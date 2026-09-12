@@ -143,7 +143,6 @@
         {"id":"nether-wart","text":"Collect Nether Wart","difficulty":"medium"},
         {"id":"piglin-barter","text":"Trade with Piglins","difficulty":"medium"},
         {"id":"bastion","text":"Find a Bastion Remnant","difficulty":"hard"},
-        {"id":"ancient-city","text":"Find an Ancient City","difficulty":"epic"},
         {"id":"netherite-upgrade","text":"Upgrade equipment to Netherite","difficulty":"hard"},
         {"id":"nether-roads","text":"Build a safe Nether travel route","difficulty":"hard"},
         {"id":"all-nether-biomes","text":"Visit every Nether biome","difficulty":"hard"},
