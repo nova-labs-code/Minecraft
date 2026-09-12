@@ -117,9 +117,7 @@
 
         header h1 {
             margin: 0;
-
             color: var(--text-bright);
-
             font-size: 1.9rem;
             line-height: 1.2;
             letter-spacing: -0.025em;
@@ -127,9 +125,7 @@
 
         header p {
             margin: 7px 0 0;
-
             color: var(--muted);
-
             font-size: 0.9rem;
             line-height: 1.45;
         }
@@ -137,7 +133,6 @@
         .controls {
             display: grid;
             grid-template-columns: minmax(0, 1fr) auto auto;
-
             gap: 8px;
             margin-bottom: 13px;
         }
@@ -149,7 +144,6 @@
         .search-wrap input {
             width: 100%;
             min-height: 44px;
-
             padding: 0 13px;
 
             border: 1px solid var(--border);
@@ -171,7 +165,6 @@
 
         button {
             min-height: 44px;
-
             padding: 0 14px;
 
             border: 1px solid var(--border);
@@ -212,17 +205,70 @@
             background: #160c0d;
         }
 
+        .filters {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 8px;
+            margin-bottom: 13px;
+        }
+
+        .filter-group {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+
+            min-width: 0;
+
+            padding: 8px 10px;
+
+            background: var(--panel);
+            border: 1px solid var(--border);
+            border-radius: 9px;
+        }
+
+        .filter-label {
+            flex: 0 0 auto;
+
+            color: var(--muted);
+
+            font-size: 0.72rem;
+            font-weight: 750;
+
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+        }
+
+        .filter-group select {
+            width: 100%;
+            min-width: 0;
+            min-height: 36px;
+
+            padding: 0 9px;
+
+            border: 1px solid var(--border);
+            border-radius: 7px;
+
+            outline: none;
+
+            background: #06080b;
+            color: var(--text-bright);
+
+            cursor: pointer;
+        }
+
+        .filter-group select:focus {
+            border-color: #303945;
+        }
+
         .score-grid {
             display: grid;
             grid-template-columns: repeat(4, minmax(0, 1fr));
-
             gap: 8px;
             margin-bottom: 13px;
         }
 
         .score-box {
             min-width: 0;
-
             padding: 13px 14px;
 
             background: var(--panel);
@@ -232,19 +278,15 @@
 
         .score-label {
             color: var(--muted);
-
             font-size: 0.73rem;
             font-weight: 700;
-
             text-transform: uppercase;
             letter-spacing: 0.045em;
         }
 
         .score-value {
             margin-top: 6px;
-
             color: var(--text-bright);
-
             font-size: 1.55rem;
             font-weight: 850;
             line-height: 1.1;
@@ -252,9 +294,7 @@
 
         .score-subtext {
             margin-top: 5px;
-
             color: var(--muted);
-
             font-size: 0.72rem;
             line-height: 1.35;
         }
@@ -262,10 +302,8 @@
         .rank-row {
             display: flex;
             align-items: center;
-
             gap: 7px;
             margin-top: 7px;
-
             flex-wrap: wrap;
         }
 
@@ -356,22 +394,18 @@
 
         .progress-title {
             color: var(--text-bright);
-
             font-size: 0.82rem;
             font-weight: 750;
         }
 
         .progress-percent {
             color: var(--muted);
-
             font-size: 0.77rem;
         }
 
         .progress-info {
             margin-bottom: 8px;
-
             color: var(--muted);
-
             font-size: 0.72rem;
             line-height: 1.4;
         }
@@ -379,22 +413,16 @@
         .progress-track {
             width: 100%;
             height: 8px;
-
             overflow: hidden;
-
             border-radius: 999px;
-
             background: #14191f;
         }
 
         .progress-fill {
             width: 0%;
             height: 100%;
-
             background: var(--green);
-
             border-radius: inherit;
-
             transition: width 0.2s ease;
         }
 
@@ -413,36 +441,25 @@
 
         .section-header h2 {
             margin: 0;
-
             color: var(--text-bright);
-
             font-size: 1.15rem;
         }
 
         .section-header p {
             margin: 4px 0 0;
-
             color: var(--muted);
-
             font-size: 0.76rem;
             line-height: 1.4;
         }
 
         .profiles-grid {
             display: grid;
-
-            grid-template-columns:
-                repeat(
-                    auto-fit,
-                    minmax(210px, 1fr)
-                );
-
+            grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
             gap: 8px;
         }
 
         .profile-card {
             min-width: 0;
-
             padding: 13px;
 
             border: 1px solid;
@@ -515,29 +532,24 @@
             display: flex;
             align-items: flex-start;
             justify-content: space-between;
-
             gap: 8px;
         }
 
         .profile-name {
             min-width: 0;
-
             overflow: hidden;
             text-overflow: ellipsis;
             white-space: nowrap;
 
             color: var(--text-bright);
-
             font-size: 0.98rem;
             font-weight: 800;
         }
 
         .profile-current {
             color: var(--muted);
-
             font-size: 0.65rem;
             font-weight: 800;
-
             white-space: nowrap;
         }
 
@@ -547,44 +559,34 @@
 
         .profile-score {
             margin-top: 9px;
-
             color: var(--text-bright);
-
             font-size: 1.3rem;
             font-weight: 850;
         }
 
         .profile-score span {
             color: var(--muted);
-
             font-size: 0.7rem;
             font-weight: 500;
         }
 
         .profile-progress {
             margin-top: 4px;
-
             color: var(--muted);
-
             font-size: 0.71rem;
             line-height: 1.4;
         }
 
         .profile-next {
             margin-top: 4px;
-
             color: var(--muted-dark);
-
             font-size: 0.68rem;
             line-height: 1.35;
         }
 
         .profile-actions {
             display: grid;
-
-            grid-template-columns:
-                repeat(3, minmax(0, 1fr));
-
+            grid-template-columns: repeat(3, minmax(0, 1fr));
             gap: 5px;
             margin-top: 11px;
         }
@@ -592,22 +594,18 @@
         .profile-actions button {
             min-width: 0;
             min-height: 38px;
-
             padding: 6px 4px;
-
             font-size: 0.7rem;
         }
 
         main {
             display: flex;
             flex-direction: column;
-
             gap: 5px;
         }
 
         .category {
             overflow: hidden;
-
             background: var(--panel);
             border: 1px solid var(--border);
             border-radius: 9px;
@@ -642,43 +640,34 @@
 
         .category-title {
             color: var(--text-bright);
-
             font-size: 0.9rem;
             font-weight: 800;
-
             overflow-wrap: anywhere;
         }
 
         .category-description {
             margin-top: 3px;
-
             color: var(--muted);
-
             font-size: 0.72rem;
             line-height: 1.35;
         }
 
         .category-right {
             flex: 0 0 auto;
-
             display: flex;
             align-items: center;
-
             gap: 8px;
         }
 
         .category-count {
             color: var(--muted);
-
             font-size: 0.69rem;
             font-weight: 700;
-
             white-space: nowrap;
         }
 
         .category-arrow {
             color: #8290a1;
-
             font-size: 0.72rem;
 
             transition:
@@ -691,9 +680,7 @@
 
         .category-content {
             display: none;
-
             padding: 0 7px 7px;
-
             border-top: 1px solid var(--border);
         }
 
@@ -704,7 +691,6 @@
         .goal-list {
             display: flex;
             flex-direction: column;
-
             gap: 5px;
             padding-top: 7px;
         }
@@ -714,9 +700,7 @@
             align-items: flex-start;
 
             gap: 9px;
-
             min-width: 0;
-
             padding: 10px;
 
             background: var(--item);
@@ -765,17 +749,14 @@
         .goal-info {
             flex: 1;
             min-width: 0;
-
             pointer-events: none;
         }
 
         .goal-name {
             color: var(--text-bright);
-
             font-size: 0.87rem;
             font-weight: 700;
             line-height: 1.35;
-
             overflow-wrap: anywhere;
         }
 
@@ -785,19 +766,15 @@
 
         .goal-description {
             margin-top: 3px;
-
             color: var(--muted);
-
             font-size: 0.74rem;
             line-height: 1.45;
-
             overflow-wrap: anywhere;
         }
 
         .goal-meta {
             display: flex;
             flex-wrap: wrap;
-
             gap: 5px;
             margin-top: 6px;
         }
@@ -807,7 +784,6 @@
             align-items: center;
 
             min-height: 21px;
-
             padding: 3px 7px;
 
             border-radius: 4px;
@@ -827,21 +803,15 @@
 
         .empty-state {
             padding: 20px 12px;
-
             color: var(--muted);
-
             text-align: center;
-
             font-size: 0.82rem;
         }
 
         footer {
             margin-top: 14px;
-
             color: #566171;
-
             text-align: center;
-
             font-size: 0.68rem;
         }
 
@@ -883,17 +853,13 @@
 
         .modal-card h2 {
             margin: 0;
-
             color: var(--text-bright);
-
             font-size: 1.15rem;
         }
 
         .modal-card p {
             margin: 7px 0 0;
-
             color: var(--muted);
-
             font-size: 0.78rem;
             line-height: 1.45;
         }
@@ -904,11 +870,8 @@
 
         .form-group label {
             display: block;
-
             margin-bottom: 6px;
-
             color: var(--text);
-
             font-size: 0.75rem;
             font-weight: 700;
         }
@@ -916,7 +879,6 @@
         .form-group input {
             width: 100%;
             min-height: 44px;
-
             padding: 0 11px;
 
             border: 1px solid var(--border);
@@ -935,7 +897,6 @@
         .modal-actions {
             display: grid;
             grid-template-columns: 1fr 1fr;
-
             gap: 7px;
             margin-top: 17px;
         }
@@ -974,6 +935,15 @@
             }
 
             .controls button {
+                width: 100%;
+            }
+
+            .filters {
+                grid-template-columns: 1fr;
+                gap: 7px;
+            }
+
+            .filter-group {
                 width: 100%;
             }
 
@@ -1065,6 +1035,18 @@
             .rank-badge {
                 font-size: 0.63rem;
                 padding: 3px 6px;
+            }
+
+            .filter-group {
+                padding: 7px 8px;
+            }
+
+            .filter-label {
+                font-size: 0.67rem;
+            }
+
+            .filter-group select {
+                min-height: 35px;
             }
 
             .profile-card {
@@ -1196,6 +1178,78 @@
         >
             Reset Goals
         </button>
+
+    </div>
+
+
+    <div class="filters">
+
+        <div class="filter-group">
+
+            <label
+                class="filter-label"
+                for="completionFilter"
+            >
+                Show
+            </label>
+
+            <select
+                id="completionFilter"
+            >
+
+                <option value="all">
+                    All
+                </option>
+
+                <option value="completed">
+                    Completed
+                </option>
+
+                <option value="incomplete">
+                    Incomplete
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <div class="filter-group">
+
+            <label
+                class="filter-label"
+                for="difficultyFilter"
+            >
+                Difficulty
+            </label>
+
+            <select
+                id="difficultyFilter"
+            >
+
+                <option value="all">
+                    All Difficulties
+                </option>
+
+                <option value="easy">
+                    Easy
+                </option>
+
+                <option value="medium">
+                    Medium
+                </option>
+
+                <option value="hard">
+                    Hard
+                </option>
+
+                <option value="epic">
+                    Epic
+                </option>
+
+            </select>
+
+        </div>
 
     </div>
 
@@ -1625,6 +1679,16 @@
     const searchInput =
         document.getElementById(
             "searchInput"
+        );
+
+    const completionFilter =
+        document.getElementById(
+            "completionFilter"
+        );
+
+    const difficultyFilter =
+        document.getElementById(
+            "difficultyFilter"
         );
 
     const categoriesElement =
@@ -2246,26 +2310,6 @@
     }
 
 
-    /*
-        Overall Progress counts actual checklist items.
-
-        Shared survival goals:
-            counted once.
-
-        Achievements:
-            counted once for every profile.
-
-        Example:
-
-            50 goals
-            134 achievements
-            3 profiles
-
-        Total:
-            50 + (134 × 3)
-            = 452 items
-    */
-
     function getTotalProgressItems() {
 
         const goalCount =
@@ -2633,6 +2677,192 @@
     }
 
 
+    function itemMatchesFilters(
+        item,
+        completed
+    ) {
+
+        const completion =
+            completionFilter.value;
+
+
+        const difficulty =
+            difficultyFilter.value;
+
+
+        if (
+            completion === "completed" &&
+            !completed
+        ) {
+
+            return false;
+
+        }
+
+
+        if (
+            completion === "incomplete" &&
+            completed
+        ) {
+
+            return false;
+
+        }
+
+
+        /*
+            Achievements do not have a
+            difficulty system, so the
+            difficulty filter only applies
+            to normal survival goals.
+        */
+
+        if (
+            difficulty !== "all" &&
+            !isAchievement(item) &&
+            getItemDifficulty(item) !==
+                difficulty
+        ) {
+
+            return false;
+
+        }
+
+
+        /*
+            If an achievement is being shown
+            while a specific difficulty is
+            selected, hide it because it has
+            no difficulty.
+        */
+
+        if (
+            difficulty !== "all" &&
+            isAchievement(item)
+        ) {
+
+            return false;
+
+        }
+
+
+        return true;
+
+    }
+
+
+    function itemMatchesSearch(
+        item,
+        search
+    ) {
+
+        if (!search) {
+            return true;
+        }
+
+
+        const text =
+            [
+                item.text,
+                item.name,
+                item.title,
+                item.label,
+                item.requirement,
+                item.description,
+                item.desc,
+                item.difficulty,
+                item.type,
+                item.category
+            ]
+                .filter(
+                    value =>
+                        value !== undefined &&
+                        value !== null
+                )
+                .join(" ")
+                .toLowerCase();
+
+
+        return text.includes(
+            search
+        );
+
+    }
+
+
+    function isItemCompleted(
+        item,
+        activeProfile,
+        sharedProgress
+    ) {
+
+        if (
+            isAchievement(item)
+        ) {
+
+            return Boolean(
+                activeProfile &&
+                activeProfile.achievements &&
+                activeProfile.achievements[
+                    getAchievementId(
+                        item
+                    )
+                ]
+            );
+
+        }
+
+
+        const id =
+            String(
+                item.id ?? ""
+            );
+
+
+        return Boolean(
+            id &&
+            sharedProgress[id]
+        );
+
+    }
+
+
+    function countCompleted(
+        items,
+        activeProfile,
+        sharedProgress
+    ) {
+
+        let completed = 0;
+
+
+        items.forEach(
+            item => {
+
+                if (
+                    isItemCompleted(
+                        item,
+                        activeProfile,
+                        sharedProgress
+                    )
+                ) {
+
+                    completed++;
+
+                }
+
+            }
+        );
+
+
+        return {
+            completed,
+            total: items.length
+        };
+
+    }
+
+
     function renderCategories() {
 
         categoriesElement.innerHTML =
@@ -2686,16 +2916,38 @@
 
                 const items =
                     category.items.filter(
-                        item =>
-                            itemMatchesSearch(
+                        item => {
+
+                            if (
+                                !itemMatchesSearch(
+                                    item,
+                                    search
+                                )
+                            ) {
+
+                                return false;
+
+                            }
+
+
+                            const completed =
+                                isItemCompleted(
+                                    item,
+                                    activeProfile,
+                                    sharedProgress
+                                );
+
+
+                            return itemMatchesFilters(
                                 item,
-                                search
-                            )
+                                completed
+                            );
+
+                        }
                     );
 
 
                 if (
-                    search &&
                     items.length === 0
                 ) {
 
@@ -3320,106 +3572,6 @@
     }
 
 
-    function itemMatchesSearch(
-        item,
-        search
-    ) {
-
-        if (!search) {
-            return true;
-        }
-
-
-        const text =
-            [
-                item.text,
-                item.name,
-                item.title,
-                item.label,
-                item.requirement,
-                item.description,
-                item.desc,
-                item.difficulty,
-                item.type,
-                item.category
-            ]
-                .filter(
-                    value =>
-                        value !== undefined &&
-                        value !== null
-                )
-                .join(" ")
-                .toLowerCase();
-
-
-        return text.includes(
-            search
-        );
-
-    }
-
-
-    function countCompleted(
-        items,
-        activeProfile,
-        sharedProgress
-    ) {
-
-        let completed = 0;
-
-
-        items.forEach(
-            item => {
-
-                if (
-                    isAchievement(item)
-                ) {
-
-                    if (
-                        activeProfile &&
-                        activeProfile.achievements &&
-                        activeProfile.achievements[
-                            getAchievementId(
-                                item
-                            )
-                        ]
-                    ) {
-
-                        completed++;
-
-                    }
-
-                } else {
-
-                    const id =
-                        String(
-                            item.id ?? ""
-                        );
-
-
-                    if (
-                        id &&
-                        sharedProgress[id]
-                    ) {
-
-                        completed++;
-
-                    }
-
-                }
-
-            }
-        );
-
-
-        return {
-            completed,
-            total: items.length
-        };
-
-    }
-
-
     function updateScores() {
 
         const globalScore =
@@ -3582,12 +3734,6 @@
         ).textContent =
             `${goalCount} completed`;
 
-
-        /*
-            Overall progress is based on
-            completed checklist items rather
-            than Gamerscore.
-        */
 
         const completedItems =
             getCompletedProgressItems();
@@ -4192,6 +4338,26 @@
 
     searchInput.addEventListener(
         "input",
+        () => {
+
+            renderCategories();
+
+        }
+    );
+
+
+    completionFilter.addEventListener(
+        "change",
+        () => {
+
+            renderCategories();
+
+        }
+    );
+
+
+    difficultyFilter.addEventListener(
+        "change",
         () => {
 
             renderCategories();
