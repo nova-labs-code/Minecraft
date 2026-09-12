@@ -31,47 +31,22 @@
             -webkit-tap-highlight-color: transparent;
         }
 
-        :root {
-            --bg: #050609;
-            --bg-soft: #080b10;
-            --panel: #0c1016;
-            --panel-hover: #11161e;
-            --item: #0a0e14;
-            --border: #1a2029;
-
-            --text: #f8fafc;
-            --text-bright: #ffffff;
-            --muted: #9ba8b8;
-            --muted-dark: #687384;
-
-            --green: #61d77b;
-            --green-dark: #27783b;
-
-            --red: #ef6b6b;
-            --red-dark: #592929;
-
-            --radius: 11px;
-        }
-
         html {
-            margin: 0;
-            padding: 0;
             width: 100%;
             min-height: 100%;
             touch-action: manipulation;
-            -ms-touch-action: manipulation;
             -webkit-text-size-adjust: 100%;
+            -ms-text-size-adjust: 100%;
         }
 
         body {
             margin: 0;
-            padding: 0;
             width: 100%;
             min-height: 100vh;
             min-height: 100dvh;
 
-            background: var(--bg);
-            color: var(--text);
+            background: #030405;
+            color: #f8fafc;
 
             font-family:
                 -apple-system,
@@ -84,7 +59,6 @@
 
             -webkit-text-size-adjust: 100%;
             -ms-text-size-adjust: 100%;
-
             touch-action: manipulation;
             overflow-x: hidden;
         }
@@ -97,11 +71,6 @@
             touch-action: manipulation;
         }
 
-        button {
-            -webkit-user-select: none;
-            user-select: none;
-        }
-
         input,
         textarea,
         select {
@@ -109,12 +78,110 @@
         }
 
         button {
+            -webkit-user-select: none;
+            user-select: none;
+        }
+
+        :root {
+            --bg: #030405;
+            --panel: #080b0f;
+            --panel-hover: #0d1117;
+            --item: #070a0e;
+
+            --border: #171c23;
+
+            --text: #f8fafc;
+            --text-bright: #ffffff;
+            --muted: #a7b2c1;
+            --muted-dark: #6f7a89;
+
+            --green: #61d77b;
+            --green-dark: #27783b;
+
+            --red: #ef6b6b;
+            --red-dark: #592929;
+
+            --radius: 10px;
+        }
+
+        .container {
+            width: min(1180px, calc(100% - 28px));
+            margin: 0 auto;
+            padding: 20px 0 50px;
+        }
+
+        /* HEADER */
+
+        header {
+            padding: 4px 2px 17px;
+        }
+
+        header h1 {
+            margin: 0;
+            color: var(--text-bright);
+
+            font-size: 1.9rem;
+            line-height: 1.2;
+            letter-spacing: -0.025em;
+        }
+
+        header p {
+            margin: 7px 0 0;
+
+            color: var(--muted);
+
+            font-size: 0.9rem;
+            line-height: 1.45;
+        }
+
+        /* CONTROLS */
+
+        .controls {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) auto auto;
+
+            gap: 8px;
+            margin-bottom: 13px;
+        }
+
+        .search-wrap {
+            min-width: 0;
+        }
+
+        .search-wrap input {
+            width: 100%;
+            min-height: 44px;
+
+            padding: 0 13px;
+
             border: 1px solid var(--border);
+            border-radius: 9px;
+
+            outline: none;
+
+            background: #06080b;
+            color: var(--text-bright);
+        }
+
+        .search-wrap input::placeholder {
+            color: #788495;
+        }
+
+        .search-wrap input:focus {
+            border-color: #303945;
+        }
+
+        button {
+            min-height: 44px;
+
+            padding: 0 14px;
+
+            border: 1px solid var(--border);
+            border-radius: 9px;
+
             background: var(--panel);
             color: var(--text-bright);
-            border-radius: 9px;
-            min-height: 44px;
-            padding: 0 14px;
+
             cursor: pointer;
             font-weight: 650;
         }
@@ -147,80 +214,19 @@
             background: #160c0d;
         }
 
-        .container {
-            width: min(1180px, calc(100% - 28px));
-            margin: 0 auto;
-            padding: 20px 0 50px;
-        }
-
-        /* Header */
-
-        header {
-            padding: 4px 2px 17px;
-        }
-
-        header h1 {
-            margin: 0;
-            color: var(--text-bright);
-            font-size: 1.9rem;
-            line-height: 1.2;
-            letter-spacing: -0.025em;
-        }
-
-        header p {
-            margin: 7px 0 0;
-            color: var(--muted);
-            font-size: 0.9rem;
-            line-height: 1.45;
-        }
-
-        /* Controls */
-
-        .controls {
-            display: grid;
-            grid-template-columns: minmax(0, 1fr) auto auto;
-            gap: 8px;
-            margin-bottom: 13px;
-        }
-
-        .search-wrap {
-            position: relative;
-            min-width: 0;
-        }
-
-        .search-wrap input {
-            width: 100%;
-            min-height: 44px;
-            padding: 0 13px;
-
-            border: 1px solid var(--border);
-            border-radius: 9px;
-
-            background: #080b10;
-            color: var(--text-bright);
-
-            outline: none;
-        }
-
-        .search-wrap input::placeholder {
-            color: #778394;
-        }
-
-        .search-wrap input:focus {
-            border-color: #34404e;
-        }
-
-        /* Score */
+        /* SCORE */
 
         .score-grid {
             display: grid;
             grid-template-columns: repeat(4, minmax(0, 1fr));
+
             gap: 8px;
             margin-bottom: 13px;
         }
 
         .score-box {
             min-width: 0;
+
             padding: 13px 14px;
 
             background: var(--panel);
@@ -230,15 +236,19 @@
 
         .score-label {
             color: var(--muted);
+
             font-size: 0.73rem;
             font-weight: 700;
+
             text-transform: uppercase;
             letter-spacing: 0.045em;
         }
 
         .score-value {
             margin-top: 6px;
+
             color: var(--text-bright);
+
             font-size: 1.55rem;
             font-weight: 850;
             line-height: 1.1;
@@ -246,7 +256,9 @@
 
         .score-subtext {
             margin-top: 5px;
+
             color: var(--muted);
+
             font-size: 0.72rem;
             line-height: 1.35;
         }
@@ -254,8 +266,10 @@
         .rank-row {
             display: flex;
             align-items: center;
+
             gap: 7px;
             margin-top: 7px;
+
             flex-wrap: wrap;
         }
 
@@ -264,10 +278,10 @@
             align-items: center;
             justify-content: center;
 
+            padding: 4px 8px;
+
             border: 1px solid currentColor;
             border-radius: 5px;
-
-            padding: 4px 8px;
 
             font-size: 0.68rem;
             font-weight: 850;
@@ -326,7 +340,7 @@
             border-color: #684895;
         }
 
-        /* Progress */
+        /* PROGRESS */
 
         .progress-section {
             padding: 13px 14px;
@@ -341,18 +355,21 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
+
             gap: 10px;
             margin-bottom: 8px;
         }
 
         .progress-title {
             color: var(--text-bright);
+
             font-size: 0.82rem;
             font-weight: 750;
         }
 
         .progress-percent {
             color: var(--muted);
+
             font-size: 0.77rem;
         }
 
@@ -361,9 +378,10 @@
             height: 8px;
 
             overflow: hidden;
+
             border-radius: 999px;
 
-            background: #171d25;
+            background: #14191f;
         }
 
         .progress-fill {
@@ -371,12 +389,13 @@
             height: 100%;
 
             background: var(--green);
+
             border-radius: inherit;
 
             transition: width 0.2s ease;
         }
 
-        /* Profiles */
+        /* PROFILES */
 
         .profiles-section {
             margin-bottom: 13px;
@@ -393,25 +412,35 @@
 
         .section-header h2 {
             margin: 0;
+
             color: var(--text-bright);
+
             font-size: 1.15rem;
         }
 
         .section-header p {
             margin: 4px 0 0;
+
             color: var(--muted);
+
             font-size: 0.76rem;
             line-height: 1.4;
         }
 
         .profiles-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+            grid-template-columns:
+                repeat(
+                    auto-fit,
+                    minmax(210px, 1fr)
+                );
+
             gap: 8px;
         }
 
         .profile-card {
             min-width: 0;
+
             padding: 13px;
 
             background: var(--panel);
@@ -424,7 +453,7 @@
         }
 
         .profile-card:hover {
-            background: #0e131a;
+            background: #0b0f14;
         }
 
         .profile-card.active {
@@ -475,6 +504,7 @@
             display: flex;
             align-items: flex-start;
             justify-content: space-between;
+
             gap: 8px;
         }
 
@@ -486,14 +516,17 @@
             white-space: nowrap;
 
             color: var(--text-bright);
+
             font-size: 0.98rem;
             font-weight: 800;
         }
 
         .profile-current {
             color: var(--green);
+
             font-size: 0.65rem;
             font-weight: 800;
+
             white-space: nowrap;
         }
 
@@ -503,34 +536,43 @@
 
         .profile-score {
             margin-top: 9px;
+
             color: var(--text-bright);
+
             font-size: 1.3rem;
             font-weight: 850;
         }
 
         .profile-score span {
             color: var(--muted);
+
             font-size: 0.7rem;
             font-weight: 500;
         }
 
         .profile-progress {
             margin-top: 4px;
+
             color: var(--muted);
+
             font-size: 0.71rem;
             line-height: 1.4;
         }
 
         .profile-next {
             margin-top: 4px;
+
             color: var(--muted-dark);
+
             font-size: 0.68rem;
             line-height: 1.35;
         }
 
         .profile-actions {
             display: grid;
-            grid-template-columns: repeat(3, minmax(0, 1fr));
+            grid-template-columns:
+                repeat(3, minmax(0, 1fr));
+
             gap: 5px;
             margin-top: 11px;
         }
@@ -538,15 +580,18 @@
         .profile-actions button {
             min-width: 0;
             min-height: 38px;
+
             padding: 6px 4px;
+
             font-size: 0.7rem;
         }
 
-        /* Categories */
+        /* CATEGORIES */
 
         main {
             display: flex;
             flex-direction: column;
+
             gap: 5px;
         }
 
@@ -573,11 +618,12 @@
             border-radius: 0;
 
             background: transparent;
+
             text-align: left;
         }
 
         .category-header:hover {
-            background: #0e131a;
+            background: #0c1015;
         }
 
         .category-title-wrap {
@@ -586,14 +632,18 @@
 
         .category-title {
             color: var(--text-bright);
+
             font-size: 0.9rem;
             font-weight: 800;
+
             overflow-wrap: anywhere;
         }
 
         .category-description {
             margin-top: 3px;
+
             color: var(--muted);
+
             font-size: 0.72rem;
             line-height: 1.35;
         }
@@ -603,18 +653,22 @@
 
             display: flex;
             align-items: center;
+
             gap: 8px;
         }
 
         .category-count {
             color: var(--muted);
+
             font-size: 0.69rem;
             font-weight: 700;
+
             white-space: nowrap;
         }
 
         .category-arrow {
             color: #8290a1;
+
             font-size: 0.72rem;
 
             transition:
@@ -640,24 +694,49 @@
         .goal-list {
             display: flex;
             flex-direction: column;
+
             gap: 5px;
             padding-top: 7px;
         }
 
-        /* Goals */
+        /* GOAL ITEMS */
 
         .goal-item {
             display: flex;
             align-items: flex-start;
 
             gap: 9px;
+
             min-width: 0;
 
             padding: 10px;
 
             background: var(--item);
-            border: 1px solid #151b23;
+            border: 1px solid #131820;
             border-radius: 8px;
+
+            cursor: pointer;
+
+            /*
+             * Prevents the browser from interpreting a tap
+             * as text selection or another gesture.
+             */
+            touch-action: manipulation;
+            -webkit-user-select: none;
+            user-select: none;
+
+            transition:
+                background 0.12s ease,
+                border-color 0.12s ease;
+        }
+
+        .goal-item:hover {
+            background: #0b0f14;
+            border-color: #1b222c;
+        }
+
+        .goal-item:active {
+            background: #0e1319;
         }
 
         .goal-item.completed {
@@ -672,19 +751,27 @@
 
             margin: 1px 0 0;
 
+            cursor: pointer;
+
             accent-color: var(--green);
+
+            pointer-events: none;
         }
 
         .goal-info {
             flex: 1;
             min-width: 0;
+
+            pointer-events: none;
         }
 
         .goal-name {
             color: var(--text-bright);
+
             font-size: 0.87rem;
             font-weight: 700;
             line-height: 1.35;
+
             overflow-wrap: anywhere;
         }
 
@@ -694,15 +781,19 @@
 
         .goal-description {
             margin-top: 3px;
+
             color: var(--muted);
+
             font-size: 0.74rem;
             line-height: 1.45;
+
             overflow-wrap: anywhere;
         }
 
         .goal-meta {
             display: flex;
             flex-wrap: wrap;
+
             gap: 5px;
             margin-top: 6px;
         }
@@ -712,12 +803,13 @@
             align-items: center;
 
             min-height: 21px;
+
             padding: 3px 7px;
 
             border-radius: 4px;
 
-            background: #171d25;
-            color: #cbd5e1;
+            background: #151a21;
+            color: #d3dae3;
 
             font-size: 0.63rem;
             font-weight: 700;
@@ -731,23 +823,27 @@
 
         .empty-state {
             padding: 20px 12px;
+
             color: var(--muted);
+
             text-align: center;
+
             font-size: 0.82rem;
         }
 
-        /* Footer */
+        /* FOOTER */
 
         footer {
             margin-top: 14px;
 
             color: #566171;
+
             text-align: center;
 
             font-size: 0.68rem;
         }
 
-        /* Modals */
+        /* MODALS */
 
         .modal {
             position: fixed;
@@ -760,7 +856,7 @@
 
             padding: 12px;
 
-            background: rgba(0, 0, 0, 0.82);
+            background: rgba(0, 0, 0, 0.84);
 
             overscroll-behavior: contain;
         }
@@ -777,23 +873,27 @@
 
             padding: 19px;
 
-            background: #0a0d12;
+            background: #080b0f;
             border: 1px solid #202732;
             border-radius: 11px;
 
             box-shadow:
-                0 20px 60px rgba(0, 0, 0, 0.65);
+                0 20px 60px rgba(0, 0, 0, 0.7);
         }
 
         .modal-card h2 {
             margin: 0;
+
             color: var(--text-bright);
+
             font-size: 1.15rem;
         }
 
         .modal-card p {
             margin: 7px 0 0;
+
             color: var(--muted);
+
             font-size: 0.78rem;
             line-height: 1.45;
         }
@@ -804,9 +904,11 @@
 
         .form-group label {
             display: block;
+
             margin-bottom: 6px;
 
             color: var(--text);
+
             font-size: 0.75rem;
             font-weight: 700;
         }
@@ -820,10 +922,10 @@
             border: 1px solid var(--border);
             border-radius: 8px;
 
-            background: #070a0e;
-            color: var(--text-bright);
-
             outline: none;
+
+            background: #05070a;
+            color: var(--text-bright);
         }
 
         .form-group input:focus {
@@ -833,8 +935,8 @@
         .modal-actions {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 7px;
 
+            gap: 7px;
             margin-top: 17px;
         }
 
@@ -847,7 +949,7 @@
             display: none !important;
         }
 
-        /* Tablet / Mobile */
+        /* TABLET */
 
         @media (max-width: 800px) {
 
@@ -925,6 +1027,8 @@
                 grid-template-columns: 1fr;
             }
         }
+
+        /* PHONE */
 
         @media (max-width: 480px) {
 
@@ -1017,6 +1121,8 @@
             }
         }
 
+        /* VERY SMALL PHONES */
+
         @media (max-width: 360px) {
 
             .score-grid {
@@ -1047,18 +1153,23 @@
 <div class="container">
 
     <header>
-        <h1>Minecraft Survival Checklist</h1>
+
+        <h1>
+            Minecraft Survival Checklist
+        </h1>
 
         <p>
-            Track survival goals, achievements, Gamerscore, profiles,
-            and Minecraft-themed ranks.
+            Track survival goals, achievements, Gamerscore,
+            profiles, and Minecraft-themed ranks.
         </p>
+
     </header>
 
 
     <div class="controls">
 
         <div class="search-wrap">
+
             <input
                 id="searchInput"
                 type="search"
@@ -1067,7 +1178,9 @@
                 autocapitalize="off"
                 spellcheck="false"
             >
+
         </div>
+
 
         <button
             id="addProfileButton"
@@ -1076,6 +1189,7 @@
         >
             Add Profile
         </button>
+
 
         <button
             id="resetButton"
@@ -1116,8 +1230,13 @@
         <div class="score-box">
 
             <div class="score-label">
-                <span id="currentProfileName">Your</span>
+
+                <span id="currentProfileName">
+                    Your
+                </span>
+
                 Score
+
             </div>
 
             <div
@@ -1213,6 +1332,7 @@
 
         </div>
 
+
         <div class="progress-track">
 
             <div
@@ -1240,6 +1360,7 @@
                 </p>
 
             </div>
+
 
             <button
                 id="addProfileButtonSecondary"
@@ -1270,7 +1391,7 @@
 </div>
 
 
-<!-- Profile Modal -->
+<!-- PROFILE MODAL -->
 
 <div
     id="profileModal"
@@ -1335,7 +1456,7 @@
 </div>
 
 
-<!-- Confirmation Modal -->
+<!-- CONFIRMATION MODAL -->
 
 <div
     id="confirmModal"
@@ -1412,66 +1533,77 @@
 
 
     const RANKS = [
+
         {
             name: "Dirt",
             min: 0,
             max: 49,
             className: "rank-dirt"
         },
+
         {
             name: "Wood",
             min: 50,
             max: 149,
             className: "rank-wood"
         },
+
         {
             name: "Stone",
             min: 150,
             max: 299,
             className: "rank-stone"
         },
+
         {
             name: "Coal",
             min: 300,
             max: 499,
             className: "rank-coal"
         },
+
         {
             name: "Iron",
             min: 500,
             max: 749,
             className: "rank-iron"
         },
+
         {
             name: "Gold",
             min: 750,
             max: 999,
             className: "rank-gold"
         },
+
         {
             name: "Diamond",
             min: 1000,
             max: 1499,
             className: "rank-diamond"
         },
+
         {
             name: "Emerald",
             min: 1500,
             max: 1999,
             className: "rank-emerald"
         },
+
         {
             name: "Netherite",
             min: 2000,
             max: 2499,
             className: "rank-netherite"
         },
+
         {
             name: "Ender Dragon",
             min: 2500,
             max: 2980,
             className: "rank-ender"
         }
+
     ];
 
 
@@ -1530,8 +1662,13 @@
                     )
                 );
 
-            if (Array.isArray(stored)) {
-                profiles = stored;
+            if (
+                Array.isArray(stored)
+            ) {
+
+                profiles =
+                    stored;
+
             }
 
         } catch (error) {
@@ -1568,7 +1705,8 @@
 
         } else {
 
-            activeProfileId = null;
+            activeProfileId =
+                null;
 
         }
 
@@ -1615,16 +1753,21 @@
                     )
                 );
 
-            return stored &&
+
+            if (
+                stored &&
                 typeof stored === "object"
-                ? stored
-                : {};
+            ) {
+
+                return stored;
+
+            }
 
         } catch (error) {
-
-            return {};
-
         }
+
+
+        return {};
 
     }
 
@@ -1652,18 +1795,6 @@
     }
 
 
-    /*
-     * The JSON structure is intentionally strict:
-     *
-     * goalsData.categories
-     *      -> category.items
-     *          -> individual item
-     *
-     * We do NOT recursively search objects for categories.
-     * This prevents normal goals and achievement fields from
-     * accidentally becoming categories.
-     */
-
     function getCategories() {
 
         if (
@@ -1677,6 +1808,7 @@
 
         }
 
+
         return goalsData.categories;
 
     }
@@ -1685,6 +1817,7 @@
     function getAllItems() {
 
         const result = [];
+
 
         getCategories().forEach(
             category => {
@@ -1695,8 +1828,11 @@
                         category.items
                     )
                 ) {
+
                     return;
+
                 }
+
 
                 category.items.forEach(
                     item => {
@@ -1706,7 +1842,9 @@
                             typeof item === "object"
                         ) {
 
-                            result.push(item);
+                            result.push(
+                                item
+                            );
 
                         }
 
@@ -1715,6 +1853,7 @@
 
             }
         );
+
 
         return result;
 
@@ -1795,12 +1934,19 @@
     function isAchievement(item) {
 
         return Boolean(
+
             item.achievement === true ||
+
             item.type === "achievement" ||
+
             item.category === "Achievements" ||
+
             item.isAchievement === true ||
+
             item.gamerscore !== undefined ||
+
             item.Gamerscore !== undefined
+
         );
 
     }
@@ -1885,25 +2031,29 @@
 
 
         getAllNormalGoals()
-            .forEach(item => {
+            .forEach(
+                item => {
 
-                const id =
-                    String(
-                        item.id ?? ""
-                    );
+                    const id =
+                        String(
+                            item.id ?? ""
+                        );
 
 
-                if (
-                    id &&
-                    progress[id]
-                ) {
+                    if (
+                        id &&
+                        progress[id]
+                    ) {
 
-                    score +=
-                        getGoalScore(item);
+                        score +=
+                            getGoalScore(
+                                item
+                            );
+
+                    }
 
                 }
-
-            });
+            );
 
 
         return score;
@@ -1917,12 +2067,16 @@
 
 
         getAllNormalGoals()
-            .forEach(item => {
+            .forEach(
+                item => {
 
-                score +=
-                    getGoalScore(item);
+                    score +=
+                        getGoalScore(
+                            item
+                        );
 
-            });
+                }
+            );
 
 
         return score;
@@ -1946,25 +2100,29 @@
 
 
         getAllAchievements()
-            .forEach(item => {
+            .forEach(
+                item => {
 
-                const id =
-                    getAchievementId(item);
-
-
-                if (
-                    id &&
-                    achievements[id]
-                ) {
-
-                    score +=
-                        getAchievementGamerscore(
+                    const id =
+                        getAchievementId(
                             item
                         );
 
-                }
 
-            });
+                    if (
+                        id &&
+                        achievements[id]
+                    ) {
+
+                        score +=
+                            getAchievementGamerscore(
+                                item
+                            );
+
+                    }
+
+                }
+            );
 
 
         return score;
@@ -1978,14 +2136,16 @@
 
 
         getAllAchievements()
-            .forEach(item => {
+            .forEach(
+                item => {
 
-                score +=
-                    getAchievementGamerscore(
-                        item
-                    );
+                    score +=
+                        getAchievementGamerscore(
+                            item
+                        );
 
-            });
+                }
+            );
 
 
         return score;
@@ -2009,22 +2169,26 @@
 
 
         getAllAchievements()
-            .forEach(item => {
+            .forEach(
+                item => {
 
-                const id =
-                    getAchievementId(item);
+                    const id =
+                        getAchievementId(
+                            item
+                        );
 
 
-                if (
-                    id &&
-                    achievements[id]
-                ) {
+                    if (
+                        id &&
+                        achievements[id]
+                    ) {
 
-                    count++;
+                        count++;
+
+                    }
 
                 }
-
-            });
+            );
 
 
         return count;
@@ -2121,7 +2285,8 @@
                     candidate.min
                 ) {
 
-                    rank = candidate;
+                    rank =
+                        candidate;
 
                 }
 
@@ -2181,7 +2346,8 @@
 
     function renderProfiles() {
 
-        profilesGrid.innerHTML = "";
+        profilesGrid.innerHTML =
+            "";
 
 
         if (
@@ -2207,28 +2373,34 @@
                         profile
                     );
 
+
                 const nextRank =
                     getNextRank(
                         profile
                     );
+
 
                 const achievementScore =
                     getProfileAchievementScore(
                         profile
                     );
 
+
                 const achievementCount =
                     getProfileAchievementCount(
                         profile
                     );
 
+
                 const totalAchievements =
                     getTotalAchievementCount();
+
 
                 const percentage =
                     getAchievementPercentage(
                         profile
                     );
+
 
                 const isActive =
                     profile.id ===
@@ -2251,13 +2423,8 @@
                     );
 
 
-                const nextText =
-                    nextRank
-                        ? `${nextRank.min - achievementScore}G until ${nextRank.name}`
-                        : "Highest rank";
-
-
                 card.innerHTML = `
+
                     <div class="profile-top">
 
                         <div class="profile-name">
@@ -2293,27 +2460,36 @@
 
 
                     <div class="profile-score">
+
                         ${achievementScore}G
+
                         <span>
                             achievements
                         </span>
+
                     </div>
 
 
                     <div class="profile-progress">
+
                         ${achievementCount}
                         /
                         ${totalAchievements}
                         achievements completed
                         ·
                         ${percentage.toFixed(1)}%
+
                     </div>
 
 
                     <div class="profile-next">
+
                         ${escapeHTML(
-                            nextText
+                            nextRank
+                                ? `${nextRank.min - achievementScore}G until ${nextRank.name}`
+                                : "Highest rank"
                         )}
+
                     </div>
 
 
@@ -2333,6 +2509,7 @@
                             }
                         </button>
 
+
                         <button
                             type="button"
                             data-action="edit"
@@ -2342,6 +2519,7 @@
                         >
                             Edit
                         </button>
+
 
                         <button
                             type="button"
@@ -2354,6 +2532,7 @@
                         </button>
 
                     </div>
+
                 `;
 
 
@@ -2369,7 +2548,8 @@
 
     function renderCategories() {
 
-        categoriesElement.innerHTML = "";
+        categoriesElement.innerHTML =
+            "";
 
 
         if (!goalsData) {
@@ -2394,16 +2574,16 @@
         const sharedProgress =
             loadSharedGoals();
 
+
         const activeProfile =
             getActiveProfile();
 
 
-        const categories =
-            getCategories();
-
-
-        categories.forEach(
-            (category, categoryIndex) => {
+        getCategories().forEach(
+            (
+                category,
+                categoryIndex
+            ) => {
 
                 if (
                     !category ||
@@ -2488,6 +2668,7 @@
 
 
                 header.innerHTML = `
+
                     <div class="category-title-wrap">
 
                         <div class="category-title">
@@ -2524,6 +2705,7 @@
                         </span>
 
                     </div>
+
                 `;
 
 
@@ -2566,6 +2748,7 @@
                             "open"
                         );
 
+
                         openCategoryId =
                             categoryId;
 
@@ -2599,7 +2782,10 @@
 
 
                 items.forEach(
-                    (item, itemIndex) => {
+                    (
+                        item,
+                        itemIndex
+                    ) => {
 
                         const goal =
                             createGoalItem(
@@ -2684,7 +2870,9 @@
 
         const itemId =
             achievement
-                ? getAchievementId(item)
+                ? getAchievementId(
+                    item
+                )
                 : String(
                     item.id ??
                     fallbackId
@@ -2701,7 +2889,9 @@
                     ]
                 )
                 : Boolean(
-                    sharedProgress[itemId]
+                    sharedProgress[
+                        itemId
+                    ]
                 );
 
 
@@ -2724,6 +2914,12 @@
         }
 
 
+        /*
+         * The checkbox is still a real checkbox,
+         * but pointer events are disabled on it.
+         *
+         * The entire .goal-item handles the click.
+         */
         const checkbox =
             document.createElement(
                 "input"
@@ -2736,6 +2932,8 @@
         checkbox.checked =
             completed;
 
+        checkbox.tabIndex =
+            -1;
 
         checkbox.setAttribute(
             "aria-label",
@@ -2743,62 +2941,73 @@
         );
 
 
-        checkbox.addEventListener(
-            "change",
-            () => {
+        /*
+         * Clicking ANYWHERE on the item toggles it.
+         */
+        element.addEventListener(
+            "click",
+            event => {
 
-                if (achievement) {
+                /*
+                 * Ignore clicks if the user somehow
+                 * clicks an interactive element inside
+                 * the item in the future.
+                 */
+                if (
+                    event.target.closest(
+                        "button, a, input, select, textarea"
+                    )
+                ) {
 
-                    if (!activeProfile) {
-
-                        checkbox.checked =
-                            false;
-
-                        alert(
-                            "Create or select a profile first."
-                        );
-
-                        return;
-
-                    }
-
-
-                    if (
-                        !activeProfile.achievements
-                    ) {
-
-                        activeProfile.achievements =
-                            {};
-
-                    }
-
-
-                    activeProfile.achievements[
-                        itemId
-                    ] =
-                        checkbox.checked;
-
-
-                    saveProfiles();
-
-                } else {
-
-                    const progress =
-                        loadSharedGoals();
-
-
-                    progress[itemId] =
-                        checkbox.checked;
-
-
-                    saveSharedGoals(
-                        progress
-                    );
+                    return;
 
                 }
 
 
-                render();
+                toggleGoal(
+                    item,
+                    itemId
+                );
+
+            }
+        );
+
+
+        /*
+         * Also allow keyboard activation when
+         * the item receives focus programmatically.
+         */
+        element.setAttribute(
+            "role",
+            "checkbox"
+        );
+
+        element.setAttribute(
+            "aria-checked",
+            String(completed)
+        );
+
+        element.tabIndex =
+            0;
+
+
+        element.addEventListener(
+            "keydown",
+            event => {
+
+                if (
+                    event.key === " " ||
+                    event.key === "Enter"
+                ) {
+
+                    event.preventDefault();
+
+                    toggleGoal(
+                        item,
+                        itemId
+                    );
+
+                }
 
             }
         );
@@ -2823,6 +3032,7 @@
         name.className =
             "goal-name";
 
+
         name.textContent =
             getItemName(item);
 
@@ -2833,7 +3043,9 @@
 
 
         const description =
-            getItemDescription(item);
+            getItemDescription(
+                item
+            );
 
 
         if (description) {
@@ -2871,39 +3083,39 @@
 
         if (achievement) {
 
-            const tag =
+            const scoreTag =
                 document.createElement(
                     "span"
                 );
 
 
-            tag.className =
+            scoreTag.className =
                 "tag tag-score";
 
 
-            tag.textContent =
+            scoreTag.textContent =
                 `${getAchievementGamerscore(
                     item
                 )}G`;
 
 
             meta.appendChild(
-                tag
+                scoreTag
             );
 
         } else {
 
-            const difficulty =
+            const difficultyTag =
                 document.createElement(
                     "span"
                 );
 
 
-            difficulty.className =
+            difficultyTag.className =
                 "tag";
 
 
-            difficulty.textContent =
+            difficultyTag.textContent =
                 capitalize(
                     getItemDifficulty(
                         item
@@ -2911,28 +3123,29 @@
                 );
 
 
-            const score =
+            const scoreTag =
                 document.createElement(
                     "span"
                 );
 
 
-            score.className =
+            scoreTag.className =
                 "tag tag-score";
 
 
-            score.textContent =
+            scoreTag.textContent =
                 `+${getGoalScore(
                     item
                 )}G`;
 
 
             meta.appendChild(
-                difficulty
+                difficultyTag
             );
 
+
             meta.appendChild(
-                score
+                scoreTag
             );
 
         }
@@ -2947,12 +3160,93 @@
             checkbox
         );
 
+
         element.appendChild(
             info
         );
 
 
         return element;
+
+    }
+
+
+    function toggleGoal(
+        item,
+        itemId
+    ) {
+
+        const achievement =
+            isAchievement(item);
+
+
+        if (achievement) {
+
+            const profile =
+                getActiveProfile();
+
+
+            if (!profile) {
+
+                alert(
+                    "Create or select a profile first."
+                );
+
+                return;
+
+            }
+
+
+            if (
+                !profile.achievements
+            ) {
+
+                profile.achievements =
+                    {};
+
+            }
+
+
+            const current =
+                Boolean(
+                    profile.achievements[
+                        itemId
+                    ]
+                );
+
+
+            profile.achievements[
+                itemId
+            ] =
+                !current;
+
+
+            saveProfiles();
+
+        } else {
+
+            const progress =
+                loadSharedGoals();
+
+
+            const current =
+                Boolean(
+                    progress[itemId]
+                );
+
+
+            progress[itemId] =
+                !current;
+
+
+            saveSharedGoals(
+                progress
+            );
+
+        }
+
+
+        render();
 
     }
 
@@ -3061,6 +3355,7 @@
 
         const globalScore =
             getCurrentGlobalScore();
+
 
         const globalTotal =
             getGlobalTotalPossible();
@@ -3186,6 +3481,10 @@
                 : "Select a profile";
 
 
+        const sharedProgress =
+            loadSharedGoals();
+
+
         const goalScore =
             getSharedGoalScore();
 
@@ -3194,7 +3493,7 @@
             getAllNormalGoals()
                 .filter(
                     item =>
-                        loadSharedGoals()[
+                        sharedProgress[
                             String(
                                 item.id ?? ""
                             )
@@ -3591,8 +3890,7 @@
 
 
         return (
-            value.charAt(0)
-                .toUpperCase() +
+            value.charAt(0).toUpperCase() +
             value.slice(1)
         );
 
@@ -3602,22 +3900,27 @@
     function escapeHTML(value) {
 
         return String(value)
+
             .replaceAll(
                 "&",
                 "&amp;"
             )
+
             .replaceAll(
                 "<",
                 "&lt;"
             )
+
             .replaceAll(
                 ">",
                 "&gt;"
             )
+
             .replaceAll(
                 '"',
                 "&quot;"
             )
+
             .replaceAll(
                 "'",
                 "&#039;"
@@ -3625,6 +3928,8 @@
 
     }
 
+
+    /* PROFILE ACTIONS */
 
     profilesGrid.addEventListener(
         "click",
@@ -3654,7 +3959,9 @@
                 "select"
             ) {
 
-                selectProfile(id);
+                selectProfile(
+                    id
+                );
 
             }
 
@@ -3687,7 +3994,9 @@
                 "delete"
             ) {
 
-                deleteProfile(id);
+                deleteProfile(
+                    id
+                );
 
             }
 
@@ -3771,7 +4080,6 @@
 
 
                     closeConfirmModal();
-
 
                     action();
 
@@ -3896,6 +4204,99 @@
         }
     );
 
+
+    /*
+     * Additional mobile zoom prevention.
+     * Prevents double-tap zoom while preserving
+     * normal scrolling.
+     */
+
+    let lastTouchEnd = 0;
+
+
+    document.addEventListener(
+        "touchend",
+        event => {
+
+            const now =
+                Date.now();
+
+
+            if (
+                now - lastTouchEnd <=
+                300
+            ) {
+
+                event.preventDefault();
+
+            }
+
+
+            lastTouchEnd =
+                now;
+
+        },
+        {
+            passive: false
+        }
+    );
+
+
+    /*
+     * Prevent pinch zoom.
+     */
+
+    document.addEventListener(
+        "touchmove",
+        event => {
+
+            if (
+                event.touches &&
+                event.touches.length > 1
+            ) {
+
+                event.preventDefault();
+
+            }
+
+        },
+        {
+            passive: false
+        }
+    );
+
+
+    document.addEventListener(
+        "gesturestart",
+        event => {
+
+            event.preventDefault();
+
+        }
+    );
+
+
+    document.addEventListener(
+        "gesturechange",
+        event => {
+
+            event.preventDefault();
+
+        }
+    );
+
+
+    document.addEventListener(
+        "gestureend",
+        event => {
+
+            event.preventDefault();
+
+        }
+    );
+
+
+    /* LOAD DATA */
 
     loadProfiles();
 
