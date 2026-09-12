@@ -19,12 +19,16 @@
             --bg: #080b09;
             --panel: #101610;
             --panel-2: #151d15;
+            --panel-3: #1a231a;
             --border: #263126;
+            --border-light: #344134;
             --green: #4caf50;
             --green-dark: #2e7d32;
             --text: #edf3ed;
             --muted: #9ba69b;
+            --muted-2: #6f796f;
             --danger: #d9534f;
+            --gold: #d6b85c;
         }
 
         html {
@@ -45,7 +49,8 @@
         }
 
         button,
-        input {
+        input,
+        select {
             font: inherit;
         }
 
@@ -56,11 +61,11 @@
         .container {
             width: min(1100px, calc(100% - 28px));
             margin: 0 auto;
-            padding: 30px 0 50px;
+            padding: 24px 0 50px;
         }
 
         header {
-            margin-bottom: 24px;
+            margin-bottom: 20px;
         }
 
         h1 {
@@ -75,40 +80,220 @@
             font-size: 15px;
         }
 
-        .top-panel {
+        /*
+         * PROFILE AREA
+         */
+
+        .profiles-panel {
             background: var(--panel);
             border: 1px solid var(--border);
             border-radius: 14px;
-            padding: 18px;
-            margin-bottom: 20px;
+            padding: 14px;
+            margin-bottom: 14px;
         }
 
-        .progress-row {
+        .profiles-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        .profiles-title {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--muted);
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+        }
+
+        .profiles-limit {
+            color: var(--muted-2);
+            font-size: 12px;
+        }
+
+        .profiles-list {
+            display: grid;
+            grid-template-columns:
+                repeat(auto-fill, minmax(150px, 1fr));
+            gap: 9px;
+        }
+
+        .profile-card {
+            position: relative;
+            min-width: 0;
+            border: 1px solid var(--border);
+            background: var(--panel-2);
+            border-radius: 10px;
+            padding: 11px;
+            cursor: pointer;
+            text-align: left;
+            transition:
+                background 0.15s ease,
+                border-color 0.15s ease,
+                transform 0.15s ease;
+        }
+
+        .profile-card:hover {
+            background: var(--panel-3);
+            border-color: var(--border-light);
+            transform: translateY(-1px);
+        }
+
+        .profile-card.active {
+            border-color: var(--green);
+            background: #152015;
+        }
+
+        .profile-card-top {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+            min-width: 0;
+        }
+
+        .profile-avatar {
+            width: 34px;
+            height: 34px;
+            flex: 0 0 34px;
+            border-radius: 8px;
+            background: #202a20;
+            border: 1px solid var(--border-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: 800;
+            color: var(--green);
+        }
+
+        .profile-card.active .profile-avatar {
+            background: #203c20;
+            border-color: var(--green-dark);
+        }
+
+        .profile-name {
+            min-width: 0;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            font-size: 14px;
+            font-weight: 700;
+        }
+
+        .profile-card-score {
+            margin-top: 8px;
+            color: var(--muted);
+            font-size: 12px;
+        }
+
+        .profile-card-score strong {
+            color: var(--text);
+        }
+
+        .profile-card-percent {
+            float: right;
+            color: var(--green);
+        }
+
+        .add-profile {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 74px;
+            border: 1px dashed var(--border-light);
+            background: transparent;
+            color: var(--muted);
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 700;
+            transition:
+                background 0.15s ease,
+                border-color 0.15s ease,
+                color 0.15s ease;
+        }
+
+        .add-profile:hover {
+            background: var(--panel-2);
+            border-color: var(--green);
+            color: var(--text);
+        }
+
+        /*
+         * SCORE PANEL
+         */
+
+        .score-panel {
+            background: var(--panel);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 16px;
+            margin-bottom: 14px;
+        }
+
+        .score-grid {
+            display: grid;
+            grid-template-columns:
+                repeat(3, minmax(0, 1fr));
+            gap: 10px;
+        }
+
+        .score-box {
+            background: var(--panel-2);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 13px;
+        }
+
+        .score-label {
+            color: var(--muted);
+            font-size: 12px;
+            margin-bottom: 4px;
+        }
+
+        .score-value {
+            font-size: 23px;
+            font-weight: 800;
+            line-height: 1.2;
+        }
+
+        .score-value.green {
+            color: var(--green);
+        }
+
+        .score-value.gold {
+            color: var(--gold);
+        }
+
+        .score-small {
+            margin-top: 4px;
+            color: var(--muted-2);
+            font-size: 11px;
+        }
+
+        .score-progress {
+            margin-top: 13px;
+        }
+
+        .score-progress-row {
             display: flex;
             justify-content: space-between;
-            gap: 15px;
-            align-items: center;
-            margin-bottom: 10px;
+            gap: 10px;
+            margin-bottom: 6px;
+            color: var(--muted);
+            font-size: 12px;
         }
 
-        .progress-text {
-            font-weight: 700;
-        }
-
-        .progress-percent {
-            color: var(--green);
-            font-weight: 700;
-        }
-
-        .progress-track {
+        .score-track {
             width: 100%;
-            height: 10px;
+            height: 9px;
             background: #202720;
             border-radius: 999px;
             overflow: hidden;
         }
 
-        .progress-bar {
+        .score-bar {
             width: 0%;
             height: 100%;
             background: var(--green);
@@ -116,16 +301,27 @@
             transition: width 0.2s ease;
         }
 
+        /*
+         * CONTROLS
+         */
+
+        .controls-panel {
+            background: var(--panel);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 14px;
+            margin-bottom: 20px;
+        }
+
         .controls {
             display: flex;
-            gap: 10px;
-            margin-top: 16px;
+            gap: 9px;
         }
 
         .search {
             flex: 1;
             min-width: 0;
-            padding: 11px 13px;
+            padding: 10px 12px;
             border: 1px solid var(--border);
             border-radius: 9px;
             outline: none;
@@ -140,7 +336,7 @@
         .button {
             border: 1px solid var(--border);
             background: var(--panel-2);
-            padding: 11px 14px;
+            padding: 10px 13px;
             border-radius: 9px;
             cursor: pointer;
             transition:
@@ -149,14 +345,18 @@
         }
 
         .button:hover {
-            background: #1b241b;
-            border-color: #3b493b;
+            background: var(--panel-3);
+            border-color: var(--border-light);
         }
 
         .button.danger:hover {
             border-color: var(--danger);
             color: #ff8b87;
         }
+
+        /*
+         * ERROR / LOADING
+         */
 
         #loading {
             text-align: center;
@@ -173,6 +373,10 @@
             border-radius: 10px;
             margin-bottom: 20px;
         }
+
+        /*
+         * CATEGORIES
+         */
 
         .category {
             margin-bottom: 14px;
@@ -239,6 +443,10 @@
             padding: 6px 0;
         }
 
+        /*
+         * ITEMS
+         */
+
         .item {
             display: flex;
             align-items: flex-start;
@@ -287,10 +495,75 @@
             opacity: 0.6;
         }
 
+        /*
+         * GOAL SCORE
+         */
+
+        .goal-meta {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 7px;
+            margin-top: 5px;
+        }
+
+        .goal-score {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 38px;
+            padding: 2px 7px;
+            border-radius: 6px;
+            background: #202a20;
+            border: 1px solid var(--border-light);
+            color: #b9c9b9;
+            font-size: 11px;
+            font-weight: 800;
+        }
+
+        .difficulty {
+            display: inline-flex;
+            align-items: center;
+            padding: 2px 7px;
+            border-radius: 6px;
+            background: #1b211b;
+            border: 1px solid var(--border);
+            color: var(--muted);
+            font-size: 11px;
+        }
+
+        /*
+         * ACHIEVEMENTS
+         */
+
+        .achievement-profile-panel {
+            padding: 14px 18px;
+            border-bottom: 1px solid var(--border);
+            background: #0d120d;
+        }
+
+        .achievement-profile-title {
+            color: var(--muted);
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            margin-bottom: 8px;
+        }
+
+        .achievement-profile-info {
+            color: var(--muted);
+            font-size: 12px;
+        }
+
+        .achievement-profile-info strong {
+            color: var(--text);
+        }
+
         .achievement-meta {
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 7px;
             flex-wrap: wrap;
             margin-top: 5px;
         }
@@ -299,20 +572,25 @@
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            min-width: 34px;
+            min-width: 38px;
             padding: 2px 7px;
             border-radius: 6px;
             background: #202a20;
-            border: 1px solid #344134;
-            color: #b9c9b9;
-            font-size: 12px;
-            font-weight: 700;
+            border: 1px solid var(--border-light);
+            color: var(--gold);
+            font-size: 11px;
+            font-weight: 800;
         }
 
         .requirement-label {
-            color: #7f8a7f;
+            color: var(--muted);
             font-size: 12px;
+            line-height: 1.4;
         }
+
+        /*
+         * EMPTY / FOOTER
+         */
 
         .empty {
             padding: 35px 20px;
@@ -327,14 +605,24 @@
             font-size: 12px;
         }
 
+        /*
+         * MOBILE
+         */
+
         @media (max-width: 650px) {
+
             .container {
                 width: min(100% - 18px, 1100px);
-                padding-top: 20px;
+                padding-top: 18px;
             }
 
-            .top-panel {
-                padding: 14px;
+            .score-grid {
+                grid-template-columns:
+                    1fr 1fr;
+            }
+
+            .score-box:last-child {
+                grid-column: 1 / -1;
             }
 
             .controls {
@@ -343,6 +631,11 @@
 
             .button {
                 width: 100%;
+            }
+
+            .profiles-list {
+                grid-template-columns:
+                    repeat(2, minmax(0, 1fr));
             }
 
             .category-header {
@@ -360,6 +653,25 @@
             .category-count {
                 font-size: 12px;
             }
+
+            .achievement-profile-panel {
+                padding: 13px 14px;
+            }
+        }
+
+        @media (max-width: 390px) {
+
+            .profiles-list {
+                grid-template-columns: 1fr;
+            }
+
+            .score-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .score-box:last-child {
+                grid-column: auto;
+            }
         }
     </style>
 </head>
@@ -369,43 +681,155 @@
 <div class="container">
 
     <header>
-        <h1>Minecraft Survival Checklist</h1>
+
+        <h1>
+            Minecraft Survival Checklist
+        </h1>
 
         <p class="subtitle">
             Survival goals, exploration, building, automation, and Xbox achievements.
         </p>
+
     </header>
+
 
     <div id="error"></div>
 
-    <section class="top-panel">
 
-        <div class="progress-row">
+    <!-- PROFILES -->
 
-            <span class="progress-text">
-                <span id="completedCount">0</span>
-                /
-                <span id="totalCount">0</span>
-                completed
-            </span>
+    <section class="profiles-panel">
 
-            <span
-                class="progress-percent"
-                id="progressPercent"
-            >
-                0%
-            </span>
+        <div class="profiles-header">
 
-        </div>
-
-        <div class="progress-track">
+            <div class="profiles-title">
+                Profiles
+            </div>
 
             <div
-                class="progress-bar"
-                id="progressBar"
-            ></div>
+                class="profiles-limit"
+                id="profilesLimit"
+            >
+                0 / 12
+            </div>
 
         </div>
+
+        <div
+            class="profiles-list"
+            id="profilesList"
+        ></div>
+
+    </section>
+
+
+    <!-- SCORES -->
+
+    <section class="score-panel">
+
+        <div class="score-grid">
+
+            <div class="score-box">
+
+                <div class="score-label">
+                    Global Score
+                </div>
+
+                <div
+                    class="score-value gold"
+                    id="globalScore"
+                >
+                    0
+                </div>
+
+                <div class="score-small">
+                    Total possible
+                </div>
+
+            </div>
+
+
+            <div class="score-box">
+
+                <div class="score-label">
+                    <span id="currentProfileName">
+                        Your
+                    </span>
+                    Score
+                </div>
+
+                <div
+                    class="score-value green"
+                    id="userScore"
+                >
+                    0
+                </div>
+
+                <div
+                    class="score-small"
+                    id="userScoreDetail"
+                >
+                    0%
+                </div>
+
+            </div>
+
+
+            <div class="score-box">
+
+                <div class="score-label">
+                    Goals
+                </div>
+
+                <div
+                    class="score-value"
+                    id="goalsScore"
+                >
+                    0
+                </div>
+
+                <div class="score-small">
+                    Goal points earned
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="score-progress">
+
+            <div class="score-progress-row">
+
+                <span>
+                    Profile progress
+                </span>
+
+                <span
+                    id="scoreProgressText"
+                >
+                    0 / 0
+                </span>
+
+            </div>
+
+            <div class="score-track">
+
+                <div
+                    class="score-bar"
+                    id="scoreBar"
+                ></div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- CONTROLS -->
+
+    <section class="controls-panel">
 
         <div class="controls">
 
@@ -420,9 +844,9 @@
             <button
                 type="button"
                 class="button"
-                id="expandButton"
+                id="editProfileButton"
             >
-                Collapse All
+                Edit Profile
             </button>
 
             <button
@@ -437,11 +861,14 @@
 
     </section>
 
+
     <main id="checklist"></main>
+
 
     <div id="loading">
         Loading goals...
     </div>
+
 
     <footer>
         Progress is saved locally in your browser.
@@ -449,174 +876,1234 @@
 
 </div>
 
+
 <script>
-    const STORAGE_KEY =
-        "minecraft-survival-checklist-v2";
+
+    /*
+     * =========================================================
+     * SETTINGS
+     * =========================================================
+     *
+     * This is the main place to change how goal scoring works.
+     *
+     * Example:
+     *
+     * "easy": 10
+     * "medium": 25
+     * "hard": 50
+     * "epic": 100
+     *
+     * Change these numbers whenever you want.
+     */
+
+    const DIFFICULTY_SCORES = {
+        easy: 10,
+        medium: 25,
+        hard: 50,
+        epic: 100
+    };
+
+
+    const DEFAULT_DIFFICULTY =
+        "medium";
+
+
+    const MAX_PROFILES =
+        12;
+
+
+    const PROFILE_STORAGE_KEY =
+        "minecraft-survival-profiles-v1";
+
+
+    const ACTIVE_PROFILE_STORAGE_KEY =
+        "minecraft-active-profile-v1";
+
+
+    /*
+     * =========================================================
+     * ELEMENTS
+     * =========================================================
+     */
+
+    const profilesList =
+        document.getElementById(
+            "profilesList"
+        );
+
+
+    const profilesLimit =
+        document.getElementById(
+            "profilesLimit"
+        );
+
+
+    const globalScoreElement =
+        document.getElementById(
+            "globalScore"
+        );
+
+
+    const userScoreElement =
+        document.getElementById(
+            "userScore"
+        );
+
+
+    const goalsScoreElement =
+        document.getElementById(
+            "goalsScore"
+        );
+
+
+    const currentProfileNameElement =
+        document.getElementById(
+            "currentProfileName"
+        );
+
+
+    const userScoreDetailElement =
+        document.getElementById(
+            "userScoreDetail"
+        );
+
+
+    const scoreProgressText =
+        document.getElementById(
+            "scoreProgressText"
+        );
+
+
+    const scoreBar =
+        document.getElementById(
+            "scoreBar"
+        );
+
 
     const checklistElement =
-        document.getElementById("checklist");
+        document.getElementById(
+            "checklist"
+        );
+
 
     const loadingElement =
-        document.getElementById("loading");
+        document.getElementById(
+            "loading"
+        );
+
 
     const errorElement =
-        document.getElementById("error");
+        document.getElementById(
+            "error"
+        );
+
 
     const searchElement =
-        document.getElementById("search");
+        document.getElementById(
+            "search"
+        );
 
-    const completedCountElement =
-        document.getElementById("completedCount");
 
-    const totalCountElement =
-        document.getElementById("totalCount");
+    const editProfileButton =
+        document.getElementById(
+            "editProfileButton"
+        );
 
-    const progressPercentElement =
-        document.getElementById("progressPercent");
-
-    const progressBarElement =
-        document.getElementById("progressBar");
-
-    const expandButton =
-        document.getElementById("expandButton");
 
     const resetButton =
-        document.getElementById("resetButton");
+        document.getElementById(
+            "resetButton"
+        );
+
+
+    /*
+     * =========================================================
+     * STATE
+     * =========================================================
+     */
 
     let goals = [];
 
-    let progress = {};
+    let profiles = [];
 
-    let collapsedCategories = new Set();
+    let activeProfileId = null;
 
-    let everythingExpanded = true;
+    /*
+     * Only one category can be open.
+     *
+     * null means everything is collapsed.
+     */
+
+    let openCategoryId = null;
 
 
-    function loadProgress() {
+    /*
+     * =========================================================
+     * PROFILE STORAGE
+     * =========================================================
+     */
+
+    function createId(
+        prefix
+    ) {
+
+        return (
+            prefix +
+            "-" +
+            Date.now().toString(36) +
+            "-" +
+            Math.random()
+                .toString(36)
+                .slice(2, 8)
+        );
+
+    }
+
+
+    function createDefaultProfile() {
+
+        return {
+            id: createId(
+                "profile"
+            ),
+
+            name:
+                "My Profile",
+
+            progress: {}
+        };
+
+    }
+
+
+    function loadProfiles() {
 
         try {
 
             const saved =
-                localStorage.getItem(STORAGE_KEY);
+                localStorage.getItem(
+                    PROFILE_STORAGE_KEY
+                );
 
-            if (!saved) {
-                progress = {};
-                return;
-            }
 
-            const parsed =
-                JSON.parse(saved);
+            if (saved) {
 
-            if (
-                parsed &&
-                typeof parsed === "object"
-            ) {
-                progress = parsed;
-            } else {
-                progress = {};
+                const parsed =
+                    JSON.parse(
+                        saved
+                    );
+
+
+                if (
+                    Array.isArray(
+                        parsed
+                    )
+                ) {
+
+                    profiles =
+                        parsed
+                            .slice(
+                                0,
+                                MAX_PROFILES
+                            )
+                            .filter(
+                                profile =>
+                                    profile &&
+                                    profile.id &&
+                                    profile.name
+                            );
+
+                }
+
             }
 
         } catch {
 
-            progress = {};
+            profiles = [];
 
         }
+
+
+        if (
+            profiles.length ===
+            0
+        ) {
+
+            profiles = [
+                createDefaultProfile()
+            ];
+
+        }
+
+
+        const savedActive =
+            localStorage.getItem(
+                ACTIVE_PROFILE_STORAGE_KEY
+            );
+
+
+        if (
+            savedActive &&
+            profiles.some(
+                profile =>
+                    profile.id ===
+                    savedActive
+            )
+        ) {
+
+            activeProfileId =
+                savedActive;
+
+        } else {
+
+            activeProfileId =
+                profiles[0].id;
+
+        }
+
+
+        saveProfiles();
+
     }
 
 
-    function saveProgress() {
+    function saveProfiles() {
 
         localStorage.setItem(
-            STORAGE_KEY,
-            JSON.stringify(progress)
+            PROFILE_STORAGE_KEY,
+            JSON.stringify(
+                profiles
+            )
         );
 
     }
 
 
-    function getAllItems() {
+    function saveActiveProfile() {
 
-        return goals.flatMap(
-            category =>
-                category.items || []
+        localStorage.setItem(
+            ACTIVE_PROFILE_STORAGE_KEY,
+            activeProfileId
         );
 
     }
 
 
-    function isCompleted(id) {
+    function getActiveProfile() {
 
-        return progress[id] === true;
-
-    }
-
-
-    function setCompleted(id, value) {
-
-        progress[id] = value;
-
-        saveProgress();
-
-        updateProgress();
+        return profiles.find(
+            profile =>
+                profile.id ===
+                activeProfileId
+        );
 
     }
 
 
-    function updateProgress() {
+    /*
+     * =========================================================
+     * SCORE HELPERS
+     * =========================================================
+     */
 
-        const items =
-            getAllItems();
+    function isAchievementCategory(
+        category
+    ) {
 
-        const total =
-            items.length;
+        return (
+            category.type ===
+            "achievements"
+        );
 
-        const completed =
-            items.filter(
-                item =>
-                    isCompleted(item.id)
-            ).length;
+    }
 
-        const percent =
-            total === 0
-                ? 0
-                : Math.round(
-                    (completed / total) * 100
+
+    function getGoalDifficulty(
+        item
+    ) {
+
+        const difficulty =
+            String(
+                item.difficulty ||
+                DEFAULT_DIFFICULTY
+            )
+                .trim()
+                .toLowerCase();
+
+
+        if (
+            Object.prototype.hasOwnProperty.call(
+                DIFFICULTY_SCORES,
+                difficulty
+            )
+        ) {
+
+            return difficulty;
+
+        }
+
+
+        return DEFAULT_DIFFICULTY;
+
+    }
+
+
+    function getItemScore(
+        item,
+        category
+    ) {
+
+        /*
+         * Xbox achievements use their
+         * actual Gamerscore.
+         */
+
+        if (
+            isAchievementCategory(
+                category
+            )
+        ) {
+
+            return (
+                Number(
+                    item.gamerscore
+                ) || 0
+            );
+
+        }
+
+
+        /*
+         * A goal can optionally have a
+         * direct score in goals.json.
+         *
+         * Example:
+         *
+         * "score": 75
+         *
+         * If no direct score exists,
+         * difficulty determines it.
+         */
+
+        if (
+            typeof item.score ===
+            "number"
+        ) {
+
+            return item.score;
+
+        }
+
+
+        const difficulty =
+            getGoalDifficulty(
+                item
+            );
+
+
+        return (
+            DIFFICULTY_SCORES[
+                difficulty
+            ] ||
+            DIFFICULTY_SCORES[
+                DEFAULT_DIFFICULTY
+            ]
+        );
+
+    }
+
+
+    function getAllItemsWithCategories() {
+
+        const result = [];
+
+
+        for (
+            const category
+            of goals
+        ) {
+
+            for (
+                const item
+                of category.items || []
+            ) {
+
+                result.push({
+                    item,
+                    category
+                });
+
+            }
+
+        }
+
+
+        return result;
+
+    }
+
+
+    function getGlobalScore() {
+
+        let total = 0;
+
+
+        for (
+            const {
+                item,
+                category
+            }
+            of getAllItemsWithCategories()
+        ) {
+
+            total +=
+                getItemScore(
+                    item,
+                    category
                 );
 
-        completedCountElement.textContent =
-            completed;
+        }
 
-        totalCountElement.textContent =
-            total;
 
-        progressPercentElement.textContent =
-            percent + "%";
-
-        progressBarElement.style.width =
-            percent + "%";
+        return total;
 
     }
 
 
-    function createCheckbox(item) {
+    function getProfileScore(
+        profile
+    ) {
+
+        if (!profile) {
+            return 0;
+        }
+
+
+        let score = 0;
+
+
+        for (
+            const {
+                item,
+                category
+            }
+            of getAllItemsWithCategories()
+        ) {
+
+            if (
+                profile.progress &&
+                profile.progress[item.id] === true
+            ) {
+
+                score +=
+                    getItemScore(
+                        item,
+                        category
+                    );
+
+            }
+
+        }
+
+
+        return score;
+
+    }
+
+
+    function getCompletedCount(
+        profile
+    ) {
+
+        if (!profile) {
+            return 0;
+        }
+
+
+        let completed = 0;
+
+
+        for (
+            const {
+                item
+            }
+            of getAllItemsWithCategories()
+        ) {
+
+            if (
+                profile.progress &&
+                profile.progress[item.id] === true
+            ) {
+
+                completed++;
+
+            }
+
+        }
+
+
+        return completed;
+
+    }
+
+
+    function getTotalItemCount() {
+
+        return getAllItemsWithCategories()
+            .length;
+
+    }
+
+
+    function getProfileGoalScore(
+        profile
+    ) {
+
+        if (!profile) {
+            return 0;
+        }
+
+
+        let score = 0;
+
+
+        for (
+            const {
+                item,
+                category
+            }
+            of getAllItemsWithCategories()
+        ) {
+
+            if (
+                isAchievementCategory(
+                    category
+                )
+            ) {
+
+                continue;
+
+            }
+
+
+            if (
+                profile.progress &&
+                profile.progress[item.id] === true
+            ) {
+
+                score +=
+                    getItemScore(
+                        item,
+                        category
+                    );
+
+            }
+
+        }
+
+
+        return score;
+
+    }
+
+
+    /*
+     * =========================================================
+     * PROFILE DISPLAY
+     * =========================================================
+     */
+
+    function getInitial(
+        name
+    ) {
+
+        return (
+            String(
+                name ||
+                "?"
+            )
+                .trim()
+                .charAt(0)
+                .toUpperCase() ||
+            "?"
+        );
+
+    }
+
+
+    function getProfilePercent(
+        profile
+    ) {
+
+        const total =
+            getGlobalScore();
+
+
+        if (
+            total ===
+            0
+        ) {
+
+            return 0;
+
+        }
+
+
+        return Math.round(
+            (
+                getProfileScore(
+                    profile
+                ) /
+                total
+            ) *
+            100
+        );
+
+    }
+
+
+    function renderProfiles() {
+
+        profilesList.innerHTML =
+            "";
+
+
+        profilesLimit.textContent =
+            profiles.length +
+            " / " +
+            MAX_PROFILES;
+
+
+        for (
+            const profile
+            of profiles
+        ) {
+
+            const button =
+                document.createElement(
+                    "button"
+                );
+
+
+            button.type =
+                "button";
+
+
+            button.className =
+                "profile-card";
+
+
+            if (
+                profile.id ===
+                activeProfileId
+            ) {
+
+                button.classList.add(
+                    "active"
+                );
+
+            }
+
+
+            const top =
+                document.createElement(
+                    "div"
+                );
+
+
+            top.className =
+                "profile-card-top";
+
+
+            const avatar =
+                document.createElement(
+                    "div"
+                );
+
+
+            avatar.className =
+                "profile-avatar";
+
+
+            avatar.textContent =
+                getInitial(
+                    profile.name
+                );
+
+
+            const name =
+                document.createElement(
+                    "div"
+                );
+
+
+            name.className =
+                "profile-name";
+
+
+            name.textContent =
+                profile.name;
+
+
+            top.appendChild(
+                avatar
+            );
+
+
+            top.appendChild(
+                name
+            );
+
+
+            button.appendChild(
+                top
+            );
+
+
+            const score =
+                document.createElement(
+                    "div"
+                );
+
+
+            score.className =
+                "profile-card-score";
+
+
+            score.innerHTML =
+                "<strong>" +
+                getProfileScore(
+                    profile
+                ) +
+                "</strong> pts" +
+                '<span class="profile-card-percent">' +
+                getProfilePercent(
+                    profile
+                ) +
+                "%" +
+                "</span>";
+
+
+            button.appendChild(
+                score
+            );
+
+
+            button.addEventListener(
+                "click",
+                () => {
+
+                    activeProfileId =
+                        profile.id;
+
+
+                    saveActiveProfile();
+
+
+                    /*
+                     * Keep all categories
+                     * collapsed after switching
+                     * profiles.
+                     */
+
+                    openCategoryId =
+                        null;
+
+
+                    render();
+
+                }
+            );
+
+
+            profilesList.appendChild(
+                button
+            );
+
+        }
+
+
+        if (
+            profiles.length <
+            MAX_PROFILES
+        ) {
+
+            const add =
+                document.createElement(
+                    "button"
+                );
+
+
+            add.type =
+                "button";
+
+
+            add.className =
+                "add-profile";
+
+
+            add.textContent =
+                "+ Add Profile";
+
+
+            add.addEventListener(
+                "click",
+                addProfile
+            );
+
+
+            profilesList.appendChild(
+                add
+            );
+
+        }
+
+    }
+
+
+    function addProfile() {
+
+        if (
+            profiles.length >=
+            MAX_PROFILES
+        ) {
+
+            alert(
+                "You can have up to " +
+                MAX_PROFILES +
+                " profiles."
+            );
+
+            return;
+
+        }
+
+
+        const name =
+            prompt(
+                "Enter a name for the new profile:"
+            );
+
+
+        if (
+            !name ||
+            !name.trim()
+        ) {
+
+            return;
+
+        }
+
+
+        const profile = {
+            id:
+                createId(
+                    "profile"
+                ),
+
+            name:
+                name.trim(),
+
+            progress: {}
+        };
+
+
+        profiles.push(
+            profile
+        );
+
+
+        activeProfileId =
+            profile.id;
+
+
+        saveProfiles();
+
+        saveActiveProfile();
+
+
+        openCategoryId =
+            null;
+
+
+        render();
+
+    }
+
+
+    function editActiveProfile() {
+
+        const profile =
+            getActiveProfile();
+
+
+        if (!profile) {
+            return;
+        }
+
+
+        const newName =
+            prompt(
+                "Edit profile name:",
+                profile.name
+            );
+
+
+        if (
+            !newName ||
+            !newName.trim()
+        ) {
+
+            return;
+
+        }
+
+
+        profile.name =
+            newName.trim();
+
+
+        saveProfiles();
+
+
+        render();
+
+    }
+
+
+    function deleteActiveProfile() {
+
+        if (
+            profiles.length <=
+            1
+        ) {
+
+            alert(
+                "You must keep at least one profile."
+            );
+
+            return;
+
+        }
+
+
+        const profile =
+            getActiveProfile();
+
+
+        if (!profile) {
+            return;
+        }
+
+
+        const confirmed =
+            confirm(
+                'Delete "' +
+                profile.name +
+                '" and all of its progress?'
+            );
+
+
+        if (!confirmed) {
+            return;
+        }
+
+
+        profiles =
+            profiles.filter(
+                item =>
+                    item.id !==
+                    profile.id
+            );
+
+
+        activeProfileId =
+            profiles[0].id;
+
+
+        saveProfiles();
+
+        saveActiveProfile();
+
+
+        openCategoryId =
+            null;
+
+
+        render();
+
+    }
+
+
+    /*
+     * =========================================================
+     * CHECKBOX / PROGRESS
+     * =========================================================
+     */
+
+    function isCompleted(
+        item
+    ) {
+
+        const profile =
+            getActiveProfile();
+
+
+        return Boolean(
+            profile &&
+            profile.progress &&
+            profile.progress[item.id] === true
+        );
+
+    }
+
+
+    function setCompleted(
+        item,
+        value
+    ) {
+
+        const profile =
+            getActiveProfile();
+
+
+        if (!profile) {
+            return;
+        }
+
+
+        if (!profile.progress) {
+
+            profile.progress = {};
+
+        }
+
+
+        profile.progress[item.id] =
+            value;
+
+
+        saveProfiles();
+
+    }
+
+
+    function updateScores() {
+
+        const profile =
+            getActiveProfile();
+
+
+        const globalScore =
+            getGlobalScore();
+
+
+        const userScore =
+            getProfileScore(
+                profile
+            );
+
+
+        const goalScore =
+            getProfileGoalScore(
+                profile
+            );
+
+
+        const completed =
+            getCompletedCount(
+                profile
+            );
+
+
+        const total =
+            getTotalItemCount();
+
+
+        const percent =
+            globalScore === 0
+                ? 0
+                : Math.round(
+                    (
+                        userScore /
+                        globalScore
+                    ) *
+                    100
+                );
+
+
+        globalScoreElement.textContent =
+            globalScore.toLocaleString();
+
+
+        userScoreElement.textContent =
+            userScore.toLocaleString();
+
+
+        goalsScoreElement.textContent =
+            goalScore.toLocaleString();
+
+
+        currentProfileNameElement.textContent =
+            profile
+                ? profile.name
+                : "Your";
+
+
+        userScoreDetailElement.textContent =
+            percent +
+            "% of global score";
+
+
+        scoreProgressText.textContent =
+            completed +
+            " / " +
+            total;
+
+
+        scoreBar.style.width =
+            percent +
+            "%";
+
+    }
+
+
+    /*
+     * =========================================================
+     * CHECKBOX
+     * =========================================================
+     */
+
+    function createCheckbox(
+        item
+    ) {
 
         const checkbox =
-            document.createElement("input");
+            document.createElement(
+                "input"
+            );
+
 
         checkbox.type =
             "checkbox";
 
+
         checkbox.className =
             "checkbox";
 
+
         checkbox.checked =
-            isCompleted(item.id);
+            isCompleted(
+                item
+            );
 
 
         checkbox.addEventListener(
             "click",
             event => {
+
                 event.stopPropagation();
+
             }
         );
 
@@ -626,12 +2113,16 @@
             () => {
 
                 setCompleted(
-                    item.id,
+                    item,
                     checkbox.checked
                 );
 
+
                 const row =
-                    checkbox.closest(".item");
+                    checkbox.closest(
+                        ".item"
+                    );
+
 
                 if (row) {
 
@@ -642,7 +2133,12 @@
 
                 }
 
+
+                updateScores();
+
                 updateCategoryCounts();
+
+                renderProfiles();
 
             }
         );
@@ -653,16 +2149,32 @@
     }
 
 
-    function createItem(item) {
+    /*
+     * =========================================================
+     * ITEM
+     * =========================================================
+     */
+
+    function createItem(
+        item,
+        category
+    ) {
 
         const row =
-            document.createElement("label");
+            document.createElement(
+                "label"
+            );
+
 
         row.className =
             "item";
 
 
-        if (isCompleted(item.id)) {
+        if (
+            isCompleted(
+                item
+            )
+        ) {
 
             row.classList.add(
                 "completed"
@@ -671,81 +2183,105 @@
         }
 
 
-        const checkbox =
-            createCheckbox(item);
-
         row.appendChild(
-            checkbox
+            createCheckbox(
+                item
+            )
         );
 
 
         const content =
-            document.createElement("div");
+            document.createElement(
+                "div"
+            );
+
 
         content.className =
             "item-content";
 
 
         const title =
-            document.createElement("div");
+            document.createElement(
+                "div"
+            );
+
 
         title.className =
             "item-title";
+
 
         title.textContent =
             item.name ||
             item.text ||
             "Unnamed goal";
 
+
         content.appendChild(
             title
         );
 
 
-        if (item.type === "achievement") {
+        if (
+            isAchievementCategory(
+                category
+            )
+        ) {
 
             const meta =
-                document.createElement("div");
+                document.createElement(
+                    "div"
+                );
+
 
             meta.className =
                 "achievement-meta";
 
 
-            if (
-                typeof item.gamerscore ===
-                "number"
-            ) {
-
-                const score =
-                    document.createElement("span");
-
-                score.className =
-                    "gamerscore";
-
-                score.textContent =
-                    item.gamerscore + "G";
-
-                meta.appendChild(
-                    score
+            const score =
+                document.createElement(
+                    "span"
                 );
 
-            }
+
+            score.className =
+                "gamerscore";
 
 
-            if (item.requirement) {
+            score.textContent =
+                (
+                    Number(
+                        item.gamerscore
+                    ) || 0
+                ) +
+                "G";
 
-                const label =
-                    document.createElement("span");
 
-                label.className =
+            meta.appendChild(
+                score
+            );
+
+
+            if (
+                item.requirement
+            ) {
+
+                const requirement =
+                    document.createElement(
+                        "span"
+                    );
+
+
+                requirement.className =
                     "requirement-label";
 
-                label.textContent =
+
+                requirement.textContent =
                     "What it takes: " +
                     item.requirement;
 
+
                 meta.appendChild(
-                    label
+                    requirement
                 );
 
             }
@@ -755,20 +2291,90 @@
                 meta
             );
 
-        } else if (item.description) {
+        } else {
 
-            const description =
-                document.createElement("div");
+            const meta =
+                document.createElement(
+                    "div"
+                );
 
-            description.className =
-                "item-description";
 
-            description.textContent =
-                item.description;
+            meta.className =
+                "goal-meta";
+
+
+            const score =
+                document.createElement(
+                    "span"
+                );
+
+
+            score.className =
+                "goal-score";
+
+
+            score.textContent =
+                getItemScore(
+                    item,
+                    category
+                ) +
+                " pts";
+
+
+            meta.appendChild(
+                score
+            );
+
+
+            const difficulty =
+                document.createElement(
+                    "span"
+                );
+
+
+            difficulty.className =
+                "difficulty";
+
+
+            difficulty.textContent =
+                getGoalDifficulty(
+                    item
+                );
+
+
+            meta.appendChild(
+                difficulty
+            );
+
 
             content.appendChild(
-                description
+                meta
             );
+
+
+            if (
+                item.description
+            ) {
+
+                const description =
+                    document.createElement(
+                        "div"
+                    );
+
+
+                description.className =
+                    "item-description";
+
+
+                description.textContent =
+                    item.description;
+
+
+                content.appendChild(
+                    description
+                );
+
+            }
 
         }
 
@@ -783,22 +2389,177 @@
     }
 
 
-    function createCategory(category) {
+    /*
+     * =========================================================
+     * ACHIEVEMENT PROFILE INFORMATION
+     * =========================================================
+     */
+
+    function createAchievementProfilePanel() {
+
+        const panel =
+            document.createElement(
+                "div"
+            );
+
+
+        panel.className =
+            "achievement-profile-panel";
+
+
+        const title =
+            document.createElement(
+                "div"
+            );
+
+
+        title.className =
+            "achievement-profile-title";
+
+
+        title.textContent =
+            "Achievement Progress";
+
+
+        panel.appendChild(
+            title
+        );
+
+
+        const profile =
+            getActiveProfile();
+
+
+        const achievements =
+            getAchievementItems();
+
+
+        let completed =
+            0;
+
+
+        let gamerscore =
+            0;
+
+
+        for (
+            const item
+            of achievements
+        ) {
+
+            if (
+                profile &&
+                profile.progress &&
+                profile.progress[item.id] === true
+            ) {
+
+                completed++;
+
+                gamerscore +=
+                    Number(
+                        item.gamerscore
+                    ) || 0;
+
+            }
+
+        }
+
+
+        const info =
+            document.createElement(
+                "div"
+            );
+
+
+        info.className =
+            "achievement-profile-info";
+
+
+        info.innerHTML =
+            "<strong>" +
+            completed +
+            "</strong> / " +
+            achievements.length +
+            " achievements • " +
+            "<strong>" +
+            gamerscore.toLocaleString() +
+            "G</strong>";
+
+
+        panel.appendChild(
+            info
+        );
+
+
+        return panel;
+
+    }
+
+
+    function getAchievementItems() {
+
+        const results = [];
+
+
+        for (
+            const category
+            of goals
+        ) {
+
+            if (
+                isAchievementCategory(
+                    category
+                )
+            ) {
+
+                results.push(
+                    ...(category.items || [])
+                );
+
+            }
+
+        }
+
+
+        return results;
+
+    }
+
+
+    /*
+     * =========================================================
+     * CATEGORY
+     * =========================================================
+     */
+
+    function createCategory(
+        category
+    ) {
 
         const section =
-            document.createElement("section");
+            document.createElement(
+                "section"
+            );
+
 
         section.className =
             "category";
+
 
         section.dataset.categoryId =
             category.id;
 
 
+        /*
+         * Only the selected category
+         * is open.
+         *
+         * null = all collapsed.
+         */
+
         if (
-            collapsedCategories.has(
-                category.id
-            )
+            openCategoryId !==
+            category.id
         ) {
 
             section.classList.add(
@@ -809,34 +2570,48 @@
 
 
         const header =
-            document.createElement("button");
+            document.createElement(
+                "button"
+            );
+
 
         header.type =
             "button";
+
 
         header.className =
             "category-header";
 
 
         const titleWrapper =
-            document.createElement("div");
+            document.createElement(
+                "div"
+            );
+
 
         titleWrapper.className =
             "category-title";
 
 
         const arrow =
-            document.createElement("span");
+            document.createElement(
+                "span"
+            );
+
 
         arrow.className =
             "arrow";
+
 
         arrow.textContent =
             "▼";
 
 
         const title =
-            document.createElement("h2");
+            document.createElement(
+                "h2"
+            );
+
 
         title.textContent =
             category.title;
@@ -846,16 +2621,21 @@
             arrow
         );
 
+
         titleWrapper.appendChild(
             title
         );
 
 
         const count =
-            document.createElement("span");
+            document.createElement(
+                "span"
+            );
+
 
         count.className =
             "category-count";
+
 
         count.dataset.count =
             category.id;
@@ -864,6 +2644,7 @@
         header.appendChild(
             titleWrapper
         );
+
 
         header.appendChild(
             count
@@ -874,28 +2655,23 @@
             "click",
             () => {
 
-                section.classList.toggle(
-                    "collapsed"
-                );
-
-
                 if (
-                    section.classList.contains(
-                        "collapsed"
-                    )
+                    openCategoryId ===
+                    category.id
                 ) {
 
-                    collapsedCategories.add(
-                        category.id
-                    );
+                    openCategoryId =
+                        null;
 
                 } else {
 
-                    collapsedCategories.delete(
-                        category.id
-                    );
+                    openCategoryId =
+                        category.id;
 
                 }
+
+
+                render();
 
             }
         );
@@ -907,42 +2683,48 @@
 
 
         const body =
-            document.createElement("div");
+            document.createElement(
+                "div"
+            );
+
 
         body.className =
             "category-body";
 
 
+        if (
+            isAchievementCategory(
+                category
+            )
+        ) {
+
+            body.appendChild(
+                createAchievementProfilePanel()
+            );
+
+        }
+
+
         const items =
-            document.createElement("div");
+            document.createElement(
+                "div"
+            );
+
 
         items.className =
             "items";
 
 
         for (
-            const originalItem
+            const item
             of category.items || []
         ) {
 
-            const item = {
-                ...originalItem
-            };
-
-
-            if (
-                category.type ===
-                "achievements"
-            ) {
-
-                item.type =
-                    "achievement";
-
-            }
-
-
             items.appendChild(
-                createItem(item)
+                createItem(
+                    item,
+                    category
+                )
             );
 
         }
@@ -951,6 +2733,7 @@
         body.appendChild(
             items
         );
+
 
         section.appendChild(
             body
@@ -962,113 +2745,11 @@
     }
 
 
-    function render() {
-
-        const search =
-            searchElement.value
-                .trim()
-                .toLowerCase();
-
-
-        checklistElement.innerHTML =
-            "";
-
-
-        let visibleCategories =
-            0;
-
-
-        for (
-            const category
-            of goals
-        ) {
-
-            const categoryItems =
-                category.items || [];
-
-
-            const filteredItems =
-                categoryItems.filter(
-                    item => {
-
-                        if (!search) {
-                            return true;
-                        }
-
-
-                        const searchable =
-                            [
-                                item.name,
-                                item.text,
-                                item.description,
-                                item.requirement
-                            ]
-                                .filter(Boolean)
-                                .join(" ")
-                                .toLowerCase();
-
-
-                        return searchable.includes(
-                            search
-                        );
-
-                    }
-                );
-
-
-            if (
-                filteredItems.length === 0
-            ) {
-
-                continue;
-
-            }
-
-
-            visibleCategories++;
-
-
-            const categoryCopy = {
-                ...category,
-                items: filteredItems
-            };
-
-
-            checklistElement.appendChild(
-                createCategory(
-                    categoryCopy
-                )
-            );
-
-        }
-
-
-        if (
-            visibleCategories === 0
-        ) {
-
-            const empty =
-                document.createElement("div");
-
-            empty.className =
-                "empty";
-
-            empty.textContent =
-                "No goals found.";
-
-            checklistElement.appendChild(
-                empty
-            );
-
-        }
-
-
-        updateProgress();
-
-        updateCategoryCounts();
-
-    }
-
+    /*
+     * =========================================================
+     * CATEGORY COUNTS
+     * =========================================================
+     */
 
     function updateCategoryCounts() {
 
@@ -1097,14 +2778,15 @@
 
 
                     const items =
-                        category.items || [];
+                        category.items ||
+                        [];
 
 
                     const completed =
                         items.filter(
                             item =>
                                 isCompleted(
-                                    item.id
+                                    item
                                 )
                         ).length;
 
@@ -1130,35 +2812,31 @@
     }
 
 
-    function expandAll() {
+    /*
+     * =========================================================
+     * RENDER
+     * =========================================================
+     */
 
-        collapsedCategories.clear();
+    function render() {
 
+        renderProfiles();
 
-        document
-            .querySelectorAll(
-                ".category"
-            )
-            .forEach(
-                section => {
-
-                    section.classList.remove(
-                        "collapsed"
-                    );
-
-                }
-            );
+        updateScores();
 
 
-        expandButton.textContent =
-            "Collapse All";
+        const search =
+            searchElement.value
+                .trim()
+                .toLowerCase();
 
-    }
+
+        checklistElement.innerHTML =
+            "";
 
 
-    function collapseAll() {
-
-        collapsedCategories.clear();
+        let visibleCategories =
+            0;
 
 
         for (
@@ -1166,61 +2844,171 @@
             of goals
         ) {
 
-            collapsedCategories.add(
-                category.id
+            const items =
+                category.items ||
+                [];
+
+
+            const filteredItems =
+                items.filter(
+                    item => {
+
+                        if (!search) {
+                            return true;
+                        }
+
+
+                        const searchable =
+                            [
+                                item.name,
+                                item.text,
+                                item.description,
+                                item.requirement,
+                                item.difficulty
+                            ]
+                                .filter(Boolean)
+                                .join(" ")
+                                .toLowerCase();
+
+
+                        return searchable.includes(
+                            search
+                        );
+
+                    }
+                );
+
+
+            if (
+                filteredItems.length ===
+                0
+            ) {
+
+                continue;
+
+            }
+
+
+            visibleCategories++;
+
+
+            const copy = {
+                ...category,
+                items:
+                    filteredItems
+            };
+
+
+            checklistElement.appendChild(
+                createCategory(
+                    copy
+                )
             );
 
         }
 
 
-        document
-            .querySelectorAll(
-                ".category"
-            )
-            .forEach(
-                section => {
+        if (
+            visibleCategories ===
+            0
+        ) {
 
-                    section.classList.add(
-                        "collapsed"
-                    );
+            const empty =
+                document.createElement(
+                    "div"
+                );
 
-                }
+
+            empty.className =
+                "empty";
+
+
+            empty.textContent =
+                "No goals found.";
+
+
+            checklistElement.appendChild(
+                empty
             );
 
+        }
 
-        expandButton.textContent =
-            "Expand All";
+
+        updateCategoryCounts();
 
     }
 
 
-    expandButton.addEventListener(
-        "click",
+    /*
+     * =========================================================
+     * CONTROLS
+     * =========================================================
+     */
+
+    searchElement.addEventListener(
+        "input",
         () => {
 
-            if (
-                everythingExpanded
-            ) {
+            /*
+             * Searching shouldn't force
+             * categories open.
+             */
 
-                collapseAll();
-
-            } else {
-
-                expandAll();
-
-            }
-
-
-            everythingExpanded =
-                !everythingExpanded;
+            render();
 
         }
     );
 
 
-    searchElement.addEventListener(
-        "input",
-        render
+    editProfileButton.addEventListener(
+        "click",
+        () => {
+
+            const profile =
+                getActiveProfile();
+
+
+            if (!profile) {
+                return;
+            }
+
+
+            const action =
+                prompt(
+                    "Profile: " +
+                    profile.name +
+                    "\n\nType:\nrename\nor\ndelete"
+                );
+
+
+            if (!action) {
+                return;
+            }
+
+
+            const normalized =
+                action
+                    .trim()
+                    .toLowerCase();
+
+
+            if (
+                normalized ===
+                "rename"
+            ) {
+
+                editActiveProfile();
+
+            } else if (
+                normalized ===
+                "delete"
+            ) {
+
+                deleteActiveProfile();
+
+            }
+
+        }
     );
 
 
@@ -1228,9 +3016,20 @@
         "click",
         () => {
 
+            const profile =
+                getActiveProfile();
+
+
+            if (!profile) {
+                return;
+            }
+
+
             const confirmed =
                 confirm(
-                    "Reset all checklist progress?"
+                    'Reset all progress for "' +
+                    profile.name +
+                    '"?'
                 );
 
 
@@ -1239,15 +3038,27 @@
             }
 
 
-            progress = {};
+            profile.progress = {};
 
-            saveProgress();
+
+            saveProfiles();
+
+
+            openCategoryId =
+                null;
+
 
             render();
 
         }
     );
 
+
+    /*
+     * =========================================================
+     * LOAD GOALS.JSON
+     * =========================================================
+     */
 
     async function loadGoals() {
 
@@ -1294,6 +3105,10 @@
                 data.categories;
 
 
+            /*
+             * Make sure every item has an ID.
+             */
+
             for (
                 const category
                 of goals
@@ -1318,20 +3133,20 @@
 
 
             /*
-             * Categories start expanded.
-             * Nothing is added to the collapsed
-             * set when the page first loads.
+             * Profiles are loaded after the
+             * goal data so their scores can
+             * immediately be calculated.
              */
-            collapsedCategories.clear();
 
-            everythingExpanded =
-                true;
-
-            expandButton.textContent =
-                "Collapse All";
+            loadProfiles();
 
 
-            loadProgress();
+            /*
+             * Everything starts collapsed.
+             */
+
+            openCategoryId =
+                null;
 
 
             loadingElement.style.display =
