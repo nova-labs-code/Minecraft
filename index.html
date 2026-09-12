@@ -26,6 +26,7 @@
     <title>Minecraft Survival Checklist</title>
 
     <style>
+
         * {
             box-sizing: border-box;
             -webkit-tap-highlight-color: transparent;
@@ -110,14 +111,13 @@
             padding: 20px 0 50px;
         }
 
-        /* HEADER */
-
         header {
             padding: 4px 2px 17px;
         }
 
         header h1 {
             margin: 0;
+
             color: var(--text-bright);
 
             font-size: 1.9rem;
@@ -133,8 +133,6 @@
             font-size: 0.9rem;
             line-height: 1.45;
         }
-
-        /* CONTROLS */
 
         .controls {
             display: grid;
@@ -213,8 +211,6 @@
         .button-danger:hover {
             background: #160c0d;
         }
-
-        /* SCORE */
 
         .score-grid {
             display: grid;
@@ -340,8 +336,6 @@
             border-color: #684895;
         }
 
-        /* PROGRESS */
-
         .progress-section {
             padding: 13px 14px;
             margin-bottom: 13px;
@@ -395,8 +389,6 @@
             transition: width 0.2s ease;
         }
 
-        /* PROFILES */
-
         .profiles-section {
             margin-bottom: 13px;
         }
@@ -429,6 +421,7 @@
 
         .profiles-grid {
             display: grid;
+
             grid-template-columns:
                 repeat(
                     auto-fit,
@@ -443,61 +436,74 @@
 
             padding: 13px;
 
-            background: var(--panel);
             border: 1px solid var(--border);
             border-radius: 10px;
 
             transition:
-                border-color 0.15s ease,
-                background 0.15s ease;
+                background 0.15s ease,
+                opacity 0.15s ease;
         }
 
         .profile-card:hover {
-            background: #0b0f14;
+            filter: brightness(1.08);
         }
 
         .profile-card.active {
-            border-color: #3d6046;
+            opacity: 0.72;
         }
 
+        /*
+            Rank-themed profile cards
+        */
+
         .profile-card.rank-dirt {
-            border-left: 3px solid #60462f;
+            background: #17100a;
+            border-color: #60462f;
         }
 
         .profile-card.rank-wood {
-            border-left: 3px solid #79532d;
+            background: #1a1209;
+            border-color: #79532d;
         }
 
         .profile-card.rank-stone {
-            border-left: 3px solid #59616b;
+            background: #111419;
+            border-color: #59616b;
         }
 
         .profile-card.rank-coal {
-            border-left: 3px solid #3c434d;
+            background: #0d1014;
+            border-color: #3c434d;
         }
 
         .profile-card.rank-iron {
-            border-left: 3px solid #727d88;
+            background: #15191d;
+            border-color: #727d88;
         }
 
         .profile-card.rank-gold {
-            border-left: 3px solid #947b27;
+            background: #1a170b;
+            border-color: #947b27;
         }
 
         .profile-card.rank-diamond {
-            border-left: 3px solid #2e8881;
+            background: #081716;
+            border-color: #2e8881;
         }
 
         .profile-card.rank-emerald {
-            border-left: 3px solid #2f8050;
+            background: #09170f;
+            border-color: #2f8050;
         }
 
         .profile-card.rank-netherite {
-            border-left: 3px solid #60566d;
+            background: #110e15;
+            border-color: #60566d;
         }
 
         .profile-card.rank-ender {
-            border-left: 3px solid #684895;
+            background: #120b1b;
+            border-color: #684895;
         }
 
         .profile-top {
@@ -522,7 +528,7 @@
         }
 
         .profile-current {
-            color: var(--green);
+            color: var(--muted);
 
             font-size: 0.65rem;
             font-weight: 800;
@@ -570,6 +576,7 @@
 
         .profile-actions {
             display: grid;
+
             grid-template-columns:
                 repeat(3, minmax(0, 1fr));
 
@@ -585,8 +592,6 @@
 
             font-size: 0.7rem;
         }
-
-        /* CATEGORIES */
 
         main {
             display: flex;
@@ -699,8 +704,6 @@
             padding-top: 7px;
         }
 
-        /* GOAL ITEMS */
-
         .goal-item {
             display: flex;
             align-items: flex-start;
@@ -717,10 +720,6 @@
 
             cursor: pointer;
 
-            /*
-             * Prevents the browser from interpreting a tap
-             * as text selection or another gesture.
-             */
             touch-action: manipulation;
             -webkit-user-select: none;
             user-select: none;
@@ -831,8 +830,6 @@
             font-size: 0.82rem;
         }
 
-        /* FOOTER */
-
         footer {
             margin-top: 14px;
 
@@ -842,8 +839,6 @@
 
             font-size: 0.68rem;
         }
-
-        /* MODALS */
 
         .modal {
             position: fixed;
@@ -949,8 +944,6 @@
             display: none !important;
         }
 
-        /* TABLET */
-
         @media (max-width: 800px) {
 
             .container {
@@ -1026,9 +1019,8 @@
             .modal-actions {
                 grid-template-columns: 1fr;
             }
-        }
 
-        /* PHONE */
+        }
 
         @media (max-width: 480px) {
 
@@ -1119,9 +1111,8 @@
             .goal-description {
                 font-size: 0.72rem;
             }
-        }
 
-        /* VERY SMALL PHONES */
+        }
 
         @media (max-width: 360px) {
 
@@ -1144,7 +1135,9 @@
             .category-count {
                 display: none;
             }
+
         }
+
     </style>
 </head>
 
@@ -1391,8 +1384,6 @@
 </div>
 
 
-<!-- PROFILE MODAL -->
-
 <div
     id="profileModal"
     class="modal"
@@ -1455,8 +1446,6 @@
 
 </div>
 
-
-<!-- CONFIRMATION MODAL -->
 
 <div
     id="confirmModal"
@@ -2914,12 +2903,6 @@
         }
 
 
-        /*
-         * The checkbox is still a real checkbox,
-         * but pointer events are disabled on it.
-         *
-         * The entire .goal-item handles the click.
-         */
         const checkbox =
             document.createElement(
                 "input"
@@ -2941,18 +2924,10 @@
         );
 
 
-        /*
-         * Clicking ANYWHERE on the item toggles it.
-         */
         element.addEventListener(
             "click",
             event => {
 
-                /*
-                 * Ignore clicks if the user somehow
-                 * clicks an interactive element inside
-                 * the item in the future.
-                 */
                 if (
                     event.target.closest(
                         "button, a, input, select, textarea"
@@ -2973,10 +2948,6 @@
         );
 
 
-        /*
-         * Also allow keyboard activation when
-         * the item receives focus programmatically.
-         */
         element.setAttribute(
             "role",
             "checkbox"
@@ -3929,8 +3900,6 @@
     }
 
 
-    /* PROFILE ACTIONS */
-
     profilesGrid.addEventListener(
         "click",
         event => {
@@ -4205,12 +4174,6 @@
     );
 
 
-    /*
-     * Additional mobile zoom prevention.
-     * Prevents double-tap zoom while preserving
-     * normal scrolling.
-     */
-
     let lastTouchEnd = 0;
 
 
@@ -4241,10 +4204,6 @@
         }
     );
 
-
-    /*
-     * Prevent pinch zoom.
-     */
 
     document.addEventListener(
         "touchmove",
@@ -4295,8 +4254,6 @@
         }
     );
 
-
-    /* LOAD DATA */
 
     loadProfiles();
 
