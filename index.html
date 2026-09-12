@@ -84,9 +84,7 @@
             font-size: 15px;
         }
 
-        /*
-         * PROFILE AREA
-         */
+        /* Profiles */
 
         .profiles-panel {
             background: var(--panel);
@@ -224,9 +222,7 @@
             color: var(--text);
         }
 
-        /*
-         * SCORE PANEL
-         */
+        /* Scores */
 
         .score-panel {
             background: var(--panel);
@@ -248,6 +244,7 @@
             border: 1px solid var(--border);
             border-radius: 10px;
             padding: 13px;
+            min-width: 0;
         }
 
         .score-label {
@@ -259,7 +256,8 @@
         .score-value {
             font-size: 23px;
             font-weight: 800;
-            line-height: 1.2;
+            line-height: 1.25;
+            overflow-wrap: anywhere;
         }
 
         .score-value.green {
@@ -305,9 +303,7 @@
             transition: width 0.2s ease;
         }
 
-        /*
-         * CONTROLS
-         */
+        /* Controls */
 
         .controls-panel {
             background: var(--panel);
@@ -358,9 +354,7 @@
             color: #ff8b87;
         }
 
-        /*
-         * ERROR / LOADING
-         */
+        /* Loading / Error */
 
         #loading {
             text-align: center;
@@ -378,9 +372,7 @@
             margin-bottom: 20px;
         }
 
-        /*
-         * CATEGORIES
-         */
+        /* Categories */
 
         .category {
             margin-bottom: 14px;
@@ -447,9 +439,7 @@
             padding: 6px 0;
         }
 
-        /*
-         * ITEMS
-         */
+        /* Items */
 
         .item {
             display: flex;
@@ -499,9 +489,7 @@
             opacity: 0.6;
         }
 
-        /*
-         * GOAL SCORE
-         */
+        /* Goal score */
 
         .goal-meta {
             display: flex;
@@ -536,9 +524,7 @@
             font-size: 11px;
         }
 
-        /*
-         * ACHIEVEMENTS
-         */
+        /* Achievements */
 
         .achievement-profile-panel {
             padding: 14px 18px;
@@ -592,26 +578,7 @@
             line-height: 1.4;
         }
 
-        /*
-         * EMPTY / FOOTER
-         */
-
-        .empty {
-            padding: 35px 20px;
-            text-align: center;
-            color: var(--muted);
-        }
-
-        footer {
-            margin-top: 30px;
-            text-align: center;
-            color: #687168;
-            font-size: 12px;
-        }
-
-        /*
-         * MODALS
-         */
+        /* Modals */
 
         .modal-overlay {
             position: fixed;
@@ -622,10 +589,10 @@
             justify-content: center;
             padding: 18px;
             background: rgba(0, 0, 0, 0.72);
-            backdrop-filter: blur(5px);
+            backdrop-filter: blur(6px);
         }
 
-        .modal-overlay.open {
+        .modal-overlay.active {
             display: flex;
         }
 
@@ -635,7 +602,7 @@
             border: 1px solid var(--border-light);
             border-radius: 14px;
             box-shadow:
-                0 20px 60px rgba(0, 0, 0, 0.5);
+                0 20px 70px rgba(0, 0, 0, 0.5);
             overflow: hidden;
             animation: modalIn 0.16s ease;
         }
@@ -653,21 +620,32 @@
         }
 
         .modal-header {
-            padding: 18px 18px 14px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            padding: 16px 18px;
             border-bottom: 1px solid var(--border);
         }
 
         .modal-title {
             margin: 0;
-            font-size: 19px;
-            line-height: 1.25;
+            font-size: 18px;
         }
 
-        .modal-subtitle {
-            margin: 6px 0 0;
+        .modal-close {
+            width: 32px;
+            height: 32px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            background: var(--panel-2);
+            cursor: pointer;
             color: var(--muted);
-            font-size: 13px;
-            line-height: 1.45;
+        }
+
+        .modal-close:hover {
+            background: var(--panel-3);
+            color: var(--text);
         }
 
         .modal-body {
@@ -678,7 +656,7 @@
             display: block;
             margin-bottom: 7px;
             color: var(--muted);
-            font-size: 12px;
+            font-size: 13px;
             font-weight: 700;
         }
 
@@ -703,35 +681,19 @@
             font-size: 12px;
         }
 
-        .modal-error.visible {
-            display: block;
-        }
-
-        .modal-footer {
+        .modal-actions {
             display: flex;
-            align-items: center;
-            justify-content: flex-end;
             gap: 9px;
-            padding: 14px 18px;
-            border-top: 1px solid var(--border);
-        }
-
-        .modal-footer-spacer {
-            flex: 1;
+            justify-content: flex-end;
+            margin-top: 18px;
         }
 
         .modal-button {
             border: 1px solid var(--border);
             background: var(--panel-2);
-            color: var(--text);
-            padding: 9px 13px;
+            padding: 10px 14px;
             border-radius: 9px;
             cursor: pointer;
-            font-weight: 700;
-            transition:
-                background 0.15s ease,
-                border-color 0.15s ease,
-                color 0.15s ease;
         }
 
         .modal-button:hover {
@@ -741,12 +703,11 @@
 
         .modal-button.primary {
             background: var(--green-dark);
-            border-color: var(--green-dark);
+            border-color: var(--green);
         }
 
         .modal-button.primary:hover {
             background: #388e3c;
-            border-color: #388e3c;
         }
 
         .modal-button.danger {
@@ -754,13 +715,26 @@
         }
 
         .modal-button.danger:hover {
-            background: #251414;
             border-color: var(--danger);
+            background: #211010;
         }
 
-        /*
-         * MOBILE
-         */
+        /* Empty / Footer */
+
+        .empty {
+            padding: 35px 20px;
+            text-align: center;
+            color: var(--muted);
+        }
+
+        footer {
+            margin-top: 30px;
+            text-align: center;
+            color: #687168;
+            font-size: 12px;
+        }
+
+        /* Mobile */
 
         @media (max-width: 650px) {
 
@@ -809,23 +783,6 @@
 
             .achievement-profile-panel {
                 padding: 13px 14px;
-            }
-
-            .modal-footer {
-                flex-wrap: wrap;
-            }
-
-            .modal-footer .modal-button {
-                flex: 1;
-            }
-
-            .modal-footer .modal-button.danger {
-                flex: 0 0 100%;
-                order: 3;
-            }
-
-            .modal-footer-spacer {
-                display: none;
             }
         }
 
@@ -909,11 +866,11 @@
                     class="score-value gold"
                     id="globalScore"
                 >
-                    0
+                    0 / 0
                 </div>
 
                 <div class="score-small">
-                    Total possible
+                    Current / Total Possible
                 </div>
 
             </div>
@@ -922,10 +879,13 @@
             <div class="score-box">
 
                 <div class="score-label">
+
                     <span id="currentProfileName">
                         Your
                     </span>
+
                     Score
+
                 </div>
 
                 <div
@@ -939,7 +899,7 @@
                     class="score-small"
                     id="userScoreDetail"
                 >
-                    0%
+                    0G achievements
                 </div>
 
             </div>
@@ -959,7 +919,7 @@
                 </div>
 
                 <div class="score-small">
-                    Goal points earned
+                    Shared goal points earned
                 </div>
 
             </div>
@@ -972,7 +932,7 @@
             <div class="score-progress-row">
 
                 <span>
-                    Profile progress
+                    Global progress
                 </span>
 
                 <span
@@ -1047,33 +1007,38 @@
 </div>
 
 
-<!-- PROFILE MODAL -->
+<!-- CREATE PROFILE MODAL -->
 
 <div
     class="modal-overlay"
-    id="profileModal"
-    role="dialog"
-    aria-modal="true"
-    aria-labelledby="profileModalTitle"
+    id="createProfileModal"
+    aria-hidden="true"
 >
 
-    <div class="modal">
+    <div
+        class="modal"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="createProfileTitle"
+    >
 
         <div class="modal-header">
 
             <h2
                 class="modal-title"
-                id="profileModalTitle"
+                id="createProfileTitle"
             >
                 Create Profile
             </h2>
 
-            <p
-                class="modal-subtitle"
-                id="profileModalSubtitle"
+            <button
+                type="button"
+                class="modal-close"
+                data-close-modal="createProfileModal"
+                aria-label="Close"
             >
-                Choose a name for this profile.
-            </p>
+                ×
+            </button>
 
         </div>
 
@@ -1082,47 +1047,45 @@
 
             <label
                 class="modal-label"
-                for="profileNameInput"
+                for="createProfileName"
             >
-                Profile Name
+                Profile name
             </label>
 
             <input
                 type="text"
-                id="profileNameInput"
+                id="createProfileName"
                 class="modal-input"
-                maxlength="40"
+                maxlength="30"
                 autocomplete="off"
-                placeholder="Enter profile name"
+                placeholder="Enter a profile name"
             >
 
             <div
                 class="modal-error"
-                id="profileModalError"
+                id="createProfileError"
             ></div>
 
-        </div>
 
+            <div class="modal-actions">
 
-        <div class="modal-footer">
+                <button
+                    type="button"
+                    class="modal-button"
+                    data-close-modal="createProfileModal"
+                >
+                    Cancel
+                </button>
 
-            <div class="modal-footer-spacer"></div>
+                <button
+                    type="button"
+                    class="modal-button primary"
+                    id="createProfileSubmit"
+                >
+                    Create Profile
+                </button>
 
-            <button
-                type="button"
-                class="modal-button"
-                id="profileCancelButton"
-            >
-                Cancel
-            </button>
-
-            <button
-                type="button"
-                class="modal-button primary"
-                id="profileSaveButton"
-            >
-                Create
-            </button>
+            </div>
 
         </div>
 
@@ -1135,26 +1098,34 @@
 
 <div
     class="modal-overlay"
-    id="editModal"
-    role="dialog"
-    aria-modal="true"
-    aria-labelledby="editModalTitle"
+    id="editProfileModal"
+    aria-hidden="true"
 >
 
-    <div class="modal">
+    <div
+        class="modal"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="editProfileTitle"
+    >
 
         <div class="modal-header">
 
             <h2
                 class="modal-title"
-                id="editModalTitle"
+                id="editProfileTitle"
             >
                 Edit Profile
             </h2>
 
-            <p class="modal-subtitle">
-                Change the name or delete this profile.
-            </p>
+            <button
+                type="button"
+                class="modal-close"
+                data-close-modal="editProfileModal"
+                aria-label="Close"
+            >
+                ×
+            </button>
 
         </div>
 
@@ -1163,54 +1134,61 @@
 
             <label
                 class="modal-label"
-                for="editProfileNameInput"
+                for="editProfileName"
             >
-                Profile Name
+                Profile name
             </label>
 
             <input
                 type="text"
-                id="editProfileNameInput"
+                id="editProfileName"
                 class="modal-input"
-                maxlength="40"
+                maxlength="30"
                 autocomplete="off"
             >
 
             <div
                 class="modal-error"
-                id="editModalError"
+                id="editProfileError"
             ></div>
 
-        </div>
+
+            <div class="modal-actions">
+
+                <button
+                    type="button"
+                    class="modal-button"
+                    data-close-modal="editProfileModal"
+                >
+                    Cancel
+                </button>
+
+                <button
+                    type="button"
+                    class="modal-button primary"
+                    id="saveProfileButton"
+                >
+                    Save Changes
+                </button>
+
+            </div>
 
 
-        <div class="modal-footer">
-
-            <button
-                type="button"
-                class="modal-button danger"
-                id="deleteProfileButton"
+            <div
+                class="modal-actions"
+                style="margin-top: 9px;"
             >
-                Delete Profile
-            </button>
 
-            <div class="modal-footer-spacer"></div>
+                <button
+                    type="button"
+                    class="modal-button danger"
+                    id="deleteProfileButton"
+                    style="width: 100%;"
+                >
+                    Delete Profile
+                </button>
 
-            <button
-                type="button"
-                class="modal-button"
-                id="editCancelButton"
-            >
-                Cancel
-            </button>
-
-            <button
-                type="button"
-                class="modal-button primary"
-                id="editSaveButton"
-            >
-                Save Changes
-            </button>
+            </div>
 
         </div>
 
@@ -1219,17 +1197,95 @@
 </div>
 
 
-<!-- CONFIRMATION MODAL -->
+<!-- DELETE PROFILE MODAL -->
+
+<div
+    class="modal-overlay"
+    id="deleteProfileModal"
+    aria-hidden="true"
+>
+
+    <div
+        class="modal"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="deleteProfileTitle"
+    >
+
+        <div class="modal-header">
+
+            <h2
+                class="modal-title"
+                id="deleteProfileTitle"
+            >
+                Delete Profile
+            </h2>
+
+            <button
+                type="button"
+                class="modal-close"
+                data-close-modal="deleteProfileModal"
+                aria-label="Close"
+            >
+                ×
+            </button>
+
+        </div>
+
+
+        <div class="modal-body">
+
+            <div
+                style="
+                    color: var(--muted);
+                    font-size: 14px;
+                    line-height: 1.5;
+                "
+                id="deleteProfileMessage"
+            ></div>
+
+
+            <div class="modal-actions">
+
+                <button
+                    type="button"
+                    class="modal-button"
+                    data-close-modal="deleteProfileModal"
+                >
+                    Cancel
+                </button>
+
+                <button
+                    type="button"
+                    class="modal-button danger"
+                    id="confirmDeleteProfileButton"
+                >
+                    Delete Profile
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- CONFIRM MODAL -->
 
 <div
     class="modal-overlay"
     id="confirmModal"
-    role="dialog"
-    aria-modal="true"
-    aria-labelledby="confirmModalTitle"
+    aria-hidden="true"
 >
 
-    <div class="modal">
+    <div
+        class="modal"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="confirmModalTitle"
+    >
 
         <div class="modal-header">
 
@@ -1237,36 +1293,52 @@
                 class="modal-title"
                 id="confirmModalTitle"
             >
-                Confirm Action
+                Confirm
             </h2>
 
-            <p
-                class="modal-subtitle"
-                id="confirmModalMessage"
-            ></p>
+            <button
+                type="button"
+                class="modal-close"
+                id="confirmModalClose"
+                aria-label="Close"
+            >
+                ×
+            </button>
 
         </div>
 
 
-        <div class="modal-footer">
+        <div class="modal-body">
 
-            <div class="modal-footer-spacer"></div>
+            <div
+                id="confirmModalMessage"
+                style="
+                    color: var(--muted);
+                    font-size: 14px;
+                    line-height: 1.5;
+                "
+            ></div>
 
-            <button
-                type="button"
-                class="modal-button"
-                id="confirmCancelButton"
-            >
-                Cancel
-            </button>
 
-            <button
-                type="button"
-                class="modal-button danger"
-                id="confirmActionButton"
-            >
-                Confirm
-            </button>
+            <div class="modal-actions">
+
+                <button
+                    type="button"
+                    class="modal-button"
+                    id="confirmCancelButton"
+                >
+                    Cancel
+                </button>
+
+                <button
+                    type="button"
+                    class="modal-button danger"
+                    id="confirmActionButton"
+                >
+                    Confirm
+                </button>
+
+            </div>
 
         </div>
 
@@ -1299,12 +1371,25 @@
         12;
 
 
+    /*
+     * Shared survival goals.
+     */
+
+    const GOALS_STORAGE_KEY =
+        "minecraft-survival-goals-v1";
+
+
+    /*
+     * Player profiles and their
+     * individual achievement progress.
+     */
+
     const PROFILE_STORAGE_KEY =
-        "minecraft-survival-profiles-v1";
+        "minecraft-survival-profiles-v2";
 
 
     const ACTIVE_PROFILE_STORAGE_KEY =
-        "minecraft-active-profile-v1";
+        "minecraft-active-profile-v2";
 
 
     /*
@@ -1403,99 +1488,57 @@
         );
 
 
-    /*
-     * Profile creation modal
-     */
-
-    const profileModal =
+    const createProfileModal =
         document.getElementById(
-            "profileModal"
+            "createProfileModal"
         );
 
 
-    const profileModalTitle =
+    const editProfileModal =
         document.getElementById(
-            "profileModalTitle"
+            "editProfileModal"
         );
 
 
-    const profileModalSubtitle =
+    const deleteProfileModal =
         document.getElementById(
-            "profileModalSubtitle"
+            "deleteProfileModal"
         );
 
-
-    const profileNameInput =
-        document.getElementById(
-            "profileNameInput"
-        );
-
-
-    const profileModalError =
-        document.getElementById(
-            "profileModalError"
-        );
-
-
-    const profileCancelButton =
-        document.getElementById(
-            "profileCancelButton"
-        );
-
-
-    const profileSaveButton =
-        document.getElementById(
-            "profileSaveButton"
-        );
-
-
-    /*
-     * Edit modal
-     */
-
-    const editModal =
-        document.getElementById(
-            "editModal"
-        );
-
-
-    const editProfileNameInput =
-        document.getElementById(
-            "editProfileNameInput"
-        );
-
-
-    const editModalError =
-        document.getElementById(
-            "editModalError"
-        );
-
-
-    const editCancelButton =
-        document.getElementById(
-            "editCancelButton"
-        );
-
-
-    const editSaveButton =
-        document.getElementById(
-            "editSaveButton"
-        );
-
-
-    const deleteProfileButton =
-        document.getElementById(
-            "deleteProfileButton"
-        );
-
-
-    /*
-     * Confirmation modal
-     */
 
     const confirmModal =
         document.getElementById(
             "confirmModal"
+        );
+
+
+    const createProfileName =
+        document.getElementById(
+            "createProfileName"
+        );
+
+
+    const editProfileName =
+        document.getElementById(
+            "editProfileName"
+        );
+
+
+    const createProfileError =
+        document.getElementById(
+            "createProfileError"
+        );
+
+
+    const editProfileError =
+        document.getElementById(
+            "editProfileError"
+        );
+
+
+    const deleteProfileMessage =
+        document.getElementById(
+            "deleteProfileMessage"
         );
 
 
@@ -1511,20 +1554,22 @@
         );
 
 
-    const confirmCancelButton =
-        document.getElementById(
-            "confirmCancelButton"
-        );
-
-
     const confirmActionButton =
         document.getElementById(
             "confirmActionButton"
         );
 
 
-    let confirmationCallback =
-        null;
+    const confirmCancelButton =
+        document.getElementById(
+            "confirmCancelButton"
+        );
+
+
+    const confirmModalClose =
+        document.getElementById(
+            "confirmModalClose"
+        );
 
 
     /*
@@ -1541,254 +1586,14 @@
 
     let openCategoryId = null;
 
+    let profileBeingDeleted = null;
 
-    /*
-     * =========================================================
-     * MODAL HELPERS
-     * =========================================================
-     */
-
-    function openModal(
-        modal
-    ) {
-
-        modal.classList.add(
-            "open"
-        );
-
-        document.body.classList.add(
-            "modal-open"
-        );
-
-    }
-
-
-    function closeModal(
-        modal
-    ) {
-
-        modal.classList.remove(
-            "open"
-        );
-
-
-        if (
-            !document.querySelector(
-                ".modal-overlay.open"
-            )
-        ) {
-
-            document.body.classList.remove(
-                "modal-open"
-            );
-
-        }
-
-    }
-
-
-    function showProfileError(
-        message
-    ) {
-
-        profileModalError.textContent =
-            message;
-
-        profileModalError.classList.add(
-            "visible"
-        );
-
-    }
-
-
-    function clearProfileError() {
-
-        profileModalError.textContent =
-            "";
-
-        profileModalError.classList.remove(
-            "visible"
-        );
-
-    }
-
-
-    function showEditError(
-        message
-    ) {
-
-        editModalError.textContent =
-            message;
-
-        editModalError.classList.add(
-            "visible"
-        );
-
-    }
-
-
-    function clearEditError() {
-
-        editModalError.textContent =
-            "";
-
-        editModalError.classList.remove(
-            "visible"
-        );
-
-    }
-
-
-    function openConfirmation(
-        title,
-        message,
-        actionText,
-        callback
-    ) {
-
-        confirmModalTitle.textContent =
-            title;
-
-        confirmModalMessage.textContent =
-            message;
-
-        confirmActionButton.textContent =
-            actionText;
-
-        confirmationCallback =
-            callback;
-
-
-        openModal(
-            confirmModal
-        );
-
-    }
-
-
-    function closeConfirmation() {
-
-        confirmationCallback =
-            null;
-
-        closeModal(
-            confirmModal
-        );
-
-    }
-
-
-    /*
-     * Clicking outside a modal closes it.
-     * Confirmation modals intentionally also
-     * close without performing the action.
-     */
-
-    [
-        profileModal,
-        editModal,
-        confirmModal
-    ].forEach(
-        modal => {
-
-            modal.addEventListener(
-                "click",
-                event => {
-
-                    if (
-                        event.target ===
-                        modal
-                    ) {
-
-                        if (
-                            modal ===
-                            confirmModal
-                        ) {
-
-                            closeConfirmation();
-
-                        } else {
-
-                            closeModal(
-                                modal
-                            );
-
-                        }
-
-                    }
-
-                }
-            );
-
-        }
-    );
-
-
-    /*
-     * Escape closes whichever modal is open.
-     */
-
-    document.addEventListener(
-        "keydown",
-        event => {
-
-            if (
-                event.key !==
-                "Escape"
-            ) {
-
-                return;
-
-            }
-
-
-            if (
-                confirmModal.classList.contains(
-                    "open"
-                )
-            ) {
-
-                closeConfirmation();
-
-                return;
-
-            }
-
-
-            if (
-                editModal.classList.contains(
-                    "open"
-                )
-            ) {
-
-                closeModal(
-                    editModal
-                );
-
-                return;
-
-            }
-
-
-            if (
-                profileModal.classList.contains(
-                    "open"
-                )
-            ) {
-
-                closeModal(
-                    profileModal
-                );
-
-            }
-
-        }
-    );
+    let confirmationCallback = null;
 
 
     /*
      * =========================================================
-     * PROFILE STORAGE
+     * IDs
      * =========================================================
      */
 
@@ -1809,17 +1614,26 @@
     }
 
 
+    /*
+     * =========================================================
+     * PROFILE STORAGE
+     * =========================================================
+     */
+
     function createDefaultProfile() {
 
         return {
-            id: createId(
-                "profile"
-            ),
+
+            id:
+                createId(
+                    "profile"
+                ),
 
             name:
                 "My Profile",
 
-            progress: {}
+            achievements: {}
+
         };
 
     }
@@ -1861,6 +1675,24 @@
                                     profile.id &&
                                     profile.name
                             );
+
+
+                    profiles.forEach(
+                        profile => {
+
+                            if (
+                                !profile.achievements ||
+                                typeof profile.achievements !==
+                                "object"
+                            ) {
+
+                                profile.achievements =
+                                    {};
+
+                            }
+
+                        }
+                    );
 
                 }
 
@@ -1913,6 +1745,8 @@
 
         saveProfiles();
 
+        saveActiveProfile();
+
     }
 
 
@@ -1951,7 +1785,77 @@
 
     /*
      * =========================================================
-     * SCORE HELPERS
+     * SHARED GOAL STORAGE
+     * =========================================================
+     */
+
+    function loadSharedGoalsProgress() {
+
+        try {
+
+            const saved =
+                localStorage.getItem(
+                    GOALS_STORAGE_KEY
+                );
+
+
+            if (!saved) {
+                return {};
+            }
+
+
+            const parsed =
+                JSON.parse(
+                    saved
+                );
+
+
+            if (
+                parsed &&
+                typeof parsed ===
+                "object"
+            ) {
+
+                return parsed;
+
+            }
+
+        } catch {
+
+            return {};
+
+        }
+
+
+        return {};
+
+    }
+
+
+    function saveSharedGoalsProgress(
+        progress
+    ) {
+
+        localStorage.setItem(
+            GOALS_STORAGE_KEY,
+            JSON.stringify(
+                progress
+            )
+        );
+
+    }
+
+
+    function getSharedGoalsProgress() {
+
+        return loadSharedGoalsProgress();
+
+    }
+
+
+    /*
+     * =========================================================
+     * CATEGORY HELPERS
      * =========================================================
      */
 
@@ -1966,6 +1870,78 @@
 
     }
 
+
+    function getAchievementItems() {
+
+        const results = [];
+
+
+        for (
+            const category
+            of goals
+        ) {
+
+            if (
+                isAchievementCategory(
+                    category
+                )
+            ) {
+
+                results.push(
+                    ...(category.items || [])
+                );
+
+            }
+
+        }
+
+
+        return results;
+
+    }
+
+
+    function getNormalGoalItems() {
+
+        const results = [];
+
+
+        for (
+            const category
+            of goals
+        ) {
+
+            if (
+                isAchievementCategory(
+                    category
+                )
+            ) {
+
+                continue;
+
+            }
+
+
+            results.push(
+                ...(
+                    category.items ||
+                    []
+                )
+            );
+
+        }
+
+
+        return results;
+
+    }
+
+
+    /*
+     * =========================================================
+     * SCORE HELPERS
+     * =========================================================
+     */
 
     function getGoalDifficulty(
         item
@@ -2045,9 +2021,9 @@
     }
 
 
-    function getAllItemsWithCategories() {
+    function getTotalGoalScore() {
 
-        const result = [];
+        let total = 0;
 
 
         for (
@@ -2055,44 +2031,29 @@
             of goals
         ) {
 
+            if (
+                isAchievementCategory(
+                    category
+                )
+            ) {
+
+                continue;
+
+            }
+
+
             for (
                 const item
                 of category.items || []
             ) {
 
-                result.push({
-                    item,
-                    category
-                });
+                total +=
+                    getItemScore(
+                        item,
+                        category
+                    );
 
             }
-
-        }
-
-
-        return result;
-
-    }
-
-
-    function getGlobalScore() {
-
-        let total = 0;
-
-
-        for (
-            const {
-                item,
-                category
-            }
-            of getAllItemsWithCategories()
-        ) {
-
-            total +=
-                getItemScore(
-                    item,
-                    category
-                );
 
         }
 
@@ -2102,7 +2063,67 @@
     }
 
 
-    function getProfileScore(
+    function getTotalAchievementGamerscore() {
+
+        let total = 0;
+
+
+        for (
+            const item
+            of getAchievementItems()
+        ) {
+
+            total +=
+                Number(
+                    item.gamerscore
+                ) || 0;
+
+        }
+
+
+        return total;
+
+    }
+
+
+    /*
+     * Total possible:
+     *
+     * Shared goals:
+     *     counted once
+     *
+     * Achievements:
+     *     counted once for EACH profile
+     */
+
+    function getGlobalTotalPossible() {
+
+        const goalScore =
+            getTotalGoalScore();
+
+
+        const achievementScore =
+            getTotalAchievementGamerscore();
+
+
+        return (
+            goalScore +
+            (
+                achievementScore *
+                profiles.length
+            )
+        );
+
+    }
+
+
+    /*
+     * =========================================================
+     * PROFILE ACHIEVEMENT SCORE
+     * =========================================================
+     */
+
+    function getProfileAchievementScore(
         profile
     ) {
 
@@ -2115,23 +2136,20 @@
 
 
         for (
-            const {
-                item,
-                category
-            }
-            of getAllItemsWithCategories()
+            const item
+            of getAchievementItems()
         ) {
 
             if (
-                profile.progress &&
-                profile.progress[item.id] === true
+                profile.achievements &&
+                profile.achievements[item.id] ===
+                true
             ) {
 
                 score +=
-                    getItemScore(
-                        item,
-                        category
-                    );
+                    Number(
+                        item.gamerscore
+                    ) || 0;
 
             }
 
@@ -2143,7 +2161,7 @@
     }
 
 
-    function getCompletedCount(
+    function getProfileAchievementCount(
         profile
     ) {
 
@@ -2156,15 +2174,14 @@
 
 
         for (
-            const {
-                item
-            }
-            of getAllItemsWithCategories()
+            const item
+            of getAchievementItems()
         ) {
 
             if (
-                profile.progress &&
-                profile.progress[item.id] === true
+                profile.achievements &&
+                profile.achievements[item.id] ===
+                true
             ) {
 
                 completed++;
@@ -2179,32 +2196,24 @@
     }
 
 
-    function getTotalItemCount() {
+    /*
+     * =========================================================
+     * SHARED GOAL SCORE
+     * =========================================================
+     */
 
-        return getAllItemsWithCategories()
-            .length;
+    function getSharedGoalScore() {
 
-    }
-
-
-    function getProfileGoalScore(
-        profile
-    ) {
-
-        if (!profile) {
-            return 0;
-        }
+        const progress =
+            getSharedGoalsProgress();
 
 
         let score = 0;
 
 
         for (
-            const {
-                item,
-                category
-            }
-            of getAllItemsWithCategories()
+            const category
+            of goals
         ) {
 
             if (
@@ -2218,16 +2227,23 @@
             }
 
 
-            if (
-                profile.progress &&
-                profile.progress[item.id] === true
+            for (
+                const item
+                of category.items || []
             ) {
 
-                score +=
-                    getItemScore(
-                        item,
-                        category
-                    );
+                if (
+                    progress[item.id] ===
+                    true
+                ) {
+
+                    score +=
+                        getItemScore(
+                            item,
+                            category
+                        );
+
+                }
 
             }
 
@@ -2235,6 +2251,104 @@
 
 
         return score;
+
+    }
+
+
+    /*
+     * =========================================================
+     * CURRENT GLOBAL SCORE
+     * =========================================================
+     *
+     * Shared goals are counted once.
+     *
+     * Every profile's achievement score
+     * is counted separately.
+     */
+
+    function getCurrentGlobalScore() {
+
+        let score =
+            getSharedGoalScore();
+
+
+        for (
+            const profile
+            of profiles
+        ) {
+
+            score +=
+                getProfileAchievementScore(
+                    profile
+                );
+
+        }
+
+
+        return score;
+
+    }
+
+
+    /*
+     * =========================================================
+     * CURRENT PROFILE SCORE
+     * =========================================================
+     *
+     * Shared goals
+     * +
+     * current profile's achievements
+     */
+
+    function getProfileScore(
+        profile
+    ) {
+
+        return (
+            getSharedGoalScore() +
+            getProfileAchievementScore(
+                profile
+            )
+        );
+
+    }
+
+
+    function getCompletedGoalCount() {
+
+        const progress =
+            getSharedGoalsProgress();
+
+
+        let completed = 0;
+
+
+        for (
+            const item
+            of getNormalGoalItems()
+        ) {
+
+            if (
+                progress[item.id] ===
+                true
+            ) {
+
+                completed++;
+
+            }
+
+        }
+
+
+        return completed;
+
+    }
+
+
+    function getTotalGoalCount() {
+
+        return getNormalGoalItems()
+            .length;
 
     }
 
@@ -2263,37 +2377,6 @@
     }
 
 
-    function getProfilePercent(
-        profile
-    ) {
-
-        const total =
-            getGlobalScore();
-
-
-        if (
-            total ===
-            0
-        ) {
-
-            return 0;
-
-        }
-
-
-        return Math.round(
-            (
-                getProfileScore(
-                    profile
-                ) /
-                total
-            ) *
-            100
-        );
-
-    }
-
-
     function renderProfiles() {
 
         profilesList.innerHTML =
@@ -2304,6 +2387,10 @@
             profiles.length +
             " / " +
             MAX_PROFILES;
+
+
+        const achievementTotal =
+            getTotalAchievementGamerscore();
 
 
         for (
@@ -2392,6 +2479,31 @@
             );
 
 
+            const achievementScore =
+                getProfileAchievementScore(
+                    profile
+                );
+
+
+            const achievementCount =
+                getProfileAchievementCount(
+                    profile
+                );
+
+
+            const percent =
+                achievementTotal ===
+                0
+                    ? 0
+                    : Math.round(
+                        (
+                            achievementScore /
+                            achievementTotal
+                        ) *
+                        100
+                    );
+
+
             const score =
                 document.createElement(
                     "div"
@@ -2404,14 +2516,13 @@
 
             score.innerHTML =
                 "<strong>" +
-                getProfileScore(
-                    profile
-                ) +
-                "</strong> pts" +
+                achievementScore.toLocaleString() +
+                "G</strong>" +
+                " • " +
+                achievementCount +
+                " achievements" +
                 '<span class="profile-card-percent">' +
-                getProfilePercent(
-                    profile
-                ) +
+                percent +
                 "%" +
                 "</span>";
 
@@ -2489,6 +2600,169 @@
 
     /*
      * =========================================================
+     * MODALS
+     * =========================================================
+     */
+
+    function openModal(
+        modal
+    ) {
+
+        modal.classList.add(
+            "active"
+        );
+
+
+        modal.setAttribute(
+            "aria-hidden",
+            "false"
+        );
+
+
+        document.body.classList.add(
+            "modal-open"
+        );
+
+    }
+
+
+    function closeModal(
+        modal
+    ) {
+
+        modal.classList.remove(
+            "active"
+        );
+
+
+        modal.setAttribute(
+            "aria-hidden",
+            "true"
+        );
+
+
+        if (
+            !document.querySelector(
+                ".modal-overlay.active"
+            )
+        ) {
+
+            document.body.classList.remove(
+                "modal-open"
+            );
+
+        }
+
+    }
+
+
+    function closeAllModals() {
+
+        document
+            .querySelectorAll(
+                ".modal-overlay.active"
+            )
+            .forEach(
+                modal =>
+                    closeModal(
+                        modal
+                    )
+            );
+
+    }
+
+
+    function openConfirmation(
+        title,
+        message,
+        actionText,
+        callback,
+        danger = true
+    ) {
+
+        confirmModalTitle.textContent =
+            title;
+
+
+        confirmModalMessage.textContent =
+            message;
+
+
+        confirmActionButton.textContent =
+            actionText;
+
+
+        confirmActionButton.classList.toggle(
+            "danger",
+            danger
+        );
+
+
+        confirmationCallback =
+            callback;
+
+
+        openModal(
+            confirmModal
+        );
+
+    }
+
+
+    function closeConfirmation() {
+
+        confirmationCallback =
+            null;
+
+
+        closeModal(
+            confirmModal
+        );
+
+    }
+
+
+    confirmActionButton.addEventListener(
+        "click",
+        () => {
+
+            const callback =
+                confirmationCallback;
+
+
+            confirmationCallback =
+                null;
+
+
+            closeModal(
+                confirmModal
+            );
+
+
+            if (callback) {
+
+                callback();
+
+            }
+
+        }
+    );
+
+
+    confirmCancelButton.addEventListener(
+        "click",
+        closeConfirmation
+    );
+
+
+    confirmModalClose.addEventListener(
+        "click",
+        closeConfirmation
+    );
+
+
+    /*
+     * =========================================================
      * CREATE PROFILE
      * =========================================================
      */
@@ -2503,14 +2777,11 @@
             openConfirmation(
                 "Profile Limit Reached",
                 "You can have up to " +
-                MAX_PROFILES +
-                " profiles.",
+                    MAX_PROFILES +
+                    " profiles.",
                 "OK",
-                () => {
-
-                    closeConfirmation();
-
-                }
+                null,
+                false
             );
 
             return;
@@ -2518,42 +2789,45 @@
         }
 
 
-        profileModalTitle.textContent =
-            "Create Profile";
-
-
-        profileModalSubtitle.textContent =
-            "Choose a name for this profile.";
-
-
-        profileSaveButton.textContent =
-            "Create";
-
-
-        profileNameInput.value =
+        createProfileName.value =
             "";
 
 
-        profileNameInput.placeholder =
-            "Enter profile name";
+        createProfileError.textContent =
+            "";
 
 
-        clearProfileError();
+        createProfileError.style.display =
+            "none";
 
 
         openModal(
-            profileModal
+            createProfileModal
         );
 
 
         setTimeout(
             () => {
 
-                profileNameInput.focus();
+                createProfileName.focus();
 
             },
-            0
+            50
         );
+
+    }
+
+
+    function showCreateProfileError(
+        message
+    ) {
+
+        createProfileError.textContent =
+            message;
+
+
+        createProfileError.style.display =
+            "block";
 
     }
 
@@ -2565,8 +2839,19 @@
             MAX_PROFILES
         ) {
 
-            closeModal(
-                profileModal
+            return;
+
+        }
+
+
+        const name =
+            createProfileName.value.trim();
+
+
+        if (!name) {
+
+            showCreateProfileError(
+                "Enter a profile name."
             );
 
             return;
@@ -2574,17 +2859,19 @@
         }
 
 
-        const name =
-            profileNameInput.value.trim();
+        if (
+            profiles.some(
+                profile =>
+                    profile.name
+                        .trim()
+                        .toLowerCase() ===
+                    name.toLowerCase()
+            )
+        ) {
 
-
-        if (!name) {
-
-            showProfileError(
-                "Please enter a profile name."
+            showCreateProfileError(
+                "A profile with that name already exists."
             );
-
-            profileNameInput.focus();
 
             return;
 
@@ -2601,7 +2888,7 @@
             name:
                 name,
 
-            progress: {}
+            achievements: {}
 
         };
 
@@ -2620,13 +2907,13 @@
         saveActiveProfile();
 
 
+        closeModal(
+            createProfileModal
+        );
+
+
         openCategoryId =
             null;
-
-
-        closeModal(
-            profileModal
-        );
 
 
         render();
@@ -2651,28 +2938,47 @@
         }
 
 
-        editProfileNameInput.value =
+        editProfileName.value =
             profile.name;
 
 
-        clearEditError();
+        editProfileError.textContent =
+            "";
+
+
+        editProfileError.style.display =
+            "none";
 
 
         openModal(
-            editModal
+            editProfileModal
         );
 
 
         setTimeout(
             () => {
 
-                editProfileNameInput.focus();
+                editProfileName.focus();
 
-                editProfileNameInput.select();
+                editProfileName.select();
 
             },
-            0
+            50
         );
+
+    }
+
+
+    function showEditProfileError(
+        message
+    ) {
+
+        editProfileError.textContent =
+            message;
+
+
+        editProfileError.style.display =
+            "block";
 
     }
 
@@ -2688,17 +2994,38 @@
         }
 
 
-        const newName =
-            editProfileNameInput.value.trim();
+        const name =
+            editProfileName.value.trim();
 
 
-        if (!newName) {
+        if (!name) {
 
-            showEditError(
-                "Please enter a profile name."
+            showEditProfileError(
+                "Enter a profile name."
             );
 
-            editProfileNameInput.focus();
+            return;
+
+        }
+
+
+        const duplicate =
+            profiles.some(
+                other =>
+                    other.id !==
+                    profile.id &&
+                    other.name
+                        .trim()
+                        .toLowerCase() ===
+                    name.toLowerCase()
+            );
+
+
+        if (duplicate) {
+
+            showEditProfileError(
+                "A profile with that name already exists."
+            );
 
             return;
 
@@ -2706,14 +3033,14 @@
 
 
         profile.name =
-            newName;
+            name;
 
 
         saveProfiles();
 
 
         closeModal(
-            editModal
+            editProfileModal
         );
 
 
@@ -2728,27 +3055,15 @@
      * =========================================================
      */
 
-    function requestDeleteProfile() {
+    function openDeleteProfileModal() {
 
         if (
             profiles.length <=
             1
         ) {
 
-            closeModal(
-                editModal
-            );
-
-
-            openConfirmation(
-                "Cannot Delete Profile",
-                "You must keep at least one profile.",
-                "OK",
-                () => {
-
-                    closeConfirmation();
-
-                }
+            showEditProfileError(
+                "You must keep at least one profile."
             );
 
             return;
@@ -2765,53 +3080,63 @@
         }
 
 
+        profileBeingDeleted =
+            profile.id;
+
+
+        deleteProfileMessage.textContent =
+            'Delete "' +
+            profile.name +
+            '" and all of its achievement progress?';
+
+
         closeModal(
-            editModal
+            editProfileModal
         );
 
 
-        openConfirmation(
-            "Delete Profile?",
-            'Delete "' +
-            profile.name +
-            '" and all of its progress?',
-            "Delete",
-            () => {
-
-                deleteProfile(
-                    profile.id
-                );
-
-            }
+        openModal(
+            deleteProfileModal
         );
 
     }
 
 
-    function deleteProfile(
-        profileId
-    ) {
+    function confirmDeleteProfile() {
+
+        if (!profileBeingDeleted) {
+            return;
+        }
+
+
+        if (
+            profiles.length <=
+            1
+        ) {
+
+            closeModal(
+                deleteProfileModal
+            );
+
+            return;
+
+        }
+
 
         profiles =
             profiles.filter(
                 profile =>
                     profile.id !==
-                    profileId
+                    profileBeingDeleted
             );
 
 
-        if (
-            !profiles.some(
-                profile =>
-                    profile.id ===
-                    activeProfileId
-            )
-        ) {
+        activeProfileId =
+            profiles[0].id;
 
-            activeProfileId =
-                profiles[0].id;
 
-        }
+        profileBeingDeleted =
+            null;
 
 
         saveProfiles();
@@ -2819,11 +3144,13 @@
         saveActiveProfile();
 
 
+        closeModal(
+            deleteProfileModal
+        );
+
+
         openCategoryId =
             null;
-
-
-        closeConfirmation();
 
 
         render();
@@ -2833,11 +3160,11 @@
 
     /*
      * =========================================================
-     * CHECKBOX / PROGRESS
+     * ACHIEVEMENT PROGRESS
      * =========================================================
      */
 
-    function isCompleted(
+    function isAchievementCompleted(
         item
     ) {
 
@@ -2847,14 +3174,15 @@
 
         return Boolean(
             profile &&
-            profile.progress &&
-            profile.progress[item.id] === true
+            profile.achievements &&
+            profile.achievements[item.id] ===
+            true
         );
 
     }
 
 
-    function setCompleted(
+    function setAchievementCompleted(
         item,
         value
     ) {
@@ -2868,14 +3196,17 @@
         }
 
 
-        if (!profile.progress) {
+        if (
+            !profile.achievements
+        ) {
 
-            profile.progress = {};
+            profile.achievements =
+                {};
 
         }
 
 
-        profile.progress[item.id] =
+        profile.achievements[item.id] =
             value;
 
 
@@ -2884,82 +3215,44 @@
     }
 
 
-    function updateScores() {
+    /*
+     * =========================================================
+     * SHARED GOAL PROGRESS
+     * =========================================================
+     */
 
-        const profile =
-            getActiveProfile();
+    function isGoalCompleted(
+        item
+    ) {
 
-
-        const globalScore =
-            getGlobalScore();
-
-
-        const userScore =
-            getProfileScore(
-                profile
-            );
+        const progress =
+            getSharedGoalsProgress();
 
 
-        const goalScore =
-            getProfileGoalScore(
-                profile
-            );
+        return (
+            progress[item.id] ===
+            true
+        );
+
+    }
 
 
-        const completed =
-            getCompletedCount(
-                profile
-            );
+    function setGoalCompleted(
+        item,
+        value
+    ) {
+
+        const progress =
+            getSharedGoalsProgress();
 
 
-        const total =
-            getTotalItemCount();
+        progress[item.id] =
+            value;
 
 
-        const percent =
-            globalScore === 0
-                ? 0
-                : Math.round(
-                    (
-                        userScore /
-                        globalScore
-                    ) *
-                    100
-                );
-
-
-        globalScoreElement.textContent =
-            globalScore.toLocaleString();
-
-
-        userScoreElement.textContent =
-            userScore.toLocaleString();
-
-
-        goalsScoreElement.textContent =
-            goalScore.toLocaleString();
-
-
-        currentProfileNameElement.textContent =
-            profile
-                ? profile.name
-                : "Your";
-
-
-        userScoreDetailElement.textContent =
-            percent +
-            "% of global score";
-
-
-        scoreProgressText.textContent =
-            completed +
-            " / " +
-            total;
-
-
-        scoreBar.style.width =
-            percent +
-            "%";
+        saveSharedGoalsProgress(
+            progress
+        );
 
     }
 
@@ -2971,7 +3264,8 @@
      */
 
     function createCheckbox(
-        item
+        item,
+        category
     ) {
 
         const checkbox =
@@ -2989,9 +3283,15 @@
 
 
         checkbox.checked =
-            isCompleted(
-                item
-            );
+            isAchievementCategory(
+                category
+            )
+                ? isAchievementCompleted(
+                    item
+                )
+                : isGoalCompleted(
+                    item
+                );
 
 
         checkbox.addEventListener(
@@ -3008,10 +3308,25 @@
             "change",
             () => {
 
-                setCompleted(
-                    item,
-                    checkbox.checked
-                );
+                if (
+                    isAchievementCategory(
+                        category
+                    )
+                ) {
+
+                    setAchievementCompleted(
+                        item,
+                        checkbox.checked
+                    );
+
+                } else {
+
+                    setGoalCompleted(
+                        item,
+                        checkbox.checked
+                    );
+
+                }
 
 
                 const row =
@@ -3035,6 +3350,8 @@
                 updateCategoryCounts();
 
                 renderProfiles();
+
+                updateAchievementPanel();
 
             }
         );
@@ -3066,11 +3383,19 @@
             "item";
 
 
-        if (
-            isCompleted(
-                item
+        const completed =
+            isAchievementCategory(
+                category
             )
-        ) {
+                ? isAchievementCompleted(
+                    item
+                )
+                : isGoalCompleted(
+                    item
+                );
+
+
+        if (completed) {
 
             row.classList.add(
                 "completed"
@@ -3081,7 +3406,8 @@
 
         row.appendChild(
             createCheckbox(
-                item
+                item,
+                category
             )
         );
 
@@ -3287,7 +3613,7 @@
 
     /*
      * =========================================================
-     * ACHIEVEMENT PROFILE INFORMATION
+     * ACHIEVEMENT PROFILE PANEL
      * =========================================================
      */
 
@@ -3301,6 +3627,40 @@
 
         panel.className =
             "achievement-profile-panel";
+
+
+        panel.id =
+            "achievementProfilePanel";
+
+
+        updateAchievementPanel(
+            panel
+        );
+
+
+        return panel;
+
+    }
+
+
+    function updateAchievementPanel(
+        existingPanel = null
+    ) {
+
+        const panel =
+            existingPanel ||
+            document.getElementById(
+                "achievementProfilePanel"
+            );
+
+
+        if (!panel) {
+            return;
+        }
+
+
+        panel.innerHTML =
+            "";
 
 
         const title =
@@ -3330,35 +3690,20 @@
             getAchievementItems();
 
 
-        let completed =
-            0;
+        const completed =
+            getProfileAchievementCount(
+                profile
+            );
 
 
-        let gamerscore =
-            0;
+        const gamerscore =
+            getProfileAchievementScore(
+                profile
+            );
 
 
-        for (
-            const item
-            of achievements
-        ) {
-
-            if (
-                profile &&
-                profile.progress &&
-                profile.progress[item.id] === true
-            ) {
-
-                completed++;
-
-                gamerscore +=
-                    Number(
-                        item.gamerscore
-                    ) || 0;
-
-            }
-
-        }
+        const total =
+            getTotalAchievementGamerscore();
 
 
         const info =
@@ -3379,45 +3724,15 @@
             " achievements • " +
             "<strong>" +
             gamerscore.toLocaleString() +
+            "G</strong> / " +
+            "<strong>" +
+            total.toLocaleString() +
             "G</strong>";
 
 
         panel.appendChild(
             info
         );
-
-
-        return panel;
-
-    }
-
-
-    function getAchievementItems() {
-
-        const results = [];
-
-
-        for (
-            const category
-            of goals
-        ) {
-
-            if (
-                isAchievementCategory(
-                    category
-                )
-            ) {
-
-                results.push(
-                    ...(category.items || [])
-                );
-
-            }
-
-        }
-
-
-        return results;
 
     }
 
@@ -3524,10 +3839,6 @@
 
         count.className =
             "category-count";
-
-
-        count.dataset.count =
-            category.id;
 
 
         header.appendChild(
@@ -3673,10 +3984,26 @@
 
                     const completed =
                         items.filter(
-                            item =>
-                                isCompleted(
+                            item => {
+
+                                if (
+                                    isAchievementCategory(
+                                        category
+                                    )
+                                ) {
+
+                                    return isAchievementCompleted(
+                                        item
+                                    );
+
+                                }
+
+
+                                return isGoalCompleted(
                                     item
-                                )
+                                );
+
+                            }
                         ).length;
 
 
@@ -3697,6 +4024,165 @@
 
                 }
             );
+
+    }
+
+
+    /*
+     * =========================================================
+     * SCORE DISPLAY
+     * =========================================================
+     */
+
+    function updateScores() {
+
+        const profile =
+            getActiveProfile();
+
+
+        const currentGlobalScore =
+            getCurrentGlobalScore();
+
+
+        const totalPossible =
+            getGlobalTotalPossible();
+
+
+        const userScore =
+            getProfileScore(
+                profile
+            );
+
+
+        const sharedGoalScore =
+            getSharedGoalScore();
+
+
+        const completedGoals =
+            getCompletedGoalCount();
+
+
+        const totalGoals =
+            getTotalGoalCount();
+
+
+        const achievementScore =
+            getProfileAchievementScore(
+                profile
+            );
+
+
+        const achievementTotal =
+            getTotalAchievementGamerscore();
+
+
+        const totalAchievements =
+            getAchievementItems()
+                .length;
+
+
+        const completedAchievements =
+            getProfileAchievementCount(
+                profile
+            );
+
+
+        const globalPercent =
+            totalPossible === 0
+                ? 0
+                : Math.round(
+                    (
+                        currentGlobalScore /
+                        totalPossible
+                    ) *
+                    100
+                );
+
+
+        const profileAchievementPercent =
+            achievementTotal === 0
+                ? 0
+                : Math.round(
+                    (
+                        achievementScore /
+                        achievementTotal
+                    ) *
+                    100
+                );
+
+
+        /*
+         * Global Score:
+         *
+         * CURRENT / TOTAL POSSIBLE
+         */
+
+        globalScoreElement.textContent =
+            currentGlobalScore.toLocaleString() +
+            " / " +
+            totalPossible.toLocaleString();
+
+
+        /*
+         * Current profile score.
+         */
+
+        userScoreElement.textContent =
+            userScore.toLocaleString();
+
+
+        /*
+         * Shared goals score.
+         */
+
+        goalsScoreElement.textContent =
+            sharedGoalScore.toLocaleString();
+
+
+        /*
+         * Current profile name.
+         */
+
+        currentProfileNameElement.textContent =
+            profile
+                ? profile.name
+                : "Your";
+
+
+        /*
+         * Current profile achievement
+         * progress.
+         */
+
+        userScoreDetailElement.textContent =
+            achievementScore.toLocaleString() +
+            "G achievements • " +
+            profileAchievementPercent +
+            "%";
+
+
+        /*
+         * Global progress.
+         */
+
+        scoreProgressText.textContent =
+            currentGlobalScore.toLocaleString() +
+            " / " +
+            totalPossible.toLocaleString() +
+            " points • " +
+            completedGoals +
+            " / " +
+            totalGoals +
+            " goals • " +
+            completedAchievements +
+            " / " +
+            totalAchievements +
+            " achievements";
+
+
+        scoreBar.style.width =
+            globalPercent +
+            "%";
 
     }
 
@@ -3844,29 +4330,173 @@
     );
 
 
-    /*
-     * CREATE PROFILE
-     */
-
-    profileSaveButton.addEventListener(
+    editProfileButton.addEventListener(
         "click",
-        createProfileFromModal
+        openEditProfileModal
     );
 
 
-    profileCancelButton.addEventListener(
-        "click",
-        () => {
+    document
+        .getElementById(
+            "createProfileSubmit"
+        )
+        .addEventListener(
+            "click",
+            createProfileFromModal
+        );
 
-            closeModal(
-                profileModal
-            );
+
+    document
+        .getElementById(
+            "saveProfileButton"
+        )
+        .addEventListener(
+            "click",
+            saveEditedProfile
+        );
+
+
+    document
+        .getElementById(
+            "deleteProfileButton"
+        )
+        .addEventListener(
+            "click",
+            openDeleteProfileModal
+        );
+
+
+    document
+        .getElementById(
+            "confirmDeleteProfileButton"
+        )
+        .addEventListener(
+            "click",
+            confirmDeleteProfile
+        );
+
+
+    /*
+     * Close buttons.
+     */
+
+    document
+        .querySelectorAll(
+            "[data-close-modal]"
+        )
+        .forEach(
+            button => {
+
+                button.addEventListener(
+                    "click",
+                    () => {
+
+                        const modal =
+                            document.getElementById(
+                                button.dataset.closeModal
+                            );
+
+
+                        if (modal) {
+
+                            closeModal(
+                                modal
+                            );
+
+                        }
+
+                    }
+                );
+
+            }
+        );
+
+
+    /*
+     * Clicking outside a modal closes it.
+     */
+
+    document
+        .querySelectorAll(
+            ".modal-overlay"
+        )
+        .forEach(
+            overlay => {
+
+                overlay.addEventListener(
+                    "click",
+                    event => {
+
+                        if (
+                            event.target ===
+                            overlay
+                        ) {
+
+                            closeModal(
+                                overlay
+                            );
+
+                        }
+
+                    }
+                );
+
+            }
+        );
+
+
+    /*
+     * Escape closes the active modal.
+     */
+
+    document.addEventListener(
+        "keydown",
+        event => {
+
+            if (
+                event.key !==
+                "Escape"
+            ) {
+
+                return;
+
+            }
+
+
+            const activeModal =
+                document.querySelector(
+                    ".modal-overlay.active"
+                );
+
+
+            if (activeModal) {
+
+                if (
+                    activeModal ===
+                    confirmModal
+                ) {
+
+                    closeConfirmation();
+
+                } else {
+
+                    closeModal(
+                        activeModal
+                    );
+
+                }
+
+            }
 
         }
     );
 
 
-    profileNameInput.addEventListener(
+    /*
+     * Enter creates a profile.
+     */
+
+    createProfileName.addEventListener(
         "keydown",
         event => {
 
@@ -3886,40 +4516,10 @@
 
 
     /*
-     * EDIT PROFILE
+     * Enter saves profile changes.
      */
 
-    editProfileButton.addEventListener(
-        "click",
-        openEditProfileModal
-    );
-
-
-    editCancelButton.addEventListener(
-        "click",
-        () => {
-
-            closeModal(
-                editModal
-            );
-
-        }
-    );
-
-
-    editSaveButton.addEventListener(
-        "click",
-        saveEditedProfile
-    );
-
-
-    deleteProfileButton.addEventListener(
-        "click",
-        requestDeleteProfile
-    );
-
-
-    editProfileNameInput.addEventListener(
+    editProfileName.addEventListener(
         "keydown",
         event => {
 
@@ -3939,79 +4539,66 @@
 
 
     /*
-     * CONFIRMATION
-     */
-
-    confirmCancelButton.addEventListener(
-        "click",
-        closeConfirmation
-    );
-
-
-    confirmActionButton.addEventListener(
-        "click",
-        () => {
-
-            if (
-                typeof confirmationCallback ===
-                "function"
-            ) {
-
-                const callback =
-                    confirmationCallback;
-
-                confirmationCallback =
-                    null;
-
-                callback();
-
-            }
-
-        }
-    );
-
-
-    /*
-     * RESET
+     * =========================================================
+     * RESET SHARED GOALS
+     * =========================================================
+     *
+     * IMPORTANT:
+     *
+     * This does NOT reset achievements.
+     *
+     * Achievements belong to individual
+     * profiles and stay with those profiles.
      */
 
     resetButton.addEventListener(
         "click",
         () => {
 
-            const profile =
-                getActiveProfile();
+            const progress =
+                getSharedGoalsProgress();
 
 
-            if (!profile) {
+            const completedCount =
+                Object.values(
+                    progress
+                )
+                    .filter(
+                        value =>
+                            value === true
+                    )
+                    .length;
+
+
+            if (
+                completedCount ===
+                0
+            ) {
+
                 return;
+
             }
 
 
             openConfirmation(
                 "Reset Progress?",
-                'Reset all progress for "' +
-                profile.name +
-                '"?',
+                "Reset all shared survival goal progress? Player achievement progress will not be affected.",
                 "Reset",
                 () => {
 
-                    profile.progress = {};
-
-
-                    saveProfiles();
+                    saveSharedGoalsProgress(
+                        {}
+                    );
 
 
                     openCategoryId =
                         null;
 
 
-                    closeConfirmation();
-
-
                     render();
 
-                }
+                },
+                true
             );
 
         }
@@ -4025,6 +4612,14 @@
      */
 
     async function loadGoals() {
+
+        /*
+         * Load profiles independently of
+         * goals.json.
+         */
+
+        loadProfiles();
+
 
         try {
 
@@ -4069,6 +4664,10 @@
                 data.categories;
 
 
+            /*
+             * Verify every item has an ID.
+             */
+
             for (
                 const category
                 of goals
@@ -4092,13 +4691,6 @@
             }
 
 
-            loadProfiles();
-
-
-            openCategoryId =
-                null;
-
-
             loadingElement.style.display =
                 "none";
 
@@ -4118,6 +4710,14 @@
             errorElement.textContent =
                 "Could not load goals.json. " +
                 error.message;
+
+
+            /*
+             * Profiles still render even if
+             * goals.json fails.
+             */
+
+            renderProfiles();
 
         }
 
