@@ -48,6 +48,10 @@
                 sans-serif;
         }
 
+        body.modal-open {
+            overflow: hidden;
+        }
+
         button,
         input,
         select {
@@ -606,6 +610,155 @@
         }
 
         /*
+         * MODALS
+         */
+
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 1000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 18px;
+            background: rgba(0, 0, 0, 0.72);
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-overlay.open {
+            display: flex;
+        }
+
+        .modal {
+            width: min(430px, 100%);
+            background: var(--panel);
+            border: 1px solid var(--border-light);
+            border-radius: 14px;
+            box-shadow:
+                0 20px 60px rgba(0, 0, 0, 0.5);
+            overflow: hidden;
+            animation: modalIn 0.16s ease;
+        }
+
+        @keyframes modalIn {
+            from {
+                opacity: 0;
+                transform: translateY(8px) scale(0.98);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .modal-header {
+            padding: 18px 18px 14px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .modal-title {
+            margin: 0;
+            font-size: 19px;
+            line-height: 1.25;
+        }
+
+        .modal-subtitle {
+            margin: 6px 0 0;
+            color: var(--muted);
+            font-size: 13px;
+            line-height: 1.45;
+        }
+
+        .modal-body {
+            padding: 18px;
+        }
+
+        .modal-label {
+            display: block;
+            margin-bottom: 7px;
+            color: var(--muted);
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .modal-input {
+            width: 100%;
+            padding: 11px 12px;
+            border: 1px solid var(--border);
+            border-radius: 9px;
+            outline: none;
+            background: var(--panel-2);
+            color: var(--text);
+        }
+
+        .modal-input:focus {
+            border-color: var(--green);
+        }
+
+        .modal-error {
+            display: none;
+            margin-top: 8px;
+            color: #ff8b87;
+            font-size: 12px;
+        }
+
+        .modal-error.visible {
+            display: block;
+        }
+
+        .modal-footer {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            gap: 9px;
+            padding: 14px 18px;
+            border-top: 1px solid var(--border);
+        }
+
+        .modal-footer-spacer {
+            flex: 1;
+        }
+
+        .modal-button {
+            border: 1px solid var(--border);
+            background: var(--panel-2);
+            color: var(--text);
+            padding: 9px 13px;
+            border-radius: 9px;
+            cursor: pointer;
+            font-weight: 700;
+            transition:
+                background 0.15s ease,
+                border-color 0.15s ease,
+                color 0.15s ease;
+        }
+
+        .modal-button:hover {
+            background: var(--panel-3);
+            border-color: var(--border-light);
+        }
+
+        .modal-button.primary {
+            background: var(--green-dark);
+            border-color: var(--green-dark);
+        }
+
+        .modal-button.primary:hover {
+            background: #388e3c;
+            border-color: #388e3c;
+        }
+
+        .modal-button.danger {
+            color: #ff8b87;
+        }
+
+        .modal-button.danger:hover {
+            background: #251414;
+            border-color: var(--danger);
+        }
+
+        /*
          * MOBILE
          */
 
@@ -656,6 +809,23 @@
 
             .achievement-profile-panel {
                 padding: 13px 14px;
+            }
+
+            .modal-footer {
+                flex-wrap: wrap;
+            }
+
+            .modal-footer .modal-button {
+                flex: 1;
+            }
+
+            .modal-footer .modal-button.danger {
+                flex: 0 0 100%;
+                order: 3;
+            }
+
+            .modal-footer-spacer {
+                display: none;
             }
         }
 
@@ -877,23 +1047,240 @@
 </div>
 
 
+<!-- PROFILE MODAL -->
+
+<div
+    class="modal-overlay"
+    id="profileModal"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="profileModalTitle"
+>
+
+    <div class="modal">
+
+        <div class="modal-header">
+
+            <h2
+                class="modal-title"
+                id="profileModalTitle"
+            >
+                Create Profile
+            </h2>
+
+            <p
+                class="modal-subtitle"
+                id="profileModalSubtitle"
+            >
+                Choose a name for this profile.
+            </p>
+
+        </div>
+
+
+        <div class="modal-body">
+
+            <label
+                class="modal-label"
+                for="profileNameInput"
+            >
+                Profile Name
+            </label>
+
+            <input
+                type="text"
+                id="profileNameInput"
+                class="modal-input"
+                maxlength="40"
+                autocomplete="off"
+                placeholder="Enter profile name"
+            >
+
+            <div
+                class="modal-error"
+                id="profileModalError"
+            ></div>
+
+        </div>
+
+
+        <div class="modal-footer">
+
+            <div class="modal-footer-spacer"></div>
+
+            <button
+                type="button"
+                class="modal-button"
+                id="profileCancelButton"
+            >
+                Cancel
+            </button>
+
+            <button
+                type="button"
+                class="modal-button primary"
+                id="profileSaveButton"
+            >
+                Create
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- EDIT PROFILE MODAL -->
+
+<div
+    class="modal-overlay"
+    id="editModal"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="editModalTitle"
+>
+
+    <div class="modal">
+
+        <div class="modal-header">
+
+            <h2
+                class="modal-title"
+                id="editModalTitle"
+            >
+                Edit Profile
+            </h2>
+
+            <p class="modal-subtitle">
+                Change the name or delete this profile.
+            </p>
+
+        </div>
+
+
+        <div class="modal-body">
+
+            <label
+                class="modal-label"
+                for="editProfileNameInput"
+            >
+                Profile Name
+            </label>
+
+            <input
+                type="text"
+                id="editProfileNameInput"
+                class="modal-input"
+                maxlength="40"
+                autocomplete="off"
+            >
+
+            <div
+                class="modal-error"
+                id="editModalError"
+            ></div>
+
+        </div>
+
+
+        <div class="modal-footer">
+
+            <button
+                type="button"
+                class="modal-button danger"
+                id="deleteProfileButton"
+            >
+                Delete Profile
+            </button>
+
+            <div class="modal-footer-spacer"></div>
+
+            <button
+                type="button"
+                class="modal-button"
+                id="editCancelButton"
+            >
+                Cancel
+            </button>
+
+            <button
+                type="button"
+                class="modal-button primary"
+                id="editSaveButton"
+            >
+                Save Changes
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- CONFIRMATION MODAL -->
+
+<div
+    class="modal-overlay"
+    id="confirmModal"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="confirmModalTitle"
+>
+
+    <div class="modal">
+
+        <div class="modal-header">
+
+            <h2
+                class="modal-title"
+                id="confirmModalTitle"
+            >
+                Confirm Action
+            </h2>
+
+            <p
+                class="modal-subtitle"
+                id="confirmModalMessage"
+            ></p>
+
+        </div>
+
+
+        <div class="modal-footer">
+
+            <div class="modal-footer-spacer"></div>
+
+            <button
+                type="button"
+                class="modal-button"
+                id="confirmCancelButton"
+            >
+                Cancel
+            </button>
+
+            <button
+                type="button"
+                class="modal-button danger"
+                id="confirmActionButton"
+            >
+                Confirm
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
 <script>
 
     /*
      * =========================================================
      * SETTINGS
      * =========================================================
-     *
-     * This is the main place to change how goal scoring works.
-     *
-     * Example:
-     *
-     * "easy": 10
-     * "medium": 25
-     * "hard": 50
-     * "epic": 100
-     *
-     * Change these numbers whenever you want.
      */
 
     const DIFFICULTY_SCORES = {
@@ -1017,6 +1404,130 @@
 
 
     /*
+     * Profile creation modal
+     */
+
+    const profileModal =
+        document.getElementById(
+            "profileModal"
+        );
+
+
+    const profileModalTitle =
+        document.getElementById(
+            "profileModalTitle"
+        );
+
+
+    const profileModalSubtitle =
+        document.getElementById(
+            "profileModalSubtitle"
+        );
+
+
+    const profileNameInput =
+        document.getElementById(
+            "profileNameInput"
+        );
+
+
+    const profileModalError =
+        document.getElementById(
+            "profileModalError"
+        );
+
+
+    const profileCancelButton =
+        document.getElementById(
+            "profileCancelButton"
+        );
+
+
+    const profileSaveButton =
+        document.getElementById(
+            "profileSaveButton"
+        );
+
+
+    /*
+     * Edit modal
+     */
+
+    const editModal =
+        document.getElementById(
+            "editModal"
+        );
+
+
+    const editProfileNameInput =
+        document.getElementById(
+            "editProfileNameInput"
+        );
+
+
+    const editModalError =
+        document.getElementById(
+            "editModalError"
+        );
+
+
+    const editCancelButton =
+        document.getElementById(
+            "editCancelButton"
+        );
+
+
+    const editSaveButton =
+        document.getElementById(
+            "editSaveButton"
+        );
+
+
+    const deleteProfileButton =
+        document.getElementById(
+            "deleteProfileButton"
+        );
+
+
+    /*
+     * Confirmation modal
+     */
+
+    const confirmModal =
+        document.getElementById(
+            "confirmModal"
+        );
+
+
+    const confirmModalTitle =
+        document.getElementById(
+            "confirmModalTitle"
+        );
+
+
+    const confirmModalMessage =
+        document.getElementById(
+            "confirmModalMessage"
+        );
+
+
+    const confirmCancelButton =
+        document.getElementById(
+            "confirmCancelButton"
+        );
+
+
+    const confirmActionButton =
+        document.getElementById(
+            "confirmActionButton"
+        );
+
+
+    let confirmationCallback =
+        null;
+
+
+    /*
      * =========================================================
      * STATE
      * =========================================================
@@ -1028,13 +1539,251 @@
 
     let activeProfileId = null;
 
+    let openCategoryId = null;
+
+
     /*
-     * Only one category can be open.
-     *
-     * null means everything is collapsed.
+     * =========================================================
+     * MODAL HELPERS
+     * =========================================================
      */
 
-    let openCategoryId = null;
+    function openModal(
+        modal
+    ) {
+
+        modal.classList.add(
+            "open"
+        );
+
+        document.body.classList.add(
+            "modal-open"
+        );
+
+    }
+
+
+    function closeModal(
+        modal
+    ) {
+
+        modal.classList.remove(
+            "open"
+        );
+
+
+        if (
+            !document.querySelector(
+                ".modal-overlay.open"
+            )
+        ) {
+
+            document.body.classList.remove(
+                "modal-open"
+            );
+
+        }
+
+    }
+
+
+    function showProfileError(
+        message
+    ) {
+
+        profileModalError.textContent =
+            message;
+
+        profileModalError.classList.add(
+            "visible"
+        );
+
+    }
+
+
+    function clearProfileError() {
+
+        profileModalError.textContent =
+            "";
+
+        profileModalError.classList.remove(
+            "visible"
+        );
+
+    }
+
+
+    function showEditError(
+        message
+    ) {
+
+        editModalError.textContent =
+            message;
+
+        editModalError.classList.add(
+            "visible"
+        );
+
+    }
+
+
+    function clearEditError() {
+
+        editModalError.textContent =
+            "";
+
+        editModalError.classList.remove(
+            "visible"
+        );
+
+    }
+
+
+    function openConfirmation(
+        title,
+        message,
+        actionText,
+        callback
+    ) {
+
+        confirmModalTitle.textContent =
+            title;
+
+        confirmModalMessage.textContent =
+            message;
+
+        confirmActionButton.textContent =
+            actionText;
+
+        confirmationCallback =
+            callback;
+
+
+        openModal(
+            confirmModal
+        );
+
+    }
+
+
+    function closeConfirmation() {
+
+        confirmationCallback =
+            null;
+
+        closeModal(
+            confirmModal
+        );
+
+    }
+
+
+    /*
+     * Clicking outside a modal closes it.
+     * Confirmation modals intentionally also
+     * close without performing the action.
+     */
+
+    [
+        profileModal,
+        editModal,
+        confirmModal
+    ].forEach(
+        modal => {
+
+            modal.addEventListener(
+                "click",
+                event => {
+
+                    if (
+                        event.target ===
+                        modal
+                    ) {
+
+                        if (
+                            modal ===
+                            confirmModal
+                        ) {
+
+                            closeConfirmation();
+
+                        } else {
+
+                            closeModal(
+                                modal
+                            );
+
+                        }
+
+                    }
+
+                }
+            );
+
+        }
+    );
+
+
+    /*
+     * Escape closes whichever modal is open.
+     */
+
+    document.addEventListener(
+        "keydown",
+        event => {
+
+            if (
+                event.key !==
+                "Escape"
+            ) {
+
+                return;
+
+            }
+
+
+            if (
+                confirmModal.classList.contains(
+                    "open"
+                )
+            ) {
+
+                closeConfirmation();
+
+                return;
+
+            }
+
+
+            if (
+                editModal.classList.contains(
+                    "open"
+                )
+            ) {
+
+                closeModal(
+                    editModal
+                );
+
+                return;
+
+            }
+
+
+            if (
+                profileModal.classList.contains(
+                    "open"
+                )
+            ) {
+
+                closeModal(
+                    profileModal
+                );
+
+            }
+
+        }
+    );
 
 
     /*
@@ -1253,11 +2002,6 @@
         category
     ) {
 
-        /*
-         * Xbox achievements use their
-         * actual Gamerscore.
-         */
-
         if (
             isAchievementCategory(
                 category
@@ -1272,18 +2016,6 @@
 
         }
 
-
-        /*
-         * A goal can optionally have a
-         * direct score in goals.json.
-         *
-         * Example:
-         *
-         * "score": 75
-         *
-         * If no direct score exists,
-         * difficulty determines it.
-         */
 
         if (
             typeof item.score ===
@@ -1700,12 +2432,6 @@
                     saveActiveProfile();
 
 
-                    /*
-                     * Keep all categories
-                     * collapsed after switching
-                     * profiles.
-                     */
-
                     openCategoryId =
                         null;
 
@@ -1748,7 +2474,7 @@
 
             add.addEventListener(
                 "click",
-                addProfile
+                openCreateProfileModal
             );
 
 
@@ -1761,17 +2487,86 @@
     }
 
 
-    function addProfile() {
+    /*
+     * =========================================================
+     * CREATE PROFILE
+     * =========================================================
+     */
+
+    function openCreateProfileModal() {
 
         if (
             profiles.length >=
             MAX_PROFILES
         ) {
 
-            alert(
+            openConfirmation(
+                "Profile Limit Reached",
                 "You can have up to " +
                 MAX_PROFILES +
-                " profiles."
+                " profiles.",
+                "OK",
+                () => {
+
+                    closeConfirmation();
+
+                }
+            );
+
+            return;
+
+        }
+
+
+        profileModalTitle.textContent =
+            "Create Profile";
+
+
+        profileModalSubtitle.textContent =
+            "Choose a name for this profile.";
+
+
+        profileSaveButton.textContent =
+            "Create";
+
+
+        profileNameInput.value =
+            "";
+
+
+        profileNameInput.placeholder =
+            "Enter profile name";
+
+
+        clearProfileError();
+
+
+        openModal(
+            profileModal
+        );
+
+
+        setTimeout(
+            () => {
+
+                profileNameInput.focus();
+
+            },
+            0
+        );
+
+    }
+
+
+    function createProfileFromModal() {
+
+        if (
+            profiles.length >=
+            MAX_PROFILES
+        ) {
+
+            closeModal(
+                profileModal
             );
 
             return;
@@ -1780,15 +2575,16 @@
 
 
         const name =
-            prompt(
-                "Enter a name for the new profile:"
+            profileNameInput.value.trim();
+
+
+        if (!name) {
+
+            showProfileError(
+                "Please enter a profile name."
             );
 
-
-        if (
-            !name ||
-            !name.trim()
-        ) {
+            profileNameInput.focus();
 
             return;
 
@@ -1796,15 +2592,17 @@
 
 
         const profile = {
+
             id:
                 createId(
                     "profile"
                 ),
 
             name:
-                name.trim(),
+                name,
 
             progress: {}
+
         };
 
 
@@ -1826,12 +2624,60 @@
             null;
 
 
+        closeModal(
+            profileModal
+        );
+
+
         render();
 
     }
 
 
-    function editActiveProfile() {
+    /*
+     * =========================================================
+     * EDIT PROFILE
+     * =========================================================
+     */
+
+    function openEditProfileModal() {
+
+        const profile =
+            getActiveProfile();
+
+
+        if (!profile) {
+            return;
+        }
+
+
+        editProfileNameInput.value =
+            profile.name;
+
+
+        clearEditError();
+
+
+        openModal(
+            editModal
+        );
+
+
+        setTimeout(
+            () => {
+
+                editProfileNameInput.focus();
+
+                editProfileNameInput.select();
+
+            },
+            0
+        );
+
+    }
+
+
+    function saveEditedProfile() {
 
         const profile =
             getActiveProfile();
@@ -1843,16 +2689,16 @@
 
 
         const newName =
-            prompt(
-                "Edit profile name:",
-                profile.name
+            editProfileNameInput.value.trim();
+
+
+        if (!newName) {
+
+            showEditError(
+                "Please enter a profile name."
             );
 
-
-        if (
-            !newName ||
-            !newName.trim()
-        ) {
+            editProfileNameInput.focus();
 
             return;
 
@@ -1860,10 +2706,15 @@
 
 
         profile.name =
-            newName.trim();
+            newName;
 
 
         saveProfiles();
+
+
+        closeModal(
+            editModal
+        );
 
 
         render();
@@ -1871,15 +2722,33 @@
     }
 
 
-    function deleteActiveProfile() {
+    /*
+     * =========================================================
+     * DELETE PROFILE
+     * =========================================================
+     */
+
+    function requestDeleteProfile() {
 
         if (
             profiles.length <=
             1
         ) {
 
-            alert(
-                "You must keep at least one profile."
+            closeModal(
+                editModal
+            );
+
+
+            openConfirmation(
+                "Cannot Delete Profile",
+                "You must keep at least one profile.",
+                "OK",
+                () => {
+
+                    closeConfirmation();
+
+                }
             );
 
             return;
@@ -1896,29 +2765,53 @@
         }
 
 
-        const confirmed =
-            confirm(
-                'Delete "' +
-                profile.name +
-                '" and all of its progress?'
-            );
+        closeModal(
+            editModal
+        );
 
 
-        if (!confirmed) {
-            return;
-        }
+        openConfirmation(
+            "Delete Profile?",
+            'Delete "' +
+            profile.name +
+            '" and all of its progress?',
+            "Delete",
+            () => {
 
+                deleteProfile(
+                    profile.id
+                );
+
+            }
+        );
+
+    }
+
+
+    function deleteProfile(
+        profileId
+    ) {
 
         profiles =
             profiles.filter(
-                item =>
-                    item.id !==
-                    profile.id
+                profile =>
+                    profile.id !==
+                    profileId
             );
 
 
-        activeProfileId =
-            profiles[0].id;
+        if (
+            !profiles.some(
+                profile =>
+                    profile.id ===
+                    activeProfileId
+            )
+        ) {
+
+            activeProfileId =
+                profiles[0].id;
+
+        }
 
 
         saveProfiles();
@@ -1928,6 +2821,9 @@
 
         openCategoryId =
             null;
+
+
+        closeConfirmation();
 
 
         render();
@@ -2550,13 +3446,6 @@
             category.id;
 
 
-        /*
-         * Only the selected category
-         * is open.
-         *
-         * null = all collapsed.
-         */
-
         if (
             openCategoryId !==
             category.id
@@ -2949,68 +3838,142 @@
         "input",
         () => {
 
-            /*
-             * Searching shouldn't force
-             * categories open.
-             */
-
             render();
 
         }
     );
 
 
-    editProfileButton.addEventListener(
+    /*
+     * CREATE PROFILE
+     */
+
+    profileSaveButton.addEventListener(
+        "click",
+        createProfileFromModal
+    );
+
+
+    profileCancelButton.addEventListener(
         "click",
         () => {
 
-            const profile =
-                getActiveProfile();
+            closeModal(
+                profileModal
+            );
+
+        }
+    );
 
 
-            if (!profile) {
-                return;
-            }
-
-
-            const action =
-                prompt(
-                    "Profile: " +
-                    profile.name +
-                    "\n\nType:\nrename\nor\ndelete"
-                );
-
-
-            if (!action) {
-                return;
-            }
-
-
-            const normalized =
-                action
-                    .trim()
-                    .toLowerCase();
-
+    profileNameInput.addEventListener(
+        "keydown",
+        event => {
 
             if (
-                normalized ===
-                "rename"
+                event.key ===
+                "Enter"
             ) {
 
-                editActiveProfile();
+                event.preventDefault();
 
-            } else if (
-                normalized ===
-                "delete"
-            ) {
-
-                deleteActiveProfile();
+                createProfileFromModal();
 
             }
 
         }
     );
 
+
+    /*
+     * EDIT PROFILE
+     */
+
+    editProfileButton.addEventListener(
+        "click",
+        openEditProfileModal
+    );
+
+
+    editCancelButton.addEventListener(
+        "click",
+        () => {
+
+            closeModal(
+                editModal
+            );
+
+        }
+    );
+
+
+    editSaveButton.addEventListener(
+        "click",
+        saveEditedProfile
+    );
+
+
+    deleteProfileButton.addEventListener(
+        "click",
+        requestDeleteProfile
+    );
+
+
+    editProfileNameInput.addEventListener(
+        "keydown",
+        event => {
+
+            if (
+                event.key ===
+                "Enter"
+            ) {
+
+                event.preventDefault();
+
+                saveEditedProfile();
+
+            }
+
+        }
+    );
+
+
+    /*
+     * CONFIRMATION
+     */
+
+    confirmCancelButton.addEventListener(
+        "click",
+        closeConfirmation
+    );
+
+
+    confirmActionButton.addEventListener(
+        "click",
+        () => {
+
+            if (
+                typeof confirmationCallback ===
+                "function"
+            ) {
+
+                const callback =
+                    confirmationCallback;
+
+                confirmationCallback =
+                    null;
+
+                callback();
+
+            }
+
+        }
+    );
+
+
+    /*
+     * RESET
+     */
 
     resetButton.addEventListener(
         "click",
@@ -3025,30 +3988,31 @@
             }
 
 
-            const confirmed =
-                confirm(
-                    'Reset all progress for "' +
-                    profile.name +
-                    '"?'
-                );
+            openConfirmation(
+                "Reset Progress?",
+                'Reset all progress for "' +
+                profile.name +
+                '"?',
+                "Reset",
+                () => {
+
+                    profile.progress = {};
 
 
-            if (!confirmed) {
-                return;
-            }
+                    saveProfiles();
 
 
-            profile.progress = {};
+                    openCategoryId =
+                        null;
 
 
-            saveProfiles();
+                    closeConfirmation();
 
 
-            openCategoryId =
-                null;
+                    render();
 
-
-            render();
+                }
+            );
 
         }
     );
@@ -3105,10 +4069,6 @@
                 data.categories;
 
 
-            /*
-             * Make sure every item has an ID.
-             */
-
             for (
                 const category
                 of goals
@@ -3132,18 +4092,8 @@
             }
 
 
-            /*
-             * Profiles are loaded after the
-             * goal data so their scores can
-             * immediately be calculated.
-             */
-
             loadProfiles();
 
-
-            /*
-             * Everything starts collapsed.
-             */
 
             openCategoryId =
                 null;
