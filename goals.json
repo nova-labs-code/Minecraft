@@ -1,9 +1,15 @@
 {
-  "version": 2,
+  "version": 3,
   "game": "Minecraft Bedrock Edition",
   "platform": "Xbox",
   "achievementCount": 133,
   "achievementGamerscore": 2980,
+  "goalScoring": {
+    "easy": 10,
+    "medium": 25,
+    "hard": 50,
+    "epic": 100
+  },
   "categories": [
     {
       "id": "day-1",
@@ -11,43 +17,53 @@
       "items": [
         {
           "id": "punch-tree",
-          "text": "Collect your first logs"
+          "text": "Collect your first logs",
+          "difficulty": "easy"
         },
         {
           "id": "craft-table",
-          "text": "Craft a Crafting Table"
+          "text": "Craft a Crafting Table",
+          "difficulty": "easy"
         },
         {
           "id": "craft-tools",
-          "text": "Craft a wooden pickaxe, axe, shovel and sword"
+          "text": "Craft a wooden pickaxe, axe, shovel and sword",
+          "difficulty": "easy"
         },
         {
           "id": "stone-tools",
-          "text": "Upgrade to stone tools"
+          "text": "Upgrade to stone tools",
+          "difficulty": "easy"
         },
         {
           "id": "get-food",
-          "text": "Collect a reliable food supply"
+          "text": "Collect a reliable food supply",
+          "difficulty": "easy"
         },
         {
           "id": "make-shelter",
-          "text": "Build a temporary shelter"
+          "text": "Build a temporary shelter",
+          "difficulty": "easy"
         },
         {
           "id": "make-bed",
-          "text": "Craft and place a bed"
+          "text": "Craft and place a bed",
+          "difficulty": "easy"
         },
         {
           "id": "make-furnace",
-          "text": "Craft a furnace"
+          "text": "Craft a furnace",
+          "difficulty": "easy"
         },
         {
           "id": "make-storage",
-          "text": "Set up basic storage"
+          "text": "Set up basic storage",
+          "difficulty": "easy"
         },
         {
           "id": "secure-base",
-          "text": "Light up your base and surrounding area"
+          "text": "Light up your base and surrounding area",
+          "difficulty": "easy"
         }
       ]
     },
@@ -57,47 +73,58 @@
       "items": [
         {
           "id": "iron-tools",
-          "text": "Craft a full set of iron tools"
+          "text": "Craft a full set of iron tools",
+          "difficulty": "medium"
         },
         {
           "id": "iron-armor",
-          "text": "Craft a full set of iron armor"
+          "text": "Craft a full set of iron armor",
+          "difficulty": "medium"
         },
         {
           "id": "shield",
-          "text": "Craft a shield"
+          "text": "Craft a shield",
+          "difficulty": "easy"
         },
         {
           "id": "bucket",
-          "text": "Craft a bucket"
+          "text": "Craft a bucket",
+          "difficulty": "easy"
         },
         {
           "id": "shears",
-          "text": "Craft shears"
+          "text": "Craft shears",
+          "difficulty": "easy"
         },
         {
           "id": "flint-steel",
-          "text": "Craft flint and steel"
+          "text": "Craft flint and steel",
+          "difficulty": "easy"
         },
         {
           "id": "enchanting-table",
-          "text": "Craft an enchanting table"
+          "text": "Craft an enchanting table",
+          "difficulty": "hard"
         },
         {
           "id": "bookshelves",
-          "text": "Build an enchanting setup with bookshelves"
+          "text": "Build an enchanting setup with bookshelves",
+          "difficulty": "hard"
         },
         {
           "id": "diamond-pickaxe",
-          "text": "Craft a diamond pickaxe"
+          "text": "Craft a diamond pickaxe",
+          "difficulty": "hard"
         },
         {
           "id": "diamond-armor",
-          "text": "Craft diamond armor"
+          "text": "Craft diamond armor",
+          "difficulty": "hard"
         },
         {
           "id": "nether-portal",
-          "text": "Build and activate a Nether portal"
+          "text": "Build and activate a Nether portal",
+          "difficulty": "medium"
         }
       ]
     },
@@ -107,51 +134,98 @@
       "items": [
         {
           "id": "main-base",
-          "text": "Build a permanent main base"
+          "text": "Build a permanent main base",
+          "difficulty": "hard"
         },
         {
           "id": "storage-room",
-          "text": "Build an organized storage room"
+          "text": "Build an organized storage room",
+          "difficulty": "medium"
         },
         {
           "id": "smelting-room",
-          "text": "Build a dedicated smelting area"
+          "text": "Build a dedicated smelting area",
+          "difficulty": "medium"
         },
         {
           "id": "enchanting-room",
-          "text": "Build a dedicated enchanting room"
+          "text": "Build a dedicated enchanting room",
+          "difficulty": "medium"
         },
         {
           "id": "map-wall",
-          "text": "Create a map wall"
+          "text": "Create a map wall",
+          "difficulty": "hard"
         },
         {
           "id": "nether-hub",
-          "text": "Build a Nether hub"
+          "text": "Build a Nether hub",
+          "difficulty": "hard"
         },
         {
           "id": "roads",
-          "text": "Connect important locations with roads or paths"
+          "text": "Connect important locations with roads or paths",
+          "difficulty": "medium"
         },
         {
           "id": "bridge",
-          "text": "Build a major bridge"
+          "text": "Build a major bridge",
+          "difficulty": "hard"
         },
         {
           "id": "watchtower",
-          "text": "Build a watchtower"
+          "text": "Build a watchtower",
+          "difficulty": "medium"
         },
         {
           "id": "wall",
-          "text": "Build a defensive wall around your settlement"
+          "text": "Build a defensive wall around your settlement",
+          "difficulty": "hard"
         },
         {
           "id": "moat",
-          "text": "Build a moat or defensive trench"
+          "text": "Build a moat or defensive trench",
+          "difficulty": "hard"
         },
         {
           "id": "kingdom",
-          "text": "Turn your base into a full settlement or kingdom"
+          "text": "Turn your base into a full settlement or kingdom",
+          "difficulty": "epic"
+        },
+        {
+          "id": "castle",
+          "text": "Build a large castle or fortress",
+          "difficulty": "epic"
+        },
+        {
+          "id": "castle-throne-room",
+          "text": "Build a decorated throne room",
+          "difficulty": "hard"
+        },
+        {
+          "id": "kingdom-gates",
+          "text": "Build a grand entrance gate for your settlement",
+          "difficulty": "hard"
+        },
+        {
+          "id": "town-square",
+          "text": "Build a central town square",
+          "difficulty": "medium"
+        },
+        {
+          "id": "villager-homes",
+          "text": "Build individual homes for your villagers",
+          "difficulty": "hard"
+        },
+        {
+          "id": "harbor",
+          "text": "Build a harbor or dock",
+          "difficulty": "hard"
+        },
+        {
+          "id": "custom-landmark",
+          "text": "Build a unique landmark that represents your world",
+          "difficulty": "hard"
         }
       ]
     },
@@ -161,47 +235,78 @@
       "items": [
         {
           "id": "coal",
-          "text": "Collect a large supply of coal"
+          "text": "Collect a large supply of coal",
+          "difficulty": "easy"
         },
         {
           "id": "iron",
-          "text": "Collect a large supply of iron"
+          "text": "Collect a large supply of iron",
+          "difficulty": "medium"
         },
         {
           "id": "copper",
-          "text": "Collect a large supply of copper"
+          "text": "Collect a large supply of copper",
+          "difficulty": "medium"
         },
         {
           "id": "gold",
-          "text": "Collect a large supply of gold"
+          "text": "Collect a large supply of gold",
+          "difficulty": "medium"
         },
         {
           "id": "redstone",
-          "text": "Collect a large supply of redstone"
+          "text": "Collect a large supply of redstone",
+          "difficulty": "medium"
         },
         {
           "id": "lapis",
-          "text": "Collect a large supply of lapis lazuli"
+          "text": "Collect a large supply of lapis lazuli",
+          "difficulty": "easy"
         },
         {
           "id": "diamonds",
-          "text": "Build up a diamond supply"
+          "text": "Build up a diamond supply",
+          "difficulty": "hard"
         },
         {
           "id": "emeralds",
-          "text": "Collect emeralds"
+          "text": "Collect emeralds",
+          "difficulty": "medium"
         },
         {
           "id": "ancient-debris",
-          "text": "Find ancient debris"
+          "text": "Find ancient debris",
+          "difficulty": "hard"
         },
         {
           "id": "netherite",
-          "text": "Craft a Netherite item"
+          "text": "Craft a Netherite item",
+          "difficulty": "hard"
         },
         {
           "id": "ore-collection",
-          "text": "Collect at least one of every overworld ore"
+          "text": "Collect at least one of every overworld ore",
+          "difficulty": "hard"
+        },
+        {
+          "id": "diamond-stack",
+          "text": "Collect a full stack of diamonds",
+          "difficulty": "epic"
+        },
+        {
+          "id": "netherite-stack",
+          "text": "Build up a large supply of Netherite",
+          "difficulty": "epic"
+        },
+        {
+          "id": "deep-mine",
+          "text": "Create a large underground mining network",
+          "difficulty": "hard"
+        },
+        {
+          "id": "resource-room",
+          "text": "Create a dedicated room for valuable resources",
+          "difficulty": "medium"
         }
       ]
     },
@@ -211,63 +316,103 @@
       "items": [
         {
           "id": "wheat-farm",
-          "text": "Build a wheat farm"
+          "text": "Build a wheat farm",
+          "difficulty": "easy"
         },
         {
           "id": "carrot-farm",
-          "text": "Build a carrot farm"
+          "text": "Build a carrot farm",
+          "difficulty": "easy"
         },
         {
           "id": "potato-farm",
-          "text": "Build a potato farm"
+          "text": "Build a potato farm",
+          "difficulty": "easy"
         },
         {
           "id": "beetroot-farm",
-          "text": "Build a beetroot farm"
+          "text": "Build a beetroot farm",
+          "difficulty": "easy"
         },
         {
           "id": "sugar-cane-farm",
-          "text": "Build a sugar cane farm"
+          "text": "Build a sugar cane farm",
+          "difficulty": "easy"
         },
         {
           "id": "bamboo-farm",
-          "text": "Build a bamboo farm"
+          "text": "Build a bamboo farm",
+          "difficulty": "easy"
         },
         {
           "id": "pumpkin-farm",
-          "text": "Build a pumpkin farm"
+          "text": "Build a pumpkin farm",
+          "difficulty": "medium"
         },
         {
           "id": "melon-farm",
-          "text": "Build a melon farm"
+          "text": "Build a melon farm",
+          "difficulty": "medium"
         },
         {
           "id": "animal-farm",
-          "text": "Build an animal breeding area"
+          "text": "Build an animal breeding area",
+          "difficulty": "medium"
         },
         {
           "id": "cow-farm",
-          "text": "Build a cow farm"
+          "text": "Build a cow farm",
+          "difficulty": "medium"
         },
         {
           "id": "chicken-farm",
-          "text": "Build a chicken farm"
+          "text": "Build a chicken farm",
+          "difficulty": "medium"
         },
         {
           "id": "sheep-farm",
-          "text": "Build a sheep farm"
+          "text": "Build a sheep farm",
+          "difficulty": "medium"
         },
         {
           "id": "villager-farm",
-          "text": "Build a villager trading area"
+          "text": "Build a villager trading area",
+          "difficulty": "hard"
         },
         {
           "id": "xp-farm",
-          "text": "Build an XP farm"
+          "text": "Build an XP farm",
+          "difficulty": "hard"
         },
         {
           "id": "iron-farm",
-          "text": "Build an iron farm"
+          "text": "Build an iron farm",
+          "difficulty": "hard"
+        },
+        {
+          "id": "tree-farm",
+          "text": "Build a renewable tree farm",
+          "difficulty": "medium"
+        },
+        {
+          "id": "flower-farm",
+          "text": "Build a flower farm or garden",
+          "difficulty": "medium"
+        },
+        {
+          "id": "honey-farm",
+          "text": "Build a honey or honeycomb farm",
+          "difficulty": "medium"
+        },
+        {
+          "id": "raid-farm",
+          "text": "Build a raid farm",
+          "difficulty": "epic"
+        },
+        {
+          "id": "gold-farm",
+          "text": "Build a gold farm",
+          "difficulty": "epic"
         }
       ]
     },
@@ -277,35 +422,58 @@
       "items": [
         {
           "id": "find-village",
-          "text": "Find a village"
+          "text": "Find a village",
+          "difficulty": "easy"
         },
         {
           "id": "protect-village",
-          "text": "Secure a village from hostile mobs"
+          "text": "Secure a village from hostile mobs",
+          "difficulty": "medium"
         },
         {
           "id": "breed-villagers",
-          "text": "Breed villagers"
+          "text": "Breed villagers",
+          "difficulty": "medium"
         },
         {
           "id": "librarian",
-          "text": "Create a librarian villager"
+          "text": "Create a librarian villager",
+          "difficulty": "medium"
         },
         {
           "id": "mending",
-          "text": "Obtain a Mending trade"
+          "text": "Obtain a Mending trade",
+          "difficulty": "hard"
         },
         {
           "id": "max-trader",
-          "text": "Level a villager to Master"
+          "text": "Level a villager to Master",
+          "difficulty": "medium"
         },
         {
           "id": "trading-hall",
-          "text": "Build a villager trading hall"
+          "text": "Build a villager trading hall",
+          "difficulty": "hard"
         },
         {
           "id": "raid",
-          "text": "Defend a village from a raid"
+          "text": "Defend a village from a raid",
+          "difficulty": "hard"
+        },
+        {
+          "id": "all-professions",
+          "text": "Have villagers representing every profession",
+          "difficulty": "hard"
+        },
+        {
+          "id": "emerald-fortune",
+          "text": "Build a large emerald supply through trading",
+          "difficulty": "hard"
+        },
+        {
+          "id": "max-villager-network",
+          "text": "Create a fully organized villager trading network",
+          "difficulty": "epic"
         }
       ]
     },
@@ -315,43 +483,68 @@
       "items": [
         {
           "id": "enter-nether",
-          "text": "Enter the Nether"
+          "text": "Enter the Nether",
+          "difficulty": "medium"
         },
         {
           "id": "nether-fortress",
-          "text": "Find a Nether Fortress"
+          "text": "Find a Nether Fortress",
+          "difficulty": "hard"
         },
         {
           "id": "blaze-rods",
-          "text": "Collect blaze rods"
+          "text": "Collect blaze rods",
+          "difficulty": "hard"
         },
         {
           "id": "nether-wart",
-          "text": "Collect Nether Wart"
+          "text": "Collect Nether Wart",
+          "difficulty": "medium"
         },
         {
           "id": "piglin-barter",
-          "text": "Trade with Piglins"
+          "text": "Trade with Piglins",
+          "difficulty": "medium"
         },
         {
           "id": "bastion",
-          "text": "Find a Bastion Remnant"
+          "text": "Find a Bastion Remnant",
+          "difficulty": "hard"
         },
         {
           "id": "ancient-city",
-          "text": "Find an Ancient City"
+          "text": "Find an Ancient City",
+          "difficulty": "epic"
         },
         {
           "id": "netherite-upgrade",
-          "text": "Upgrade equipment to Netherite"
+          "text": "Upgrade equipment to Netherite",
+          "difficulty": "hard"
         },
         {
           "id": "nether-roads",
-          "text": "Build a safe Nether travel route"
+          "text": "Build a safe Nether travel route",
+          "difficulty": "hard"
         },
         {
           "id": "all-nether-biomes",
-          "text": "Visit every Nether biome"
+          "text": "Visit every Nether biome",
+          "difficulty": "hard"
+        },
+        {
+          "id": "nether-base",
+          "text": "Build a permanent Nether base",
+          "difficulty": "hard"
+        },
+        {
+          "id": "nether-fortress-base",
+          "text": "Build a fortified base near a Nether Fortress",
+          "difficulty": "epic"
+        },
+        {
+          "id": "nether-highway",
+          "text": "Build a long-distance Nether highway",
+          "difficulty": "epic"
         }
       ]
     },
@@ -361,39 +554,58 @@
       "items": [
         {
           "id": "brewing-stand",
-          "text": "Craft a Brewing Stand"
+          "text": "Craft a Brewing Stand",
+          "difficulty": "medium"
         },
         {
           "id": "water-bottles",
-          "text": "Make water bottles"
+          "text": "Make water bottles",
+          "difficulty": "easy"
         },
         {
           "id": "awkward-potions",
-          "text": "Brew Awkward Potions"
+          "text": "Brew Awkward Potions",
+          "difficulty": "medium"
         },
         {
           "id": "useful-potions",
-          "text": "Brew useful combat or exploration potions"
+          "text": "Brew useful combat or exploration potions",
+          "difficulty": "medium"
         },
         {
           "id": "enchant-tools",
-          "text": "Enchant your main tools"
+          "text": "Enchant your main tools",
+          "difficulty": "medium"
         },
         {
           "id": "enchant-armor",
-          "text": "Enchant a full set of armor"
+          "text": "Enchant a full set of armor",
+          "difficulty": "hard"
         },
         {
           "id": "max-enchanting",
-          "text": "Create a level 30 enchanting setup"
+          "text": "Create a level 30 enchanting setup",
+          "difficulty": "hard"
         },
         {
           "id": "anvil",
-          "text": "Craft an anvil"
+          "text": "Craft an anvil",
+          "difficulty": "medium"
         },
         {
           "id": "mending-gear",
-          "text": "Put Mending on important equipment"
+          "text": "Put Mending on important equipment",
+          "difficulty": "hard"
+        },
+        {
+          "id": "max-enchant-gear",
+          "text": "Create a fully optimized enchanted gear set",
+          "difficulty": "epic"
+        },
+        {
+          "id": "potion-library",
+          "text": "Create a storage area containing your main potion types",
+          "difficulty": "hard"
         }
       ]
     },
@@ -403,23 +615,33 @@
       "items": [
         {
           "id": "eyes-of-ender",
-          "text": "Craft Eyes of Ender"
+          "text": "Craft Eyes of Ender",
+          "difficulty": "hard"
         },
         {
           "id": "find-stronghold",
-          "text": "Locate a Stronghold"
+          "text": "Locate a Stronghold",
+          "difficulty": "hard"
         },
         {
           "id": "activate-portal",
-          "text": "Activate the End Portal"
+          "text": "Activate the End Portal",
+          "difficulty": "hard"
         },
         {
           "id": "stronghold-library",
-          "text": "Find a Stronghold library"
+          "text": "Find a Stronghold library",
+          "difficulty": "medium"
         },
         {
           "id": "stronghold-loot",
-          "text": "Loot the Stronghold"
+          "text": "Loot the Stronghold",
+          "difficulty": "medium"
+        },
+        {
+          "id": "stronghold-base",
+          "text": "Create a safe base or outpost near the Stronghold",
+          "difficulty": "medium"
         }
       ]
     },
@@ -429,35 +651,58 @@
       "items": [
         {
           "id": "enter-end",
-          "text": "Enter the End"
+          "text": "Enter the End",
+          "difficulty": "hard"
         },
         {
           "id": "defeat-dragon",
-          "text": "Defeat the Ender Dragon"
+          "text": "Defeat the Ender Dragon",
+          "difficulty": "epic"
         },
         {
           "id": "dragon-egg",
-          "text": "Collect the Dragon Egg"
+          "text": "Collect the Dragon Egg",
+          "difficulty": "hard"
         },
         {
           "id": "end-gateway",
-          "text": "Use an End Gateway"
+          "text": "Use an End Gateway",
+          "difficulty": "hard"
         },
         {
           "id": "end-city",
-          "text": "Find an End City"
+          "text": "Find an End City",
+          "difficulty": "hard"
         },
         {
           "id": "elytra",
-          "text": "Obtain an Elytra"
+          "text": "Obtain an Elytra",
+          "difficulty": "epic"
         },
         {
           "id": "shulker-box",
-          "text": "Craft a Shulker Box"
+          "text": "Craft a Shulker Box",
+          "difficulty": "hard"
         },
         {
           "id": "respawn-dragon",
-          "text": "Respawn the Ender Dragon"
+          "text": "Respawn the Ender Dragon",
+          "difficulty": "epic"
+        },
+        {
+          "id": "end-city-expedition",
+          "text": "Loot multiple End Cities",
+          "difficulty": "epic"
+        },
+        {
+          "id": "end-base",
+          "text": "Build an End outpost",
+          "difficulty": "hard"
+        },
+        {
+          "id": "dragon-arena",
+          "text": "Build a permanent Ender Dragon arena or monument",
+          "difficulty": "epic"
         }
       ]
     },
@@ -467,35 +712,63 @@
       "items": [
         {
           "id": "redstone-door",
-          "text": "Build a redstone door"
+          "text": "Build a redstone door",
+          "difficulty": "medium"
         },
         {
           "id": "automatic-farm",
-          "text": "Build an automatic farm"
+          "text": "Build an automatic farm",
+          "difficulty": "medium"
         },
         {
           "id": "item-sorter",
-          "text": "Build an automatic item sorter"
+          "text": "Build an automatic item sorter",
+          "difficulty": "hard"
         },
         {
           "id": "super-smelter",
-          "text": "Build an automated smelting system"
+          "text": "Build an automated smelting system",
+          "difficulty": "hard"
         },
         {
           "id": "auto-storage",
-          "text": "Build an automated storage system"
+          "text": "Build an automated storage system",
+          "difficulty": "epic"
         },
         {
           "id": "piston-door",
-          "text": "Build a piston door"
+          "text": "Build a piston door",
+          "difficulty": "hard"
         },
         {
           "id": "redstone-clock",
-          "text": "Build a redstone clock"
+          "text": "Build a redstone clock",
+          "difficulty": "medium"
         },
         {
           "id": "rail-system",
-          "text": "Build an automated rail system"
+          "text": "Build an automated rail system",
+          "difficulty": "hard"
+        },
+        {
+          "id": "auto-brewer",
+          "text": "Build an automatic brewing system",
+          "difficulty": "hard"
+        },
+        {
+          "id": "auto-crafter",
+          "text": "Build an automated Crafter-based system",
+          "difficulty": "hard"
+        },
+        {
+          "id": "redstone-computer",
+          "text": "Build a complex redstone machine of your own design",
+          "difficulty": "epic"
+        },
+        {
+          "id": "redstone-control-room",
+          "text": "Build a central redstone control room",
+          "difficulty": "epic"
         }
       ]
     },
@@ -505,47 +778,93 @@
       "items": [
         {
           "id": "biomes",
-          "text": "Visit as many different biomes as possible"
+          "text": "Visit as many different biomes as possible",
+          "difficulty": "hard"
         },
         {
           "id": "ocean-monument",
-          "text": "Find an Ocean Monument"
+          "text": "Find an Ocean Monument",
+          "difficulty": "hard"
         },
         {
           "id": "woodland-mansion",
-          "text": "Find a Woodland Mansion"
+          "text": "Find a Woodland Mansion",
+          "difficulty": "hard"
         },
         {
           "id": "pillager-outpost",
-          "text": "Find a Pillager Outpost"
+          "text": "Find a Pillager Outpost",
+          "difficulty": "medium"
         },
         {
           "id": "desert-temple",
-          "text": "Find a Desert Pyramid"
+          "text": "Find a Desert Pyramid",
+          "difficulty": "medium"
         },
         {
           "id": "jungle-temple",
-          "text": "Find a Jungle Temple"
+          "text": "Find a Jungle Temple",
+          "difficulty": "medium"
         },
         {
           "id": "ancient-city",
-          "text": "Find an Ancient City"
+          "text": "Find an Ancient City",
+          "difficulty": "epic"
         },
         {
           "id": "trial-chamber",
-          "text": "Find a Trial Chamber"
+          "text": "Find a Trial Chamber",
+          "difficulty": "hard"
         },
         {
           "id": "shipwreck",
-          "text": "Find a Shipwreck"
+          "text": "Find a Shipwreck",
+          "difficulty": "easy"
         },
         {
           "id": "buried-treasure",
-          "text": "Find buried treasure"
+          "text": "Find buried treasure",
+          "difficulty": "medium"
         },
         {
           "id": "mushroom-island",
-          "text": "Find a Mushroom Fields biome"
+          "text": "Find a Mushroom Fields biome",
+          "difficulty": "hard"
+        },
+        {
+          "id": "ocean-ruin",
+          "text": "Find an Ocean Ruin",
+          "difficulty": "medium"
+        },
+        {
+          "id": "igloo",
+          "text": "Find an Igloo",
+          "difficulty": "medium"
+        },
+        {
+          "id": "swamp-hut",
+          "text": "Find a Swamp Hut",
+          "difficulty": "medium"
+        },
+        {
+          "id": "witch-hut",
+          "text": "Find a Witch Hut",
+          "difficulty": "medium"
+        },
+        {
+          "id": "trail-ruins",
+          "text": "Find Trail Ruins",
+          "difficulty": "hard"
+        },
+        {
+          "id": "ruined-portal",
+          "text": "Find a Ruined Portal",
+          "difficulty": "easy"
+        },
+        {
+          "id": "exploration-outpost",
+          "text": "Create a safe outpost far from your main base",
+          "difficulty": "hard"
         }
       ]
     },
@@ -555,43 +874,210 @@
       "items": [
         {
           "id": "all-wood",
-          "text": "Collect every overworld wood type"
+          "text": "Collect every overworld wood type",
+          "difficulty": "hard"
         },
         {
           "id": "all-wool",
-          "text": "Collect every wool color"
+          "text": "Collect every wool color",
+          "difficulty": "medium"
         },
         {
           "id": "all-dyes",
-          "text": "Collect every dye color"
+          "text": "Collect every dye color",
+          "difficulty": "hard"
         },
         {
           "id": "all-flowers",
-          "text": "Collect every obtainable flower type"
+          "text": "Collect every obtainable flower type",
+          "difficulty": "hard"
         },
         {
           "id": "all-music-discs",
-          "text": "Collect every music disc"
+          "text": "Collect every music disc",
+          "difficulty": "epic"
         },
         {
           "id": "all-armor-trims",
-          "text": "Collect every armor trim template"
+          "text": "Collect every armor trim template",
+          "difficulty": "epic"
         },
         {
           "id": "all-pottery-sherds",
-          "text": "Collect every pottery sherd"
+          "text": "Collect every pottery sherd",
+          "difficulty": "epic"
         },
         {
           "id": "all-flowers-plants",
-          "text": "Collect a broad collection of plants and decorative blocks"
+          "text": "Collect a broad collection of plants and decorative blocks",
+          "difficulty": "hard"
         },
         {
           "id": "all-mobs",
-          "text": "Encounter every major mob"
+          "text": "Encounter every major mob",
+          "difficulty": "epic"
         },
         {
           "id": "rare-items",
-          "text": "Collect rare and difficult-to-obtain items"
+          "text": "Collect rare and difficult-to-obtain items",
+          "difficulty": "epic"
+        },
+        {
+          "id": "all-banner-patterns",
+          "text": "Collect a large collection of banner patterns",
+          "difficulty": "hard"
+        },
+        {
+          "id": "all-froglights",
+          "text": "Collect all froglight variants",
+          "difficulty": "hard"
+        },
+        {
+          "id": "all-copper",
+          "text": "Collect the major copper variants and stages",
+          "difficulty": "hard"
+        },
+        {
+          "id": "museum",
+          "text": "Build a museum displaying your rare items",
+          "difficulty": "epic"
+        },
+        {
+          "id": "treasure-vault",
+          "text": "Build a secure vault for your rarest items",
+          "difficulty": "hard"
+        }
+      ]
+    },
+    {
+      "id": "building",
+      "title": "Building & Creativity",
+      "items": [
+        {
+          "id": "garden",
+          "text": "Build a decorated garden",
+          "difficulty": "medium"
+        },
+        {
+          "id": "library",
+          "text": "Build a library",
+          "difficulty": "medium"
+        },
+        {
+          "id": "armory",
+          "text": "Build an armory displaying your equipment",
+          "difficulty": "medium"
+        },
+        {
+          "id": "barn",
+          "text": "Build a barn for your animals",
+          "difficulty": "medium"
+        },
+        {
+          "id": "market",
+          "text": "Build a marketplace",
+          "difficulty": "hard"
+        },
+        {
+          "id": "church",
+          "text": "Build a large place of worship or community gathering",
+          "difficulty": "hard"
+        },
+        {
+          "id": "farmhouse",
+          "text": "Build a detailed farmhouse",
+          "difficulty": "medium"
+        },
+        {
+          "id": "windmill",
+          "text": "Build a windmill",
+          "difficulty": "hard"
+        },
+        {
+          "id": "lighthouse",
+          "text": "Build a lighthouse",
+          "difficulty": "hard"
+        },
+        {
+          "id": "arena",
+          "text": "Build a combat or minigame arena",
+          "difficulty": "hard"
+        },
+        {
+          "id": "statue",
+          "text": "Build a large statue",
+          "difficulty": "hard"
+        },
+        {
+          "id": "custom-village",
+          "text": "Build your own custom village",
+          "difficulty": "epic"
+        },
+        {
+          "id": "districts",
+          "text": "Create multiple themed districts in your settlement",
+          "difficulty": "epic"
+        },
+        {
+          "id": "landscaping",
+          "text": "Transform the natural terrain around your base",
+          "difficulty": "hard"
+        }
+      ]
+    },
+    {
+      "id": "adventure",
+      "title": "Adventure Challenges",
+      "items": [
+        {
+          "id": "long-expedition",
+          "text": "Travel at least 5,000 blocks from your base and return safely",
+          "difficulty": "hard"
+        },
+        {
+          "id": "ocean-expedition",
+          "text": "Complete a major ocean expedition",
+          "difficulty": "hard"
+        },
+        {
+          "id": "nether-expedition",
+          "text": "Complete a major Nether expedition",
+          "difficulty": "hard"
+        },
+        {
+          "id": "end-expedition",
+          "text": "Complete a major End expedition",
+          "difficulty": "epic"
+        },
+        {
+          "id": "raid-survivor",
+          "text": "Survive a major raid without dying",
+          "difficulty": "hard"
+        },
+        {
+          "id": "ancient-city-survivor",
+          "text": "Explore an Ancient City and return safely",
+          "difficulty": "epic"
+        },
+        {
+          "id": "trial-master",
+          "text": "Complete a difficult Trial Chamber expedition",
+          "difficulty": "hard"
+        },
+        {
+          "id": "no-death-expedition",
+          "text": "Complete a long expedition without dying",
+          "difficulty": "epic"
+        },
+        {
+          "id": "elytra-flight",
+          "text": "Complete a long-distance Elytra flight",
+          "difficulty": "hard"
+        },
+        {
+          "id": "nether-survival",
+          "text": "Spend an extended expedition in the Nether and return safely",
+          "difficulty": "epic"
         }
       ]
     },
@@ -601,43 +1087,129 @@
       "items": [
         {
           "id": "fully-enchanted",
-          "text": "Create fully enchanted Netherite equipment"
+          "text": "Create fully enchanted Netherite equipment",
+          "difficulty": "epic"
         },
         {
           "id": "beacon",
-          "text": "Build a fully powered Beacon"
+          "text": "Build a fully powered Beacon",
+          "difficulty": "epic"
         },
         {
           "id": "wither",
-          "text": "Defeat the Wither"
+          "text": "Defeat the Wither",
+          "difficulty": "epic"
         },
         {
           "id": "multiple-beacons",
-          "text": "Build multiple Beacons"
+          "text": "Build multiple Beacons",
+          "difficulty": "epic"
         },
         {
           "id": "elytra-fleet",
-          "text": "Collect multiple Elytras"
+          "text": "Collect multiple Elytras",
+          "difficulty": "epic"
         },
         {
           "id": "shulker-storage",
-          "text": "Fill your storage with Shulker Boxes"
+          "text": "Fill your storage with Shulker Boxes",
+          "difficulty": "epic"
         },
         {
           "id": "netherite-beacon",
-          "text": "Build a Beacon using a Netherite-powered base"
+          "text": "Build a Beacon using a Netherite-powered base",
+          "difficulty": "epic"
         },
         {
           "id": "mega-base",
-          "text": "Build a massive survival base"
+          "text": "Build a massive survival base",
+          "difficulty": "epic"
         },
         {
           "id": "world-railway",
-          "text": "Build a long-distance transportation network"
+          "text": "Build a long-distance transportation network",
+          "difficulty": "epic"
         },
         {
           "id": "world-map",
-          "text": "Create a large-scale map of your world"
+          "text": "Create a large-scale map of your world",
+          "difficulty": "epic"
+        },
+        {
+          "id": "full-netherite",
+          "text": "Create a complete backup set of Netherite equipment",
+          "difficulty": "epic"
+        },
+        {
+          "id": "max-level",
+          "text": "Reach a very high experience level",
+          "difficulty": "hard"
+        },
+        {
+          "id": "dragon-rematch",
+          "text": "Defeat the Ender Dragon again after becoming fully geared",
+          "difficulty": "epic"
+        },
+        {
+          "id": "wither-arena",
+          "text": "Build a dedicated Wither battle arena",
+          "difficulty": "hard"
+        },
+        {
+          "id": "endgame-vault",
+          "text": "Create a secure endgame vault containing your best gear",
+          "difficulty": "hard"
+        },
+        {
+          "id": "survival-complete",
+          "text": "Complete every normal survival goal in this checklist",
+          "difficulty": "epic"
+        }
+      ]
+    },
+    {
+      "id": "world",
+      "title": "World Completion",
+      "items": [
+        {
+          "id": "world-spawn",
+          "text": "Create a permanent spawn area",
+          "difficulty": "medium"
+        },
+        {
+          "id": "world-road-network",
+          "text": "Connect your major settlements with a road network",
+          "difficulty": "epic"
+        },
+        {
+          "id": "world-transport",
+          "text": "Create multiple reliable transportation methods",
+          "difficulty": "hard"
+        },
+        {
+          "id": "world-outposts",
+          "text": "Create several remote outposts",
+          "difficulty": "hard"
+        },
+        {
+          "id": "world-landmarks",
+          "text": "Create landmarks throughout your world",
+          "difficulty": "epic"
+        },
+        {
+          "id": "world-history",
+          "text": "Build a museum or monument documenting your world's history",
+          "difficulty": "epic"
+        },
+        {
+          "id": "world-capital",
+          "text": "Designate and build a capital city",
+          "difficulty": "epic"
+        },
+        {
+          "id": "world-complete",
+          "text": "Turn your survival world into a fully developed civilization",
+          "difficulty": "epic"
         }
       ]
     },
