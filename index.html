@@ -79,7 +79,7 @@
         /* HEADER */
 
         .header {
-            margin-bottom: 20px;
+            margin-bottom: 12px;
         }
 
         .header h1 {
@@ -99,16 +99,11 @@
         /* CONTROLS */
 
         .controls {
-
-    display: flex;
-
-    gap: 10px;
-
-    flex-wrap: wrap;
-
-    margin-bottom: 8px;
-
-}
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 8px;
+        }
 
         .search {
             flex: 1 1 260px;
@@ -190,26 +185,20 @@
         /* SCORE */
 
         .score-grid {
+            display: grid;
 
-    display: grid;
+            grid-template-columns:
+                repeat(
+                    4,
+                    minmax(0, 1fr)
+                );
 
-    grid-template-columns:
-
-        repeat(
-
-            4,
-
-            minmax(0, 1fr)
-
-        );
-
-    gap: 10px;
-
-    margin-bottom: 10px;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
 
         .score-box {
             min-width: 0;
-
             padding: 15px;
 
             border: 1px solid var(--border);
@@ -331,7 +320,7 @@
         /* GLOBAL PROGRESS */
 
         .global-progress {
-            margin-bottom: 20px;
+            margin-bottom: 10px;
         }
 
         .global-progress-top {
@@ -371,10 +360,8 @@
         /* PROFILES */
 
         .profiles-section {
-
-    margin-bottom: 10px;
-
-}
+            margin-bottom: 10px;
+        }
 
         .section-header {
             display: flex;
@@ -401,6 +388,7 @@
 
         .profiles-list {
             display: grid;
+
             grid-template-columns:
                 repeat(
                     auto-fill,
@@ -455,12 +443,7 @@
                 );
         }
 
-        /*
-            RANK-SPECIFIC PROFILE BORDERS
-
-            These are intentionally static.
-            No animation or glow effects.
-        */
+        /* STATIC RANK BORDERS */
 
         .profile-card.rank-dirt {
             border-color: #705139;
@@ -1472,10 +1455,6 @@
     <script>
         "use strict";
 
-        /*
-            STORAGE
-        */
-
         const GOALS_STORAGE_KEY =
             "minecraft-survival-goals-v1";
 
@@ -1484,11 +1463,6 @@
 
         const ACTIVE_PROFILE_STORAGE_KEY =
             "minecraft-active-profile-v2";
-
-
-        /*
-            SETTINGS
-        */
 
         const MAX_PROFILES = 12;
 
@@ -1502,259 +1476,152 @@
         const DEFAULT_DIFFICULTY =
             "medium";
 
-
-        /*
-            MINECRAFT-THEMED RANKS
-
-            Based on individual achievement Gamerscore.
-            Borders are static and do not animate.
-        */
-
         const RANKS = [
-
             {
                 name: "Dirt",
                 min: 0,
                 className: "rank-dirt"
             },
-
             {
                 name: "Wood",
                 min: 50,
                 className: "rank-wood"
             },
-
             {
                 name: "Stone",
                 min: 150,
                 className: "rank-stone"
             },
-
             {
                 name: "Coal",
                 min: 300,
                 className: "rank-coal"
             },
-
             {
                 name: "Iron",
                 min: 500,
                 className: "rank-iron"
             },
-
             {
                 name: "Gold",
                 min: 750,
                 className: "rank-gold"
             },
-
             {
                 name: "Diamond",
                 min: 1000,
                 className: "rank-diamond"
             },
-
             {
                 name: "Emerald",
                 min: 1500,
                 className: "rank-emerald"
             },
-
             {
                 name: "Netherite",
                 min: 2000,
                 className: "rank-netherite"
             },
-
             {
                 name: "Ender Dragon",
                 min: 2500,
                 className: "rank-ender"
             }
-
         ];
 
-
-        /*
-            DATA
-        */
-
         let goalsData = [];
-
         let sharedGoals = {};
-
         let profiles = [];
-
         let activeProfileId = null;
-
         let editingProfileId = null;
-
         let pendingConfirmAction = null;
 
-
-        /*
-            ELEMENTS
-        */
-
         const searchInput =
-            document.getElementById(
-                "searchInput"
-            );
+            document.getElementById("searchInput");
 
         const categoriesElement =
-            document.getElementById(
-                "categories"
-            );
+            document.getElementById("categories");
 
         const profilesListElement =
-            document.getElementById(
-                "profilesList"
-            );
+            document.getElementById("profilesList");
 
         const profileCountElement =
-            document.getElementById(
-                "profileCount"
-            );
+            document.getElementById("profileCount");
 
         const globalScoreElement =
-            document.getElementById(
-                "globalScore"
-            );
+            document.getElementById("globalScore");
 
         const globalScoreDetailElement =
-            document.getElementById(
-                "globalScoreDetail"
-            );
+            document.getElementById("globalScoreDetail");
 
         const userScoreElement =
-            document.getElementById(
-                "userScore"
-            );
+            document.getElementById("userScore");
 
         const userScoreDetailElement =
-            document.getElementById(
-                "userScoreDetail"
-            );
+            document.getElementById("userScoreDetail");
 
         const goalsScoreElement =
-            document.getElementById(
-                "goalsScore"
-            );
+            document.getElementById("goalsScore");
 
         const goalsScoreDetailElement =
-            document.getElementById(
-                "goalsScoreDetail"
-            );
+            document.getElementById("goalsScoreDetail");
 
         const globalPercentElement =
-            document.getElementById(
-                "globalPercent"
-            );
+            document.getElementById("globalPercent");
 
         const achievementGlobalDetailElement =
-            document.getElementById(
-                "achievementGlobalDetail"
-            );
+            document.getElementById("achievementGlobalDetail");
 
         const currentProfileNameElement =
-            document.getElementById(
-                "currentProfileName"
-            );
+            document.getElementById("currentProfileName");
 
         const currentProfileRankElement =
-            document.getElementById(
-                "currentProfileRank"
-            );
+            document.getElementById("currentProfileRank");
 
         const globalProgressBar =
-            document.getElementById(
-                "globalProgressBar"
-            );
+            document.getElementById("globalProgressBar");
 
         const progressText =
-            document.getElementById(
-                "progressText"
-            );
+            document.getElementById("progressText");
 
         const addProfileButton =
-            document.getElementById(
-                "addProfileButton"
-            );
+            document.getElementById("addProfileButton");
 
         const resetButton =
-            document.getElementById(
-                "resetButton"
-            );
-
-
-        /*
-            PROFILE MODAL ELEMENTS
-        */
+            document.getElementById("resetButton");
 
         const profileModal =
-            document.getElementById(
-                "profileModal"
-            );
+            document.getElementById("profileModal");
 
         const profileModalTitle =
-            document.getElementById(
-                "profileModalTitle"
-            );
+            document.getElementById("profileModalTitle");
 
         const profileModalDescription =
-            document.getElementById(
-                "profileModalDescription"
-            );
+            document.getElementById("profileModalDescription");
 
         const profileNameInput =
-            document.getElementById(
-                "profileNameInput"
-            );
+            document.getElementById("profileNameInput");
 
         const profileModalError =
-            document.getElementById(
-                "profileModalError"
-            );
+            document.getElementById("profileModalError");
 
         const profileCancelButton =
-            document.getElementById(
-                "profileCancelButton"
-            );
+            document.getElementById("profileCancelButton");
 
         const profileSaveButton =
-            document.getElementById(
-                "profileSaveButton"
-            );
-
-
-        /*
-            CONFIRM MODAL ELEMENTS
-        */
+            document.getElementById("profileSaveButton");
 
         const confirmModal =
-            document.getElementById(
-                "confirmModal"
-            );
+            document.getElementById("confirmModal");
 
         const confirmCancelButton =
-            document.getElementById(
-                "confirmCancelButton"
-            );
+            document.getElementById("confirmCancelButton");
 
         const confirmYesButton =
-            document.getElementById(
-                "confirmYesButton"
-            );
-
-
-        /*
-            STORAGE HELPERS
-        */
+            document.getElementById("confirmYesButton");
 
         function loadSharedGoals() {
-
             try {
-
                 const stored =
                     localStorage.getItem(
                         GOALS_STORAGE_KEY
@@ -1768,17 +1635,13 @@
                 const parsed =
                     JSON.parse(stored);
 
-                if (
+                sharedGoals =
                     parsed &&
                     typeof parsed === "object"
-                ) {
-                    sharedGoals = parsed;
-                } else {
-                    sharedGoals = {};
-                }
+                        ? parsed
+                        : {};
 
             } catch (error) {
-
                 console.error(
                     "Could not load shared goals:",
                     error
@@ -1788,22 +1651,15 @@
             }
         }
 
-
         function saveSharedGoals() {
-
             localStorage.setItem(
                 GOALS_STORAGE_KEY,
-                JSON.stringify(
-                    sharedGoals
-                )
+                JSON.stringify(sharedGoals)
             );
         }
 
-
         function loadProfiles() {
-
             try {
-
                 const stored =
                     localStorage.getItem(
                         PROFILES_STORAGE_KEY
@@ -1833,9 +1689,7 @@
                         .map(
                             profile => ({
                                 id:
-                                    String(
-                                        profile.id
-                                    ),
+                                    String(profile.id),
 
                                 name:
                                     String(
@@ -1852,7 +1706,6 @@
                         );
 
             } catch (error) {
-
                 console.error(
                     "Could not load profiles:",
                     error
@@ -1862,27 +1715,20 @@
             }
         }
 
-
         function saveProfiles() {
-
             localStorage.setItem(
                 PROFILES_STORAGE_KEY,
-                JSON.stringify(
-                    profiles
-                )
+                JSON.stringify(profiles)
             );
         }
 
-
         function loadActiveProfile() {
-
             const stored =
                 localStorage.getItem(
                     ACTIVE_PROFILE_STORAGE_KEY
                 );
 
             if (!stored) {
-
                 activeProfileId =
                     profiles.length
                         ? profiles[0].id
@@ -1897,45 +1743,28 @@
                         profile.id === stored
                 );
 
-            if (exists) {
-
-                activeProfileId =
-                    stored;
-
-            } else {
-
-                activeProfileId =
-                    profiles.length
+            activeProfileId =
+                exists
+                    ? stored
+                    : profiles.length
                         ? profiles[0].id
                         : null;
-            }
         }
 
-
         function saveActiveProfile() {
-
             if (activeProfileId) {
-
                 localStorage.setItem(
                     ACTIVE_PROFILE_STORAGE_KEY,
                     activeProfileId
                 );
-
             } else {
-
                 localStorage.removeItem(
                     ACTIVE_PROFILE_STORAGE_KEY
                 );
             }
         }
 
-
-        /*
-            DATA HELPERS
-        */
-
         function getCurrentProfile() {
-
             return profiles.find(
                 profile =>
                     profile.id ===
@@ -1943,9 +1772,7 @@
             ) || null;
         }
 
-
         function getGoalId(goal) {
-
             if (goal.id != null) {
                 return String(goal.id);
             }
@@ -1957,30 +1784,22 @@
             return "";
         }
 
-
         function getAchievementId(
             achievement
         ) {
-
-            if (
-                achievement.id != null
-            ) {
+            if (achievement.id != null) {
                 return String(
                     achievement.id
                 );
             }
 
-            if (
-                achievement.name != null
-            ) {
+            if (achievement.name != null) {
                 return String(
                     achievement.name
                 );
             }
 
-            if (
-                achievement.title != null
-            ) {
+            if (achievement.title != null) {
                 return String(
                     achievement.title
                 );
@@ -1989,47 +1808,30 @@
             return "";
         }
 
-
         function isAchievementCategory(
             category
         ) {
-
             const name =
                 String(
                     category.name ||
                     category.title ||
                     ""
-                )
-                    .toLowerCase();
+                ).toLowerCase();
 
             return (
-                name.includes(
-                    "achievement"
-                ) ||
-                name.includes(
-                    "xbox"
-                )
+                name.includes("achievement") ||
+                name.includes("xbox")
             );
         }
-
 
         function getCategoryItems(
             category
         ) {
-
-            if (
-                Array.isArray(
-                    category.goals
-                )
-            ) {
+            if (Array.isArray(category.goals)) {
                 return category.goals;
             }
 
-            if (
-                Array.isArray(
-                    category.items
-                )
-            ) {
+            if (Array.isArray(category.items)) {
                 return category.items;
             }
 
@@ -2044,11 +1846,9 @@
             return [];
         }
 
-
         function getAchievementGamerscore(
             achievement
         ) {
-
             const value =
                 Number(
                     achievement.gamerscore ??
@@ -2062,41 +1862,27 @@
                 : 0;
         }
 
-
-        function getGoalDifficulty(
-            goal
-        ) {
-
+        function getGoalDifficulty(goal) {
             const difficulty =
                 String(
                     goal.difficulty ||
                     DEFAULT_DIFFICULTY
-                )
-                    .toLowerCase();
+                ).toLowerCase();
 
-            return DIFFICULTY_SCORES[
-                difficulty
-            ]
+            return DIFFICULTY_SCORES[difficulty]
                 ? difficulty
                 : DEFAULT_DIFFICULTY;
         }
 
-
-        /*
-            RANK HELPERS
-        */
-
         function getProfileAchievementScore(
             profile
         ) {
-
             let score = 0;
 
             for (
                 const category
                 of goalsData
             ) {
-
                 if (
                     !isAchievementCategory(
                         category
@@ -2105,16 +1891,12 @@
                     continue;
                 }
 
-                const items =
-                    getCategoryItems(
-                        category
-                    );
-
                 for (
                     const achievement
-                    of items
+                    of getCategoryItems(
+                        category
+                    )
                 ) {
-
                     const id =
                         getAchievementId(
                             achievement
@@ -2122,10 +1904,8 @@
 
                     if (
                         id &&
-                        profile
-                            .achievements?.[id]
+                        profile.achievements?.[id]
                     ) {
-
                         score +=
                             getAchievementGamerscore(
                                 achievement
@@ -2137,18 +1917,15 @@
             return score;
         }
 
-
         function getProfileAchievementCount(
             profile
         ) {
-
             let count = 0;
 
             for (
                 const category
                 of goalsData
             ) {
-
                 if (
                     !isAchievementCategory(
                         category
@@ -2157,16 +1934,12 @@
                     continue;
                 }
 
-                const items =
-                    getCategoryItems(
-                        category
-                    );
-
                 for (
                     const achievement
-                    of items
+                    of getCategoryItems(
+                        category
+                    )
                 ) {
-
                     const id =
                         getAchievementId(
                             achievement
@@ -2174,10 +1947,8 @@
 
                     if (
                         id &&
-                        profile
-                            .achievements?.[id]
+                        profile.achievements?.[id]
                     ) {
-
                         count++;
                     }
                 }
@@ -2186,16 +1957,13 @@
             return count;
         }
 
-
         function getTotalAchievementGamerscore() {
-
             let total = 0;
 
             for (
                 const category
                 of goalsData
             ) {
-
                 if (
                     !isAchievementCategory(
                         category
@@ -2204,16 +1972,12 @@
                     continue;
                 }
 
-                const items =
-                    getCategoryItems(
-                        category
-                    );
-
                 for (
                     const achievement
-                    of items
+                    of getCategoryItems(
+                        category
+                    )
                 ) {
-
                     total +=
                         getAchievementGamerscore(
                             achievement
@@ -2224,16 +1988,13 @@
             return total;
         }
 
-
         function getTotalAchievementCount() {
-
             let total = 0;
 
             for (
                 const category
                 of goalsData
             ) {
-
                 if (
                     !isAchievementCategory(
                         category
@@ -2251,34 +2012,24 @@
             return total;
         }
 
-
-        function getProfileRank(
-            profile
-        ) {
-
+        function getProfileRank(profile) {
             const score =
                 getProfileAchievementScore(
                     profile
                 );
 
-            let rank =
-                RANKS[0];
+            let rank = RANKS[0];
 
             for (
                 const candidate
                 of RANKS
             ) {
-
                 if (
                     score >=
                     candidate.min
                 ) {
-
-                    rank =
-                        candidate;
-
+                    rank = candidate;
                 } else {
-
                     break;
                 }
             }
@@ -2286,11 +2037,7 @@
             return rank;
         }
 
-
-        function getNextRank(
-            profile
-        ) {
-
+        function getNextRank(profile) {
             const score =
                 getProfileAchievementScore(
                     profile
@@ -2305,20 +2052,13 @@
             );
         }
 
-
-        /*
-            SHARED GOAL SCORE
-        */
-
         function getTotalGoalScore() {
-
             let total = 0;
 
             for (
                 const category
                 of goalsData
             ) {
-
                 if (
                     isAchievementCategory(
                         category
@@ -2327,16 +2067,12 @@
                     continue;
                 }
 
-                const items =
-                    getCategoryItems(
-                        category
-                    );
-
                 for (
                     const goal
-                    of items
+                    of getCategoryItems(
+                        category
+                    )
                 ) {
-
                     const difficulty =
                         getGoalDifficulty(
                             goal
@@ -2352,16 +2088,13 @@
             return total;
         }
 
-
         function getSharedGoalScore() {
-
             let score = 0;
 
             for (
                 const category
                 of goalsData
             ) {
-
                 if (
                     isAchievementCategory(
                         category
@@ -2370,34 +2103,24 @@
                     continue;
                 }
 
-                const items =
-                    getCategoryItems(
-                        category
-                    );
-
                 for (
                     const goal
-                    of items
+                    of getCategoryItems(
+                        category
+                    )
                 ) {
-
                     const id =
-                        getGoalId(
-                            goal
-                        );
+                        getGoalId(goal);
 
                     if (
                         id &&
                         sharedGoals[id]
                     ) {
-
-                        const difficulty =
-                            getGoalDifficulty(
-                                goal
-                            );
-
                         score +=
                             DIFFICULTY_SCORES[
-                                difficulty
+                                getGoalDifficulty(
+                                    goal
+                                )
                             ];
                     }
                 }
@@ -2406,16 +2129,13 @@
             return score;
         }
 
-
         function getCompletedGoalCount() {
-
             let count = 0;
 
             for (
                 const category
                 of goalsData
             ) {
-
                 if (
                     isAchievementCategory(
                         category
@@ -2424,20 +2144,14 @@
                     continue;
                 }
 
-                const items =
-                    getCategoryItems(
-                        category
-                    );
-
                 for (
                     const goal
-                    of items
+                    of getCategoryItems(
+                        category
+                    )
                 ) {
-
                     const id =
-                        getGoalId(
-                            goal
-                        );
+                        getGoalId(goal);
 
                     if (
                         id &&
@@ -2451,16 +2165,13 @@
             return count;
         }
 
-
         function getTotalGoalCount() {
-
             let count = 0;
 
             for (
                 const category
                 of goalsData
             ) {
-
                 if (
                     isAchievementCategory(
                         category
@@ -2478,18 +2189,7 @@
             return count;
         }
 
-
-        /*
-            GLOBAL SCORE
-
-            Shared goals are counted once.
-
-            Achievement Gamerscore is counted
-            for every created profile.
-        */
-
         function getCurrentGlobalScore() {
-
             let score =
                 getSharedGoalScore();
 
@@ -2497,7 +2197,6 @@
                 const profile
                 of profiles
             ) {
-
                 score +=
                     getProfileAchievementScore(
                         profile
@@ -2507,9 +2206,7 @@
             return score;
         }
 
-
         function getGlobalTotalPossible() {
-
             const goalScore =
                 getTotalGoalScore();
 
@@ -2518,25 +2215,14 @@
 
             return (
                 goalScore +
-                (
-                    achievementScore *
-                    profiles.length
-                )
+                achievementScore *
+                profiles.length
             );
         }
 
-
-        /*
-            PROFILE UI
-        */
-
-        function getInitial(
-            name
-        ) {
-
+        function getInitial(name) {
             const trimmed =
-                String(name || "")
-                    .trim();
+                String(name || "").trim();
 
             return trimmed
                 ? trimmed
@@ -2545,9 +2231,7 @@
                 : "?";
         }
 
-
         function renderProfiles() {
-
             profilesListElement.innerHTML = "";
 
             profileCountElement.textContent =
@@ -2557,7 +2241,6 @@
                 const profile
                 of profiles
             ) {
-
                 const score =
                     getProfileAchievementScore(
                         profile
@@ -2574,10 +2257,9 @@
                 const percent =
                     totalScore > 0
                         ? Math.round(
-                            (
-                                score /
-                                totalScore
-                            ) * 100
+                            score /
+                            totalScore *
+                            100
                         )
                         : 0;
 
@@ -2616,7 +2298,6 @@
                     selected
                 );
 
-
                 const top =
                     document.createElement(
                         "div"
@@ -2624,7 +2305,6 @@
 
                 top.className =
                     "profile-card-top";
-
 
                 const avatar =
                     document.createElement(
@@ -2639,7 +2319,6 @@
                         profile.name
                     );
 
-
                 const heading =
                     document.createElement(
                         "div"
@@ -2647,7 +2326,6 @@
 
                 heading.className =
                     "profile-heading";
-
 
                 const name =
                     document.createElement(
@@ -2659,7 +2337,6 @@
 
                 name.textContent =
                     profile.name;
-
 
                 const rankElement =
                     document.createElement(
@@ -2673,28 +2350,15 @@
                 rankElement.textContent =
                     rank.name;
 
-
-                heading.appendChild(
-                    name
-                );
-
+                heading.appendChild(name);
                 heading.appendChild(
                     rankElement
                 );
 
+                top.appendChild(avatar);
+                top.appendChild(heading);
 
-                top.appendChild(
-                    avatar
-                );
-
-                top.appendChild(
-                    heading
-                );
-
-                card.appendChild(
-                    top
-                );
-
+                card.appendChild(top);
 
                 const stats =
                     document.createElement(
@@ -2704,7 +2368,6 @@
                 stats.className =
                     "profile-card-stats";
 
-
                 const scoreText =
                     document.createElement(
                         "span"
@@ -2712,7 +2375,6 @@
 
                 scoreText.innerHTML =
                     `<strong>${score}G</strong> achievements`;
-
 
                 const percentText =
                     document.createElement(
@@ -2722,19 +2384,10 @@
                 percentText.textContent =
                     `${percent}%`;
 
+                stats.appendChild(scoreText);
+                stats.appendChild(percentText);
 
-                stats.appendChild(
-                    scoreText
-                );
-
-                stats.appendChild(
-                    percentText
-                );
-
-                card.appendChild(
-                    stats
-                );
-
+                card.appendChild(stats);
 
                 const progress =
                     document.createElement(
@@ -2744,7 +2397,6 @@
                 progress.className =
                     "profile-card-progress " +
                     rank.className;
-
 
                 const progressBar =
                     document.createElement(
@@ -2757,15 +2409,11 @@
                 progressBar.style.width =
                     `${percent}%`;
 
-
                 progress.appendChild(
                     progressBar
                 );
 
-                card.appendChild(
-                    progress
-                );
-
+                card.appendChild(progress);
 
                 const actions =
                     document.createElement(
@@ -2774,7 +2422,6 @@
 
                 actions.className =
                     "profile-actions";
-
 
                 const editButton =
                     document.createElement(
@@ -2793,7 +2440,6 @@
                 editButton.addEventListener(
                     "click",
                     event => {
-
                         event.stopPropagation();
 
                         openProfileModal(
@@ -2802,7 +2448,6 @@
                         );
                     }
                 );
-
 
                 const deleteButton =
                     document.createElement(
@@ -2821,7 +2466,6 @@
                 deleteButton.addEventListener(
                     "click",
                     event => {
-
                         event.stopPropagation();
 
                         deleteProfile(
@@ -2829,7 +2473,6 @@
                         );
                     }
                 );
-
 
                 actions.appendChild(
                     editButton
@@ -2839,15 +2482,11 @@
                     deleteButton
                 );
 
-                card.appendChild(
-                    actions
-                );
-
+                card.appendChild(actions);
 
                 card.addEventListener(
                     "click",
                     () => {
-
                         activeProfileId =
                             profile.id;
 
@@ -2859,26 +2498,21 @@
                     }
                 );
 
-
                 profilesListElement.appendChild(
                     card
                 );
             }
 
-
             if (
                 profiles.length <
                 MAX_PROFILES
             ) {
-
                 const add =
                     document.createElement(
                         "button"
                     );
 
-                add.type =
-                    "button";
-
+                add.type = "button";
                 add.className =
                     "add-profile";
 
@@ -2900,16 +2534,10 @@
             }
         }
 
-
-        /*
-            PROFILE MODAL
-        */
-
         function openProfileModal(
             mode,
             profile = null
         ) {
-
             editingProfileId =
                 mode === "edit"
                     ? profile.id
@@ -2950,49 +2578,34 @@
             );
         }
 
-
         function closeProfileModal() {
-
             profileModal.classList.remove(
                 "open"
             );
 
-            editingProfileId =
-                null;
-
-            profileNameInput.value =
-                "";
-
+            editingProfileId = null;
+            profileNameInput.value = "";
             profileModalError.textContent =
                 "";
         }
 
-
         function saveProfileFromModal() {
-
             const name =
-                profileNameInput.value
-                    .trim();
+                profileNameInput.value.trim();
 
             if (!name) {
-
                 profileModalError.textContent =
                     "Enter a player name.";
-
                 return;
             }
 
             if (name.length > 30) {
-
                 profileModalError.textContent =
                     "Player names can be up to 30 characters.";
-
                 return;
             }
 
-
             if (editingProfileId) {
-
                 const profile =
                     profiles.find(
                         item =>
@@ -3004,46 +2617,36 @@
                     return;
                 }
 
-                profile.name =
-                    name;
+                profile.name = name;
 
             } else {
-
                 if (
                     profiles.length >=
                     MAX_PROFILES
                 ) {
-
                     profileModalError.textContent =
                         `You can have up to ${MAX_PROFILES} profiles.`;
 
                     return;
                 }
 
-
                 const profile = {
-
                     id:
                         `${Date.now()}-${Math.random()
                             .toString(36)
                             .slice(2, 8)}`,
 
                     name,
-
                     achievements: {}
                 };
 
-
-                profiles.push(
-                    profile
-                );
+                profiles.push(profile);
 
                 activeProfileId =
                     profile.id;
 
                 saveActiveProfile();
             }
-
 
             saveProfiles();
 
@@ -3054,11 +2657,7 @@
             updateScores();
         }
 
-
-        function deleteProfile(
-            profileId
-        ) {
-
+        function deleteProfile(profileId) {
             const profile =
                 profiles.find(
                     item =>
@@ -3073,16 +2672,12 @@
             if (
                 profiles.length === 1
             ) {
-
                 showConfirm(
                     "Delete Profile?",
                     "This will delete the only profile. Its achievement progress will be removed.",
                     () => {
-
                         profiles = [];
-
-                        activeProfileId =
-                            null;
+                        activeProfileId = null;
 
                         saveProfiles();
                         saveActiveProfile();
@@ -3096,12 +2691,10 @@
                 return;
             }
 
-
             showConfirm(
                 "Delete Profile?",
                 `Delete "${profile.name}" and its achievement progress?`,
                 () => {
-
                     profiles =
                         profiles.filter(
                             item =>
@@ -3109,19 +2702,16 @@
                                 profileId
                         );
 
-
                     if (
                         activeProfileId ===
                         profileId
                     ) {
-
                         activeProfileId =
                             profiles[0]?.id ||
                             null;
 
                         saveActiveProfile();
                     }
-
 
                     saveProfiles();
 
@@ -3132,16 +2722,10 @@
             );
         }
 
-
-        /*
-            CATEGORY UI
-        */
-
         function getCategoryName(
             category,
             index
         ) {
-
             return String(
                 category.name ||
                 category.title ||
@@ -3149,11 +2733,7 @@
             );
         }
 
-
-        function getItemTitle(
-            item
-        ) {
-
+        function getItemTitle(item) {
             return String(
                 item.title ||
                 item.name ||
@@ -3161,11 +2741,7 @@
             );
         }
 
-
-        function getItemDescription(
-            item
-        ) {
-
+        function getItemDescription(item) {
             return String(
                 item.description ||
                 item.desc ||
@@ -3174,9 +2750,7 @@
             );
         }
 
-
         function renderCategories() {
-
             categoriesElement.innerHTML = "";
 
             const query =
@@ -3184,13 +2758,11 @@
                     .trim()
                     .toLowerCase();
 
-
             goalsData.forEach(
                 (
                     category,
                     categoryIndex
                 ) => {
-
                     const items =
                         getCategoryItems(
                             category
@@ -3201,11 +2773,9 @@
                             category
                         );
 
-
                     const filteredItems =
                         items.filter(
                             item => {
-
                                 if (!query) {
                                     return true;
                                 }
@@ -3215,17 +2785,12 @@
                                         getItemTitle(
                                             item
                                         ),
-
                                         getItemDescription(
                                             item
                                         ),
-
                                         item.difficulty,
-
                                         item.gamerscore,
-
                                         item.score,
-
                                         item.points
                                     ]
                                         .filter(
@@ -3241,14 +2806,12 @@
                             }
                         );
 
-
                     if (
                         query &&
                         filteredItems.length === 0
                     ) {
                         return;
                     }
-
 
                     const categoryElement =
                         document.createElement(
@@ -3257,7 +2820,6 @@
 
                     categoryElement.className =
                         "category";
-
 
                     const header =
                         document.createElement(
@@ -3270,7 +2832,6 @@
                     header.className =
                         "category-header";
 
-
                     const info =
                         document.createElement(
                             "div"
@@ -3278,7 +2839,6 @@
 
                     info.className =
                         "category-info";
-
 
                     const categoryName =
                         document.createElement(
@@ -3294,15 +2854,12 @@
                             categoryIndex
                         );
 
-
                     const completed =
                         filteredItems.filter(
                             item => {
-
                                 if (
                                     achievementCategory
                                 ) {
-
                                     const profile =
                                         getCurrentProfile();
 
@@ -3322,7 +2879,6 @@
                                     );
                                 }
 
-
                                 const id =
                                     getGoalId(
                                         item
@@ -3335,7 +2891,6 @@
                             }
                         ).length;
 
-
                     const categoryCount =
                         document.createElement(
                             "div"
@@ -3347,7 +2902,6 @@
                     categoryCount.textContent =
                         `${completed} / ${filteredItems.length} completed`;
 
-
                     info.appendChild(
                         categoryName
                     );
@@ -3355,7 +2909,6 @@
                     info.appendChild(
                         categoryCount
                     );
-
 
                     const right =
                         document.createElement(
@@ -3365,7 +2918,6 @@
                     right.className =
                         "category-right";
 
-
                     const categoryScore =
                         document.createElement(
                             "div"
@@ -3374,16 +2926,13 @@
                     categoryScore.className =
                         "category-score";
 
-
                     let categoryPossibleScore =
                         0;
-
 
                     for (
                         const item
                         of filteredItems
                     ) {
-
                         categoryPossibleScore +=
                             achievementCategory
                                 ? getAchievementGamerscore(
@@ -3396,12 +2945,10 @@
                                 ];
                     }
 
-
                     categoryScore.textContent =
                         achievementCategory
                             ? `${categoryPossibleScore}G`
                             : `${categoryPossibleScore} pts`;
-
 
                     const arrow =
                         document.createElement(
@@ -3414,7 +2961,6 @@
                     arrow.textContent =
                         "▼";
 
-
                     right.appendChild(
                         categoryScore
                     );
@@ -3422,7 +2968,6 @@
                     right.appendChild(
                         arrow
                     );
-
 
                     header.appendChild(
                         info
@@ -3432,7 +2977,6 @@
                         right
                     );
 
-
                     const content =
                         document.createElement(
                             "div"
@@ -3441,12 +2985,10 @@
                     content.className =
                         "category-content";
 
-
                     for (
                         const item
                         of filteredItems
                     ) {
-
                         content.appendChild(
                             createItemElement(
                                 item,
@@ -3454,7 +2996,6 @@
                             )
                         );
                     }
-
 
                     categoryElement.appendChild(
                         header
@@ -3464,18 +3005,15 @@
                         content
                     );
 
-
                     header.addEventListener(
                         "click",
                         () => {
-
                             const isOpen =
                                 categoryElement
                                     .classList
                                     .contains(
                                         "open"
                                     );
-
 
                             document
                                 .querySelectorAll(
@@ -3490,9 +3028,7 @@
                                             )
                                 );
 
-
                             if (!isOpen) {
-
                                 categoryElement
                                     .classList
                                     .add(
@@ -3502,18 +3038,15 @@
                         }
                     );
 
-
                     categoriesElement.appendChild(
                         categoryElement
                     );
                 }
             );
 
-
             if (
                 !categoriesElement.children.length
             ) {
-
                 const empty =
                     document.createElement(
                         "div"
@@ -3533,12 +3066,10 @@
             }
         }
 
-
         function createItemElement(
             item,
             isAchievement
         ) {
-
             const wrapper =
                 document.createElement(
                     "label"
@@ -3549,7 +3080,6 @@
                     ? "achievement"
                     : "goal";
 
-
             const checkbox =
                 document.createElement(
                     "input"
@@ -3557,7 +3087,6 @@
 
             checkbox.type =
                 "checkbox";
-
 
             const info =
                 document.createElement(
@@ -3568,7 +3097,6 @@
                 isAchievement
                     ? "achievement-info"
                     : "goal-info";
-
 
             const title =
                 document.createElement(
@@ -3581,19 +3109,12 @@
                     : "goal-title";
 
             title.textContent =
-                getItemTitle(
-                    item
-                );
-
+                getItemTitle(item);
 
             const description =
-                getItemDescription(
-                    item
-                );
-
+                getItemDescription(item);
 
             if (description) {
-
                 const descriptionElement =
                     document.createElement(
                         "div"
@@ -3607,24 +3128,16 @@
                 descriptionElement.textContent =
                     description;
 
-                info.appendChild(
-                    title
-                );
-
+                info.appendChild(title);
                 info.appendChild(
                     descriptionElement
                 );
 
             } else {
-
-                info.appendChild(
-                    title
-                );
+                info.appendChild(title);
             }
 
-
             if (isAchievement) {
-
                 const id =
                     getAchievementId(
                         item
@@ -3641,7 +3154,6 @@
                             .achievements?.[id]
                     );
 
-
                 const points =
                     document.createElement(
                         "div"
@@ -3653,11 +3165,9 @@
                 points.textContent =
                     `${getAchievementGamerscore(item)}G`;
 
-
                 checkbox.addEventListener(
                     "change",
                     () => {
-
                         const currentProfile =
                             getCurrentProfile();
 
@@ -3665,28 +3175,21 @@
                             !currentProfile ||
                             !id
                         ) {
-
                             checkbox.checked =
                                 false;
-
                             return;
                         }
-
 
                         if (
                             checkbox.checked
                         ) {
-
                             currentProfile
                                 .achievements[id] =
                                 true;
-
                         } else {
-
                             delete currentProfile
                                 .achievements[id];
                         }
-
 
                         saveProfiles();
 
@@ -3695,7 +3198,6 @@
                         renderCategories();
                     }
                 );
-
 
                 wrapper.appendChild(
                     checkbox
@@ -3709,20 +3211,15 @@
                     points
                 );
 
-
             } else {
-
                 const id =
-                    getGoalId(
-                        item
-                    );
+                    getGoalId(item);
 
                 checkbox.checked =
                     Boolean(
                         id &&
                         sharedGoals[id]
                     );
-
 
                 const meta =
                     document.createElement(
@@ -3732,12 +3229,10 @@
                 meta.className =
                     "goal-meta";
 
-
                 const difficulty =
                     getGoalDifficulty(
                         item
                     );
-
 
                 const difficultyElement =
                     document.createElement(
@@ -3750,7 +3245,6 @@
                 difficultyElement.textContent =
                     difficulty;
 
-
                 const points =
                     document.createElement(
                         "span"
@@ -3762,41 +3256,29 @@
                 points.textContent =
                     `+${DIFFICULTY_SCORES[difficulty]} pts`;
 
-
                 meta.appendChild(
                     difficultyElement
                 );
 
-                meta.appendChild(
-                    points
-                );
+                meta.appendChild(points);
 
-                info.appendChild(
-                    meta
-                );
-
+                info.appendChild(meta);
 
                 checkbox.addEventListener(
                     "change",
                     () => {
-
                         if (!id) {
                             return;
                         }
 
-
                         if (
                             checkbox.checked
                         ) {
-
                             sharedGoals[id] =
                                 true;
-
                         } else {
-
                             delete sharedGoals[id];
                         }
-
 
                         saveSharedGoals();
 
@@ -3804,7 +3286,6 @@
                         renderCategories();
                     }
                 );
-
 
                 wrapper.appendChild(
                     checkbox
@@ -3815,17 +3296,10 @@
                 );
             }
 
-
             return wrapper;
         }
 
-
-        /*
-            SCORE UI
-        */
-
         function updateScores() {
-
             const globalScore =
                 getCurrentGlobalScore();
 
@@ -3847,13 +3321,11 @@
             const profile =
                 getCurrentProfile();
 
-
             globalScoreElement.textContent =
                 globalScore;
 
             globalScoreDetailElement.textContent =
                 `${globalScore} / ${globalTotal} points`;
-
 
             goalsScoreElement.textContent =
                 goalScore;
@@ -3861,9 +3333,7 @@
             goalsScoreDetailElement.textContent =
                 `${completedGoals} / ${totalGoals} goals`;
 
-
             if (profile) {
-
                 const profileScore =
                     getProfileAchievementScore(
                         profile
@@ -3873,9 +3343,6 @@
                     getProfileAchievementCount(
                         profile
                     );
-
-                const totalAchievementCount =
-                    getTotalAchievementCount();
 
                 const rank =
                     getProfileRank(
@@ -3887,15 +3354,11 @@
                         profile
                     );
 
-
                 currentProfileNameElement.textContent =
-                    profile.name +
-                    "'s";
-
+                    profile.name + "'s";
 
                 userScoreElement.textContent =
                     profileScore;
-
 
                 currentProfileRankElement.textContent =
                     rank.name;
@@ -3904,32 +3367,25 @@
                     "current-rank " +
                     rank.className;
 
-
                 let rankDetail =
                     `${achievementCount} achievements`;
 
-
                 if (nextRank) {
-
                     const difference =
                         nextRank.min -
                         profileScore;
 
                     rankDetail +=
                         ` • ${difference}G to ${nextRank.name}`;
-
                 } else {
-
                     rankDetail +=
                         " • Highest rank";
                 }
-
 
                 userScoreDetailElement.textContent =
                     rankDetail;
 
             } else {
-
                 currentProfileNameElement.textContent =
                     "Your";
 
@@ -3946,17 +3402,14 @@
                     "Create a profile to track achievements";
             }
 
-
             const globalPercent =
                 globalTotal > 0
                     ? Math.round(
-                        (
-                            globalScore /
-                            globalTotal
-                        ) * 100
+                        globalScore /
+                        globalTotal *
+                        100
                     )
                     : 0;
-
 
             globalPercentElement.textContent =
                 `${globalPercent}%`;
@@ -3966,7 +3419,6 @@
 
             globalProgressBar.style.width =
                 `${globalPercent}%`;
-
 
             const achievementTotal =
                 getTotalAchievementGamerscore();
@@ -3984,7 +3436,6 @@
                     0
                 );
 
-
             achievementGlobalDetailElement.textContent =
                 `${achievementProfilesScore}G / ${
                     achievementTotal *
@@ -3992,17 +3443,11 @@
                 }G achievements`;
         }
 
-
-        /*
-            CONFIRMATION MODAL
-        */
-
         function showConfirm(
             title,
             description,
             action
         ) {
-
             document.getElementById(
                 "confirmModalTitle"
             ).textContent =
@@ -4021,9 +3466,7 @@
             );
         }
 
-
         function closeConfirm() {
-
             confirmModal.classList.remove(
                 "open"
             );
@@ -4032,18 +3475,11 @@
                 null;
         }
 
-
-        /*
-            RESET
-        */
-
         function resetSharedGoals() {
-
             showConfirm(
                 "Reset Goals?",
                 "This will reset all shared survival goal progress. Achievement progress for every profile will stay untouched.",
                 () => {
-
                     sharedGoals = {};
 
                     saveSharedGoals();
@@ -4054,33 +3490,18 @@
             );
         }
 
-
-        /*
-            SEARCH
-        */
-
         searchInput.addEventListener(
             "input",
-            () => {
-
-                renderCategories();
-            }
+            renderCategories
         );
-
-
-        /*
-            PROFILE EVENTS
-        */
 
         addProfileButton.addEventListener(
             "click",
             () => {
-
                 if (
                     profiles.length >=
                     MAX_PROFILES
                 ) {
-
                     return;
                 }
 
@@ -4090,28 +3511,23 @@
             }
         );
 
-
         profileCancelButton.addEventListener(
             "click",
             closeProfileModal
         );
-
 
         profileSaveButton.addEventListener(
             "click",
             saveProfileFromModal
         );
 
-
         profileNameInput.addEventListener(
             "keydown",
             event => {
-
                 if (
                     event.key ===
                     "Enter"
                 ) {
-
                     saveProfileFromModal();
                 }
 
@@ -4119,38 +3535,28 @@
                     event.key ===
                     "Escape"
                 ) {
-
                     closeProfileModal();
                 }
             }
         );
-
-
-        /*
-            CONFIRM EVENTS
-        */
 
         resetButton.addEventListener(
             "click",
             resetSharedGoals
         );
 
-
         confirmCancelButton.addEventListener(
             "click",
             closeConfirm
         );
 
-
         confirmYesButton.addEventListener(
             "click",
             () => {
-
                 if (
                     typeof pendingConfirmAction ===
                     "function"
                 ) {
-
                     const action =
                         pendingConfirmAction;
 
@@ -4159,47 +3565,38 @@
                     action();
 
                 } else {
-
                     closeConfirm();
                 }
             }
         );
 
-
         profileModal.addEventListener(
             "click",
             event => {
-
                 if (
                     event.target ===
                     profileModal
                 ) {
-
                     closeProfileModal();
                 }
             }
         );
 
-
         confirmModal.addEventListener(
             "click",
             event => {
-
                 if (
                     event.target ===
                     confirmModal
                 ) {
-
                     closeConfirm();
                 }
             }
         );
 
-
         document.addEventListener(
             "keydown",
             event => {
-
                 if (
                     event.key !==
                     "Escape"
@@ -4211,48 +3608,28 @@
                     profileModal.classList
                         .contains("open")
                 ) {
-
                     closeProfileModal();
 
                 } else if (
                     confirmModal.classList
                         .contains("open")
                 ) {
-
                     closeConfirm();
                 }
             }
         );
 
-
-        /*
-            LOAD DATA
-
-            Profiles are initialized BEFORE
-            goals.json is fetched, so profile
-            creation does not depend on the
-            JSON loading successfully.
-        */
-
         loadSharedGoals();
-
         loadProfiles();
-
         loadActiveProfile();
 
         renderProfiles();
-
         updateScores();
 
-
-        fetch(
-            "goals.json"
-        )
+        fetch("goals.json")
             .then(
                 response => {
-
                     if (!response.ok) {
-
                         throw new Error(
                             `HTTP ${response.status}`
                         );
@@ -4263,30 +3640,22 @@
             )
             .then(
                 data => {
-
-                    if (
-                        Array.isArray(data)
-                    ) {
-
-                        goalsData =
-                            data;
+                    if (Array.isArray(data)) {
+                        goalsData = data;
 
                     } else if (
                         Array.isArray(
                             data.categories
                         )
                     ) {
-
                         goalsData =
                             data.categories;
 
                     } else {
-
                         throw new Error(
                             "goals.json does not contain a valid category array."
                         );
                     }
-
 
                     renderProfiles();
                     renderCategories();
@@ -4295,15 +3664,12 @@
             )
             .catch(
                 error => {
-
                     console.error(
                         "Could not load goals.json:",
                         error
                     );
 
-
                     categoriesElement.innerHTML = "";
-
 
                     const errorElement =
                         document.createElement(
@@ -4320,11 +3686,9 @@
                         errorElement
                     );
 
-
                     updateScores();
                 }
             );
-
     </script>
 
 </body>
