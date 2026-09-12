@@ -2711,34 +2711,14 @@
 
 
         /*
-            Achievements do not have a
-            difficulty system, so the
-            difficulty filter only applies
-            to normal survival goals.
+            Difficulty applies to both
+            normal goals and achievements.
         */
 
         if (
             difficulty !== "all" &&
-            !isAchievement(item) &&
             getItemDifficulty(item) !==
                 difficulty
-        ) {
-
-            return false;
-
-        }
-
-
-        /*
-            If an achievement is being shown
-            while a specific difficulty is
-            selected, hide it because it has
-            no difficulty.
-        */
-
-        if (
-            difficulty !== "all" &&
-            isAchievement(item)
         ) {
 
             return false;
@@ -3404,27 +3384,45 @@
 
         if (achievement) {
 
-            const scoreTag =
-                document.createElement(
-                    "span"
-                );
+    const difficultyTag =
+        document.createElement(
+            "span"
+        );
+
+    difficultyTag.className =
+        "tag";
+
+    difficultyTag.textContent =
+        capitalize(
+            getItemDifficulty(
+                item
+            )
+        );
 
 
-            scoreTag.className =
-                "tag tag-score";
+    const scoreTag =
+        document.createElement(
+            "span"
+        );
+
+    scoreTag.className =
+        "tag tag-score";
+
+    scoreTag.textContent =
+        `${getAchievementGamerscore(
+            item
+        )}G`;
 
 
-            scoreTag.textContent =
-                `${getAchievementGamerscore(
-                    item
-                )}G`;
+    meta.appendChild(
+        difficultyTag
+    );
 
+    meta.appendChild(
+        scoreTag
+    );
 
-            meta.appendChild(
-                scoreTag
-            );
-
-        } else {
+} else {
 
             const difficultyTag =
                 document.createElement(
