@@ -1,3270 +1,2028 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"
-    >
-
-    <meta
-        name="apple-mobile-web-app-capable"
-        content="yes"
-    >
-
-    <meta
-        name="mobile-web-app-capable"
-        content="yes"
-    >
-
-    <meta
-        name="format-detection"
-        content="telephone=no"
-    >
-
-    <title>Minecraft Survival Checklist</title>
-
-    <style>
-        * {
-            box-sizing: border-box;
-            -webkit-tap-highlight-color: transparent;
-        }
-
-        html {
-            margin: 0;
-            padding: 0;
-            background: #080a0f;
-            touch-action: manipulation;
-            -webkit-text-size-adjust: 100%;
-        }
-
-        body {
-            margin: 0;
-            padding: 0;
-            min-width: 0;
-            background:
-                radial-gradient(
-                    circle at top,
-                    #151a25 0,
-                    #0b0e14 42%,
-                    #080a0f 100%
-                );
-            color: #f1f4f8;
-            font-family:
-                Inter,
-                -apple-system,
-                BlinkMacSystemFont,
-                "Segoe UI",
-                sans-serif;
-            line-height: 1.5;
-            touch-action: manipulation;
-            -webkit-text-size-adjust: 100%;
-        }
-
-        button,
-        input {
-            font: inherit;
-        }
-
-        button {
-            touch-action: manipulation;
-        }
-
-        a {
-            color: inherit;
-        }
-
-        .page {
-            width: min(1180px, calc(100% - 32px));
-            margin: 0 auto;
-            padding: 28px 0 50px;
-        }
-
-        /* =========================
-           HEADER
-        ========================= */
-
-        .header {
-            margin-bottom: 22px;
-        }
-
-        .eyebrow {
-            margin: 0 0 7px;
-            color: #8f9bad;
-            font-size: 12px;
-            font-weight: 800;
-            letter-spacing: 0.12em;
-            text-transform: uppercase;
-        }
-
-        h1 {
-            margin: 0;
-            color: #ffffff;
-            font-size: clamp(28px, 5vw, 42px);
-            line-height: 1.08;
-            letter-spacing: -0.035em;
-        }
-
-        .subtitle {
-            max-width: 720px;
-            margin: 10px 0 0;
-            color: #9ca7b7;
-            font-size: 15px;
-        }
-
-        /* =========================
-           CONTROLS
-        ========================= */
-
-        .controls {
-            display: grid;
-            grid-template-columns: minmax(0, 1fr) auto auto;
-            gap: 10px;
-            margin-bottom: 18px;
-        }
-
-        .search-wrap {
-            position: relative;
-            min-width: 0;
-        }
-
-        .search-icon {
-            position: absolute;
-            left: 14px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: #788396;
-            font-size: 16px;
-            pointer-events: none;
-        }
-
-        .search {
-            width: 100%;
-            min-height: 46px;
-            padding: 0 14px 0 40px;
-            border: 1px solid #252d3a;
-            border-radius: 10px;
-            outline: none;
-            background: #10141c;
-            color: #ffffff;
-            transition:
-                border-color 0.15s ease,
-                background 0.15s ease;
-        }
-
-        .search::placeholder {
-            color: #667182;
-        }
-
-        .search:focus {
-            border-color: #56657b;
-            background: #121720;
-        }
-
-        .button {
-            min-height: 46px;
-            padding: 0 17px;
-            border: 1px solid #2b3442;
-            border-radius: 10px;
-            background: #151a23;
-            color: #e9edf3;
-            font-size: 14px;
-            font-weight: 750;
-            cursor: pointer;
-            white-space: nowrap;
-            transition:
-                background 0.15s ease,
-                border-color 0.15s ease,
-                transform 0.08s ease;
-        }
-
-        .button:hover {
-            background: #1b222e;
-            border-color: #3b4657;
-        }
-
-        .button:active {
-            transform: translateY(1px);
-        }
-
-        .button.primary {
-            border-color: #4c607d;
-            background: #26364c;
-        }
-
-        .button.primary:hover {
-            background: #30445e;
-        }
-
-        .button.danger {
-            border-color: #57333a;
-            color: #ffb8c0;
-        }
-
-        .button.danger:hover {
-            background: #29171b;
-            border-color: #70414a;
-        }
-
-        /* =========================
-           SCORE AREA
-        ========================= */
-
-        .dashboard {
-            display: grid;
-            gap: 14px;
-            margin-bottom: 18px;
-        }
-
-        .score-grid {
-            display: grid;
-            grid-template-columns: repeat(4, minmax(0, 1fr));
-            gap: 10px;
-        }
-
-        .score-card {
-            min-width: 0;
-            padding: 16px;
-            border: 1px solid #202733;
-            border-radius: 12px;
-            background: rgba(15, 19, 27, 0.94);
-        }
-
-        .score-label {
-            margin-bottom: 6px;
-            color: #7f8a9b;
-            font-size: 11px;
-            font-weight: 800;
-            letter-spacing: 0.08em;
-            text-transform: uppercase;
-        }
-
-        .score-value {
-            display: flex;
-            align-items: baseline;
-            gap: 5px;
-            min-width: 0;
-            color: #ffffff;
-            font-size: 24px;
-            font-weight: 850;
-            letter-spacing: -0.025em;
-        }
-
-        .score-value small {
-            color: #7d8796;
-            font-size: 12px;
-            font-weight: 700;
-        }
-
-        .score-subtext {
-            margin-top: 5px;
-            overflow: hidden;
-            color: #737f90;
-            font-size: 12px;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-        }
-
-        .rank-line {
-            display: flex;
-            align-items: center;
-            gap: 7px;
-            margin-top: 7px;
-        }
-
-        .rank-badge {
-            display: inline-flex;
-            align-items: center;
-            min-height: 22px;
-            padding: 0 8px;
-            border: 1px solid #343d4b;
-            border-radius: 6px;
-            background: #151a22;
-            color: #dbe1e9;
-            font-size: 10px;
-            font-weight: 850;
-            letter-spacing: 0.04em;
-            text-transform: uppercase;
-        }
-
-        /* =========================
-           PROGRESS
-        ========================= */
-
-        .progress-panel {
-            padding: 16px;
-            border: 1px solid #202733;
-            border-radius: 12px;
-            background: rgba(15, 19, 27, 0.94);
-        }
-
-        .progress-top {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 12px;
-            margin-bottom: 9px;
-        }
-
-        .progress-title {
-            color: #dfe5ed;
-            font-size: 13px;
-            font-weight: 800;
-        }
-
-        .progress-percent {
-            color: #8995a6;
-            font-size: 12px;
-            font-weight: 800;
-        }
-
-        .progress-track {
-            width: 100%;
-            height: 8px;
-            overflow: hidden;
-            border-radius: 999px;
-            background: #202632;
-        }
-
-        .progress-fill {
-            width: 0;
-            height: 100%;
-            border-radius: inherit;
-            background: #687c9b;
-            transition: width 0.2s ease;
-        }
-
-        /* =========================
-           PROFILES
-        ========================= */
-
-        .section {
-            margin-top: 18px;
-        }
-
-        .section-heading {
-            display: flex;
-            align-items: end;
-            justify-content: space-between;
-            gap: 12px;
-            margin-bottom: 10px;
-        }
-
-        .section-heading h2 {
-            margin: 0;
-            color: #ffffff;
-            font-size: 18px;
-            letter-spacing: -0.02em;
-        }
-
-        .section-heading p {
-            margin: 3px 0 0;
-            color: #737e8e;
-            font-size: 12px;
-        }
-
-        .profile-count {
-            flex: 0 0 auto;
-            color: #727d8e;
-            font-size: 12px;
-            font-weight: 750;
-        }
-
-        .profiles {
-            display: grid;
-            grid-template-columns: repeat(3, minmax(0, 1fr));
-            gap: 10px;
-        }
-
-        .profile {
-            position: relative;
-            min-width: 0;
-            padding: 14px;
-            border: 1px solid #232b37;
-            border-radius: 12px;
-            background: #10141c;
-            cursor: pointer;
-            transition:
-                border-color 0.15s ease,
-                background 0.15s ease;
-        }
-
-        .profile:hover {
-            border-color: #354153;
-            background: #131822;
-        }
-
-        .profile.active {
-            border-color: #596b86;
-            background: #151b25;
-        }
-
-        .profile-top {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            min-width: 0;
-        }
-
-        .profile-avatar {
-            display: grid;
-            flex: 0 0 auto;
-            width: 38px;
-            height: 38px;
-            place-items: center;
-            border: 1px solid #303a49;
-            border-radius: 9px;
-            background: #1a202b;
-            color: #dfe5ec;
-            font-size: 14px;
-            font-weight: 900;
-        }
-
-        .profile-info {
-            min-width: 0;
-        }
-
-        .profile-name {
-            overflow: hidden;
-            color: #f2f5f8;
-            font-size: 14px;
-            font-weight: 800;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-        }
-
-        .profile-rank {
-            margin-top: 2px;
-            color: #7e8999;
-            font-size: 11px;
-            font-weight: 700;
-        }
-
-        .profile-score {
-            margin-top: 11px;
-            color: #ffffff;
-            font-size: 18px;
-            font-weight: 850;
-        }
-
-        .profile-score small {
-            color: #707c8d;
-            font-size: 11px;
-        }
-
-        .profile-status {
-            margin-top: 2px;
-            color: #6f7a8a;
-            font-size: 11px;
-        }
-
-        .profile-actions {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 7px;
-            margin-top: 11px;
-        }
-
-        .profile-action {
-            min-height: 34px;
-            border: 1px solid #293240;
-            border-radius: 7px;
-            background: #151a23;
-            color: #aeb7c5;
-            font-size: 11px;
-            font-weight: 800;
-            cursor: pointer;
-        }
-
-        .profile-action:hover {
-            background: #1b222d;
-            color: #ffffff;
-        }
-
-        .profile-action.delete {
-            border-color: #4c3037;
-            color: #d9949d;
-        }
-
-        .empty-profiles {
-            padding: 20px;
-            border: 1px dashed #2b3441;
-            border-radius: 12px;
-            color: #788394;
-            text-align: center;
-            font-size: 13px;
-        }
-
-        /* =========================
-           CATEGORIES
-        ========================= */
-
-        #categories {
-            display: grid;
-            gap: 9px;
-            margin-top: 18px;
-        }
-
-        .category {
-            overflow: hidden;
-            border: 1px solid #222a36;
-            border-radius: 12px;
-            background: #0f131a;
-        }
-
-        .category-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 12px;
-            width: 100%;
-            min-height: 58px;
-            padding: 13px 15px;
-            border: 0;
-            background: transparent;
-            color: inherit;
-            text-align: left;
-            cursor: pointer;
-        }
-
-        .category-header:hover {
-            background: #121720;
-        }
-
-        .category-title-wrap {
-            min-width: 0;
-        }
-
-        .category-title {
-            overflow: hidden;
-            color: #eef2f6;
-            font-size: 14px;
-            font-weight: 850;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-        }
-
-        .category-meta {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            margin-top: 2px;
-            color: #707b8b;
-            font-size: 11px;
-            font-weight: 700;
-        }
-
-        .category-score {
-            color: #8995a5;
-        }
-
-        .category-arrow {
-            flex: 0 0 auto;
-            color: #687486;
-            font-size: 15px;
-            transition: transform 0.15s ease;
-        }
-
-        .category.open .category-arrow {
-            transform: rotate(180deg);
-        }
-
-        .category-body {
-            display: none;
-            padding: 0 10px 10px;
-        }
-
-        .category.open .category-body {
-            display: grid;
-            gap: 6px;
-        }
-
-        /* =========================
-           CHECKLIST ITEMS
-        ========================= */
-
-        .check-item {
-            display: grid;
-            grid-template-columns: 22px minmax(0, 1fr) auto;
-            align-items: center;
-            gap: 10px;
-            min-width: 0;
-            padding: 11px;
-            border: 1px solid #1f2631;
-            border-radius: 9px;
-            background: #121720;
-            transition:
-                background 0.12s ease,
-                border-color 0.12s ease;
-        }
-
-        .check-item:hover {
-            border-color: #2b3544;
-            background: #151b25;
-        }
-
-        .check-item.completed {
-            background: #10151d;
-        }
-
-        .check-item.completed .item-text {
-            color: #667181;
-            text-decoration: line-through;
-            text-decoration-thickness: 1px;
-        }
-
-        .check-box {
-            position: relative;
-            display: grid;
-            width: 20px;
-            height: 20px;
-            place-items: center;
-        }
-
-        .check-box input {
-            position: absolute;
-            width: 20px;
-            height: 20px;
-            margin: 0;
-            opacity: 0;
-            cursor: pointer;
-        }
-
-        .check-mark {
-            display: grid;
-            width: 20px;
-            height: 20px;
-            place-items: center;
-            border: 1px solid #3b4554;
-            border-radius: 5px;
-            background: #0d1117;
-            color: transparent;
-            font-size: 13px;
-            font-weight: 900;
-            pointer-events: none;
-        }
-
-        .check-box input:checked + .check-mark {
-            border-color: #667c9d;
-            background: #4f6380;
-            color: #ffffff;
-        }
-
-        .item-content {
-            min-width: 0;
-        }
-
-        .item-text {
-            color: #dce2e9;
-            font-size: 13px;
-            font-weight: 650;
-            overflow-wrap: anywhere;
-        }
-
-        .item-requirement {
-            margin-top: 3px;
-            color: #717d8d;
-            font-size: 11px;
-            line-height: 1.4;
-        }
-
-        .item-badge {
-            flex: 0 0 auto;
-            align-self: center;
-            padding: 4px 7px;
-            border: 1px solid #303948;
-            border-radius: 5px;
-            background: #171d27;
-            color: #9da8b7;
-            font-size: 9px;
-            font-weight: 900;
-            letter-spacing: 0.04em;
-            text-transform: uppercase;
-            white-space: nowrap;
-        }
-
-        .item-badge.easy {
-            color: #9aa9bb;
-        }
-
-        .item-badge.medium {
-            color: #aeb6c2;
-        }
-
-        .item-badge.hard {
-            color: #c3cbd5;
-        }
-
-        .item-badge.epic {
-            border-color: #4a5362;
-            color: #e1e5ea;
-        }
-
-        .achievement-score {
-            display: inline-flex;
-            align-items: center;
-            gap: 3px;
-            flex: 0 0 auto;
-            color: #aab4c1;
-            font-size: 11px;
-            font-weight: 850;
-            white-space: nowrap;
-        }
-
-        .achievement-score strong {
-            color: #ffffff;
-            font-size: 13px;
-        }
-
-        /* =========================
-           NO RESULTS
-        ========================= */
-
-        .no-results {
-            padding: 28px 15px;
-            border: 1px dashed #2a3340;
-            border-radius: 12px;
-            color: #768293;
-            text-align: center;
-            font-size: 13px;
-        }
-
-        /* =========================
-           FOOTER
-        ========================= */
-
-        footer {
-            margin-top: 30px;
-            padding-top: 18px;
-            border-top: 1px solid #1d242f;
-            color: #596474;
-            font-size: 11px;
-            text-align: center;
-        }
-
-        /* =========================
-           MODALS
-        ========================= */
-
-        .modal-backdrop {
-            position: fixed;
-            z-index: 1000;
-            inset: 0;
-            display: none;
-            align-items: center;
-            justify-content: center;
-            padding: 18px;
-            background: rgba(3, 5, 8, 0.78);
-            backdrop-filter: blur(6px);
-        }
-
-        .modal-backdrop.visible {
-            display: flex;
-        }
-
-        .modal {
-            width: min(430px, 100%);
-            max-height: calc(100dvh - 36px);
-            overflow: auto;
-            padding: 20px;
-            border: 1px solid #2b3441;
-            border-radius: 14px;
-            background: #10141c;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.45);
-        }
-
-        .modal h2 {
-            margin: 0;
-            color: #ffffff;
-            font-size: 19px;
-        }
-
-        .modal-text {
-            margin: 7px 0 17px;
-            color: #7d8898;
-            font-size: 12px;
-        }
-
-        .modal-label {
-            display: block;
-            margin-bottom: 6px;
-            color: #aab4c2;
-            font-size: 11px;
-            font-weight: 800;
-        }
-
-        .modal-input {
-            width: 100%;
-            min-height: 44px;
-            padding: 0 12px;
-            border: 1px solid #293240;
-            border-radius: 9px;
-            outline: none;
-            background: #0c1016;
-            color: #ffffff;
-        }
-
-        .modal-input:focus {
-            border-color: #53647d;
-        }
-
-        .modal-buttons {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 8px;
-            margin-top: 15px;
-        }
-
-        .confirm-buttons {
-            grid-template-columns: 1fr 1fr;
-        }
-
-        /* =========================
-           MOBILE
-        ========================= */
-
-        @media (max-width: 900px) {
-            .score-grid {
-                grid-template-columns: repeat(2, minmax(0, 1fr));
-            }
-
-            .profiles {
-                grid-template-columns: repeat(2, minmax(0, 1fr));
-            }
-
-            .controls {
-                grid-template-columns: minmax(0, 1fr) auto;
-            }
-
-            .controls .button:last-child {
-                grid-column: 1 / -1;
-            }
-        }
-
-        @media (max-width: 620px) {
-            .page {
-                width: calc(100% - 18px);
-                padding-top: 18px;
-                padding-bottom: 30px;
-            }
-
-            .controls {
-                grid-template-columns: 1fr;
-            }
-
-            .controls .button:last-child {
-                grid-column: auto;
-            }
-
-            .button {
-                width: 100%;
-            }
-
-            .profiles {
-                grid-template-columns: 1fr;
-            }
-
-            .section-heading {
-                align-items: flex-start;
-            }
-
-            .check-item {
-                grid-template-columns: 22px minmax(0, 1fr);
-            }
-
-            .item-badge,
-            .achievement-score {
-                grid-column: 2;
-                justify-self: start;
-            }
-        }
-
-        @media (max-width: 420px) {
-            .page {
-                width: calc(100% - 14px);
-            }
-
-            h1 {
-                font-size: 29px;
-            }
-
-            .subtitle {
-                font-size: 13px;
-            }
-
-            .score-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .score-card {
-                padding: 14px;
-            }
-
-            .category-header {
-                min-height: 54px;
-                padding: 12px;
-            }
-
-            .category-title {
-                font-size: 13px;
-            }
-
-            .category-body {
-                padding: 0 7px 7px;
-            }
-
-            .check-item {
-                padding: 10px;
-            }
-
-            .item-text {
-                font-size: 12px;
-            }
-
-            .modal-backdrop {
-                padding: 10px;
-            }
-
-            .modal {
-                padding: 16px;
-            }
-        }
-    </style>
-</head>
-
-<body>
-
-<div class="page">
-
-    <header class="header">
-        <p class="eyebrow">Minecraft Bedrock Edition • Xbox</p>
-
-        <h1>Minecraft Survival Checklist</h1>
-
-        <p class="subtitle">
-            Track survival goals, Xbox achievements, Gamerscore,
-            and progress across your profiles.
-        </p>
-    </header>
-
-    <section class="controls">
-        <div class="search-wrap">
-            <span class="search-icon">⌕</span>
-
-            <input
-                id="searchInput"
-                class="search"
-                type="search"
-                placeholder="Search goals and achievements..."
-                autocomplete="off"
-                autocorrect="off"
-                autocapitalize="off"
-                spellcheck="false"
-            >
-        </div>
-
-        <button
-            id="addProfileButton"
-            class="button primary"
-            type="button"
-        >
-            Add Profile
-        </button>
-
-        <button
-            id="resetButton"
-            class="button danger"
-            type="button"
-        >
-            Reset Goals
-        </button>
-    </section>
-
-    <section class="dashboard">
-
-        <div class="score-grid">
-
-            <div class="score-card">
-                <div class="score-label">Global Score</div>
-
-                <div class="score-value">
-                    <span id="globalScore">0</span>
-                    <small>G</small>
-                </div>
-
-                <div
-                    id="globalScoreSubtext"
-                    class="score-subtext"
-                >
-                    0 / 0 possible
-                </div>
-            </div>
-
-            <div class="score-card">
-                <div class="score-label">Current Profile</div>
-
-                <div class="score-value">
-                    <span id="profileScore">0</span>
-                    <small>G</small>
-                </div>
-
-                <div class="rank-line">
-                    <span
-                        id="profileRank"
-                        class="rank-badge"
-                    >
-                        Dirt
-                    </span>
-                </div>
-            </div>
-
-            <div class="score-card">
-                <div class="score-label">Achievements</div>
-
-                <div class="score-value">
-                    <span id="achievementProgress">0</span>
-                    <small>/ 133</small>
-                </div>
-
-                <div
-                    id="achievementScoreText"
-                    class="score-subtext"
-                >
-                    0G earned
-                </div>
-            </div>
-
-            <div class="score-card">
-                <div class="score-label">Goals</div>
-
-                <div class="score-value">
-                    <span id="goalProgress">0</span>
-                    <small>completed</small>
-                </div>
-
-                <div
-                    id="goalScoreText"
-                    class="score-subtext"
-                >
-                    0G earned
-                </div>
-            </div>
-
-        </div>
-
-        <div class="progress-panel">
-
-            <div class="progress-top">
-                <span class="progress-title">
-                    Overall Progress
-                </span>
-
-                <span
-                    id="progressPercent"
-                    class="progress-percent"
-                >
-                    0%
-                </span>
-            </div>
-
-            <div class="progress-track">
-                <div
-                    id="progressFill"
-                    class="progress-fill"
-                ></div>
-            </div>
-
-        </div>
-
-    </section>
-
-    <section class="section">
-
-        <div class="section-heading">
-            <div>
-                <h2>Profiles</h2>
-
-                <p>
-                    Achievement progress is tracked separately for each player.
-                </p>
-            </div>
-
-            <span
-                id="profileCount"
-                class="profile-count"
-            >
-                0 / 12
-            </span>
-        </div>
-
-        <div
-            id="profiles"
-            class="profiles"
-        ></div>
-
-    </section>
-
-    <main id="categories"></main>
-
-    <footer>
-        Minecraft Survival Checklist
-    </footer>
-
-</div>
-
-
-<!-- =========================
-     PROFILE MODAL
-========================= -->
-
-<div
-    id="profileModal"
-    class="modal-backdrop"
-    aria-hidden="true"
->
-    <div
-        class="modal"
-        role="dialog"
-        aria-modal="true"
-        aria-labelledby="profileModalTitle"
-    >
-
-        <h2 id="profileModalTitle">
-            Add Profile
-        </h2>
-
-        <p class="modal-text">
-            Choose a name for this player profile.
-        </p>
-
-        <label
-            class="modal-label"
-            for="profileNameInput"
-        >
-            Profile Name
-        </label>
-
-        <input
-            id="profileNameInput"
-            class="modal-input"
-            type="text"
-            maxlength="30"
-            autocomplete="off"
-            spellcheck="false"
-            placeholder="Enter a profile name"
-        >
-
-        <div class="modal-buttons">
-
-            <button
-                id="profileCancelButton"
-                class="button"
-                type="button"
-            >
-                Cancel
-            </button>
-
-            <button
-                id="profileSaveButton"
-                class="button primary"
-                type="button"
-            >
-                Save Profile
-            </button>
-
-        </div>
-
-    </div>
-</div>
-
-
-<!-- =========================
-     CONFIRM MODAL
-========================= -->
-
-<div
-    id="confirmModal"
-    class="modal-backdrop"
-    aria-hidden="true"
->
-    <div
-        class="modal"
-        role="dialog"
-        aria-modal="true"
-        aria-labelledby="confirmModalTitle"
-    >
-
-        <h2 id="confirmModalTitle">
-            Reset Goals?
-        </h2>
-
-        <p
-            id="confirmModalText"
-            class="modal-text"
-        >
-            This will reset the selected progress.
-        </p>
-
-        <div class="modal-buttons confirm-buttons">
-
-            <button
-                id="confirmCancelButton"
-                class="button"
-                type="button"
-            >
-                Cancel
-            </button>
-
-            <button
-                id="confirmOkayButton"
-                class="button danger"
-                type="button"
-            >
-                Reset
-            </button>
-
-        </div>
-
-    </div>
-</div>
-
-
-<script>
-"use strict";
-
-/* =========================
-   SETTINGS
-========================= */
-
-const GOALS_FILE = "goals.json";
-
-const GOAL_STORAGE_KEY =
-    "minecraft-survival-goals-v1";
-
-const PROFILES_STORAGE_KEY =
-    "minecraft-survival-profiles-v2";
-
-const ACTIVE_PROFILE_STORAGE_KEY =
-    "minecraft-active-profile-v2";
-
-const MAX_PROFILES = 12;
-
-const DIFFICULTY_SCORES = {
-    easy: 10,
-    medium: 25,
-    hard: 50,
-    epic: 100
-};
-
-const DEFAULT_DIFFICULTY = "medium";
-
-
-/* =========================
-   RANKS
-========================= */
-
-const RANKS = [
+{
+  "version": 3,
+  "game": "Minecraft Bedrock Edition",
+  "platform": "Xbox",
+  "achievementCount": 133,
+  "achievementGamerscore": 2980,
+  "goalScoring": {
+    "easy": 10,
+    "medium": 25,
+    "hard": 50,
+    "epic": 100
+  },
+  "categories": [
     {
-        name: "Dirt",
-        min: 0,
-        max: 49
-    },
-    {
-        name: "Wood",
-        min: 50,
-        max: 149
-    },
-    {
-        name: "Stone",
-        min: 150,
-        max: 299
-    },
-    {
-        name: "Coal",
-        min: 300,
-        max: 499
-    },
-    {
-        name: "Iron",
-        min: 500,
-        max: 749
-    },
-    {
-        name: "Gold",
-        min: 750,
-        max: 999
-    },
-    {
-        name: "Diamond",
-        min: 1000,
-        max: 1499
-    },
-    {
-        name: "Emerald",
-        min: 1500,
-        max: 1999
-    },
-    {
-        name: "Netherite",
-        min: 2000,
-        max: 2499
-    },
-    {
-        name: "Ender Dragon",
-        min: 2500,
-        max: 2980
-    }
-];
-
-
-/* =========================
-   STATE
-========================= */
-
-let goalsData = null;
-
-let sharedGoals = {};
-
-let profiles = [];
-
-let activeProfileId = null;
-
-let currentSearch = "";
-
-let editingProfileId = null;
-
-let confirmAction = null;
-
-
-/* =========================
-   ELEMENTS
-========================= */
-
-const searchInput =
-    document.getElementById("searchInput");
-
-const categoriesElement =
-    document.getElementById("categories");
-
-const profilesElement =
-    document.getElementById("profiles");
-
-const globalScoreElement =
-    document.getElementById("globalScore");
-
-const globalScoreSubtextElement =
-    document.getElementById("globalScoreSubtext");
-
-const profileScoreElement =
-    document.getElementById("profileScore");
-
-const profileRankElement =
-    document.getElementById("profileRank");
-
-const achievementProgressElement =
-    document.getElementById("achievementProgress");
-
-const achievementScoreTextElement =
-    document.getElementById("achievementScoreText");
-
-const goalProgressElement =
-    document.getElementById("goalProgress");
-
-const goalScoreTextElement =
-    document.getElementById("goalScoreText");
-
-const progressPercentElement =
-    document.getElementById("progressPercent");
-
-const progressFillElement =
-    document.getElementById("progressFill");
-
-const profileCountElement =
-    document.getElementById("profileCount");
-
-const addProfileButton =
-    document.getElementById("addProfileButton");
-
-const resetButton =
-    document.getElementById("resetButton");
-
-const profileModal =
-    document.getElementById("profileModal");
-
-const profileModalTitle =
-    document.getElementById("profileModalTitle");
-
-const profileNameInput =
-    document.getElementById("profileNameInput");
-
-const profileSaveButton =
-    document.getElementById("profileSaveButton");
-
-const profileCancelButton =
-    document.getElementById("profileCancelButton");
-
-const confirmModal =
-    document.getElementById("confirmModal");
-
-const confirmModalText =
-    document.getElementById("confirmModalText");
-
-const confirmOkayButton =
-    document.getElementById("confirmOkayButton");
-
-const confirmCancelButton =
-    document.getElementById("confirmCancelButton");
-
-
-/* =========================
-   STORAGE
-========================= */
-
-function loadStorage() {
-
-    try {
-        const savedGoals =
-            localStorage.getItem(
-                GOAL_STORAGE_KEY
-            );
-
-        if (savedGoals) {
-            sharedGoals =
-                JSON.parse(savedGoals) || {};
-        }
-    } catch {
-        sharedGoals = {};
-    }
-
-
-    try {
-        const savedProfiles =
-            localStorage.getItem(
-                PROFILES_STORAGE_KEY
-            );
-
-        if (savedProfiles) {
-            profiles =
-                JSON.parse(savedProfiles) || [];
-        }
-    } catch {
-        profiles = [];
-    }
-
-
-    try {
-        const savedActive =
-            localStorage.getItem(
-                ACTIVE_PROFILE_STORAGE_KEY
-            );
-
-        if (savedActive) {
-            activeProfileId = savedActive;
-        }
-    } catch {
-        activeProfileId = null;
-    }
-
-
-    normalizeProfiles();
-}
-
-
-function saveGoals() {
-
-    localStorage.setItem(
-        GOAL_STORAGE_KEY,
-        JSON.stringify(sharedGoals)
-    );
-}
-
-
-function saveProfiles() {
-
-    localStorage.setItem(
-        PROFILES_STORAGE_KEY,
-        JSON.stringify(profiles)
-    );
-}
-
-
-function saveActiveProfile() {
-
-    if (activeProfileId) {
-        localStorage.setItem(
-            ACTIVE_PROFILE_STORAGE_KEY,
-            activeProfileId
-        );
-    }
-}
-
-
-/* =========================
-   PROFILE NORMALIZATION
-========================= */
-
-function normalizeProfiles() {
-
-    if (!Array.isArray(profiles)) {
-        profiles = [];
-    }
-
-    profiles = profiles
-        .filter(profile =>
-            profile &&
-            typeof profile === "object" &&
-            profile.id
-        )
-        .slice(0, MAX_PROFILES)
-        .map(profile => ({
-            id: String(profile.id),
-
-            name:
-                typeof profile.name === "string" &&
-                profile.name.trim()
-                    ? profile.name.trim()
-                    : "Player",
-
-            achievements:
-                profile.achievements &&
-                typeof profile.achievements === "object"
-                    ? profile.achievements
-                    : {}
-        }));
-
-
-    if (
-        !activeProfileId ||
-        !profiles.some(
-            profile =>
-                profile.id === activeProfileId
-        )
-    ) {
-        activeProfileId =
-            profiles[0]?.id || null;
-    }
-}
-
-
-/* =========================
-   DATA HELPERS
-========================= */
-
-/*
-    IMPORTANT:
-    This intentionally uses ONLY:
-
-        goalsData.categories[]
-
-    and:
-
-        category.items[]
-
-    There is no recursive category detection.
-*/
-
-function getCategories() {
-
-    if (
-        !goalsData ||
-        !Array.isArray(goalsData.categories)
-    ) {
-        return [];
-    }
-
-    return goalsData.categories;
-}
-
-
-function getNormalGoalCategories() {
-
-    return getCategories().filter(
-        category =>
-            category.type !== "achievements"
-    );
-}
-
-
-function getAchievementCategory() {
-
-    return getCategories().find(
-        category =>
-            category.type === "achievements"
-    );
-}
-
-
-function getNormalGoals() {
-
-    const result = [];
-
-    for (const category of getNormalGoalCategories()) {
-
-        if (!Array.isArray(category.items)) {
-            continue;
-        }
-
-        for (const item of category.items) {
-
-            if (!item || !item.id) {
-                continue;
-            }
-
-            result.push(item);
-        }
-    }
-
-    return result;
-}
-
-
-function getAchievements() {
-
-    const category =
-        getAchievementCategory();
-
-    if (
-        !category ||
-        !Array.isArray(category.items)
-    ) {
-        return [];
-    }
-
-    return category.items.filter(
-        item =>
-            item &&
-            item.id
-    );
-}
-
-
-function isGoalCompleted(id) {
-
-    return sharedGoals[id] === true;
-}
-
-
-function isAchievementCompleted(
-    profile,
-    id
-) {
-
-    return Boolean(
-        profile &&
-        profile.achievements &&
-        profile.achievements[id] === true
-    );
-}
-
-
-function getGoalScore(goal) {
-
-    const difficulty =
-        String(
-            goal.difficulty ||
-            DEFAULT_DIFFICULTY
-        ).toLowerCase();
-
-    return (
-        DIFFICULTY_SCORES[difficulty] ||
-        DIFFICULTY_SCORES[
-            DEFAULT_DIFFICULTY
-        ]
-    );
-}
-
-
-function getSharedGoalScore() {
-
-    let score = 0;
-
-    for (const goal of getNormalGoals()) {
-
-        if (isGoalCompleted(goal.id)) {
-            score += getGoalScore(goal);
-        }
-    }
-
-    return score;
-}
-
-
-function getSharedGoalCompletedCount() {
-
-    let count = 0;
-
-    for (const goal of getNormalGoals()) {
-
-        if (isGoalCompleted(goal.id)) {
-            count++;
-        }
-    }
-
-    return count;
-}
-
-
-function getTotalGoalScore() {
-
-    return getNormalGoals().reduce(
-        (total, goal) =>
-            total + getGoalScore(goal),
-        0
-    );
-}
-
-
-function getProfileAchievementScore(
-    profile
-) {
-
-    if (!profile) {
-        return 0;
-    }
-
-    return getAchievements().reduce(
-        (total, achievement) => {
-
-            if (
-                isAchievementCompleted(
-                    profile,
-                    achievement.id
-                )
-            ) {
-                return (
-                    total +
-                    Number(
-                        achievement.gamerscore
-                    ) || 0
-                );
-            }
-
-            return total;
+      "id": "day-1",
+      "title": "Day 1 — Get Established",
+      "items": [
+        {
+          "id": "punch-tree",
+          "text": "Collect your first logs",
+          "difficulty": "easy"
         },
-        0
-    );
-}
-
-
-function getProfileAchievementCount(
-    profile
-) {
-
-    if (!profile) {
-        return 0;
-    }
-
-    return getAchievements().filter(
-        achievement =>
-            isAchievementCompleted(
-                profile,
-                achievement.id
-            )
-    ).length;
-}
-
-
-function getCurrentProfile() {
-
-    return profiles.find(
-        profile =>
-            profile.id === activeProfileId
-    ) || null;
-}
-
-
-function getCurrentProfileScore() {
-
-    return (
-        getSharedGoalScore() +
-        getProfileAchievementScore(
-            getCurrentProfile()
-        )
-    );
-}
-
-
-function getGlobalAchievementScore() {
-
-    return profiles.reduce(
-        (total, profile) =>
-            total +
-            getProfileAchievementScore(
-                profile
-            ),
-        0
-    );
-}
-
-
-function getGlobalAchievementCount() {
-
-    return profiles.reduce(
-        (total, profile) =>
-            total +
-            getProfileAchievementCount(
-                profile
-            ),
-        0
-    );
-}
-
-
-function getGlobalScore() {
-
-    return (
-        getSharedGoalScore() +
-        getGlobalAchievementScore()
-    );
-}
-
-
-function getGlobalPossibleScore() {
-
-    return (
-        getTotalGoalScore() +
-        getAchievements().reduce(
-            (total, achievement) =>
-                total +
-                Number(
-                    achievement.gamerscore
-                ) || 0,
-            0
-        ) * profiles.length
-    );
-}
-
-
-/* =========================
-   RANK
-========================= */
-
-function getRank(score) {
-
-    let currentRank = RANKS[0];
-
-    for (const rank of RANKS) {
-
-        if (score >= rank.min) {
-            currentRank = rank;
-        }
-    }
-
-    return currentRank;
-}
-
-
-/* =========================
-   PROFILE HELPERS
-========================= */
-
-function createProfileId() {
-
-    return (
-        Date.now().toString(36) +
-        Math.random()
-            .toString(36)
-            .slice(2, 8)
-    );
-}
-
-
-function getProfileInitial(name) {
-
-    const clean =
-        String(name || "P")
-            .trim();
-
-    return (
-        clean.charAt(0).toUpperCase() ||
-        "P"
-    );
-}
-
-
-function addProfile(name) {
-
-    if (profiles.length >= MAX_PROFILES) {
-        return;
-    }
-
-    const cleanName =
-        String(name || "")
-            .trim()
-            .slice(0, 30);
-
-    if (!cleanName) {
-        return;
-    }
-
-    const profile = {
-        id: createProfileId(),
-        name: cleanName,
-        achievements: {}
-    };
-
-    profiles.push(profile);
-
-    activeProfileId = profile.id;
-
-    saveProfiles();
-    saveActiveProfile();
-
-    renderAll();
-}
-
-
-function renameProfile(id, name) {
-
-    const profile =
-        profiles.find(
-            item => item.id === id
-        );
-
-    if (!profile) {
-        return;
-    }
-
-    const cleanName =
-        String(name || "")
-            .trim()
-            .slice(0, 30);
-
-    if (!cleanName) {
-        return;
-    }
-
-    profile.name = cleanName;
-
-    saveProfiles();
-
-    renderAll();
-}
-
-
-function deleteProfile(id) {
-
-    if (profiles.length <= 1) {
-        return;
-    }
-
-    const index =
-        profiles.findIndex(
-            profile => profile.id === id
-        );
-
-    if (index === -1) {
-        return;
-    }
-
-    profiles.splice(index, 1);
-
-    if (activeProfileId === id) {
-        activeProfileId =
-            profiles[0]?.id || null;
-
-        saveActiveProfile();
-    }
-
-    saveProfiles();
-
-    renderAll();
-}
-
-
-function selectProfile(id) {
-
-    if (
-        !profiles.some(
-            profile => profile.id === id
-        )
-    ) {
-        return;
-    }
-
-    activeProfileId = id;
-
-    saveActiveProfile();
-
-    renderAll();
-}
-
-
-/* =========================
-   PROFILE RENDER
-========================= */
-
-function renderProfiles() {
-
-    profilesElement.innerHTML = "";
-
-    profileCountElement.textContent =
-        `${profiles.length} / ${MAX_PROFILES}`;
-
-
-    if (!profiles.length) {
-
-        profilesElement.innerHTML = `
-            <div class="empty-profiles">
-                Add a profile to start tracking Xbox achievements.
-            </div>
-        `;
-
-        return;
-    }
-
-
-    for (const profile of profiles) {
-
-        const card =
-            document.createElement("article");
-
-        card.className = "profile";
-
-        if (
-            profile.id === activeProfileId
-        ) {
-            card.classList.add("active");
-        }
-
-
-        const achievementCount =
-            getProfileAchievementCount(
-                profile
-            );
-
-        const achievementScore =
-            getProfileAchievementScore(
-                profile
-            );
-
-        const score =
-            getSharedGoalScore() +
-            achievementScore;
-
-        const rank =
-            getRank(score);
-
-
-        card.innerHTML = `
-            <div class="profile-top">
-
-                <div class="profile-avatar">
-                    ${escapeHtml(
-                        getProfileInitial(
-                            profile.name
-                        )
-                    )}
-                </div>
-
-                <div class="profile-info">
-
-                    <div class="profile-name">
-                        ${escapeHtml(
-                            profile.name
-                        )}
-                    </div>
-
-                    <div class="profile-rank">
-                        ${escapeHtml(
-                            rank.name
-                        )}
-                    </div>
-
-                </div>
-
-            </div>
-
-            <div class="profile-score">
-                ${score}G
-                <small>total</small>
-            </div>
-
-            <div class="profile-status">
-                ${achievementCount} /
-                ${getAchievements().length}
-                achievements •
-                ${achievementScore}G earned
-            </div>
-
-            <div class="profile-actions">
-
-                <button
-                    class="profile-action"
-                    type="button"
-                    data-action="select"
-                    data-id="${escapeAttribute(
-                        profile.id
-                    )}"
-                >
-                    Select
-                </button>
-
-                <button
-                    class="profile-action"
-                    type="button"
-                    data-action="rename"
-                    data-id="${escapeAttribute(
-                        profile.id
-                    )}"
-                >
-                    Rename
-                </button>
-
-                <button
-                    class="profile-action delete"
-                    type="button"
-                    data-action="delete"
-                    data-id="${escapeAttribute(
-                        profile.id
-                    )}"
-                >
-                    Delete
-                </button>
-
-            </div>
-        `;
-
-
-        card.addEventListener(
-            "click",
-            event => {
-
-                const button =
-                    event.target.closest(
-                        "button"
-                    );
-
-                if (button) {
-                    return;
-                }
-
-                selectProfile(profile.id);
-            }
-        );
-
-
-        profilesElement.appendChild(card);
-    }
-}
-
-
-/* =========================
-   CATEGORY RENDER
-========================= */
-
-function renderCategories() {
-
-    categoriesElement.innerHTML = "";
-
-    const categories =
-        getCategories();
-
-
-    if (!categories.length) {
-
-        categoriesElement.innerHTML = `
-            <div class="no-results">
-                No categories were found.
-            </div>
-        `;
-
-        return;
-    }
-
-
-    let visibleCategoryCount = 0;
-
-
-    for (
-        const category of categories
-    ) {
-
-        if (
-            !Array.isArray(
-                category.items
-            )
-        ) {
-            continue;
-        }
-
-
-        const items =
-            category.items.filter(
-                item =>
-                    matchesSearch(
-                        item,
-                        category
-                    )
-            );
-
-
-        if (
-            currentSearch &&
-            items.length === 0
-        ) {
-            continue;
-        }
-
-
-        visibleCategoryCount++;
-
-
-        const categoryElement =
-            document.createElement("section");
-
-        categoryElement.className =
-            "category";
-
-
-        const isAchievements =
-            category.type === "achievements";
-
-
-        const completedCount =
-            items.filter(item => {
-
-                if (isAchievements) {
-
-                    return isAchievementCompleted(
-                        getCurrentProfile(),
-                        item.id
-                    );
-                }
-
-                return isGoalCompleted(
-                    item.id
-                );
-
-            }).length;
-
-
-        let possibleScore = 0;
-
-        for (const item of items) {
-
-            possibleScore +=
-                isAchievements
-                    ? Number(
-                        item.gamerscore
-                    ) || 0
-                    : getGoalScore(item);
-        }
-
-
-        const earnedScore =
-            items.reduce(
-                (total, item) => {
-
-                    const completed =
-                        isAchievements
-                            ? isAchievementCompleted(
-                                getCurrentProfile(),
-                                item.id
-                            )
-                            : isGoalCompleted(
-                                item.id
-                            );
-
-                    if (!completed) {
-                        return total;
-                    }
-
-                    return (
-                        total +
-                        (
-                            isAchievements
-                                ? Number(
-                                    item.gamerscore
-                                ) || 0
-                                : getGoalScore(item)
-                        )
-                    );
-                },
-                0
-            );
-
-
-        categoryElement.innerHTML = `
-            <button
-                class="category-header"
-                type="button"
-            >
-
-                <div class="category-title-wrap">
-
-                    <div class="category-title">
-                        ${escapeHtml(
-                            category.title ||
-                            category.id ||
-                            "Category"
-                        )}
-                    </div>
-
-                    <div class="category-meta">
-
-                        <span>
-                            ${completedCount}
-                            /
-                            ${items.length}
-                        </span>
-
-                        <span>•</span>
-
-                        <span class="category-score">
-                            ${earnedScore}G /
-                            ${possibleScore}G
-                        </span>
-
-                    </div>
-
-                </div>
-
-                <span
-                    class="category-arrow"
-                    aria-hidden="true"
-                >
-                    ▼
-                </span>
-
-            </button>
-
-            <div class="category-body"></div>
-        `;
-
-
-        const header =
-            categoryElement.querySelector(
-                ".category-header"
-            );
-
-        const body =
-            categoryElement.querySelector(
-                ".category-body"
-            );
-
-
-        for (const item of items) {
-
-            body.appendChild(
-                createItemElement(
-                    item,
-                    isAchievements
-                )
-            );
-        }
-
-
-        header.addEventListener(
-            "click",
-            () => {
-
-                const wasOpen =
-                    categoryElement.classList.contains(
-                        "open"
-                    );
-
-
-                document
-                    .querySelectorAll(
-                        ".category.open"
-                    )
-                    .forEach(
-                        openCategory => {
-                            openCategory.classList.remove(
-                                "open"
-                            );
-                        }
-                    );
-
-
-                if (!wasOpen) {
-
-                    categoryElement.classList.add(
-                        "open"
-                    );
-                }
-            }
-        );
-
-
-        if (currentSearch) {
-            categoryElement.classList.add(
-                "open"
-            );
-        }
-
-
-        categoriesElement.appendChild(
-            categoryElement
-        );
-    }
-
-
-    if (!visibleCategoryCount) {
-
-        categoriesElement.innerHTML = `
-            <div class="no-results">
-                No goals or achievements match
-                "<strong>${escapeHtml(
-                    currentSearch
-                )}</strong>".
-            </div>
-        `;
-    }
-}
-
-
-/* =========================
-   ITEM RENDER
-========================= */
-
-function createItemElement(
-    item,
-    isAchievement
-) {
-
-    const wrapper =
-        document.createElement("label");
-
-    wrapper.className = "check-item";
-
-
-    const completed =
-        isAchievement
-            ? isAchievementCompleted(
-                getCurrentProfile(),
-                item.id
-            )
-            : isGoalCompleted(
-                item.id
-            );
-
-
-    if (completed) {
-        wrapper.classList.add(
-            "completed"
-        );
-    }
-
-
-    const difficulty =
-        String(
-            item.difficulty ||
-            DEFAULT_DIFFICULTY
-        ).toLowerCase();
-
-
-    const badge =
-        isAchievement
-            ? `
-                <span class="achievement-score">
-                    <strong>
-                        ${Number(
-                            item.gamerscore
-                        ) || 0}
-                    </strong>
-                    G
-                </span>
-            `
-            : `
-                <span
-                    class="item-badge ${escapeAttribute(
-                        difficulty
-                    )}"
-                >
-                    ${escapeHtml(
-                        difficulty
-                    )}
-                    ·
-                    ${getGoalScore(item)}G
-                </span>
-            `;
-
-
-    wrapper.innerHTML = `
-        <span class="check-box">
-
-            <input
-                type="checkbox"
-                ${completed ? "checked" : ""}
-            >
-
-            <span
-                class="check-mark"
-                aria-hidden="true"
-            >
-                ✓
-            </span>
-
-        </span>
-
-        <span class="item-content">
-
-            <span class="item-text">
-                ${escapeHtml(
-                    item.text ||
-                    item.name ||
-                    "Unnamed item"
-                )}
-            </span>
-
-            ${
-                isAchievement &&
-                item.requirement
-                    ? `
-                        <span class="item-requirement">
-                            ${escapeHtml(
-                                item.requirement
-                            )}
-                        </span>
-                    `
-                    : ""
-            }
-
-        </span>
-
-        ${badge}
-    `;
-
-
-    const checkbox =
-        wrapper.querySelector(
-            "input"
-        );
-
-
-    checkbox.addEventListener(
-        "change",
-        () => {
-
-            setItemCompleted(
-                item,
-                checkbox.checked,
-                isAchievement
-            );
-        }
-    );
-
-
-    return wrapper;
-}
-
-
-/* =========================
-   ITEM STATE
-========================= */
-
-function setItemCompleted(
-    item,
-    completed,
-    isAchievement
-) {
-
-    if (isAchievement) {
-
-        const profile =
-            getCurrentProfile();
-
-        if (!profile) {
-            checkboxSafetyRefresh();
-            return;
-        }
-
-        if (!profile.achievements) {
-            profile.achievements = {};
-        }
-
-        profile.achievements[item.id] =
-            Boolean(completed);
-
-        saveProfiles();
-
-    } else {
-
-        sharedGoals[item.id] =
-            Boolean(completed);
-
-        saveGoals();
-    }
-
-
-    renderAll();
-}
-
-
-/*
-    If an achievement is clicked without
-    an available profile, restore the UI.
-*/
-function checkboxSafetyRefresh() {
-    renderAll();
-}
-
-
-/* =========================
-   SEARCH
-========================= */
-
-function matchesSearch(
-    item,
-    category
-) {
-
-    if (!currentSearch) {
-        return true;
-    }
-
-    const query =
-        currentSearch.toLowerCase();
-
-
-    const text =
-        [
-            category?.title,
-            item?.text,
-            item?.name,
-            item?.requirement,
-            item?.difficulty
-        ]
-            .filter(Boolean)
-            .join(" ")
-            .toLowerCase();
-
-
-    return text.includes(query);
-}
-
-
-/* =========================
-   DASHBOARD
-========================= */
-
-function renderDashboard() {
-
-    const currentProfile =
-        getCurrentProfile();
-
-
-    const sharedGoalScore =
-        getSharedGoalScore();
-
-    const goalCompleted =
-        getSharedGoalCompletedCount();
-
-    const totalGoals =
-        getNormalGoals().length;
-
-
-    const achievementCount =
-        getProfileAchievementCount(
-            currentProfile
-        );
-
-    const achievementScore =
-        getProfileAchievementScore(
-            currentProfile
-        );
-
-    const totalAchievements =
-        getAchievements().length;
-
-
-    const currentScore =
-        sharedGoalScore +
-        achievementScore;
-
-
-    const globalScore =
-        getGlobalScore();
-
-    const globalPossible =
-        getGlobalPossibleScore();
-
-
-    globalScoreElement.textContent =
-        globalScore;
-
-    globalScoreSubtextElement.textContent =
-        `${globalScore} / ${globalPossible} possible`;
-
-
-    profileScoreElement.textContent =
-        currentScore;
-
-
-    profileRankElement.textContent =
-        getRank(currentScore).name;
-
-
-    achievementProgressElement.textContent =
-        achievementCount;
-
-
-    achievementProgressElement.parentElement
-        .querySelector("small")
-        .textContent =
-        `/ ${totalAchievements}`;
-
-
-    achievementScoreTextElement.textContent =
-        `${achievementScore}G earned`;
-
-
-    goalProgressElement.textContent =
-        goalCompleted;
-
-
-    goalProgressElement.parentElement
-        .querySelector("small")
-        .textContent =
-        "completed";
-
-
-    goalScoreTextElement.textContent =
-        `${sharedGoalScore}G earned`;
-
-
-    const possible =
-        getTotalGoalScore() +
-        (
-            getAchievements().reduce(
-                (total, achievement) =>
-                    total +
-                    (
-                        Number(
-                            achievement.gamerscore
-                        ) || 0
-                    ),
-                0
-            )
-        );
-
-
-    const earned =
-        sharedGoalScore +
-        achievementScore;
-
-
-    const percentage =
-        possible > 0
-            ? Math.min(
-                100,
-                Math.round(
-                    (earned / possible) *
-                    100
-                )
-            )
-            : 0;
-
-
-    progressPercentElement.textContent =
-        `${percentage}%`;
-
-    progressFillElement.style.width =
-        `${percentage}%`;
-}
-
-
-/* =========================
-   RESET
-========================= */
-
-function resetSharedGoals() {
-
-    sharedGoals = {};
-
-    saveGoals();
-
-    renderAll();
-}
-
-
-function resetCurrentProfileAchievements() {
-
-    const profile =
-        getCurrentProfile();
-
-    if (!profile) {
-        return;
-    }
-
-    profile.achievements = {};
-
-    saveProfiles();
-
-    renderAll();
-}
-
-
-/* =========================
-   MODALS
-========================= */
-
-function openProfileModal(
-    profileId = null
-) {
-
-    editingProfileId =
-        profileId;
-
-    if (profileId) {
-
-        const profile =
-            profiles.find(
-                item =>
-                    item.id === profileId
-            );
-
-        if (!profile) {
-            return;
-        }
-
-        profileModalTitle.textContent =
-            "Rename Profile";
-
-        profileNameInput.value =
-            profile.name;
-
-    } else {
-
-        profileModalTitle.textContent =
-            "Add Profile";
-
-        profileNameInput.value = "";
-    }
-
-
-    profileModal.classList.add(
-        "visible"
-    );
-
-    profileModal.setAttribute(
-        "aria-hidden",
-        "false"
-    );
-
-
-    setTimeout(
-        () => {
-            profileNameInput.focus();
+        {
+          "id": "craft-table",
+          "text": "Craft a Crafting Table",
+          "difficulty": "easy"
         },
-        50
-    );
+        {
+          "id": "craft-tools",
+          "text": "Craft a wooden pickaxe, axe, shovel and sword",
+          "difficulty": "easy"
+        },
+        {
+          "id": "stone-tools",
+          "text": "Upgrade to stone tools",
+          "difficulty": "easy"
+        },
+        {
+          "id": "get-food",
+          "text": "Collect a reliable food supply",
+          "difficulty": "easy"
+        },
+        {
+          "id": "make-shelter",
+          "text": "Build a temporary shelter",
+          "difficulty": "easy"
+        },
+        {
+          "id": "make-bed",
+          "text": "Craft and place a bed",
+          "difficulty": "easy"
+        },
+        {
+          "id": "make-furnace",
+          "text": "Craft a furnace",
+          "difficulty": "easy"
+        },
+        {
+          "id": "make-storage",
+          "text": "Set up basic storage",
+          "difficulty": "easy"
+        },
+        {
+          "id": "secure-base",
+          "text": "Light up your base and surrounding area",
+          "difficulty": "easy"
+        }
+      ]
+    },
+    {
+      "id": "early-survival",
+      "title": "Early Survival",
+      "items": [
+        {
+          "id": "iron-tools",
+          "text": "Craft a full set of iron tools",
+          "difficulty": "medium"
+        },
+        {
+          "id": "iron-armor",
+          "text": "Craft a full set of iron armor",
+          "difficulty": "medium"
+        },
+        {
+          "id": "shield",
+          "text": "Craft a shield",
+          "difficulty": "easy"
+        },
+        {
+          "id": "bucket",
+          "text": "Craft a bucket",
+          "difficulty": "easy"
+        },
+        {
+          "id": "shears",
+          "text": "Craft shears",
+          "difficulty": "easy"
+        },
+        {
+          "id": "flint-steel",
+          "text": "Craft flint and steel",
+          "difficulty": "easy"
+        },
+        {
+          "id": "enchanting-table",
+          "text": "Craft an enchanting table",
+          "difficulty": "hard"
+        },
+        {
+          "id": "bookshelves",
+          "text": "Build an enchanting setup with bookshelves",
+          "difficulty": "hard"
+        },
+        {
+          "id": "diamond-pickaxe",
+          "text": "Craft a diamond pickaxe",
+          "difficulty": "hard"
+        },
+        {
+          "id": "diamond-armor",
+          "text": "Craft diamond armor",
+          "difficulty": "hard"
+        },
+        {
+          "id": "nether-portal",
+          "text": "Build and activate a Nether portal",
+          "difficulty": "medium"
+        }
+      ]
+    },
+    {
+      "id": "base",
+      "title": "Base & Infrastructure",
+      "items": [
+        {
+          "id": "main-base",
+          "text": "Build a permanent main base",
+          "difficulty": "hard"
+        },
+        {
+          "id": "storage-room",
+          "text": "Build an organized storage room",
+          "difficulty": "medium"
+        },
+        {
+          "id": "smelting-room",
+          "text": "Build a dedicated smelting area",
+          "difficulty": "medium"
+        },
+        {
+          "id": "enchanting-room",
+          "text": "Build a dedicated enchanting room",
+          "difficulty": "medium"
+        },
+        {
+          "id": "map-wall",
+          "text": "Create a map wall",
+          "difficulty": "hard"
+        },
+        {
+          "id": "nether-hub",
+          "text": "Build a Nether hub",
+          "difficulty": "hard"
+        },
+        {
+          "id": "roads",
+          "text": "Connect important locations with roads or paths",
+          "difficulty": "medium"
+        },
+        {
+          "id": "bridge",
+          "text": "Build a major bridge",
+          "difficulty": "hard"
+        },
+        {
+          "id": "watchtower",
+          "text": "Build a watchtower",
+          "difficulty": "medium"
+        },
+        {
+          "id": "wall",
+          "text": "Build a defensive wall around your settlement",
+          "difficulty": "hard"
+        },
+        {
+          "id": "moat",
+          "text": "Build a moat or defensive trench",
+          "difficulty": "hard"
+        },
+        {
+          "id": "kingdom",
+          "text": "Turn your base into a full settlement or kingdom",
+          "difficulty": "epic"
+        },
+        {
+          "id": "castle",
+          "text": "Build a large castle or fortress",
+          "difficulty": "epic"
+        },
+        {
+          "id": "castle-throne-room",
+          "text": "Build a decorated throne room",
+          "difficulty": "hard"
+        },
+        {
+          "id": "kingdom-gates",
+          "text": "Build a grand entrance gate for your settlement",
+          "difficulty": "hard"
+        },
+        {
+          "id": "town-square",
+          "text": "Build a central town square",
+          "difficulty": "medium"
+        },
+        {
+          "id": "villager-homes",
+          "text": "Build individual homes for your villagers",
+          "difficulty": "hard"
+        },
+        {
+          "id": "harbor",
+          "text": "Build a harbor or dock",
+          "difficulty": "hard"
+        },
+        {
+          "id": "custom-landmark",
+          "text": "Build a unique landmark that represents your world",
+          "difficulty": "hard"
+        }
+      ]
+    },
+    {
+      "id": "mining",
+      "title": "Mining & Resources",
+      "items": [
+        {
+          "id": "coal",
+          "text": "Collect a large supply of coal",
+          "difficulty": "easy"
+        },
+        {
+          "id": "iron",
+          "text": "Collect a large supply of iron",
+          "difficulty": "medium"
+        },
+        {
+          "id": "copper",
+          "text": "Collect a large supply of copper",
+          "difficulty": "medium"
+        },
+        {
+          "id": "gold",
+          "text": "Collect a large supply of gold",
+          "difficulty": "medium"
+        },
+        {
+          "id": "redstone",
+          "text": "Collect a large supply of redstone",
+          "difficulty": "medium"
+        },
+        {
+          "id": "lapis",
+          "text": "Collect a large supply of lapis lazuli",
+          "difficulty": "easy"
+        },
+        {
+          "id": "diamonds",
+          "text": "Build up a diamond supply",
+          "difficulty": "hard"
+        },
+        {
+          "id": "emeralds",
+          "text": "Collect emeralds",
+          "difficulty": "medium"
+        },
+        {
+          "id": "ancient-debris",
+          "text": "Find ancient debris",
+          "difficulty": "hard"
+        },
+        {
+          "id": "netherite",
+          "text": "Craft a Netherite item",
+          "difficulty": "hard"
+        },
+        {
+          "id": "ore-collection",
+          "text": "Collect at least one of every overworld ore",
+          "difficulty": "hard"
+        },
+        {
+          "id": "diamond-stack",
+          "text": "Collect a full stack of diamonds",
+          "difficulty": "epic"
+        },
+        {
+          "id": "netherite-stack",
+          "text": "Build up a large supply of Netherite",
+          "difficulty": "epic"
+        },
+        {
+          "id": "deep-mine",
+          "text": "Create a large underground mining network",
+          "difficulty": "hard"
+        },
+        {
+          "id": "resource-room",
+          "text": "Create a dedicated room for valuable resources",
+          "difficulty": "medium"
+        }
+      ]
+    },
+    {
+      "id": "farms",
+      "title": "Farms & Food",
+      "items": [
+        {
+          "id": "wheat-farm",
+          "text": "Build a wheat farm",
+          "difficulty": "easy"
+        },
+        {
+          "id": "carrot-farm",
+          "text": "Build a carrot farm",
+          "difficulty": "easy"
+        },
+        {
+          "id": "potato-farm",
+          "text": "Build a potato farm",
+          "difficulty": "easy"
+        },
+        {
+          "id": "beetroot-farm",
+          "text": "Build a beetroot farm",
+          "difficulty": "easy"
+        },
+        {
+          "id": "sugar-cane-farm",
+          "text": "Build a sugar cane farm",
+          "difficulty": "easy"
+        },
+        {
+          "id": "bamboo-farm",
+          "text": "Build a bamboo farm",
+          "difficulty": "easy"
+        },
+        {
+          "id": "pumpkin-farm",
+          "text": "Build a pumpkin farm",
+          "difficulty": "medium"
+        },
+        {
+          "id": "melon-farm",
+          "text": "Build a melon farm",
+          "difficulty": "medium"
+        },
+        {
+          "id": "animal-farm",
+          "text": "Build an animal breeding area",
+          "difficulty": "medium"
+        },
+        {
+          "id": "cow-farm",
+          "text": "Build a cow farm",
+          "difficulty": "medium"
+        },
+        {
+          "id": "chicken-farm",
+          "text": "Build a chicken farm",
+          "difficulty": "medium"
+        },
+        {
+          "id": "sheep-farm",
+          "text": "Build a sheep farm",
+          "difficulty": "medium"
+        },
+        {
+          "id": "villager-farm",
+          "text": "Build a villager trading area",
+          "difficulty": "hard"
+        },
+        {
+          "id": "xp-farm",
+          "text": "Build an XP farm",
+          "difficulty": "hard"
+        },
+        {
+          "id": "iron-farm",
+          "text": "Build an iron farm",
+          "difficulty": "hard"
+        },
+        {
+          "id": "tree-farm",
+          "text": "Build a renewable tree farm",
+          "difficulty": "medium"
+        },
+        {
+          "id": "flower-farm",
+          "text": "Build a flower farm or garden",
+          "difficulty": "medium"
+        },
+        {
+          "id": "honey-farm",
+          "text": "Build a honey or honeycomb farm",
+          "difficulty": "medium"
+        },
+        {
+          "id": "raid-farm",
+          "text": "Build a raid farm",
+          "difficulty": "epic"
+        },
+        {
+          "id": "gold-farm",
+          "text": "Build a gold farm",
+          "difficulty": "epic"
+        }
+      ]
+    },
+    {
+      "id": "villagers",
+      "title": "Villagers & Trading",
+      "items": [
+        {
+          "id": "find-village",
+          "text": "Find a village",
+          "difficulty": "easy"
+        },
+        {
+          "id": "protect-village",
+          "text": "Secure a village from hostile mobs",
+          "difficulty": "medium"
+        },
+        {
+          "id": "breed-villagers",
+          "text": "Breed villagers",
+          "difficulty": "medium"
+        },
+        {
+          "id": "librarian",
+          "text": "Create a librarian villager",
+          "difficulty": "medium"
+        },
+        {
+          "id": "mending",
+          "text": "Obtain a Mending trade",
+          "difficulty": "hard"
+        },
+        {
+          "id": "max-trader",
+          "text": "Level a villager to Master",
+          "difficulty": "medium"
+        },
+        {
+          "id": "trading-hall",
+          "text": "Build a villager trading hall",
+          "difficulty": "hard"
+        },
+        {
+          "id": "raid",
+          "text": "Defend a village from a raid",
+          "difficulty": "hard"
+        },
+        {
+          "id": "all-professions",
+          "text": "Have villagers representing every profession",
+          "difficulty": "hard"
+        },
+        {
+          "id": "emerald-fortune",
+          "text": "Build a large emerald supply through trading",
+          "difficulty": "hard"
+        },
+        {
+          "id": "max-villager-network",
+          "text": "Create a fully organized villager trading network",
+          "difficulty": "epic"
+        }
+      ]
+    },
+    {
+      "id": "nether",
+      "title": "Nether",
+      "items": [
+        {
+          "id": "enter-nether",
+          "text": "Enter the Nether",
+          "difficulty": "medium"
+        },
+        {
+          "id": "nether-fortress",
+          "text": "Find a Nether Fortress",
+          "difficulty": "hard"
+        },
+        {
+          "id": "blaze-rods",
+          "text": "Collect blaze rods",
+          "difficulty": "hard"
+        },
+        {
+          "id": "nether-wart",
+          "text": "Collect Nether Wart",
+          "difficulty": "medium"
+        },
+        {
+          "id": "piglin-barter",
+          "text": "Trade with Piglins",
+          "difficulty": "medium"
+        },
+        {
+          "id": "bastion",
+          "text": "Find a Bastion Remnant",
+          "difficulty": "hard"
+        },
+        {
+          "id": "ancient-city",
+          "text": "Find an Ancient City",
+          "difficulty": "epic"
+        },
+        {
+          "id": "netherite-upgrade",
+          "text": "Upgrade equipment to Netherite",
+          "difficulty": "hard"
+        },
+        {
+          "id": "nether-roads",
+          "text": "Build a safe Nether travel route",
+          "difficulty": "hard"
+        },
+        {
+          "id": "all-nether-biomes",
+          "text": "Visit every Nether biome",
+          "difficulty": "hard"
+        },
+        {
+          "id": "nether-base",
+          "text": "Build a permanent Nether base",
+          "difficulty": "hard"
+        },
+        {
+          "id": "nether-fortress-base",
+          "text": "Build a fortified base near a Nether Fortress",
+          "difficulty": "epic"
+        },
+        {
+          "id": "nether-highway",
+          "text": "Build a long-distance Nether highway",
+          "difficulty": "epic"
+        }
+      ]
+    },
+    {
+      "id": "brewing",
+      "title": "Brewing & Enchanting",
+      "items": [
+        {
+          "id": "brewing-stand",
+          "text": "Craft a Brewing Stand",
+          "difficulty": "medium"
+        },
+        {
+          "id": "water-bottles",
+          "text": "Make water bottles",
+          "difficulty": "easy"
+        },
+        {
+          "id": "awkward-potions",
+          "text": "Brew Awkward Potions",
+          "difficulty": "medium"
+        },
+        {
+          "id": "useful-potions",
+          "text": "Brew useful combat or exploration potions",
+          "difficulty": "medium"
+        },
+        {
+          "id": "enchant-tools",
+          "text": "Enchant your main tools",
+          "difficulty": "medium"
+        },
+        {
+          "id": "enchant-armor",
+          "text": "Enchant a full set of armor",
+          "difficulty": "hard"
+        },
+        {
+          "id": "max-enchanting",
+          "text": "Create a level 30 enchanting setup",
+          "difficulty": "hard"
+        },
+        {
+          "id": "anvil",
+          "text": "Craft an anvil",
+          "difficulty": "medium"
+        },
+        {
+          "id": "mending-gear",
+          "text": "Put Mending on important equipment",
+          "difficulty": "hard"
+        },
+        {
+          "id": "max-enchant-gear",
+          "text": "Create a fully optimized enchanted gear set",
+          "difficulty": "epic"
+        },
+        {
+          "id": "potion-library",
+          "text": "Create a storage area containing your main potion types",
+          "difficulty": "hard"
+        }
+      ]
+    },
+    {
+      "id": "stronghold",
+      "title": "Stronghold",
+      "items": [
+        {
+          "id": "eyes-of-ender",
+          "text": "Craft Eyes of Ender",
+          "difficulty": "hard"
+        },
+        {
+          "id": "find-stronghold",
+          "text": "Locate a Stronghold",
+          "difficulty": "hard"
+        },
+        {
+          "id": "activate-portal",
+          "text": "Activate the End Portal",
+          "difficulty": "hard"
+        },
+        {
+          "id": "stronghold-library",
+          "text": "Find a Stronghold library",
+          "difficulty": "medium"
+        },
+        {
+          "id": "stronghold-loot",
+          "text": "Loot the Stronghold",
+          "difficulty": "medium"
+        },
+        {
+          "id": "stronghold-base",
+          "text": "Create a safe base or outpost near the Stronghold",
+          "difficulty": "medium"
+        }
+      ]
+    },
+    {
+      "id": "end",
+      "title": "The End",
+      "items": [
+        {
+          "id": "enter-end",
+          "text": "Enter the End",
+          "difficulty": "hard"
+        },
+        {
+          "id": "defeat-dragon",
+          "text": "Defeat the Ender Dragon",
+          "difficulty": "epic"
+        },
+        {
+          "id": "dragon-egg",
+          "text": "Collect the Dragon Egg",
+          "difficulty": "hard"
+        },
+        {
+          "id": "end-gateway",
+          "text": "Use an End Gateway",
+          "difficulty": "hard"
+        },
+        {
+          "id": "end-city",
+          "text": "Find an End City",
+          "difficulty": "hard"
+        },
+        {
+          "id": "elytra",
+          "text": "Obtain an Elytra",
+          "difficulty": "epic"
+        },
+        {
+          "id": "shulker-box",
+          "text": "Craft a Shulker Box",
+          "difficulty": "hard"
+        },
+        {
+          "id": "respawn-dragon",
+          "text": "Respawn the Ender Dragon",
+          "difficulty": "epic"
+        },
+        {
+          "id": "end-city-expedition",
+          "text": "Loot multiple End Cities",
+          "difficulty": "epic"
+        },
+        {
+          "id": "end-base",
+          "text": "Build an End outpost",
+          "difficulty": "hard"
+        },
+        {
+          "id": "dragon-arena",
+          "text": "Build a permanent Ender Dragon arena or monument",
+          "difficulty": "epic"
+        }
+      ]
+    },
+    {
+      "id": "redstone",
+      "title": "Redstone & Automation",
+      "items": [
+        {
+          "id": "redstone-door",
+          "text": "Build a redstone door",
+          "difficulty": "medium"
+        },
+        {
+          "id": "automatic-farm",
+          "text": "Build an automatic farm",
+          "difficulty": "medium"
+        },
+        {
+          "id": "item-sorter",
+          "text": "Build an automatic item sorter",
+          "difficulty": "hard"
+        },
+        {
+          "id": "super-smelter",
+          "text": "Build an automated smelting system",
+          "difficulty": "hard"
+        },
+        {
+          "id": "auto-storage",
+          "text": "Build an automated storage system",
+          "difficulty": "epic"
+        },
+        {
+          "id": "piston-door",
+          "text": "Build a piston door",
+          "difficulty": "hard"
+        },
+        {
+          "id": "redstone-clock",
+          "text": "Build a redstone clock",
+          "difficulty": "medium"
+        },
+        {
+          "id": "rail-system",
+          "text": "Build an automated rail system",
+          "difficulty": "hard"
+        },
+        {
+          "id": "auto-brewer",
+          "text": "Build an automatic brewing system",
+          "difficulty": "hard"
+        },
+        {
+          "id": "auto-crafter",
+          "text": "Build an automated Crafter-based system",
+          "difficulty": "hard"
+        },
+        {
+          "id": "redstone-computer",
+          "text": "Build a complex redstone machine of your own design",
+          "difficulty": "epic"
+        },
+        {
+          "id": "redstone-control-room",
+          "text": "Build a central redstone control room",
+          "difficulty": "epic"
+        }
+      ]
+    },
+    {
+      "id": "exploration",
+      "title": "Exploration & Collection",
+      "items": [
+        {
+          "id": "biomes",
+          "text": "Visit as many different biomes as possible",
+          "difficulty": "hard"
+        },
+        {
+          "id": "ocean-monument",
+          "text": "Find an Ocean Monument",
+          "difficulty": "hard"
+        },
+        {
+          "id": "woodland-mansion",
+          "text": "Find a Woodland Mansion",
+          "difficulty": "hard"
+        },
+        {
+          "id": "pillager-outpost",
+          "text": "Find a Pillager Outpost",
+          "difficulty": "medium"
+        },
+        {
+          "id": "desert-temple",
+          "text": "Find a Desert Pyramid",
+          "difficulty": "medium"
+        },
+        {
+          "id": "jungle-temple",
+          "text": "Find a Jungle Temple",
+          "difficulty": "medium"
+        },
+        {
+          "id": "ancient-city",
+          "text": "Find an Ancient City",
+          "difficulty": "epic"
+        },
+        {
+          "id": "trial-chamber",
+          "text": "Find a Trial Chamber",
+          "difficulty": "hard"
+        },
+        {
+          "id": "shipwreck",
+          "text": "Find a Shipwreck",
+          "difficulty": "easy"
+        },
+        {
+          "id": "buried-treasure",
+          "text": "Find buried treasure",
+          "difficulty": "medium"
+        },
+        {
+          "id": "mushroom-island",
+          "text": "Find a Mushroom Fields biome",
+          "difficulty": "hard"
+        },
+        {
+          "id": "ocean-ruin",
+          "text": "Find an Ocean Ruin",
+          "difficulty": "medium"
+        },
+        {
+          "id": "igloo",
+          "text": "Find an Igloo",
+          "difficulty": "medium"
+        },
+        {
+          "id": "swamp-hut",
+          "text": "Find a Swamp Hut",
+          "difficulty": "medium"
+        },
+        {
+          "id": "witch-hut",
+          "text": "Find a Witch Hut",
+          "difficulty": "medium"
+        },
+        {
+          "id": "trail-ruins",
+          "text": "Find Trail Ruins",
+          "difficulty": "hard"
+        },
+        {
+          "id": "ruined-portal",
+          "text": "Find a Ruined Portal",
+          "difficulty": "easy"
+        },
+        {
+          "id": "exploration-outpost",
+          "text": "Create a safe outpost far from your main base",
+          "difficulty": "hard"
+        }
+      ]
+    },
+    {
+      "id": "collection",
+      "title": "Collection Goals",
+      "items": [
+        {
+          "id": "all-wood",
+          "text": "Collect every overworld wood type",
+          "difficulty": "hard"
+        },
+        {
+          "id": "all-wool",
+          "text": "Collect every wool color",
+          "difficulty": "medium"
+        },
+        {
+          "id": "all-dyes",
+          "text": "Collect every dye color",
+          "difficulty": "hard"
+        },
+        {
+          "id": "all-flowers",
+          "text": "Collect every obtainable flower type",
+          "difficulty": "hard"
+        },
+        {
+          "id": "all-music-discs",
+          "text": "Collect every music disc",
+          "difficulty": "epic"
+        },
+        {
+          "id": "all-armor-trims",
+          "text": "Collect every armor trim template",
+          "difficulty": "epic"
+        },
+        {
+          "id": "all-pottery-sherds",
+          "text": "Collect every pottery sherd",
+          "difficulty": "epic"
+        },
+        {
+          "id": "all-flowers-plants",
+          "text": "Collect a broad collection of plants and decorative blocks",
+          "difficulty": "hard"
+        },
+        {
+          "id": "all-mobs",
+          "text": "Encounter every major mob",
+          "difficulty": "epic"
+        },
+        {
+          "id": "rare-items",
+          "text": "Collect rare and difficult-to-obtain items",
+          "difficulty": "epic"
+        },
+        {
+          "id": "all-banner-patterns",
+          "text": "Collect a large collection of banner patterns",
+          "difficulty": "hard"
+        },
+        {
+          "id": "all-froglights",
+          "text": "Collect all froglight variants",
+          "difficulty": "hard"
+        },
+        {
+          "id": "all-copper",
+          "text": "Collect the major copper variants and stages",
+          "difficulty": "hard"
+        },
+        {
+          "id": "museum",
+          "text": "Build a museum displaying your rare items",
+          "difficulty": "epic"
+        },
+        {
+          "id": "treasure-vault",
+          "text": "Build a secure vault for your rarest items",
+          "difficulty": "hard"
+        }
+      ]
+    },
+    {
+      "id": "building",
+      "title": "Building & Creativity",
+      "items": [
+        {
+          "id": "garden",
+          "text": "Build a decorated garden",
+          "difficulty": "medium"
+        },
+        {
+          "id": "library",
+          "text": "Build a library",
+          "difficulty": "medium"
+        },
+        {
+          "id": "armory",
+          "text": "Build an armory displaying your equipment",
+          "difficulty": "medium"
+        },
+        {
+          "id": "barn",
+          "text": "Build a barn for your animals",
+          "difficulty": "medium"
+        },
+        {
+          "id": "market",
+          "text": "Build a marketplace",
+          "difficulty": "hard"
+        },
+        {
+          "id": "church",
+          "text": "Build a large place of worship or community gathering",
+          "difficulty": "hard"
+        },
+        {
+          "id": "farmhouse",
+          "text": "Build a detailed farmhouse",
+          "difficulty": "medium"
+        },
+        {
+          "id": "windmill",
+          "text": "Build a windmill",
+          "difficulty": "hard"
+        },
+        {
+          "id": "lighthouse",
+          "text": "Build a lighthouse",
+          "difficulty": "hard"
+        },
+        {
+          "id": "arena",
+          "text": "Build a combat or minigame arena",
+          "difficulty": "hard"
+        },
+        {
+          "id": "statue",
+          "text": "Build a large statue",
+          "difficulty": "hard"
+        },
+        {
+          "id": "custom-village",
+          "text": "Build your own custom village",
+          "difficulty": "epic"
+        },
+        {
+          "id": "districts",
+          "text": "Create multiple themed districts in your settlement",
+          "difficulty": "epic"
+        },
+        {
+          "id": "landscaping",
+          "text": "Transform the natural terrain around your base",
+          "difficulty": "hard"
+        }
+      ]
+    },
+    {
+      "id": "adventure",
+      "title": "Adventure Challenges",
+      "items": [
+        {
+          "id": "long-expedition",
+          "text": "Travel at least 5,000 blocks from your base and return safely",
+          "difficulty": "hard"
+        },
+        {
+          "id": "ocean-expedition",
+          "text": "Complete a major ocean expedition",
+          "difficulty": "hard"
+        },
+        {
+          "id": "nether-expedition",
+          "text": "Complete a major Nether expedition",
+          "difficulty": "hard"
+        },
+        {
+          "id": "end-expedition",
+          "text": "Complete a major End expedition",
+          "difficulty": "epic"
+        },
+        {
+          "id": "raid-survivor",
+          "text": "Survive a major raid without dying",
+          "difficulty": "hard"
+        },
+        {
+          "id": "ancient-city-survivor",
+          "text": "Explore an Ancient City and return safely",
+          "difficulty": "epic"
+        },
+        {
+          "id": "trial-master",
+          "text": "Complete a difficult Trial Chamber expedition",
+          "difficulty": "hard"
+        },
+        {
+          "id": "no-death-expedition",
+          "text": "Complete a long expedition without dying",
+          "difficulty": "epic"
+        },
+        {
+          "id": "elytra-flight",
+          "text": "Complete a long-distance Elytra flight",
+          "difficulty": "hard"
+        },
+        {
+          "id": "nether-survival",
+          "text": "Spend an extended expedition in the Nether and return safely",
+          "difficulty": "epic"
+        }
+      ]
+    },
+    {
+      "id": "endgame",
+      "title": "Endgame Goals",
+      "items": [
+        {
+          "id": "fully-enchanted",
+          "text": "Create fully enchanted Netherite equipment",
+          "difficulty": "epic"
+        },
+        {
+          "id": "beacon",
+          "text": "Build a fully powered Beacon",
+          "difficulty": "epic"
+        },
+        {
+          "id": "wither",
+          "text": "Defeat the Wither",
+          "difficulty": "epic"
+        },
+        {
+          "id": "multiple-beacons",
+          "text": "Build multiple Beacons",
+          "difficulty": "epic"
+        },
+        {
+          "id": "elytra-fleet",
+          "text": "Collect multiple Elytras",
+          "difficulty": "epic"
+        },
+        {
+          "id": "shulker-storage",
+          "text": "Fill your storage with Shulker Boxes",
+          "difficulty": "epic"
+        },
+        {
+          "id": "netherite-beacon",
+          "text": "Build a Beacon using a Netherite-powered base",
+          "difficulty": "epic"
+        },
+        {
+          "id": "mega-base",
+          "text": "Build a massive survival base",
+          "difficulty": "epic"
+        },
+        {
+          "id": "world-railway",
+          "text": "Build a long-distance transportation network",
+          "difficulty": "epic"
+        },
+        {
+          "id": "world-map",
+          "text": "Create a large-scale map of your world",
+          "difficulty": "epic"
+        },
+        {
+          "id": "full-netherite",
+          "text": "Create a complete backup set of Netherite equipment",
+          "difficulty": "epic"
+        },
+        {
+          "id": "max-level",
+          "text": "Reach a very high experience level",
+          "difficulty": "hard"
+        },
+        {
+          "id": "dragon-rematch",
+          "text": "Defeat the Ender Dragon again after becoming fully geared",
+          "difficulty": "epic"
+        },
+        {
+          "id": "wither-arena",
+          "text": "Build a dedicated Wither battle arena",
+          "difficulty": "hard"
+        },
+        {
+          "id": "endgame-vault",
+          "text": "Create a secure endgame vault containing your best gear",
+          "difficulty": "hard"
+        },
+        {
+          "id": "survival-complete",
+          "text": "Complete every normal survival goal in this checklist",
+          "difficulty": "epic"
+        }
+      ]
+    },
+    {
+      "id": "world",
+      "title": "World Completion",
+      "items": [
+        {
+          "id": "world-spawn",
+          "text": "Create a permanent spawn area",
+          "difficulty": "medium"
+        },
+        {
+          "id": "world-road-network",
+          "text": "Connect your major settlements with a road network",
+          "difficulty": "epic"
+        },
+        {
+          "id": "world-transport",
+          "text": "Create multiple reliable transportation methods",
+          "difficulty": "hard"
+        },
+        {
+          "id": "world-outposts",
+          "text": "Create several remote outposts",
+          "difficulty": "hard"
+        },
+        {
+          "id": "world-landmarks",
+          "text": "Create landmarks throughout your world",
+          "difficulty": "epic"
+        },
+        {
+          "id": "world-history",
+          "text": "Build a museum or monument documenting your world's history",
+          "difficulty": "epic"
+        },
+        {
+          "id": "world-capital",
+          "text": "Designate and build a capital city",
+          "difficulty": "epic"
+        },
+        {
+          "id": "world-complete",
+          "text": "Turn your survival world into a fully developed civilization",
+          "difficulty": "epic"
+        }
+      ]
+    },
+    {
+      "id": "achievements",
+      "title": "Xbox Achievements",
+      "type": "achievements",
+      "items": [
+        {
+          "id": "achievement-taking-inventory",
+          "name": "Taking Inventory",
+          "gamerscore": 10,
+          "requirement": "Open your inventory."
+        },
+        {
+          "id": "achievement-getting-wood",
+          "name": "Getting Wood",
+          "gamerscore": 10,
+          "requirement": "Collect a block of wood from a tree."
+        },
+        {
+          "id": "achievement-benchmaking",
+          "name": "Benchmaking",
+          "gamerscore": 10,
+          "requirement": "Craft a Crafting Table using four wooden planks."
+        },
+        {
+          "id": "achievement-time-to-mine",
+          "name": "Time to Mine!",
+          "gamerscore": 10,
+          "requirement": "Craft a pickaxe using wooden planks and sticks."
+        },
+        {
+          "id": "achievement-hot-topic",
+          "name": "Hot Topic",
+          "gamerscore": 15,
+          "requirement": "Craft a furnace."
+        },
+        {
+          "id": "achievement-acquire-hardware",
+          "name": "Acquire Hardware",
+          "gamerscore": 15,
+          "requirement": "Smelt an iron ingot."
+        },
+        {
+          "id": "achievement-time-to-farm",
+          "name": "Time to Farm!",
+          "gamerscore": 10,
+          "requirement": "Craft a hoe."
+        },
+        {
+          "id": "achievement-bake-bread",
+          "name": "Bake Bread",
+          "gamerscore": 15,
+          "requirement": "Turn wheat into bread."
+        },
+        {
+          "id": "achievement-the-lie",
+          "name": "The Lie",
+          "gamerscore": 30,
+          "requirement": "Bake a cake using wheat, sugar, milk and eggs."
+        },
+        {
+          "id": "achievement-getting-an-upgrade",
+          "name": "Getting an Upgrade",
+          "gamerscore": 15,
+          "requirement": "Upgrade your pickaxe to a better material."
+        },
+        {
+          "id": "achievement-delicious-fish",
+          "name": "Delicious Fish",
+          "gamerscore": 15,
+          "requirement": "Catch and cook a fish."
+        },
+        {
+          "id": "achievement-on-a-rail",
+          "name": "On A Rail",
+          "gamerscore": 40,
+          "requirement": "Travel by minecart for at least 500 blocks in a straight line."
+        },
+        {
+          "id": "achievement-time-to-strike",
+          "name": "Time to Strike!",
+          "gamerscore": 10,
+          "requirement": "Craft a sword."
+        },
+        {
+          "id": "achievement-monster-hunter",
+          "name": "Monster Hunter",
+          "gamerscore": 15,
+          "requirement": "Kill a hostile monster."
+        },
+        {
+          "id": "achievement-cow-tipper",
+          "name": "Cow Tipper",
+          "gamerscore": 15,
+          "requirement": "Collect leather."
+        },
+        {
+          "id": "achievement-when-pigs-fly",
+          "name": "When Pigs Fly",
+          "gamerscore": 40,
+          "requirement": "Ride a pig using a saddle and have it take fall damage."
+        },
+        {
+          "id": "achievement-sniper-duel",
+          "name": "Sniper Duel",
+          "gamerscore": 30,
+          "requirement": "Kill a skeleton from at least 50 blocks away using a projectile."
+        },
+        {
+          "id": "achievement-diamonds",
+          "name": "DIAMONDS!",
+          "gamerscore": 20,
+          "requirement": "Obtain diamonds using an iron or better pickaxe."
+        },
+        {
+          "id": "achievement-into-the-nether",
+          "name": "Into the Nether",
+          "gamerscore": 30,
+          "requirement": "Build, light and enter a Nether portal."
+        },
+        {
+          "id": "achievement-return-to-sender",
+          "name": "Return to Sender",
+          "gamerscore": 30,
+          "requirement": "Kill a Ghast using its own fireball."
+        },
+        {
+          "id": "achievement-into-fire",
+          "name": "Into Fire",
+          "gamerscore": 20,
+          "requirement": "Obtain a blaze rod."
+        },
+        {
+          "id": "achievement-local-brewery",
+          "name": "Local Brewery",
+          "gamerscore": 15,
+          "requirement": "Brew a potion."
+        },
+        {
+          "id": "achievement-the-end-question",
+          "name": "The End?",
+          "gamerscore": 20,
+          "requirement": "Enter the End dimension."
+        },
+        {
+          "id": "achievement-the-end",
+          "name": "The End",
+          "gamerscore": 40,
+          "requirement": "Defeat the Ender Dragon."
+        },
+        {
+          "id": "achievement-enchanter",
+          "name": "Enchanter",
+          "gamerscore": 20,
+          "requirement": "Craft an Enchanting Table."
+        },
+        {
+          "id": "achievement-overkill",
+          "name": "Overkill",
+          "gamerscore": 30,
+          "requirement": "Deal at least 9 hearts of damage with a single hit."
+        },
+        {
+          "id": "achievement-librarian",
+          "name": "Librarian",
+          "gamerscore": 20,
+          "requirement": "Build bookshelves for an Enchanting Table."
+        },
+        {
+          "id": "achievement-adventuring-time",
+          "name": "Adventuring Time",
+          "gamerscore": 40,
+          "requirement": "Discover at least 17 different biomes."
+        },
+        {
+          "id": "achievement-the-beginning-question",
+          "name": "The Beginning?",
+          "gamerscore": 20,
+          "requirement": "Summon the Wither."
+        },
+        {
+          "id": "achievement-the-beginning",
+          "name": "The Beginning.",
+          "gamerscore": 40,
+          "requirement": "Defeat the Wither."
+        },
+        {
+          "id": "achievement-the-beaconator",
+          "name": "The Beaconator",
+          "gamerscore": 60,
+          "requirement": "Create and fully power a Beacon."
+        },
+        {
+          "id": "achievement-repopulation",
+          "name": "Repopulation",
+          "gamerscore": 15,
+          "requirement": "Breed two cows using wheat."
+        },
+        {
+          "id": "achievement-diamonds-to-you",
+          "name": "Diamonds to you!",
+          "gamerscore": 15,
+          "requirement": "Throw a diamond to another player."
+        },
+        {
+          "id": "achievement-overpowered",
+          "name": "Overpowered",
+          "gamerscore": 30,
+          "requirement": "Eat an Enchanted Golden Apple."
+        },
+        {
+          "id": "achievement-moar-tools",
+          "name": "MOAR Tools",
+          "gamerscore": 15,
+          "requirement": "Construct one of each type of tool."
+        },
+        {
+          "id": "achievement-dispense-with-this",
+          "name": "Dispense With This",
+          "gamerscore": 20,
+          "requirement": "Craft a Dispenser."
+        },
+        {
+          "id": "achievement-leader-of-the-pack",
+          "name": "Leader of the Pack",
+          "gamerscore": 20,
+          "requirement": "Tame five wolves."
+        },
+        {
+          "id": "achievement-pork-chop",
+          "name": "Pork Chop",
+          "gamerscore": 10,
+          "requirement": "Cook and eat a porkchop."
+        },
+        {
+          "id": "achievement-passing-the-time",
+          "name": "Passing the Time",
+          "gamerscore": 20,
+          "requirement": "Play for 100 in-game days."
+        },
+        {
+          "id": "achievement-the-haggler",
+          "name": "The Haggler",
+          "gamerscore": 30,
+          "requirement": "Acquire or spend 30 emeralds by trading."
+        },
+        {
+          "id": "achievement-pot-planter",
+          "name": "Pot Planter",
+          "gamerscore": 15,
+          "requirement": "Craft and place a flower pot."
+        },
+        {
+          "id": "achievement-its-a-sign",
+          "name": "It's a Sign!",
+          "gamerscore": 15,
+          "requirement": "Craft and place a sign."
+        },
+        {
+          "id": "achievement-iron-belly",
+          "name": "Iron Belly",
+          "gamerscore": 20,
+          "requirement": "Use Rotten Flesh to restore hunger when near starvation."
+        },
+        {
+          "id": "achievement-have-a-shearful-day",
+          "name": "Have a Shearful Day",
+          "gamerscore": 15,
+          "requirement": "Use shears to obtain wool from a sheep."
+        },
+        {
+          "id": "achievement-rainbow-collection",
+          "name": "Rainbow Collection",
+          "gamerscore": 30,
+          "requirement": "Collect all 16 wool colors."
+        },
+        {
+          "id": "achievement-stayin-frosty",
+          "name": "Stayin' Frosty",
+          "gamerscore": 20,
+          "requirement": "Walk through lava while protected by Fire Resistance."
+        },
+        {
+          "id": "achievement-chestful-of-cobblestone",
+          "name": "Chestful of Cobblestone",
+          "gamerscore": 20,
+          "requirement": "Mine 1,728 cobblestone and place it in a chest."
+        },
+        {
+          "id": "achievement-renewable-energy",
+          "name": "Renewable Energy",
+          "gamerscore": 10,
+          "requirement": "Smelt wood logs using charcoal as fuel."
+        },
+        {
+          "id": "achievement-body-guard",
+          "name": "Body Guard",
+          "gamerscore": 20,
+          "requirement": "Create an Iron Golem."
+        },
+        {
+          "id": "achievement-iron-man",
+          "name": "Iron Man",
+          "gamerscore": 15,
+          "requirement": "Wear a full set of iron armor."
+        },
+        {
+          "id": "achievement-zombie-doctor",
+          "name": "Zombie Doctor",
+          "gamerscore": 40,
+          "requirement": "Cure a Zombie Villager."
+        },
+        {
+          "id": "achievement-lion-hunter",
+          "name": "Lion Hunter",
+          "gamerscore": 15,
+          "requirement": "Obtain a cat as a tamed companion."
+        },
+        {
+          "id": "achievement-archer",
+          "name": "Archer",
+          "gamerscore": 10,
+          "requirement": "Kill a Creeper using a bow and arrows."
+        },
+        {
+          "id": "achievement-tie-dye-outfit",
+          "name": "Tie Dye Outfit",
+          "gamerscore": 15,
+          "requirement": "Dye every piece of leather armor."
+        },
+        {
+          "id": "achievement-trampoline",
+          "name": "Trampoline",
+          "gamerscore": 15,
+          "requirement": "Bounce at least 30 blocks upward from a slime block."
+        },
+        {
+          "id": "achievement-camouflage",
+          "name": "Camouflage",
+          "gamerscore": 30,
+          "requirement": "Kill a mob while wearing the matching mob head."
+        },
+        {
+          "id": "achievement-map-room",
+          "name": "Map Room",
+          "gamerscore": 40,
+          "requirement": "Place nine fully explored maps in item frames in a connected map display."
+        },
+        {
+          "id": "achievement-freight-station",
+          "name": "Freight Station",
+          "gamerscore": 15,
+          "requirement": "Use a hopper to move an item from a Chest Minecart into a chest."
+        },
+        {
+          "id": "achievement-smelt-everything",
+          "name": "Smelt Everything!",
+          "gamerscore": 15,
+          "requirement": "Connect three chests to a furnace using hoppers."
+        },
+        {
+          "id": "achievement-taste-of-your-own-medicine",
+          "name": "Taste of Your Own Medicine",
+          "gamerscore": 20,
+          "requirement": "Poison a Witch using a splash potion."
+        },
+        {
+          "id": "achievement-inception",
+          "name": "Inception",
+          "gamerscore": 15,
+          "requirement": "Push a piston using another piston and retract the original piston."
+        },
+        {
+          "id": "achievement-saddle-up",
+          "name": "Saddle Up",
+          "gamerscore": 20,
+          "requirement": "Tame a horse."
+        },
+        {
+          "id": "achievement-artificial-selection",
+          "name": "Artificial Selection",
+          "gamerscore": 30,
+          "requirement": "Breed a mule from a horse and donkey."
+        },
+        {
+          "id": "achievement-free-diver",
+          "name": "Free Diver",
+          "gamerscore": 20,
+          "requirement": "Stay underwater for two minutes."
+        },
+        {
+          "id": "achievement-rabbit-season",
+          "name": "Rabbit Season",
+          "gamerscore": 15,
+          "requirement": "Cook and eat rabbit meat."
+        },
+        {
+          "id": "achievement-the-deep-end",
+          "name": "The Deep End",
+          "gamerscore": 30,
+          "requirement": "Defeat an Elder Guardian."
+        },
+        {
+          "id": "achievement-dry-spell",
+          "name": "Dry Spell",
+          "gamerscore": 15,
+          "requirement": "Dry a wet sponge in a furnace."
+        },
+        {
+          "id": "achievement-super-fuel",
+          "name": "Super Fuel",
+          "gamerscore": 20,
+          "requirement": "Use a lava bucket as furnace fuel."
+        },
+        {
+          "id": "achievement-you-need-a-mint",
+          "name": "You Need a Mint",
+          "gamerscore": 30,
+          "requirement": "Collect a dragon's breath."
+        },
+        {
+          "id": "achievement-beam-me-up",
+          "name": "Beam Me Up",
+          "gamerscore": 20,
+          "requirement": "Teleport more than 100 blocks using an Ender Pearl."
+        },
+        {
+          "id": "achievement-the-end-again",
+          "name": "The End... Again...",
+          "gamerscore": 30,
+          "requirement": "Respawn the Ender Dragon."
+        },
+        {
+          "id": "achievement-great-view-from-up-here",
+          "name": "Great View From Up Here",
+          "gamerscore": 30,
+          "requirement": "Levitate at least 50 blocks from attacks by a Shulker."
+        },
+        {
+          "id": "achievement-super-sonic",
+          "name": "Super Sonic",
+          "gamerscore": 30,
+          "requirement": "Fly through a 1x1 opening at very high speed using an Elytra."
+        },
+        {
+          "id": "achievement-treasure-hunter",
+          "name": "Treasure Hunter",
+          "gamerscore": 40,
+          "requirement": "Acquire a map from a Cartographer and use it to find the indicated structure."
+        },
+        {
+          "id": "achievement-organizational-wizard",
+          "name": "Organizational Wizard",
+          "gamerscore": 20,
+          "requirement": "Name a Shulker Box using an Anvil."
+        },
+        {
+          "id": "achievement-cheating-death",
+          "name": "Cheating Death",
+          "gamerscore": 30,
+          "requirement": "Use a Totem of Undying to survive otherwise fatal damage."
+        },
+        {
+          "id": "achievement-feeling-ill",
+          "name": "Feeling Ill",
+          "gamerscore": 30,
+          "requirement": "Defeat an Evoker."
+        },
+        {
+          "id": "achievement-let-it-go",
+          "name": "Let It Go!",
+          "gamerscore": 20,
+          "requirement": "Walk across a frozen ocean using Frost Walker boots."
+        },
+        {
+          "id": "achievement-so-i-got-that-going-for-me",
+          "name": "So I Got That Going for Me",
+          "gamerscore": 20,
+          "requirement": "Lead a caravan containing at least five llamas."
+        },
+        {
+          "id": "achievement-atlantis",
+          "name": "Atlantis?",
+          "gamerscore": 30,
+          "requirement": "Find an underwater ruin."
+        },
+        {
+          "id": "achievement-sail-the-seven-seas",
+          "name": "Sail the 7 Seas",
+          "gamerscore": 40,
+          "requirement": "Visit all ocean biomes."
+        },
+        {
+          "id": "achievement-castaway",
+          "name": "Castaway",
+          "gamerscore": 20,
+          "requirement": "Eat only dried kelp for three in-game days."
+        },
+        {
+          "id": "achievement-ahoy",
+          "name": "Ahoy!",
+          "gamerscore": 20,
+          "requirement": "Discover a Shipwreck."
+        },
+        {
+          "id": "achievement-marine-biologist",
+          "name": "I am a Marine Biologist",
+          "gamerscore": 20,
+          "requirement": "Collect a fish in a bucket."
+        },
+        {
+          "id": "achievement-me-gold",
+          "name": "Me Gold!",
+          "gamerscore": 30,
+          "requirement": "Dig up buried treasure."
+        },
+        {
+          "id": "achievement-sleep-with-the-fishes",
+          "name": "Sleep with the Fishes",
+          "gamerscore": 30,
+          "requirement": "Spend a full Minecraft day underwater."
+        },
+        {
+          "id": "achievement-alternative-fuel",
+          "name": "Alternative Fuel",
+          "gamerscore": 20,
+          "requirement": "Use a dried kelp block as furnace fuel."
+        },
+        {
+          "id": "achievement-do-a-barrel-roll",
+          "name": "Do a Barrel Roll!",
+          "gamerscore": 15,
+          "requirement": "Use Riptide to launch yourself."
+        },
+        {
+          "id": "achievement-one-pickle",
+          "name": "One Pickle, Two Pickle, Sea Pickle, Four",
+          "gamerscore": 15,
+          "requirement": "Place four sea pickles in one block."
+        },
+        {
+          "id": "achievement-echolocation",
+          "name": "Echolocation",
+          "gamerscore": 20,
+          "requirement": "Feed a dolphin so it leads you toward treasure."
+        },
+        {
+          "id": "achievement-moskstraumen",
+          "name": "Moskstraumen",
+          "gamerscore": 50,
+          "requirement": "Activate a Conduit."
+        },
+        {
+          "id": "achievement-top-of-the-world",
+          "name": "Top of the World",
+          "gamerscore": 20,
+          "requirement": "Place scaffolding at the world height limit."
+        },
+        {
+          "id": "achievement-where-have-you-been",
+          "name": "Where Have You Been?",
+          "gamerscore": 20,
+          "requirement": "Receive a notification from a tamed cat."
+        },
+        {
+          "id": "achievement-zoologist",
+          "name": "Zoologist",
+          "gamerscore": 15,
+          "requirement": "Breed two pandas using bamboo."
+        },
+        {
+          "id": "achievement-fruit-on-the-loom",
+          "name": "Fruit on the Loom",
+          "gamerscore": 20,
+          "requirement": "Create a banner using an Enchanted Apple pattern."
+        },
+        {
+          "id": "achievement-plethora-of-cats",
+          "name": "Plethora of Cats",
+          "gamerscore": 20,
+          "requirement": "Befriend twenty stray cats."
+        },
+        {
+          "id": "achievement-kill-the-beast",
+          "name": "Kill the Beast!",
+          "gamerscore": 30,
+          "requirement": "Defeat a Ravager."
+        },
+        {
+          "id": "achievement-buy-low-sell-high",
+          "name": "Buy Low, Sell High",
+          "gamerscore": 50,
+          "requirement": "Trade for the best possible price."
+        },
+        {
+          "id": "achievement-disenchanted",
+          "name": "Disenchanted",
+          "gamerscore": 20,
+          "requirement": "Use a Grindstone to remove an enchantment and gain experience."
+        },
+        {
+          "id": "achievement-were-being-attacked",
+          "name": "We're being attacked!",
+          "gamerscore": 20,
+          "requirement": "Trigger a Pillager Raid."
+        },
+        {
+          "id": "achievement-sound-the-alarm",
+          "name": "Sound the Alarm!",
+          "gamerscore": 20,
+          "requirement": "Ring a village bell after a villager has been hurt."
+        },
+        {
+          "id": "achievement-bad-feeling",
+          "name": "I've got a bad feeling about this",
+          "gamerscore": 20,
+          "requirement": "Kill a Pillager Captain."
+        },
+        {
+          "id": "achievement-master-trader",
+          "name": "Master Trader",
+          "gamerscore": 30,
+          "requirement": "Trade for 1,000 emeralds."
+        },
+        {
+          "id": "achievement-time-for-stew",
+          "name": "Time for Stew",
+          "gamerscore": 20,
+          "requirement": "Give another player suspicious stew."
+        },
+        {
+          "id": "achievement-bee-our-guest",
+          "name": "Bee our guest",
+          "gamerscore": 15,
+          "requirement": "Use a campfire to collect honey from a beehive with a bottle without angering the bees."
+        },
+        {
+          "id": "achievement-total-beelocation",
+          "name": "Total Beelocation",
+          "gamerscore": 15,
+          "requirement": "Move a bee nest containing three bees using Silk Touch."
+        },
+        {
+          "id": "achievement-sticky-situation",
+          "name": "Sticky Situation",
+          "gamerscore": 30,
+          "requirement": "Use a honey block to slow a fall."
+        },
+        {
+          "id": "achievement-bullseye",
+          "name": "Bullseye",
+          "gamerscore": 15,
+          "requirement": "Hit the bullseye of a target block from at least 30 blocks away."
+        },
+        {
+          "id": "achievement-cover-me-in-debris",
+          "name": "Cover Me in Debris",
+          "gamerscore": 50,
+          "requirement": "Obtain a complete set of Netherite armor."
+        },
+        {
+          "id": "achievement-oooh-shiny",
+          "name": "Oooh, shiny!",
+          "gamerscore": 30,
+          "requirement": "Distract a Piglin with gold."
+        },
+        {
+          "id": "achievement-hot-tourist-destination",
+          "name": "Hot Tourist Destination",
+          "gamerscore": 30,
+          "requirement": "Visit all Nether biomes."
+        },
+        {
+          "id": "achievement-whatever-floats-your-goat",
+          "name": "Whatever Floats Your Goat!",
+          "gamerscore": 20,
+          "requirement": "Float in a boat with a goat."
+        },
+        {
+          "id": "achievement-wax-on",
+          "name": "Wax On",
+          "gamerscore": 10,
+          "requirement": "Apply honeycomb to a copper block."
+        },
+        {
+          "id": "achievement-wax-off",
+          "name": "Wax Off",
+          "gamerscore": 10,
+          "requirement": "Remove wax from a copper block."
+        },
+        {
+          "id": "achievement-healing-power",
+          "name": "The Healing Power of Friendship!",
+          "gamerscore": 30,
+          "requirement": "Form a friendship with an Axolotl and help it win a fight."
+        },
+        {
+          "id": "achievement-caves-cliffs",
+          "name": "Caves & Cliffs",
+          "gamerscore": 30,
+          "requirement": "Fall from the top of the world to the bottom while surviving."
+        },
+        {
+          "id": "achievement-star-trader",
+          "name": "Star Trader",
+          "gamerscore": 20,
+          "requirement": "Trade with a villager at the world height limit."
+        },
+        {
+          "id": "achievement-sound-of-music",
+          "name": "Sound of Music",
+          "gamerscore": 10,
+          "requirement": "Make a jukebox play music in a meadow biome."
+        },
+        {
+          "id": "achievement-feels-like-home",
+          "name": "Feels Like Home",
+          "gamerscore": 20,
+          "requirement": "Take a Strider for a long ride across a lava lake in the Overworld."
+        },
+        {
+          "id": "achievement-it-spreads",
+          "name": "It Spreads",
+          "gamerscore": 10,
+          "requirement": "Kill a mob near a Sculk Catalyst so the catalyst spreads sculk."
+        },
+        {
+          "id": "achievement-birthday-song",
+          "name": "Birthday Song",
+          "gamerscore": 10,
+          "requirement": "Have an Allay drop a cake at a note block."
+        },
+        {
+          "id": "achievement-with-our-powers-combined",
+          "name": "With Our Powers Combined!",
+          "gamerscore": 30,
+          "requirement": "Have all three types of froglights in your inventory."
+        },
+        {
+          "id": "achievement-sneak-100",
+          "name": "Sneak 100",
+          "gamerscore": 10,
+          "requirement": "Sneak beside a Sculk Sensor without triggering it."
+        },
+        {
+          "id": "achievement-planting-the-past",
+          "name": "Planting the past",
+          "gamerscore": 10,
+          "requirement": "Plant a Sniffer seed."
+        },
+        {
+          "id": "achievement-careful-restoration",
+          "name": "Careful restoration",
+          "gamerscore": 10,
+          "requirement": "Create a Decorated Pot using four pottery sherds."
+        },
+        {
+          "id": "achievement-smithing-with-style",
+          "name": "Smithing with style",
+          "gamerscore": 10,
+          "requirement": "Apply the Spire, Snout, Rib, Ward, Silence, Vex, Tide and Wayfinder armor trim templates at least once."
+        },
+        {
+          "id": "achievement-crafters-crafting-crafters",
+          "name": "Crafters Crafting Crafters",
+          "gamerscore": 10,
+          "requirement": "Be nearby when a Crafter crafts another Crafter."
+        },
+        {
+          "id": "achievement-who-needs-rockets",
+          "name": "Who Needs Rockets?",
+          "gamerscore": 10,
+          "requirement": "Use a Wind Charge to launch yourself upward at least 8 blocks."
+        },
+        {
+          "id": "achievement-over-overkill",
+          "name": "Over-Overkill",
+          "gamerscore": 20,
+          "requirement": "Deal at least 50 hearts of damage with one Mace hit."
+        },
+        {
+          "id": "achievement-revaulting",
+          "name": "Revaulting",
+          "gamerscore": 20,
+          "requirement": "Unlock an Ominous Vault using an Ominous Trial Key."
+        },
+        {
+          "id": "achievement-heart-transplanter",
+          "name": "Heart Transplanter",
+          "gamerscore": 20,
+          "requirement": "Place a Creaking Heart correctly aligned between two Pale Oak Log blocks."
+        },
+        {
+          "id": "achievement-stay-hydrated",
+          "name": "Stay Hydrated!",
+          "gamerscore": 10,
+          "requirement": "Place a Dried Ghast block into water."
+        },
+        {
+          "id": "achievement-mob-kabob",
+          "name": "Mob Kabob",
+          "gamerscore": 10,
+          "requirement": "Hit five mobs with one charged Spear attack."
+        },
+        {
+          "id": "achievement-uh-oh",
+          "name": "Uh-oh.",
+          "gamerscore": 10,
+          "requirement": "Have a Sulfur Cube absorb a TNT block."
+        }
+      ]
+    }
+  ]
 }
-
-
-function closeProfileModal() {
-
-    profileModal.classList.remove(
-        "visible"
-    );
-
-    profileModal.setAttribute(
-        "aria-hidden",
-        "true"
-    );
-
-    editingProfileId = null;
-
-    profileNameInput.value = "";
-}
-
-
-function saveProfileModal() {
-
-    const name =
-        profileNameInput.value.trim();
-
-
-    if (!name) {
-        profileNameInput.focus();
-        return;
-    }
-
-
-    if (editingProfileId) {
-
-        renameProfile(
-            editingProfileId,
-            name
-        );
-
-    } else {
-
-        addProfile(name);
-    }
-
-
-    closeProfileModal();
-}
-
-
-function openConfirmModal(
-    text,
-    action
-) {
-
-    confirmModalText.textContent =
-        text;
-
-    confirmAction =
-        action;
-
-    confirmModal.classList.add(
-        "visible"
-    );
-
-    confirmModal.setAttribute(
-        "aria-hidden",
-        "false"
-    );
-}
-
-
-function closeConfirmModal() {
-
-    confirmModal.classList.remove(
-        "visible"
-    );
-
-    confirmModal.setAttribute(
-        "aria-hidden",
-        "true"
-    );
-
-    confirmAction = null;
-}
-
-
-/* =========================
-   EVENTS
-========================= */
-
-searchInput.addEventListener(
-    "input",
-    () => {
-
-        currentSearch =
-            searchInput.value.trim();
-
-        renderCategories();
-    }
-);
-
-
-addProfileButton.addEventListener(
-    "click",
-    () => {
-
-        if (
-            profiles.length >=
-            MAX_PROFILES
-        ) {
-            return;
-        }
-
-        openProfileModal();
-    }
-);
-
-
-resetButton.addEventListener(
-    "click",
-    () => {
-
-        openConfirmModal(
-            "Reset all shared survival goals? Achievement progress will not be affected.",
-            resetSharedGoals
-        );
-    }
-);
-
-
-profileCancelButton.addEventListener(
-    "click",
-    closeProfileModal
-);
-
-
-profileSaveButton.addEventListener(
-    "click",
-    saveProfileModal
-);
-
-
-profileNameInput.addEventListener(
-    "keydown",
-    event => {
-
-        if (event.key === "Enter") {
-            saveProfileModal();
-        }
-
-        if (event.key === "Escape") {
-            closeProfileModal();
-        }
-    }
-);
-
-
-confirmCancelButton.addEventListener(
-    "click",
-    closeConfirmModal
-);
-
-
-confirmOkayButton.addEventListener(
-    "click",
-    () => {
-
-        if (typeof confirmAction === "function") {
-            confirmAction();
-        }
-
-        closeConfirmModal();
-    }
-);
-
-
-profileModal.addEventListener(
-    "click",
-    event => {
-
-        if (
-            event.target ===
-            profileModal
-        ) {
-            closeProfileModal();
-        }
-    }
-);
-
-
-confirmModal.addEventListener(
-    "click",
-    event => {
-
-        if (
-            event.target ===
-            confirmModal
-        ) {
-            closeConfirmModal();
-        }
-    }
-);
-
-
-profilesElement.addEventListener(
-    "click",
-    event => {
-
-        const button =
-            event.target.closest(
-                "button[data-action]"
-            );
-
-        if (!button) {
-            return;
-        }
-
-
-        const action =
-            button.dataset.action;
-
-        const id =
-            button.dataset.id;
-
-
-        if (action === "select") {
-
-            selectProfile(id);
-
-            return;
-        }
-
-
-        if (action === "rename") {
-
-            openProfileModal(id);
-
-            return;
-        }
-
-
-        if (action === "delete") {
-
-            const profile =
-                profiles.find(
-                    item => item.id === id
-                );
-
-            if (!profile) {
-                return;
-            }
-
-
-            openConfirmModal(
-                `Delete the profile "${profile.name}"? Its achievement progress will be lost.`,
-                () => deleteProfile(id)
-            );
-        }
-    }
-);
-
-
-/* =========================
-   ESCAPE KEY
-========================= */
-
-document.addEventListener(
-    "keydown",
-    event => {
-
-        if (event.key !== "Escape") {
-            return;
-        }
-
-        closeProfileModal();
-        closeConfirmModal();
-    }
-);
-
-
-/* =========================
-   HTML SAFETY
-========================= */
-
-function escapeHtml(value) {
-
-    return String(value ?? "")
-        .replaceAll("&", "&amp;")
-        .replaceAll("<", "&lt;")
-        .replaceAll(">", "&gt;")
-        .replaceAll('"', "&quot;")
-        .replaceAll("'", "&#039;");
-}
-
-
-function escapeAttribute(value) {
-
-    return escapeHtml(value);
-}
-
-
-/* =========================
-   RENDER EVERYTHING
-========================= */
-
-function renderAll() {
-
-    renderDashboard();
-
-    renderProfiles();
-
-    renderCategories();
-}
-
-
-/* =========================
-   LOAD JSON
-========================= */
-
-async function loadGoals() {
-
-    try {
-
-        const response =
-            await fetch(
-                GOALS_FILE,
-                {
-                    cache: "no-store"
-                }
-            );
-
-
-        if (!response.ok) {
-            throw new Error(
-                `HTTP ${response.status}`
-            );
-        }
-
-
-        goalsData =
-            await response.json();
-
-
-        if (
-            !goalsData ||
-            !Array.isArray(
-                goalsData.categories
-            )
-        ) {
-            throw new Error(
-                "goals.json does not contain categories[]"
-            );
-        }
-
-
-        loadStorage();
-
-
-        if (!profiles.length) {
-
-            /*
-                Create one default profile only
-                when the site has never had one.
-            */
-
-            profiles.push({
-                id: createProfileId(),
-                name: "Player 1",
-                achievements: {}
-            });
-
-            activeProfileId =
-                profiles[0].id;
-
-            saveProfiles();
-            saveActiveProfile();
-        }
-
-
-        renderAll();
-
-    } catch (error) {
-
-        console.error(
-            "Unable to load goals.json:",
-            error
-        );
-
-
-        categoriesElement.innerHTML = `
-            <div class="no-results">
-                <strong>
-                    Unable to load goals.json
-                </strong>
-                <br>
-                <span>
-                    Make sure goals.json is in the same
-                    folder as index.html and uses the
-                    categories[] structure.
-                </span>
-            </div>
-        `;
-    }
-}
-
-
-/* =========================
-   START
-========================= */
-
-loadGoals();
-
-</script>
-
-</body>
-</html>
