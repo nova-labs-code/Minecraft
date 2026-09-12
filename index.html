@@ -1,0 +1,1367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Minecraft Survival Checklist</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg: #080b09;
+            --panel: #101610;
+            --panel-2: #151d15;
+            --border: #263126;
+            --green: #4caf50;
+            --green-dark: #2e7d32;
+            --text: #edf3ed;
+            --muted: #9ba69b;
+            --danger: #d9534f;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            background: var(--bg);
+            color: var(--text);
+            font-family:
+                system-ui,
+                -apple-system,
+                BlinkMacSystemFont,
+                "Segoe UI",
+                sans-serif;
+        }
+
+        button,
+        input {
+            font: inherit;
+        }
+
+        button {
+            color: inherit;
+        }
+
+        .container {
+            width: min(1100px, calc(100% - 28px));
+            margin: 0 auto;
+            padding: 30px 0 50px;
+        }
+
+        header {
+            margin-bottom: 24px;
+        }
+
+        h1 {
+            margin: 0;
+            font-size: clamp(28px, 5vw, 44px);
+            line-height: 1.1;
+        }
+
+        .subtitle {
+            margin: 8px 0 0;
+            color: var(--muted);
+            font-size: 15px;
+        }
+
+        .top-panel {
+            background: var(--panel);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 18px;
+            margin-bottom: 20px;
+        }
+
+        .progress-row {
+            display: flex;
+            justify-content: space-between;
+            gap: 15px;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .progress-text {
+            font-weight: 700;
+        }
+
+        .progress-percent {
+            color: var(--green);
+            font-weight: 700;
+        }
+
+        .progress-track {
+            width: 100%;
+            height: 10px;
+            background: #202720;
+            border-radius: 999px;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            width: 0%;
+            height: 100%;
+            background: var(--green);
+            border-radius: inherit;
+            transition: width 0.2s ease;
+        }
+
+        .controls {
+            display: flex;
+            gap: 10px;
+            margin-top: 16px;
+        }
+
+        .search {
+            flex: 1;
+            min-width: 0;
+            padding: 11px 13px;
+            border: 1px solid var(--border);
+            border-radius: 9px;
+            outline: none;
+            background: var(--panel-2);
+            color: var(--text);
+        }
+
+        .search:focus {
+            border-color: var(--green);
+        }
+
+        .button {
+            border: 1px solid var(--border);
+            background: var(--panel-2);
+            padding: 11px 14px;
+            border-radius: 9px;
+            cursor: pointer;
+            transition:
+                background 0.15s ease,
+                border-color 0.15s ease;
+        }
+
+        .button:hover {
+            background: #1b241b;
+            border-color: #3b493b;
+        }
+
+        .button.danger:hover {
+            border-color: var(--danger);
+            color: #ff8b87;
+        }
+
+        #loading {
+            text-align: center;
+            padding: 50px 20px;
+            color: var(--muted);
+        }
+
+        #error {
+            display: none;
+            background: #211010;
+            border: 1px solid #5c2929;
+            color: #ffaaa6;
+            padding: 16px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        .category {
+            margin-bottom: 14px;
+            border: 1px solid var(--border);
+            background: var(--panel);
+            border-radius: 14px;
+            overflow: hidden;
+        }
+
+        .category-header {
+            width: 100%;
+            border: 0;
+            background: transparent;
+            padding: 16px 18px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 15px;
+            cursor: pointer;
+            text-align: left;
+        }
+
+        .category-header:hover {
+            background: rgba(255, 255, 255, 0.025);
+        }
+
+        .category-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            min-width: 0;
+        }
+
+        .category-title h2 {
+            margin: 0;
+            font-size: 18px;
+        }
+
+        .arrow {
+            color: var(--muted);
+            transition: transform 0.2s ease;
+            font-size: 13px;
+        }
+
+        .category.collapsed .arrow {
+            transform: rotate(-90deg);
+        }
+
+        .category-count {
+            color: var(--muted);
+            font-size: 13px;
+            white-space: nowrap;
+        }
+
+        .category-body {
+            border-top: 1px solid var(--border);
+        }
+
+        .category.collapsed .category-body {
+            display: none;
+        }
+
+        .items {
+            padding: 6px 0;
+        }
+
+        .item {
+            display: flex;
+            align-items: flex-start;
+            gap: 13px;
+            padding: 12px 18px;
+            cursor: pointer;
+            transition: background 0.12s ease;
+        }
+
+        .item:hover {
+            background: rgba(255, 255, 255, 0.025);
+        }
+
+        .checkbox {
+            width: 19px;
+            height: 19px;
+            flex: 0 0 19px;
+            margin-top: 1px;
+            accent-color: var(--green);
+            cursor: pointer;
+        }
+
+        .item-content {
+            min-width: 0;
+            flex: 1;
+        }
+
+        .item-title {
+            font-size: 15px;
+            line-height: 1.45;
+        }
+
+        .item-description {
+            margin-top: 4px;
+            color: var(--muted);
+            font-size: 13px;
+            line-height: 1.45;
+        }
+
+        .item.completed .item-title {
+            color: #748074;
+            text-decoration: line-through;
+        }
+
+        .item.completed .item-description {
+            opacity: 0.6;
+        }
+
+        .achievement-meta {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-top: 5px;
+        }
+
+        .gamerscore {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 34px;
+            padding: 2px 7px;
+            border-radius: 6px;
+            background: #202a20;
+            border: 1px solid #344134;
+            color: #b9c9b9;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .requirement-label {
+            color: #7f8a7f;
+            font-size: 12px;
+        }
+
+        .empty {
+            padding: 35px 20px;
+            text-align: center;
+            color: var(--muted);
+        }
+
+        footer {
+            margin-top: 30px;
+            text-align: center;
+            color: #687168;
+            font-size: 12px;
+        }
+
+        @media (max-width: 650px) {
+            .container {
+                width: min(100% - 18px, 1100px);
+                padding-top: 20px;
+            }
+
+            .top-panel {
+                padding: 14px;
+            }
+
+            .controls {
+                flex-direction: column;
+            }
+
+            .button {
+                width: 100%;
+            }
+
+            .category-header {
+                padding: 14px;
+            }
+
+            .item {
+                padding: 11px 14px;
+            }
+
+            .category-title h2 {
+                font-size: 16px;
+            }
+
+            .category-count {
+                font-size: 12px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <header>
+        <h1>Minecraft Survival Checklist</h1>
+
+        <p class="subtitle">
+            Survival goals, exploration, building, automation, and Xbox achievements.
+        </p>
+    </header>
+
+    <div id="error"></div>
+
+    <section class="top-panel">
+
+        <div class="progress-row">
+
+            <span class="progress-text">
+                <span id="completedCount">0</span>
+                /
+                <span id="totalCount">0</span>
+                completed
+            </span>
+
+            <span
+                class="progress-percent"
+                id="progressPercent"
+            >
+                0%
+            </span>
+
+        </div>
+
+        <div class="progress-track">
+
+            <div
+                class="progress-bar"
+                id="progressBar"
+            ></div>
+
+        </div>
+
+        <div class="controls">
+
+            <input
+                type="search"
+                id="search"
+                class="search"
+                placeholder="Search goals or achievements..."
+                autocomplete="off"
+            >
+
+            <button
+                type="button"
+                class="button"
+                id="expandButton"
+            >
+                Collapse All
+            </button>
+
+            <button
+                type="button"
+                class="button danger"
+                id="resetButton"
+            >
+                Reset
+            </button>
+
+        </div>
+
+    </section>
+
+    <main id="checklist"></main>
+
+    <div id="loading">
+        Loading goals...
+    </div>
+
+    <footer>
+        Progress is saved locally in your browser.
+    </footer>
+
+</div>
+
+<script>
+    const STORAGE_KEY =
+        "minecraft-survival-checklist-v2";
+
+    const checklistElement =
+        document.getElementById("checklist");
+
+    const loadingElement =
+        document.getElementById("loading");
+
+    const errorElement =
+        document.getElementById("error");
+
+    const searchElement =
+        document.getElementById("search");
+
+    const completedCountElement =
+        document.getElementById("completedCount");
+
+    const totalCountElement =
+        document.getElementById("totalCount");
+
+    const progressPercentElement =
+        document.getElementById("progressPercent");
+
+    const progressBarElement =
+        document.getElementById("progressBar");
+
+    const expandButton =
+        document.getElementById("expandButton");
+
+    const resetButton =
+        document.getElementById("resetButton");
+
+    let goals = [];
+
+    let progress = {};
+
+    let collapsedCategories = new Set();
+
+    let everythingExpanded = true;
+
+
+    function loadProgress() {
+
+        try {
+
+            const saved =
+                localStorage.getItem(STORAGE_KEY);
+
+            if (!saved) {
+                progress = {};
+                return;
+            }
+
+            const parsed =
+                JSON.parse(saved);
+
+            if (
+                parsed &&
+                typeof parsed === "object"
+            ) {
+                progress = parsed;
+            } else {
+                progress = {};
+            }
+
+        } catch {
+
+            progress = {};
+
+        }
+    }
+
+
+    function saveProgress() {
+
+        localStorage.setItem(
+            STORAGE_KEY,
+            JSON.stringify(progress)
+        );
+
+    }
+
+
+    function getAllItems() {
+
+        return goals.flatMap(
+            category =>
+                category.items || []
+        );
+
+    }
+
+
+    function isCompleted(id) {
+
+        return progress[id] === true;
+
+    }
+
+
+    function setCompleted(id, value) {
+
+        progress[id] = value;
+
+        saveProgress();
+
+        updateProgress();
+
+    }
+
+
+    function updateProgress() {
+
+        const items =
+            getAllItems();
+
+        const total =
+            items.length;
+
+        const completed =
+            items.filter(
+                item =>
+                    isCompleted(item.id)
+            ).length;
+
+        const percent =
+            total === 0
+                ? 0
+                : Math.round(
+                    (completed / total) * 100
+                );
+
+        completedCountElement.textContent =
+            completed;
+
+        totalCountElement.textContent =
+            total;
+
+        progressPercentElement.textContent =
+            percent + "%";
+
+        progressBarElement.style.width =
+            percent + "%";
+
+    }
+
+
+    function createCheckbox(item) {
+
+        const checkbox =
+            document.createElement("input");
+
+        checkbox.type =
+            "checkbox";
+
+        checkbox.className =
+            "checkbox";
+
+        checkbox.checked =
+            isCompleted(item.id);
+
+
+        checkbox.addEventListener(
+            "click",
+            event => {
+                event.stopPropagation();
+            }
+        );
+
+
+        checkbox.addEventListener(
+            "change",
+            () => {
+
+                setCompleted(
+                    item.id,
+                    checkbox.checked
+                );
+
+                const row =
+                    checkbox.closest(".item");
+
+                if (row) {
+
+                    row.classList.toggle(
+                        "completed",
+                        checkbox.checked
+                    );
+
+                }
+
+                updateCategoryCounts();
+
+            }
+        );
+
+
+        return checkbox;
+
+    }
+
+
+    function createItem(item) {
+
+        const row =
+            document.createElement("label");
+
+        row.className =
+            "item";
+
+
+        if (isCompleted(item.id)) {
+
+            row.classList.add(
+                "completed"
+            );
+
+        }
+
+
+        const checkbox =
+            createCheckbox(item);
+
+        row.appendChild(
+            checkbox
+        );
+
+
+        const content =
+            document.createElement("div");
+
+        content.className =
+            "item-content";
+
+
+        const title =
+            document.createElement("div");
+
+        title.className =
+            "item-title";
+
+        title.textContent =
+            item.name ||
+            item.text ||
+            "Unnamed goal";
+
+        content.appendChild(
+            title
+        );
+
+
+        if (item.type === "achievement") {
+
+            const meta =
+                document.createElement("div");
+
+            meta.className =
+                "achievement-meta";
+
+
+            if (
+                typeof item.gamerscore ===
+                "number"
+            ) {
+
+                const score =
+                    document.createElement("span");
+
+                score.className =
+                    "gamerscore";
+
+                score.textContent =
+                    item.gamerscore + "G";
+
+                meta.appendChild(
+                    score
+                );
+
+            }
+
+
+            if (item.requirement) {
+
+                const label =
+                    document.createElement("span");
+
+                label.className =
+                    "requirement-label";
+
+                label.textContent =
+                    "What it takes: " +
+                    item.requirement;
+
+                meta.appendChild(
+                    label
+                );
+
+            }
+
+
+            content.appendChild(
+                meta
+            );
+
+        } else if (item.description) {
+
+            const description =
+                document.createElement("div");
+
+            description.className =
+                "item-description";
+
+            description.textContent =
+                item.description;
+
+            content.appendChild(
+                description
+            );
+
+        }
+
+
+        row.appendChild(
+            content
+        );
+
+
+        return row;
+
+    }
+
+
+    function createCategory(category) {
+
+        const section =
+            document.createElement("section");
+
+        section.className =
+            "category";
+
+        section.dataset.categoryId =
+            category.id;
+
+
+        if (
+            collapsedCategories.has(
+                category.id
+            )
+        ) {
+
+            section.classList.add(
+                "collapsed"
+            );
+
+        }
+
+
+        const header =
+            document.createElement("button");
+
+        header.type =
+            "button";
+
+        header.className =
+            "category-header";
+
+
+        const titleWrapper =
+            document.createElement("div");
+
+        titleWrapper.className =
+            "category-title";
+
+
+        const arrow =
+            document.createElement("span");
+
+        arrow.className =
+            "arrow";
+
+        arrow.textContent =
+            "▼";
+
+
+        const title =
+            document.createElement("h2");
+
+        title.textContent =
+            category.title;
+
+
+        titleWrapper.appendChild(
+            arrow
+        );
+
+        titleWrapper.appendChild(
+            title
+        );
+
+
+        const count =
+            document.createElement("span");
+
+        count.className =
+            "category-count";
+
+        count.dataset.count =
+            category.id;
+
+
+        header.appendChild(
+            titleWrapper
+        );
+
+        header.appendChild(
+            count
+        );
+
+
+        header.addEventListener(
+            "click",
+            () => {
+
+                section.classList.toggle(
+                    "collapsed"
+                );
+
+
+                if (
+                    section.classList.contains(
+                        "collapsed"
+                    )
+                ) {
+
+                    collapsedCategories.add(
+                        category.id
+                    );
+
+                } else {
+
+                    collapsedCategories.delete(
+                        category.id
+                    );
+
+                }
+
+            }
+        );
+
+
+        section.appendChild(
+            header
+        );
+
+
+        const body =
+            document.createElement("div");
+
+        body.className =
+            "category-body";
+
+
+        const items =
+            document.createElement("div");
+
+        items.className =
+            "items";
+
+
+        for (
+            const originalItem
+            of category.items || []
+        ) {
+
+            const item = {
+                ...originalItem
+            };
+
+
+            if (
+                category.type ===
+                "achievements"
+            ) {
+
+                item.type =
+                    "achievement";
+
+            }
+
+
+            items.appendChild(
+                createItem(item)
+            );
+
+        }
+
+
+        body.appendChild(
+            items
+        );
+
+        section.appendChild(
+            body
+        );
+
+
+        return section;
+
+    }
+
+
+    function render() {
+
+        const search =
+            searchElement.value
+                .trim()
+                .toLowerCase();
+
+
+        checklistElement.innerHTML =
+            "";
+
+
+        let visibleCategories =
+            0;
+
+
+        for (
+            const category
+            of goals
+        ) {
+
+            const categoryItems =
+                category.items || [];
+
+
+            const filteredItems =
+                categoryItems.filter(
+                    item => {
+
+                        if (!search) {
+                            return true;
+                        }
+
+
+                        const searchable =
+                            [
+                                item.name,
+                                item.text,
+                                item.description,
+                                item.requirement
+                            ]
+                                .filter(Boolean)
+                                .join(" ")
+                                .toLowerCase();
+
+
+                        return searchable.includes(
+                            search
+                        );
+
+                    }
+                );
+
+
+            if (
+                filteredItems.length === 0
+            ) {
+
+                continue;
+
+            }
+
+
+            visibleCategories++;
+
+
+            const categoryCopy = {
+                ...category,
+                items: filteredItems
+            };
+
+
+            checklistElement.appendChild(
+                createCategory(
+                    categoryCopy
+                )
+            );
+
+        }
+
+
+        if (
+            visibleCategories === 0
+        ) {
+
+            const empty =
+                document.createElement("div");
+
+            empty.className =
+                "empty";
+
+            empty.textContent =
+                "No goals found.";
+
+            checklistElement.appendChild(
+                empty
+            );
+
+        }
+
+
+        updateProgress();
+
+        updateCategoryCounts();
+
+    }
+
+
+    function updateCategoryCounts() {
+
+        document
+            .querySelectorAll(
+                ".category"
+            )
+            .forEach(
+                section => {
+
+                    const categoryId =
+                        section.dataset.categoryId;
+
+
+                    const category =
+                        goals.find(
+                            item =>
+                                item.id ===
+                                categoryId
+                        );
+
+
+                    if (!category) {
+                        return;
+                    }
+
+
+                    const items =
+                        category.items || [];
+
+
+                    const completed =
+                        items.filter(
+                            item =>
+                                isCompleted(
+                                    item.id
+                                )
+                        ).length;
+
+
+                    const count =
+                        section.querySelector(
+                            ".category-count"
+                        );
+
+
+                    if (count) {
+
+                        count.textContent =
+                            completed +
+                            " / " +
+                            items.length;
+
+                    }
+
+                }
+            );
+
+    }
+
+
+    function expandAll() {
+
+        collapsedCategories.clear();
+
+
+        document
+            .querySelectorAll(
+                ".category"
+            )
+            .forEach(
+                section => {
+
+                    section.classList.remove(
+                        "collapsed"
+                    );
+
+                }
+            );
+
+
+        expandButton.textContent =
+            "Collapse All";
+
+    }
+
+
+    function collapseAll() {
+
+        collapsedCategories.clear();
+
+
+        for (
+            const category
+            of goals
+        ) {
+
+            collapsedCategories.add(
+                category.id
+            );
+
+        }
+
+
+        document
+            .querySelectorAll(
+                ".category"
+            )
+            .forEach(
+                section => {
+
+                    section.classList.add(
+                        "collapsed"
+                    );
+
+                }
+            );
+
+
+        expandButton.textContent =
+            "Expand All";
+
+    }
+
+
+    expandButton.addEventListener(
+        "click",
+        () => {
+
+            if (
+                everythingExpanded
+            ) {
+
+                collapseAll();
+
+            } else {
+
+                expandAll();
+
+            }
+
+
+            everythingExpanded =
+                !everythingExpanded;
+
+        }
+    );
+
+
+    searchElement.addEventListener(
+        "input",
+        render
+    );
+
+
+    resetButton.addEventListener(
+        "click",
+        () => {
+
+            const confirmed =
+                confirm(
+                    "Reset all checklist progress?"
+                );
+
+
+            if (!confirmed) {
+                return;
+            }
+
+
+            progress = {};
+
+            saveProgress();
+
+            render();
+
+        }
+    );
+
+
+    async function loadGoals() {
+
+        try {
+
+            const response =
+                await fetch(
+                    "goals.json",
+                    {
+                        cache:
+                            "no-store"
+                    }
+                );
+
+
+            if (!response.ok) {
+
+                throw new Error(
+                    "Could not load goals.json."
+                );
+
+            }
+
+
+            const data =
+                await response.json();
+
+
+            if (
+                !data ||
+                !Array.isArray(
+                    data.categories
+                )
+            ) {
+
+                throw new Error(
+                    "goals.json has an invalid format."
+                );
+
+            }
+
+
+            goals =
+                data.categories;
+
+
+            for (
+                const category
+                of goals
+            ) {
+
+                for (
+                    const item
+                    of category.items || []
+                ) {
+
+                    if (!item.id) {
+
+                        throw new Error(
+                            "Every goal needs a unique id."
+                        );
+
+                    }
+
+                }
+
+            }
+
+
+            /*
+             * Categories start expanded.
+             * Nothing is added to the collapsed
+             * set when the page first loads.
+             */
+            collapsedCategories.clear();
+
+            everythingExpanded =
+                true;
+
+            expandButton.textContent =
+                "Collapse All";
+
+
+            loadProgress();
+
+
+            loadingElement.style.display =
+                "none";
+
+
+            render();
+
+        } catch (error) {
+
+            loadingElement.style.display =
+                "none";
+
+
+            errorElement.style.display =
+                "block";
+
+
+            errorElement.textContent =
+                "Could not load goals.json. " +
+                error.message;
+
+        }
+
+    }
+
+
+    loadGoals();
+
+</script>
+
+</body>
+</html>
