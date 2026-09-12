@@ -367,6 +367,15 @@
             font-size: 0.77rem;
         }
 
+        .progress-info {
+            margin-bottom: 8px;
+
+            color: var(--muted);
+
+            font-size: 0.72rem;
+            line-height: 1.4;
+        }
+
         .progress-track {
             width: 100%;
             height: 8px;
@@ -436,11 +445,11 @@
 
             padding: 13px;
 
-            border: 1px solid var(--border);
+            border: 1px solid;
             border-radius: 10px;
 
             transition:
-                background 0.15s ease,
+                filter 0.15s ease,
                 opacity 0.15s ease;
         }
 
@@ -451,10 +460,6 @@
         .profile-card.active {
             opacity: 0.72;
         }
-
-        /*
-            Rank-themed profile cards
-        */
 
         .profile-card.rank-dirt {
             background: #17100a;
@@ -1323,6 +1328,14 @@
                 0%
             </div>
 
+        </div>
+
+
+        <div
+            id="progressInfo"
+            class="progress-info"
+        >
+            0 / 0 completed · All goals and achievements across all users
         </div>
 
 
@@ -2229,6 +2242,91 @@
             achievementScore *
             profiles.length
         );
+
+    }
+
+
+    /*
+        Overall Progress counts actual checklist items.
+
+        Shared survival goals:
+            counted once.
+
+        Achievements:
+            counted once for every profile.
+
+        Example:
+
+            50 goals
+            134 achievements
+            3 profiles
+
+        Total:
+            50 + (134 × 3)
+            = 452 items
+    */
+
+    function getTotalProgressItems() {
+
+        const goalCount =
+            getAllNormalGoals().length;
+
+
+        const achievementCount =
+            getTotalAchievementCount();
+
+
+        return (
+            goalCount +
+            (
+                achievementCount *
+                profiles.length
+            )
+        );
+
+    }
+
+
+    function getCompletedProgressItems() {
+
+        const sharedProgress =
+            loadSharedGoals();
+
+
+        let completed =
+            getAllNormalGoals()
+                .filter(
+                    item => {
+
+                        const id =
+                            String(
+                                item.id ?? ""
+                            );
+
+
+                        return Boolean(
+                            id &&
+                            sharedProgress[id]
+                        );
+
+                    }
+                )
+                .length;
+
+
+        profiles.forEach(
+            profile => {
+
+                completed +=
+                    getProfileAchievementCount(
+                        profile
+                    );
+
+            }
+        );
+
+
+        return completed;
 
     }
 
@@ -3485,13 +3583,27 @@
             `${goalCount} completed`;
 
 
+        /*
+            Overall progress is based on
+            completed checklist items rather
+            than Gamerscore.
+        */
+
+        const completedItems =
+            getCompletedProgressItems();
+
+
+        const totalItems =
+            getTotalProgressItems();
+
+
         const progress =
-            globalTotal > 0
+            totalItems > 0
                 ? Math.min(
                     100,
                     (
-                        globalScore /
-                        globalTotal
+                        completedItems /
+                        totalItems
                     ) *
                     100
                 )
@@ -3502,6 +3614,12 @@
             "progressPercent"
         ).textContent =
             `${progress.toFixed(1)}%`;
+
+
+        document.getElementById(
+            "progressInfo"
+        ).textContent =
+            `${completedItems} / ${totalItems} completed · All goals and achievements across all users`;
 
 
         document.getElementById(
