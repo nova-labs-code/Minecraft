@@ -16,48 +16,47 @@
         }
 
         :root {
-            --bg: #080b09;
-            --panel: #101610;
-            --panel-2: #151d15;
-            --panel-3: #1a231a;
+            --bg: #080a0e;
+            --panel: #11151b;
+            --panel-2: #171c23;
+            --panel-3: #1d242c;
 
-            --border: #263126;
-            --border-light: #344134;
+            --text: #f4f5f7;
+            --muted: #9ca5b1;
 
-            --green: #4caf50;
-            --green-dark: #2e7d32;
+            --border: #29313b;
+            --border-light: #353f4b;
 
-            --text: #edf3ed;
-            --muted: #9ba69b;
-            --muted-2: #6f796f;
+            --green: #55c878;
+            --red: #e05b5b;
+            --blue: #5b9ded;
+            --yellow: #e0b85b;
 
-            --danger: #d9534f;
+            --radius: 14px;
         }
 
         html {
-            min-height: 100%;
-            background: var(--bg);
+            scroll-behavior: smooth;
         }
 
         body {
             margin: 0;
+
             min-height: 100vh;
 
             color: var(--text);
             background:
                 radial-gradient(
                     circle at top,
-                    #172017 0,
-                    var(--bg) 420px
+                    #151a21 0,
+                    var(--bg) 480px
                 );
 
             font-family:
+                system-ui,
                 -apple-system,
                 BlinkMacSystemFont,
                 "Segoe UI",
-                Roboto,
-                Helvetica,
-                Arial,
                 sans-serif;
         }
 
@@ -67,122 +66,138 @@
         }
 
         button {
-            color: inherit;
+            cursor: pointer;
         }
 
         .container {
-            width: min(1200px, calc(100% - 28px));
+            width: min(1180px, calc(100% - 28px));
+
             margin: 0 auto;
-            padding: 28px 0 50px;
+
+            padding:
+                24px
+                0
+                50px;
         }
 
         /* HEADER */
 
         .header {
-            margin-bottom: 12px;
+            margin-bottom: 18px;
         }
 
         .header h1 {
             margin: 0;
-            font-size: clamp(26px, 5vw, 42px);
-            line-height: 1.1;
-            font-weight: 900;
-            letter-spacing: -0.03em;
+
+            font-size:
+                clamp(
+                    1.8rem,
+                    5vw,
+                    2.7rem
+                );
+
+            line-height: 1.05;
         }
 
         .header p {
-            margin: 8px 0 0;
+            margin:
+                7px
+                0
+                0;
+
             color: var(--muted);
-            font-size: 14px;
+
+            line-height: 1.5;
         }
 
         /* CONTROLS */
 
         .controls {
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-            margin-bottom: 8px;
+            display: grid;
+
+            grid-template-columns:
+                minmax(0, 1fr)
+                auto
+                auto;
+
+            gap: 8px;
+
+            margin-bottom: 14px;
         }
 
         .search {
-            flex: 1 1 260px;
             min-width: 0;
         }
 
         .search input {
             width: 100%;
-            height: 42px;
-            padding: 0 14px;
 
-            border: 1px solid var(--border);
-            border-radius: 9px;
+            height: 44px;
 
-            outline: none;
+            padding:
+                0
+                13px;
 
             color: var(--text);
             background: var(--panel);
 
-            transition:
-                border-color 0.15s ease,
-                background 0.15s ease;
+            border:
+                1px solid
+                var(--border);
+
+            border-radius: 10px;
+
+            outline: none;
         }
 
         .search input:focus {
-            border-color: var(--green);
-            background: var(--panel-2);
+            border-color:
+                var(--border-light);
         }
 
         .button {
-            height: 42px;
-            padding: 0 15px;
+            height: 44px;
 
-            border: 1px solid var(--border);
-            border-radius: 9px;
+            padding:
+                0
+                15px;
 
-            background: var(--panel);
             color: var(--text);
+            background: var(--panel-2);
 
-            cursor: pointer;
-            font-size: 13px;
-            font-weight: 800;
+            border:
+                1px solid
+                var(--border);
+
+            border-radius: 10px;
 
             transition:
                 background 0.15s ease,
-                border-color 0.15s ease,
-                transform 0.15s ease;
+                border-color 0.15s ease;
         }
 
         .button:hover {
-            background: var(--panel-2);
-            border-color: var(--border-light);
-        }
+            background: var(--panel-3);
 
-        .button:active {
-            transform: translateY(1px);
+            border-color:
+                var(--border-light);
         }
 
         .button.primary {
-            border-color: var(--green-dark);
-            background: #173018;
-        }
+            background: #243126;
 
-        .button.primary:hover {
-            background: #1d3b1f;
-            border-color: var(--green);
+            border-color: #354d3b;
         }
 
         .button.danger {
-            border-color: #5a2927;
-            color: #ef8a86;
+            color: #ffb2b2;
+
+            background: #29191b;
+
+            border-color: #4a292c;
         }
 
-        .button.danger:hover {
-            background: #251413;
-            border-color: var(--danger);
-        }
-
-        /* SCORE */
+        /* SCORE GRID */
 
         .score-grid {
             display: grid;
@@ -194,15 +209,14 @@
                 );
 
             gap: 10px;
-            margin-bottom: 10px;
+
+            margin-bottom: 14px;
         }
 
         .score-box {
             min-width: 0;
-            padding: 15px;
 
-            border: 1px solid var(--border);
-            border-radius: 12px;
+            padding: 14px;
 
             background:
                 linear-gradient(
@@ -210,190 +224,220 @@
                     var(--panel-2),
                     var(--panel)
                 );
+
+            border:
+                1px solid
+                var(--border);
+
+            border-radius: var(--radius);
         }
 
         .score-label {
             color: var(--muted);
-            font-size: 11px;
-            font-weight: 800;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
+
+            font-size: 0.82rem;
+
+            margin-bottom: 5px;
         }
 
         .score-value {
-            margin-top: 5px;
+            font-size: 1.55rem;
 
-            font-size: 27px;
-            line-height: 1;
-            font-weight: 900;
+            font-weight: 750;
+
+            line-height: 1.1;
         }
 
-        .score-value.green {
-            color: var(--green);
+        .score-detail {
+            margin-top: 6px;
+
+            color: var(--muted);
+
+            font-size: 0.78rem;
+
+            line-height: 1.35;
         }
 
-        .score-small {
-            margin-top: 7px;
+        /* RANK */
 
-            color: var(--muted-2);
-            font-size: 11px;
-        }
-
-        .current-rank {
+        .rank-badge {
             display: inline-flex;
+
             align-items: center;
+            justify-content: center;
 
-            margin-top: 7px;
-            padding: 3px 8px;
+            min-height: 24px;
 
-            border: 1px solid;
-            border-radius: 5px;
+            margin-top: 8px;
 
-            font-size: 10px;
-            font-weight: 900;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
+            padding:
+                4px
+                9px;
+
+            color: #fff;
+
+            font-size: 0.72rem;
+
+            font-weight: 750;
+
+            letter-spacing: 0.03em;
+
+            border:
+                1px solid
+                rgba(255, 255, 255, 0.16);
+
+            border-radius: 7px;
         }
-
-        /* RANK COLORS */
 
         .rank-dirt {
-            color: #a77b52;
-            border-color: #705139;
-            background: #211811;
+            background: #62472f;
+            border-color: #815f40;
         }
 
         .rank-wood {
-            color: #c4935c;
-            border-color: #7b5b39;
-            background: #211b14;
+            background: #75502d;
+            border-color: #a27342;
         }
 
         .rank-stone {
-            color: #b7b7b7;
-            border-color: #777777;
-            background: #1c1c1c;
+            background: #5e646a;
+            border-color: #858c93;
         }
 
         .rank-coal {
-            color: #8f9798;
-            border-color: #4e5556;
-            background: #151819;
+            background: #25292e;
+            border-color: #41474e;
         }
 
         .rank-iron {
-            color: #d1d5d5;
-            border-color: #8c9698;
-            background: #1b1d1e;
+            background: #7c858c;
+            border-color: #adb5bb;
         }
 
         .rank-gold {
-            color: #e3c64f;
-            border-color: #9e872d;
-            background: #211e12;
+            background: #9a751d;
+            border-color: #c8a33a;
         }
 
         .rank-diamond {
-            color: #68d9d0;
-            border-color: #369c97;
-            background: #11201f;
+            background: #218d91;
+            border-color: #42c7cb;
         }
 
         .rank-emerald {
-            color: #48d17b;
-            border-color: #2d8f52;
-            background: #112016;
+            background: #218052;
+            border-color: #38bb7a;
         }
 
         .rank-netherite {
-            color: #9b8b9e;
-            border-color: #625866;
-            background: #1b181c;
+            background: #3b343e;
+            border-color: #66596b;
         }
 
         .rank-ender {
-            color: #c276ed;
-            border-color: #7b439a;
-            background: #1d1423;
+            background: #3d2d61;
+            border-color: #7155a8;
         }
 
-        /* GLOBAL PROGRESS */
+        /* PROGRESS */
 
-        .global-progress {
-            margin-bottom: 10px;
+        .progress-section {
+            margin-bottom: 20px;
         }
 
-        .global-progress-top {
+        .progress-header {
             display: flex;
+
             align-items: center;
             justify-content: space-between;
+
             gap: 10px;
 
             margin-bottom: 7px;
 
             color: var(--muted);
-            font-size: 11px;
-            font-weight: 700;
-        }
 
-        .progress {
-            width: 100%;
-            height: 8px;
-
-            overflow: hidden;
-
-            border-radius: 999px;
-            background: #202720;
+            font-size: 0.82rem;
         }
 
         .progress-bar {
-            width: 0%;
-            height: 100%;
+            width: 100%;
 
-            border-radius: inherit;
+            height: 9px;
+
+            overflow: hidden;
+
+            background: #20262d;
+
+            border-radius: 999px;
+        }
+
+        .progress-fill {
+            width: 0;
+            height: 100%;
 
             background: var(--green);
 
-            transition: width 0.2s ease;
+            border-radius: inherit;
+
+            transition:
+                width 0.2s ease;
         }
 
         /* PROFILES */
 
         .profiles-section {
-            margin-bottom: 10px;
+            margin-bottom: 24px;
+
+            padding: 16px;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    var(--panel-2),
+                    var(--panel)
+                );
+
+            border:
+                1px solid
+                var(--border);
+
+            border-radius: var(--radius);
         }
 
         .section-header {
             display: flex;
+
             align-items: center;
             justify-content: space-between;
-            gap: 10px;
 
-            margin-bottom: 10px;
+            gap: 12px;
+
+            margin-bottom: 13px;
         }
 
-        .section-title {
+        .section-header h2 {
             margin: 0;
 
-            font-size: 15px;
-            font-weight: 900;
+            font-size: 1.15rem;
         }
 
-        .section-subtitle {
+        .section-header p {
             margin: 3px 0 0;
 
             color: var(--muted);
-            font-size: 11px;
+
+            font-size: 0.78rem;
         }
 
-        .profiles-list {
+        .profiles-grid {
             display: grid;
 
             grid-template-columns:
                 repeat(
-                    auto-fill,
+                    auto-fit,
                     minmax(
-                        230px,
+                        210px,
                         1fr
                     )
                 );
@@ -403,579 +447,324 @@
 
         .profile-card {
             position: relative;
+
             min-width: 0;
 
             padding: 14px;
 
-            border: 2px solid var(--border);
-            border-radius: 12px;
+            background: #0f1318;
 
-            background:
-                linear-gradient(
-                    145deg,
-                    var(--panel-2),
-                    #111711
-                );
+            border:
+                2px solid
+                var(--border);
 
-            cursor: pointer;
-            text-align: left;
-
-            transition:
-                background 0.15s ease,
-                border-color 0.15s ease,
-                transform 0.15s ease,
-                box-shadow 0.15s ease;
-        }
-
-        .profile-card:hover {
-            background: var(--panel-3);
-            transform: translateY(-2px);
+            border-radius: 13px;
         }
 
         .profile-card.active {
-            box-shadow:
-                0 0 0 1px
-                rgba(
-                    255,
-                    255,
-                    255,
-                    0.04
-                );
+            background: #141a20;
+
+            border-color:
+                var(--green);
         }
 
-        /* STATIC RANK BORDERS */
-
         .profile-card.rank-dirt {
-            border-color: #705139;
+            border-color: #815f40;
         }
 
         .profile-card.rank-wood {
-            border-color: #7b5b39;
+            border-color: #a27342;
         }
 
         .profile-card.rank-stone {
-            border-color: #777777;
+            border-color: #858c93;
         }
 
         .profile-card.rank-coal {
-            border-color: #4e5556;
+            border-color: #41474e;
         }
 
         .profile-card.rank-iron {
-            border-color: #8c9698;
+            border-color: #adb5bb;
         }
 
         .profile-card.rank-gold {
-            border-color: #b49a35;
+            border-color: #c8a33a;
         }
 
         .profile-card.rank-diamond {
-            border-color: #369c97;
+            border-color: #42c7cb;
         }
 
         .profile-card.rank-emerald {
-            border-color: #2d8f52;
+            border-color: #38bb7a;
         }
 
         .profile-card.rank-netherite {
-            border-color: #625866;
+            border-color: #66596b;
         }
 
         .profile-card.rank-ender {
-            border-color: #7b439a;
+            border-color: #7155a8;
         }
 
-        .profile-card.active.rank-dirt {
-            background: #211811;
-        }
-
-        .profile-card.active.rank-wood {
-            background: #211b14;
-        }
-
-        .profile-card.active.rank-stone {
-            background: #1c1c1c;
-        }
-
-        .profile-card.active.rank-coal {
-            background: #151819;
-        }
-
-        .profile-card.active.rank-iron {
-            background: #1b1d1e;
-        }
-
-        .profile-card.active.rank-gold {
-            background: #211e12;
-        }
-
-        .profile-card.active.rank-diamond {
-            background: #11201f;
-        }
-
-        .profile-card.active.rank-emerald {
-            background: #112016;
-        }
-
-        .profile-card.active.rank-netherite {
-            background: #1b181c;
-        }
-
-        .profile-card.active.rank-ender {
-            background: #1d1423;
-        }
-
-        .profile-selected {
-            position: absolute;
-
-            top: 10px;
-            right: 10px;
-
-            width: 8px;
-            height: 8px;
-
-            border-radius: 50%;
-
-            background: currentColor;
-
-            opacity: 0;
-        }
-
-        .profile-card.active .profile-selected {
-            opacity: 1;
-        }
-
-        .profile-card-top {
+        .profile-top {
             display: flex;
-            align-items: center;
-            gap: 11px;
 
-            min-width: 0;
-        }
+            align-items: flex-start;
+            justify-content: space-between;
 
-        .profile-avatar {
-            width: 44px;
-            height: 44px;
-
-            flex: 0 0 44px;
-
-            display: flex;
-            align-items: center;
-            justify-content: center;
-
-            border: 1px solid var(--border-light);
-            border-radius: 10px;
-
-            background: #202a20;
-
-            color: var(--muted);
-            font-size: 17px;
-            font-weight: 900;
-        }
-
-        .profile-heading {
-            min-width: 0;
-            flex: 1;
+            gap: 10px;
         }
 
         .profile-name {
+            min-width: 0;
+
             overflow: hidden;
 
-            white-space: nowrap;
-            text-overflow: ellipsis;
+            font-size: 1rem;
+            font-weight: 750;
 
-            font-size: 15px;
-            font-weight: 900;
-            line-height: 1.25;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .profile-current {
+            flex-shrink: 0;
+
+            padding:
+                3px
+                7px;
+
+            color: var(--green);
+
+            background: #19251d;
+
+            border:
+                1px solid
+                #304936;
+
+            border-radius: 6px;
+
+            font-size: 0.68rem;
+            font-weight: 700;
         }
 
         .profile-rank {
-            display: inline-flex;
-            align-items: center;
-
             margin-top: 5px;
-            padding: 3px 7px;
-
-            border: 1px solid;
-            border-radius: 5px;
-
-            font-size: 9px;
-            font-weight: 900;
-
-            text-transform: uppercase;
-            letter-spacing: 0.04em;
-        }
-
-        .profile-card-stats {
-            display: flex;
-            justify-content: space-between;
-            gap: 10px;
-
-            margin-top: 13px;
 
             color: var(--muted);
-            font-size: 11px;
+
+            font-size: 0.75rem;
         }
 
-        .profile-card-stats strong {
-            color: var(--text);
-            font-size: 12px;
+        .profile-score {
+            margin-top: 12px;
+
+            font-size: 1.5rem;
+
+            font-weight: 800;
         }
 
-        .profile-card-progress {
-            width: 100%;
-            height: 5px;
-
+        .profile-progress {
             margin-top: 8px;
-
-            overflow: hidden;
-
-            border-radius: 999px;
-            background: #202720;
         }
 
-        .profile-card-progress-bar {
-            width: 0%;
-            height: 100%;
-
-            border-radius: inherit;
-
-            background: currentColor;
-
-            transition: width 0.2s ease;
+        .profile-progress .progress-bar {
+            height: 6px;
         }
 
         .profile-actions {
-            display: flex;
-            gap: 6px;
+            display: grid;
+
+            grid-template-columns:
+                1fr
+                1fr;
+
+            gap: 7px;
 
             margin-top: 12px;
         }
 
-        .profile-action {
-            height: 30px;
-            padding: 0 9px;
+        .profile-actions .button {
+            height: 36px;
 
-            border: 1px solid var(--border);
-            border-radius: 6px;
+            padding:
+                0
+                8px;
 
-            background: #141a14;
-            color: var(--muted);
-
-            cursor: pointer;
-
-            font-size: 10px;
-            font-weight: 800;
+            font-size: 0.78rem;
         }
 
-        .profile-action:hover {
-            color: var(--text);
-            border-color: var(--border-light);
-            background: #1b221b;
-        }
-
-        .profile-action.delete:hover {
-            color: #ef8a86;
-            border-color: #5a2927;
-            background: #251413;
-        }
-
-        .add-profile {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-
-            min-height: 130px;
-
-            padding: 14px;
-
-            border: 2px dashed var(--border-light);
-            border-radius: 12px;
-
-            background: transparent;
-            color: var(--muted);
-
-            cursor: pointer;
-
-            font-weight: 800;
-
-            transition:
-                background 0.15s ease,
-                border-color 0.15s ease,
-                color 0.15s ease;
-        }
-
-        .add-profile:hover {
-            background: var(--panel-2);
-            border-color: var(--green);
-            color: var(--text);
-        }
-
-        /* CATEGORIES */
-
-        .categories {
-            display: flex;
-            flex-direction: column;
-            gap: 9px;
-        }
+        /* CATEGORY */
 
         .category {
+            margin-bottom: 10px;
+
             overflow: hidden;
 
-            border: 1px solid var(--border);
-            border-radius: 11px;
-
             background: var(--panel);
+
+            border:
+                1px solid
+                var(--border);
+
+            border-radius: var(--radius);
         }
 
         .category-header {
-            width: 100%;
-
             display: flex;
+
             align-items: center;
             justify-content: space-between;
-            gap: 12px;
 
-            padding: 14px;
+            width: 100%;
 
-            border: 0;
+            padding:
+                15px;
 
-            background: transparent;
             color: var(--text);
 
-            cursor: pointer;
             text-align: left;
+
+            background: transparent;
+
+            border: 0;
         }
 
-        .category-header:hover {
-            background: var(--panel-2);
-        }
-
-        .category-info {
+        .category-title {
             min-width: 0;
         }
 
-        .category-name {
-            font-size: 14px;
-            font-weight: 900;
+        .category-title strong {
+            display: block;
+
+            font-size: 0.98rem;
         }
 
-        .category-count {
+        .category-title span {
+            display: block;
+
             margin-top: 3px;
 
             color: var(--muted);
-            font-size: 10px;
-        }
 
-        .category-right {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-
-            flex-shrink: 0;
-        }
-
-        .category-score {
-            color: var(--muted);
-            font-size: 10px;
-            font-weight: 800;
+            font-size: 0.75rem;
         }
 
         .category-arrow {
+            flex-shrink: 0;
+
             color: var(--muted);
 
-            font-size: 13px;
-
-            transition:
-                transform 0.15s ease;
-        }
-
-        .category.open .category-arrow {
-            transform: rotate(180deg);
+            font-size: 1.1rem;
         }
 
         .category-content {
             display: none;
 
-            padding: 0 10px 10px;
+            padding:
+                0
+                12px
+                12px;
         }
 
         .category.open .category-content {
             display: block;
         }
 
+        .category.open .category-arrow {
+            transform: rotate(180deg);
+        }
+
         .goal {
-            display: flex;
-            align-items: flex-start;
-            gap: 11px;
+            display: grid;
 
-            padding: 10px;
+            grid-template-columns:
+                auto
+                minmax(0, 1fr)
+                auto;
 
-            border-top: 1px solid #1d241d;
+            align-items: center;
+
+            gap: 10px;
+
+            padding:
+                11px
+                3px;
+
+            border-top:
+                1px solid
+                rgba(255, 255, 255, 0.055);
         }
 
-        .goal:hover {
-            background: #121812;
-        }
+        .goal-checkbox {
+            width: 19px;
+            height: 19px;
 
-        .goal input {
-            width: 18px;
-            height: 18px;
-
-            flex: 0 0 18px;
-
-            margin: 1px 0 0;
+            margin: 0;
 
             accent-color: var(--green);
-
-            cursor: pointer;
         }
 
-        .goal-info {
+        .goal-main {
             min-width: 0;
-            flex: 1;
         }
 
-        .goal-title {
-            font-size: 13px;
-            font-weight: 800;
+        .goal-name {
+            font-size: 0.9rem;
+
             line-height: 1.35;
+        }
+
+        .goal.checked .goal-name {
+            color: #8f989f;
+
+            text-decoration: line-through;
         }
 
         .goal-description {
-            margin-top: 3px;
+            margin-top: 2px;
 
             color: var(--muted);
-            font-size: 11px;
-            line-height: 1.45;
+
+            font-size: 0.75rem;
+
+            line-height: 1.4;
         }
 
-        .goal-meta {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-
-            margin-top: 6px;
-        }
-
-        .difficulty {
-            display: inline-flex;
-            align-items: center;
-
-            padding: 2px 6px;
-
-            border-radius: 4px;
-
-            font-size: 9px;
-            font-weight: 900;
-
-            text-transform: uppercase;
-            letter-spacing: 0.04em;
-        }
-
-        .difficulty.easy {
-            color: #69c56c;
-            background: #142216;
-        }
-
-        .difficulty.medium {
-            color: #d4c65c;
-            background: #242113;
-        }
-
-        .difficulty.hard {
-            color: #df8b65;
-            background: #281a15;
-        }
-
-        .difficulty.epic {
-            color: #c886df;
-            background: #21152a;
-        }
-
-        .points {
-            color: var(--muted-2);
-            font-size: 9px;
-            font-weight: 800;
-        }
-
-        .achievement {
-            display: flex;
-            align-items: flex-start;
-            gap: 11px;
-
-            padding: 10px;
-
-            border-top: 1px solid #1d241d;
-        }
-
-        .achievement:hover {
-            background: #121812;
-        }
-
-        .achievement input {
-            width: 18px;
-            height: 18px;
-
-            flex: 0 0 18px;
-
-            margin: 1px 0 0;
-
-            accent-color: var(--green);
-
-            cursor: pointer;
-        }
-
-        .achievement-info {
-            min-width: 0;
-            flex: 1;
-        }
-
-        .achievement-title {
-            font-size: 13px;
-            font-weight: 800;
-            line-height: 1.35;
-        }
-
-        .achievement-description {
-            margin-top: 3px;
-
-            color: var(--muted);
-            font-size: 11px;
-            line-height: 1.45;
-        }
-
-        .achievement-points {
+        .goal-score {
             flex-shrink: 0;
 
-            color: #d4c65c;
+            color: var(--yellow);
 
-            font-size: 11px;
-            font-weight: 900;
+            font-size: 0.75rem;
+            font-weight: 700;
         }
 
-        .empty {
-            padding: 35px 15px;
+        /* EMPTY */
 
-            border: 1px dashed var(--border-light);
-            border-radius: 10px;
+        .empty {
+            padding: 22px;
 
             color: var(--muted);
 
             text-align: center;
-            font-size: 13px;
+
+            font-size: 0.85rem;
         }
 
         /* MODALS */
 
-        .modal-backdrop {
+        .modal {
             position: fixed;
 
             inset: 0;
 
-            z-index: 1000;
+            z-index: 100;
 
             display: none;
+
             align-items: center;
             justify-content: center;
 
@@ -990,85 +779,92 @@
                 );
         }
 
-        .modal-backdrop.open {
+        .modal.show {
             display: flex;
         }
 
-        .modal {
-            width: min(420px, 100%);
+        .modal-box {
+            width: min(
+                430px,
+                100%
+            );
 
             padding: 20px;
 
-            border: 1px solid var(--border-light);
-            border-radius: 13px;
-
             background:
-                linear-gradient(
-                    145deg,
-                    #151d15,
-                    #0e130e
-                );
+                var(--panel-2);
+
+            border:
+                1px solid
+                var(--border-light);
+
+            border-radius: 15px;
 
             box-shadow:
-                0 20px 70px
+                0
+                20px
+                60px
                 rgba(
                     0,
                     0,
                     0,
-                    0.5
+                    0.4
                 );
         }
 
-        .modal h2 {
-            margin: 0;
-
-            font-size: 19px;
-            font-weight: 900;
+        .modal-box h2 {
+            margin:
+                0
+                0
+                7px;
         }
 
-        .modal p {
-            margin: 7px 0 15px;
+        .modal-box p {
+            margin:
+                0
+                0
+                15px;
 
             color: var(--muted);
-            font-size: 12px;
+
+            font-size: 0.84rem;
+
             line-height: 1.5;
         }
 
-        .modal input {
+        .modal-input {
             width: 100%;
-            height: 42px;
 
-            padding: 0 12px;
+            height: 44px;
 
-            border: 1px solid var(--border);
-            border-radius: 8px;
-
-            outline: none;
+            padding:
+                0
+                12px;
 
             color: var(--text);
-            background: #0b0f0b;
+
+            background:
+                #0d1116;
+
+            border:
+                1px solid
+                var(--border);
+
+            border-radius: 9px;
+
+            outline: none;
         }
 
-        .modal input:focus {
-            border-color: var(--green);
-        }
+        .modal-actions {
+            display: grid;
 
-        .modal-buttons {
-            display: flex;
-            justify-content: flex-end;
+            grid-template-columns:
+                1fr
+                1fr;
+
             gap: 8px;
 
-            margin-top: 15px;
-        }
-
-        .modal-error {
-            min-height: 16px;
-
-            margin-top: 7px;
-
-            color: #e47d78;
-
-            font-size: 11px;
+            margin-top: 12px;
         }
 
         /* FOOTER */
@@ -1076,15 +872,17 @@
         footer {
             margin-top: 25px;
 
-            color: var(--muted-2);
+            color: var(--muted);
 
             text-align: center;
-            font-size: 10px;
+
+            font-size: 0.75rem;
         }
 
-        /* RESPONSIVE */
+        /* MOBILE */
 
         @media (max-width: 800px) {
+
             .score-grid {
                 grid-template-columns:
                     repeat(
@@ -1092,604 +890,586 @@
                         minmax(0, 1fr)
                     );
             }
+
         }
 
-        @media (max-width: 520px) {
+        @media (max-width: 600px) {
+
             .container {
-                width: min(
-                    100% - 18px,
-                    1200px
-                );
+                width:
+                    min(
+                        100% - 20px,
+                        1180px
+                    );
 
                 padding-top: 18px;
             }
 
-            .score-grid {
-                grid-template-columns: 1fr 1fr;
-            }
-
-            .score-value {
-                font-size: 23px;
-            }
-
-            .profiles-list {
-                grid-template-columns: 1fr;
-            }
-
             .controls {
-                flex-direction: column;
+                grid-template-columns:
+                    1fr
+                    1fr;
             }
 
-            .button {
-                width: 100%;
+            .search {
+                grid-column: 1 / -1;
             }
 
-            .category-header {
+            .score-grid {
+                grid-template-columns:
+                    1fr
+                    1fr;
+            }
+
+            .profiles-section {
                 padding: 12px;
             }
 
-            .category-score {
-                display: none;
+            .profiles-grid {
+                grid-template-columns:
+                    1fr;
             }
 
-            .goal,
-            .achievement {
-                padding: 9px 6px;
+            .section-header {
+                align-items: stretch;
+
+                flex-direction: column;
             }
+
+            .section-header .button {
+                width: 100%;
+            }
+
+            .goal {
+                grid-template-columns:
+                    auto
+                    minmax(0, 1fr);
+            }
+
+            .goal-score {
+                grid-column: 2;
+
+                margin-top: -5px;
+            }
+
+        }
+
+        @media (max-width: 390px) {
+
+            .score-grid {
+                grid-template-columns:
+                    1fr;
+            }
+
+            .controls {
+                grid-template-columns:
+                    1fr;
+            }
+
+            .search {
+                grid-column: auto;
+            }
+
         }
     </style>
 </head>
 
 <body>
 
-    <main class="container">
+<div class="container">
 
-        <header class="header">
-            <h1>Minecraft Survival Checklist</h1>
+    <header class="header">
+        <h1>Minecraft Survival Checklist</h1>
 
-            <p>
-                Complete survival goals and Xbox achievements.
-                Progress is saved automatically.
-            </p>
-        </header>
+        <p>
+            Track survival goals, achievements, Gamerscore,
+            profiles, and Minecraft-themed ranks.
+        </p>
+    </header>
 
-        <div class="controls">
 
-            <div class="search">
-                <input
-                    id="searchInput"
-                    type="search"
-                    placeholder="Search goals and achievements..."
-                    autocomplete="off"
-                >
-            </div>
+    <!-- CONTROLS -->
 
-            <button
-                class="button primary"
-                id="addProfileButton"
-                type="button"
-            >
-                Add Profile
-            </button>
+    <div class="controls">
 
-            <button
-                class="button danger"
-                id="resetButton"
-                type="button"
-            >
-                Reset Goals
-            </button>
-
-        </div>
-
-        <section class="score-grid">
-
-            <div class="score-box">
-
-                <div class="score-label">
-                    Global Score
-                </div>
-
-                <div
-                    class="score-value green"
-                    id="globalScore"
-                >
-                    0
-                </div>
-
-                <div
-                    class="score-small"
-                    id="globalScoreDetail"
-                >
-                    0 / 0 points
-                </div>
-
-            </div>
-
-            <div class="score-box">
-
-                <div class="score-label">
-                    <span id="currentProfileName">
-                        Your
-                    </span>
-                    Score
-                </div>
-
-                <div
-                    class="score-value green"
-                    id="userScore"
-                >
-                    0
-                </div>
-
-                <div
-                    class="current-rank rank-dirt"
-                    id="currentProfileRank"
-                >
-                    Dirt
-                </div>
-
-                <div
-                    class="score-small"
-                    id="userScoreDetail"
-                >
-                    0G achievements
-                </div>
-
-            </div>
-
-            <div class="score-box">
-
-                <div class="score-label">
-                    Goals Score
-                </div>
-
-                <div
-                    class="score-value"
-                    id="goalsScore"
-                >
-                    0
-                </div>
-
-                <div
-                    class="score-small"
-                    id="goalsScoreDetail"
-                >
-                    0 / 0 goals
-                </div>
-
-            </div>
-
-            <div class="score-box">
-
-                <div class="score-label">
-                    Global Progress
-                </div>
-
-                <div
-                    class="score-value"
-                    id="globalPercent"
-                >
-                    0%
-                </div>
-
-                <div
-                    class="score-small"
-                    id="achievementGlobalDetail"
-                >
-                    0G achievements
-                </div>
-
-            </div>
-
-        </section>
-
-        <section class="global-progress">
-
-            <div class="global-progress-top">
-                <span>
-                    Overall Progress
-                </span>
-
-                <span id="progressText">
-                    0%
-                </span>
-            </div>
-
-            <div class="progress">
-                <div
-                    class="progress-bar"
-                    id="globalProgressBar"
-                ></div>
-            </div>
-
-        </section>
-
-        <section class="profiles-section">
-
-            <div class="section-header">
-
-                <div>
-                    <h2 class="section-title">
-                        Profiles
-                    </h2>
-
-                    <p class="section-subtitle">
-                        Achievement progress is tracked separately for each player.
-                    </p>
-                </div>
-
-                <div
-                    class="section-subtitle"
-                    id="profileCount"
-                >
-                    0 / 12
-                </div>
-
-            </div>
-
-            <div
-                class="profiles-list"
-                id="profilesList"
-            ></div>
-
-        </section>
-
-        <section
-            class="categories"
-            id="categories"
-        ></section>
-
-        <footer>
-            Minecraft Survival Checklist
-        </footer>
-
-    </main>
-
-    <!-- PROFILE MODAL -->
-
-    <div
-        class="modal-backdrop"
-        id="profileModal"
-    >
-
-        <div
-            class="modal"
-            role="dialog"
-            aria-modal="true"
-            aria-labelledby="profileModalTitle"
-        >
-
-            <h2 id="profileModalTitle">
-                Add Profile
-            </h2>
-
-            <p id="profileModalDescription">
-                Create a player profile for achievement progress.
-            </p>
-
+        <div class="search">
             <input
-                id="profileNameInput"
-                type="text"
-                maxlength="30"
-                placeholder="Player name"
+                id="searchInput"
+                type="search"
+                placeholder="Search goals and achievements..."
                 autocomplete="off"
             >
+        </div>
+
+        <button
+            id="addProfileButton"
+            class="button primary"
+            type="button"
+        >
+            Add Profile
+        </button>
+
+        <button
+            id="resetButton"
+            class="button danger"
+            type="button"
+        >
+            Reset Goals
+        </button>
+
+    </div>
+
+
+    <!-- SCORES -->
+
+    <section class="score-grid">
+
+        <div class="score-box">
+
+            <div class="score-label">
+                Global Score
+            </div>
 
             <div
-                class="modal-error"
-                id="profileModalError"
-            ></div>
+                id="globalScore"
+                class="score-value"
+            >
+                0G
+            </div>
 
-            <div class="modal-buttons">
-
-                <button
-                    class="button"
-                    id="profileCancelButton"
-                    type="button"
-                >
-                    Cancel
-                </button>
-
-                <button
-                    class="button primary"
-                    id="profileSaveButton"
-                    type="button"
-                >
-                    Create
-                </button>
-
+            <div
+                id="globalScoreDetail"
+                class="score-detail"
+            >
+                0 / 0
             </div>
 
         </div>
 
-    </div>
 
-    <!-- CONFIRM MODAL -->
+        <div class="score-box">
 
-    <div
-        class="modal-backdrop"
-        id="confirmModal"
-    >
+            <div
+                id="currentProfileName"
+                class="score-label"
+            >
+                Your
+            </div>
+
+            <div
+                id="profileScore"
+                class="score-value"
+            >
+                0G
+            </div>
+
+            <div
+                id="profileScoreDetail"
+                class="score-detail"
+            >
+                Select a profile
+            </div>
+
+            <div
+                id="currentRank"
+                class="rank-badge rank-dirt"
+            >
+                Dirt
+            </div>
+
+        </div>
+
+
+        <div class="score-box">
+
+            <div class="score-label">
+                Goals Score
+            </div>
+
+            <div
+                id="goalsScore"
+                class="score-value"
+            >
+                0G
+            </div>
+
+            <div
+                id="goalsScoreDetail"
+                class="score-detail"
+            >
+                0 completed
+            </div>
+
+        </div>
+
+
+        <div class="score-box">
+
+            <div class="score-label">
+                Global Progress
+            </div>
+
+            <div
+                id="globalProgress"
+                class="score-value"
+            >
+                0%
+            </div>
+
+            <div
+                id="globalProgressDetail"
+                class="score-detail"
+            >
+                0 / 0 points
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- OVERALL PROGRESS -->
+
+    <section class="progress-section">
+
+        <div class="progress-header">
+
+            <span>
+                Overall Progress
+            </span>
+
+            <span id="progressText">
+                0%
+            </span>
+
+        </div>
+
+        <div class="progress-bar">
+            <div
+                id="progressFill"
+                class="progress-fill"
+            ></div>
+        </div>
+
+    </section>
+
+
+    <!-- PROFILES -->
+
+    <section class="profiles-section">
+
+        <div class="section-header">
+
+            <div>
+                <h2>Profiles</h2>
+
+                <p>
+                    Achievement progress is tracked separately for each player.
+                </p>
+            </div>
+
+            <button
+                id="addProfileButton2"
+                class="button primary"
+                type="button"
+            >
+                + Add Profile
+            </button>
+
+        </div>
 
         <div
-            class="modal"
-            role="dialog"
-            aria-modal="true"
-            aria-labelledby="confirmModalTitle"
+            id="profilesGrid"
+            class="profiles-grid"
+        ></div>
+
+    </section>
+
+
+    <!-- GOALS -->
+
+    <main id="categories"></main>
+
+
+    <footer>
+        Minecraft Survival Checklist
+    </footer>
+
+</div>
+
+
+<!-- PROFILE MODAL -->
+
+<div
+    id="profileModal"
+    class="modal"
+    aria-hidden="true"
+>
+
+    <div class="modal-box">
+
+        <h2 id="profileModalTitle">
+            Add Profile
+        </h2>
+
+        <p>
+            Choose a name for this Minecraft player profile.
+        </p>
+
+        <input
+            id="profileNameInput"
+            class="modal-input"
+            type="text"
+            maxlength="30"
+            placeholder="Player name"
         >
 
-            <h2 id="confirmModalTitle">
-                Reset Goals?
-            </h2>
+        <div class="modal-actions">
 
-            <p id="confirmModalDescription">
-                This will reset the shared survival goal progress.
-                Achievement progress will not be affected.
-            </p>
+            <button
+                id="profileCancelButton"
+                class="button"
+                type="button"
+            >
+                Cancel
+            </button>
 
-            <div class="modal-buttons">
-
-                <button
-                    class="button"
-                    id="confirmCancelButton"
-                    type="button"
-                >
-                    Cancel
-                </button>
-
-                <button
-                    class="button danger"
-                    id="confirmYesButton"
-                    type="button"
-                >
-                    Reset
-                </button>
-
-            </div>
+            <button
+                id="profileSaveButton"
+                class="button primary"
+                type="button"
+            >
+                Save
+            </button>
 
         </div>
 
     </div>
 
-    <script>
-        "use strict";
+</div>
 
-        const GOALS_STORAGE_KEY =
-            "minecraft-survival-goals-v1";
 
-        const PROFILES_STORAGE_KEY =
-            "minecraft-survival-profiles-v2";
+<!-- CONFIRM MODAL -->
 
-        const ACTIVE_PROFILE_STORAGE_KEY =
-            "minecraft-active-profile-v2";
+<div
+    id="confirmModal"
+    class="modal"
+    aria-hidden="true"
+>
 
-        const MAX_PROFILES = 12;
+    <div class="modal-box">
 
-        const DIFFICULTY_SCORES = {
-            easy: 10,
-            medium: 25,
-            hard: 50,
-            epic: 100
-        };
+        <h2 id="confirmTitle">
+            Confirm
+        </h2>
 
-        const DEFAULT_DIFFICULTY =
-            "medium";
+        <p id="confirmMessage">
+            Are you sure?
+        </p>
 
-        const RANKS = [
-            {
-                name: "Dirt",
-                min: 0,
-                className: "rank-dirt"
-            },
-            {
-                name: "Wood",
-                min: 50,
-                className: "rank-wood"
-            },
-            {
-                name: "Stone",
-                min: 150,
-                className: "rank-stone"
-            },
-            {
-                name: "Coal",
-                min: 300,
-                className: "rank-coal"
-            },
-            {
-                name: "Iron",
-                min: 500,
-                className: "rank-iron"
-            },
-            {
-                name: "Gold",
-                min: 750,
-                className: "rank-gold"
-            },
-            {
-                name: "Diamond",
-                min: 1000,
-                className: "rank-diamond"
-            },
-            {
-                name: "Emerald",
-                min: 1500,
-                className: "rank-emerald"
-            },
-            {
-                name: "Netherite",
-                min: 2000,
-                className: "rank-netherite"
-            },
-            {
-                name: "Ender Dragon",
-                min: 2500,
-                className: "rank-ender"
-            }
-        ];
+        <div class="modal-actions">
 
-        let goalsData = [];
-        let sharedGoals = {};
-        let profiles = [];
-        let activeProfileId = null;
-        let editingProfileId = null;
-        let pendingConfirmAction = null;
+            <button
+                id="confirmCancelButton"
+                class="button"
+                type="button"
+            >
+                Cancel
+            </button>
 
-        const searchInput =
-            document.getElementById("searchInput");
+            <button
+                id="confirmOkayButton"
+                class="button danger"
+                type="button"
+            >
+                Confirm
+            </button>
 
-        const categoriesElement =
-            document.getElementById("categories");
+        </div>
 
-        const profilesListElement =
-            document.getElementById("profilesList");
+    </div>
 
-        const profileCountElement =
-            document.getElementById("profileCount");
+</div>
 
-        const globalScoreElement =
-            document.getElementById("globalScore");
 
-        const globalScoreDetailElement =
-            document.getElementById("globalScoreDetail");
+<script>
 
-        const userScoreElement =
-            document.getElementById("userScore");
+    const GOALS_STORAGE_KEY =
+        "minecraft-survival-goals-v1";
 
-        const userScoreDetailElement =
-            document.getElementById("userScoreDetail");
+    const PROFILES_STORAGE_KEY =
+        "minecraft-survival-profiles-v2";
 
-        const goalsScoreElement =
-            document.getElementById("goalsScore");
+    const ACTIVE_PROFILE_KEY =
+        "minecraft-active-profile-v2";
 
-        const goalsScoreDetailElement =
-            document.getElementById("goalsScoreDetail");
 
-        const globalPercentElement =
-            document.getElementById("globalPercent");
+    const MAX_PROFILES = 12;
 
-        const achievementGlobalDetailElement =
-            document.getElementById("achievementGlobalDetail");
 
-        const currentProfileNameElement =
-            document.getElementById("currentProfileName");
+    const DIFFICULTY_SCORES = {
+        easy: 10,
+        medium: 25,
+        hard: 50,
+        epic: 100
+    };
 
-        const currentProfileRankElement =
-            document.getElementById("currentProfileRank");
 
-        const globalProgressBar =
-            document.getElementById("globalProgressBar");
+    const DEFAULT_DIFFICULTY =
+        "medium";
 
-        const progressText =
-            document.getElementById("progressText");
 
-        const addProfileButton =
-            document.getElementById("addProfileButton");
+    const RANKS = [
 
-        const resetButton =
-            document.getElementById("resetButton");
+        {
+            name: "Dirt",
+            min: 0,
+            className: "rank-dirt"
+        },
 
-        const profileModal =
-            document.getElementById("profileModal");
+        {
+            name: "Wood",
+            min: 50,
+            className: "rank-wood"
+        },
 
-        const profileModalTitle =
-            document.getElementById("profileModalTitle");
+        {
+            name: "Stone",
+            min: 150,
+            className: "rank-stone"
+        },
 
-        const profileModalDescription =
-            document.getElementById("profileModalDescription");
+        {
+            name: "Coal",
+            min: 300,
+            className: "rank-coal"
+        },
 
-        const profileNameInput =
-            document.getElementById("profileNameInput");
+        {
+            name: "Iron",
+            min: 500,
+            className: "rank-iron"
+        },
 
-        const profileModalError =
-            document.getElementById("profileModalError");
+        {
+            name: "Gold",
+            min: 750,
+            className: "rank-gold"
+        },
 
-        const profileCancelButton =
-            document.getElementById("profileCancelButton");
+        {
+            name: "Diamond",
+            min: 1000,
+            className: "rank-diamond"
+        },
 
-        const profileSaveButton =
-            document.getElementById("profileSaveButton");
+        {
+            name: "Emerald",
+            min: 1500,
+            className: "rank-emerald"
+        },
 
-        const confirmModal =
-            document.getElementById("confirmModal");
+        {
+            name: "Netherite",
+            min: 2000,
+            className: "rank-netherite"
+        },
 
-        const confirmCancelButton =
-            document.getElementById("confirmCancelButton");
-
-        const confirmYesButton =
-            document.getElementById("confirmYesButton");
-
-        function loadSharedGoals() {
-            try {
-                const stored =
-                    localStorage.getItem(
-                        GOALS_STORAGE_KEY
-                    );
-
-                if (!stored) {
-                    sharedGoals = {};
-                    return;
-                }
-
-                const parsed =
-                    JSON.parse(stored);
-
-                sharedGoals =
-                    parsed &&
-                    typeof parsed === "object"
-                        ? parsed
-                        : {};
-
-            } catch (error) {
-                console.error(
-                    "Could not load shared goals:",
-                    error
-                );
-
-                sharedGoals = {};
-            }
+        {
+            name: "Ender Dragon",
+            min: 2500,
+            className: "rank-ender"
         }
 
-        function saveSharedGoals() {
-            localStorage.setItem(
-                GOALS_STORAGE_KEY,
-                JSON.stringify(sharedGoals)
-            );
+    ];
+
+
+    let goalsData = null;
+
+    let profiles = [];
+
+    let activeProfileId = null;
+
+    let editingProfileId = null;
+
+    let confirmAction = null;
+
+
+    const searchInput =
+        document.getElementById(
+            "searchInput"
+        );
+
+    const categoriesElement =
+        document.getElementById(
+            "categories"
+        );
+
+    const profilesGrid =
+        document.getElementById(
+            "profilesGrid"
+        );
+
+
+    /* STORAGE */
+
+
+    function loadSharedGoals() {
+
+        try {
+
+            return JSON.parse(
+                localStorage.getItem(
+                    GOALS_STORAGE_KEY
+                )
+            ) || {};
+
+        } catch {
+
+            return {};
+
         }
 
-        function loadProfiles() {
-            try {
-                const stored =
+    }
+
+
+    function saveSharedGoals(goals) {
+
+        localStorage.setItem(
+            GOALS_STORAGE_KEY,
+            JSON.stringify(goals)
+        );
+
+    }
+
+
+    function loadProfiles() {
+
+        try {
+
+            const saved =
+                JSON.parse(
                     localStorage.getItem(
                         PROFILES_STORAGE_KEY
-                    );
+                    )
+                );
 
-                if (!stored) {
-                    profiles = [];
-                    return;
-                }
-
-                const parsed =
-                    JSON.parse(stored);
-
-                if (!Array.isArray(parsed)) {
-                    profiles = [];
-                    return;
-                }
+            if (
+                Array.isArray(saved)
+            ) {
 
                 profiles =
-                    parsed
-                        .slice(0, MAX_PROFILES)
-                        .filter(
-                            profile =>
-                                profile &&
-                                typeof profile === "object"
+                    saved
+                        .slice(
+                            0,
+                            MAX_PROFILES
                         )
                         .map(
                             profile => ({
                                 id:
-                                    String(profile.id),
+                                    String(
+                                        profile.id
+                                    ),
 
                                 name:
                                     String(
@@ -1705,959 +1485,1695 @@
                             })
                         );
 
-            } catch (error) {
-                console.error(
-                    "Could not load profiles:",
-                    error
-                );
-
-                profiles = [];
             }
+
+        } catch {
+
+            profiles = [];
+
         }
 
-        function saveProfiles() {
-            localStorage.setItem(
-                PROFILES_STORAGE_KEY,
-                JSON.stringify(profiles)
+
+        const savedActive =
+            localStorage.getItem(
+                ACTIVE_PROFILE_KEY
             );
-        }
 
-        function loadActiveProfile() {
-            const stored =
-                localStorage.getItem(
-                    ACTIVE_PROFILE_STORAGE_KEY
-                );
-
-            if (!stored) {
-                activeProfileId =
-                    profiles.length
-                        ? profiles[0].id
-                        : null;
-
-                return;
-            }
-
-            const exists =
-                profiles.some(
-                    profile =>
-                        profile.id === stored
-                );
-
-            activeProfileId =
-                exists
-                    ? stored
-                    : profiles.length
-                        ? profiles[0].id
-                        : null;
-        }
-
-        function saveActiveProfile() {
-            if (activeProfileId) {
-                localStorage.setItem(
-                    ACTIVE_PROFILE_STORAGE_KEY,
-                    activeProfileId
-                );
-            } else {
-                localStorage.removeItem(
-                    ACTIVE_PROFILE_STORAGE_KEY
-                );
-            }
-        }
-
-        function getCurrentProfile() {
-            return profiles.find(
+        if (
+            savedActive &&
+            profiles.some(
                 profile =>
                     profile.id ===
-                    activeProfileId
-            ) || null;
-        }
-
-        function getGoalId(goal) {
-            if (goal.id != null) {
-                return String(goal.id);
-            }
-
-            if (goal.title != null) {
-                return String(goal.title);
-            }
-
-            return "";
-        }
-
-        function getAchievementId(
-            achievement
+                    savedActive
+            )
         ) {
-            if (achievement.id != null) {
-                return String(
-                    achievement.id
-                );
-            }
 
-            if (achievement.name != null) {
-                return String(
-                    achievement.name
-                );
-            }
+            activeProfileId =
+                savedActive;
 
-            if (achievement.title != null) {
-                return String(
-                    achievement.title
-                );
-            }
+        } else {
 
-            return "";
+            activeProfileId =
+                profiles[0]?.id ||
+                null;
+
         }
 
-        function isAchievementCategory(
-            category
-        ) {
-            const name =
-                String(
-                    category.name ||
-                    category.title ||
-                    ""
-                ).toLowerCase();
+    }
 
-            return (
-                name.includes("achievement") ||
-                name.includes("xbox")
+
+    function saveProfiles() {
+
+        localStorage.setItem(
+            PROFILES_STORAGE_KEY,
+            JSON.stringify(
+                profiles
+            )
+        );
+
+
+        if (activeProfileId) {
+
+            localStorage.setItem(
+                ACTIVE_PROFILE_KEY,
+                activeProfileId
             );
+
+        } else {
+
+            localStorage.removeItem(
+                ACTIVE_PROFILE_KEY
+            );
+
         }
 
-        function getCategoryItems(
-            category
-        ) {
-            if (Array.isArray(category.goals)) {
-                return category.goals;
-            }
+    }
 
-            if (Array.isArray(category.items)) {
-                return category.items;
-            }
 
-            if (
-                Array.isArray(
-                    category.achievements
-                )
-            ) {
-                return category.achievements;
-            }
+    /* DATA HELPERS */
 
+
+    function getGoalItems() {
+
+        if (!goalsData) {
             return [];
         }
 
-        function getAchievementGamerscore(
-            achievement
-        ) {
-            const value =
-                Number(
-                    achievement.gamerscore ??
-                    achievement.score ??
-                    achievement.points ??
-                    0
-                );
 
-            return Number.isFinite(value)
-                ? value
-                : 0;
-        }
+        const result = [];
 
-        function getGoalDifficulty(goal) {
-            const difficulty =
-                String(
-                    goal.difficulty ||
-                    DEFAULT_DIFFICULTY
-                ).toLowerCase();
 
-            return DIFFICULTY_SCORES[difficulty]
-                ? difficulty
-                : DEFAULT_DIFFICULTY;
-        }
+        function walk(value) {
 
-        function getProfileAchievementScore(
-            profile
-        ) {
-            let score = 0;
-
-            for (
-                const category
-                of goalsData
+            if (
+                Array.isArray(value)
             ) {
-                if (
-                    !isAchievementCategory(
-                        category
-                    )
-                ) {
-                    continue;
-                }
 
                 for (
-                    const achievement
-                    of getCategoryItems(
-                        category
-                    )
+                    const item of value
                 ) {
-                    const id =
-                        getAchievementId(
-                            achievement
-                        );
 
                     if (
-                        id &&
-                        profile.achievements?.[id]
+                        item &&
+                        typeof item === "object"
                     ) {
-                        score +=
-                            getAchievementGamerscore(
-                                achievement
+
+                        if (
+                            item.name ||
+                            item.title ||
+                            item.goal ||
+                            item.achievement
+                        ) {
+
+                            result.push(
+                                item
                             );
+
+                        } else {
+
+                            walk(item);
+
+                        }
+
                     }
+
                 }
+
+                return;
+
             }
 
-            return score;
-        }
 
-        function getProfileAchievementCount(
-            profile
-        ) {
-            let count = 0;
-
-            for (
-                const category
-                of goalsData
+            if (
+                value &&
+                typeof value === "object"
             ) {
-                if (
-                    !isAchievementCategory(
-                        category
-                    )
-                ) {
-                    continue;
-                }
 
                 for (
-                    const achievement
-                    of getCategoryItems(
-                        category
-                    )
+                    const key of Object.keys(value)
                 ) {
-                    const id =
-                        getAchievementId(
-                            achievement
-                        );
+
+                    const item =
+                        value[key];
+
 
                     if (
-                        id &&
-                        profile.achievements?.[id]
+                        Array.isArray(item) ||
+                        (
+                            item &&
+                            typeof item === "object"
+                        )
                     ) {
-                        count++;
+
+                        walk(item);
+
                     }
+
                 }
+
             }
 
-            return count;
         }
 
-        function getTotalAchievementGamerscore() {
-            let total = 0;
 
-            for (
-                const category
-                of goalsData
-            ) {
-                if (
-                    !isAchievementCategory(
-                        category
-                    )
-                ) {
-                    continue;
-                }
+        walk(goalsData);
 
-                for (
-                    const achievement
-                    of getCategoryItems(
-                        category
-                    )
-                ) {
-                    total +=
-                        getAchievementGamerscore(
-                            achievement
-                        );
-                }
-            }
+        return result;
 
-            return total;
+    }
+
+
+    function getItemName(item) {
+
+        return String(
+            item.name ||
+            item.title ||
+            item.goal ||
+            item.achievement ||
+            "Unnamed Goal"
+        );
+
+    }
+
+
+    function getItemDescription(item) {
+
+        return String(
+            item.description ||
+            item.desc ||
+            item.details ||
+            ""
+        );
+
+    }
+
+
+    function getItemDifficulty(item) {
+
+        const difficulty =
+            String(
+                item.difficulty ||
+                DEFAULT_DIFFICULTY
+            ).toLowerCase();
+
+
+        if (
+            DIFFICULTY_SCORES[
+                difficulty
+            ]
+        ) {
+
+            return difficulty;
+
         }
 
-        function getTotalAchievementCount() {
-            let total = 0;
 
-            for (
-                const category
-                of goalsData
-            ) {
-                if (
-                    !isAchievementCategory(
-                        category
-                    )
-                ) {
-                    continue;
-                }
+        return DEFAULT_DIFFICULTY;
 
-                total +=
-                    getCategoryItems(
-                        category
-                    ).length;
-            }
+    }
 
-            return total;
+
+    function getGoalScore(item) {
+
+        if (
+            typeof item.score === "number"
+        ) {
+
+            return item.score;
+
         }
 
-        function getProfileRank(profile) {
-            const score =
-                getProfileAchievementScore(
-                    profile
-                );
 
-            let rank = RANKS[0];
+        if (
+            typeof item.points === "number"
+        ) {
 
-            for (
-                const candidate
-                of RANKS
-            ) {
-                if (
-                    score >=
-                    candidate.min
-                ) {
-                    rank = candidate;
-                } else {
-                    break;
-                }
-            }
+            return item.points;
 
-            return rank;
         }
 
-        function getNextRank(profile) {
-            const score =
-                getProfileAchievementScore(
-                    profile
-                );
 
-            return (
-                RANKS.find(
-                    rank =>
-                        score <
-                        rank.min
-                ) || null
+        return DIFFICULTY_SCORES[
+            getItemDifficulty(item)
+        ];
+
+    }
+
+
+    function isAchievement(item) {
+
+        return (
+            item.type === "achievement" ||
+            item.category === "Xbox Achievements" ||
+            item.achievement === true ||
+            item.gamerscore !== undefined
+        );
+
+    }
+
+
+    function getAchievementGamerscore(item) {
+
+        const value =
+            Number(
+                item.gamerscore ??
+                item.gamerScore ??
+                item.Gamerscore ??
+                0
             );
+
+
+        return Number.isFinite(value)
+            ? value
+            : 0;
+
+    }
+
+
+    function getAchievementId(item, index) {
+
+        return String(
+            item.id ||
+            item.key ||
+            item.slug ||
+            getItemName(item) +
+            "-" +
+            index
+        );
+
+    }
+
+
+    function getActiveProfile() {
+
+        return profiles.find(
+            profile =>
+                profile.id ===
+                activeProfileId
+        ) || null;
+
+    }
+
+
+    /* RANKS */
+
+
+    function getProfileAchievementScore(
+        profile
+    ) {
+
+        if (!profile) {
+            return 0;
         }
 
-        function getTotalGoalScore() {
-            let total = 0;
 
-            for (
-                const category
-                of goalsData
-            ) {
+        let score = 0;
+
+
+        getGoalItems().forEach(
+            (item, index) => {
+
                 if (
-                    isAchievementCategory(
-                        category
-                    )
+                    !isAchievement(item)
                 ) {
-                    continue;
+                    return;
                 }
 
-                for (
-                    const goal
-                    of getCategoryItems(
-                        category
-                    )
+
+                const id =
+                    getAchievementId(
+                        item,
+                        index
+                    );
+
+
+                if (
+                    profile.achievements[id]
                 ) {
-                    const difficulty =
-                        getGoalDifficulty(
+
+                    score +=
+                        getAchievementGamerscore(
+                            item
+                        );
+
+                }
+
+            }
+        );
+
+
+        return score;
+
+    }
+
+
+    function getProfileRank(profile) {
+
+        const score =
+            getProfileAchievementScore(
+                profile
+            );
+
+
+        let rank =
+            RANKS[0];
+
+
+        for (
+            const candidate of RANKS
+        ) {
+
+            if (
+                score >=
+                candidate.min
+            ) {
+
+                rank = candidate;
+
+            }
+
+        }
+
+
+        return rank;
+
+    }
+
+
+    function getNextRank(profile) {
+
+        const score =
+            getProfileAchievementScore(
+                profile
+            );
+
+
+        for (
+            const rank of RANKS
+        ) {
+
+            if (
+                rank.min > score
+            ) {
+
+                return {
+                    rank,
+                    remaining:
+                        rank.min -
+                        score
+                };
+
+            }
+
+        }
+
+
+        return null;
+
+    }
+
+
+    /* SCORES */
+
+
+    function getSharedGoalScore() {
+
+        const saved =
+            loadSharedGoals();
+
+
+        let score = 0;
+
+
+        getGoalItems().forEach(
+            (item, index) => {
+
+                if (
+                    isAchievement(item)
+                ) {
+                    return;
+                }
+
+
+                const id =
+                    getAchievementId(
+                        item,
+                        index
+                    );
+
+
+                if (
+                    saved[id]
+                ) {
+
+                    score +=
+                        getGoalScore(item);
+
+                }
+
+            }
+        );
+
+
+        return score;
+
+    }
+
+
+    function getTotalGoalScore() {
+
+        let score = 0;
+
+
+        getGoalItems().forEach(
+            item => {
+
+                if (
+                    !isAchievement(item)
+                ) {
+
+                    score +=
+                        getGoalScore(item);
+
+                }
+
+            }
+        );
+
+
+        return score;
+
+    }
+
+
+    function getTotalAchievementGamerscore() {
+
+        let score = 0;
+
+
+        getGoalItems().forEach(
+            item => {
+
+                if (
+                    isAchievement(item)
+                ) {
+
+                    score +=
+                        getAchievementGamerscore(
+                            item
+                        );
+
+                }
+
+            }
+        );
+
+
+        return score;
+
+    }
+
+
+    function getCurrentGlobalScore() {
+
+        let score =
+            getSharedGoalScore();
+
+
+        for (
+            const profile of profiles
+        ) {
+
+            score +=
+                getProfileAchievementScore(
+                    profile
+                );
+
+        }
+
+
+        return score;
+
+    }
+
+
+    function getGlobalTotalPossible() {
+
+        const goalScore =
+            getTotalGoalScore();
+
+
+        const achievementScore =
+            getTotalAchievementGamerscore();
+
+
+        return (
+            goalScore +
+            (
+                achievementScore *
+                profiles.length
+            )
+        );
+
+    }
+
+
+    /* PROGRESS */
+
+
+    function getSharedGoalProgress() {
+
+        const saved =
+            loadSharedGoals();
+
+
+        let completed = 0;
+
+        let total = 0;
+
+
+        getGoalItems().forEach(
+            (item, index) => {
+
+                if (
+                    isAchievement(item)
+                ) {
+                    return;
+                }
+
+
+                total++;
+
+
+                const id =
+                    getAchievementId(
+                        item,
+                        index
+                    );
+
+
+                if (
+                    saved[id]
+                ) {
+
+                    completed++;
+
+                }
+
+            }
+        );
+
+
+        return {
+            completed,
+            total
+        };
+
+    }
+
+
+    function getProfileAchievementProgress(
+        profile
+    ) {
+
+        let completed = 0;
+
+        let total = 0;
+
+
+        getGoalItems().forEach(
+            (item, index) => {
+
+                if (
+                    !isAchievement(item)
+                ) {
+                    return;
+                }
+
+
+                total++;
+
+
+                const id =
+                    getAchievementId(
+                        item,
+                        index
+                    );
+
+
+                if (
+                    profile?.achievements?.[id]
+                ) {
+
+                    completed++;
+
+                }
+
+            }
+        );
+
+
+        return {
+            completed,
+            total
+        };
+
+    }
+
+
+    /* RENDER PROFILES */
+
+
+    function renderProfiles() {
+
+        profilesGrid.innerHTML = "";
+
+
+        if (
+            profiles.length === 0
+        ) {
+
+            profilesGrid.innerHTML = `
+                <div class="empty">
+                    No profiles yet. Create one to start
+                    tracking individual achievement progress.
+                </div>
+            `;
+
+            return;
+
+        }
+
+
+        for (
+            const profile of profiles
+        ) {
+
+            const rank =
+                getProfileRank(
+                    profile
+                );
+
+
+            const progress =
+                getProfileAchievementProgress(
+                    profile
+                );
+
+
+            const achievementScore =
+                getProfileAchievementScore(
+                    profile
+                );
+
+
+            const totalAchievementScore =
+                getTotalAchievementGamerscore();
+
+
+            const percentage =
+                totalAchievementScore > 0
+                    ? Math.round(
+                        (
+                            achievementScore /
+                            totalAchievementScore
+                        ) *
+                        100
+                    )
+                    : 0;
+
+
+            const next =
+                getNextRank(
+                    profile
+                );
+
+
+            const card =
+                document.createElement(
+                    "article"
+                );
+
+
+            card.className =
+                "profile-card " +
+                rank.className;
+
+
+            if (
+                profile.id ===
+                activeProfileId
+            ) {
+
+                card.classList.add(
+                    "active"
+                );
+
+            }
+
+
+            const nextText =
+                next
+                    ? `${next.remaining}G to ${next.rank.name}`
+                    : "Maximum rank";
+
+
+            card.innerHTML = `
+
+                <div class="profile-top">
+
+                    <div class="profile-name">
+                        ${escapeHtml(profile.name)}
+                    </div>
+
+                    ${
+                        profile.id === activeProfileId
+                            ? `
+                                <div class="profile-current">
+                                    CURRENT
+                                </div>
+                            `
+                            : ""
+                    }
+
+                </div>
+
+                <div class="profile-rank">
+                    ${escapeHtml(rank.name)} Rank
+                </div>
+
+                <div class="rank-badge ${rank.className}">
+                    ${escapeHtml(rank.name)}
+                </div>
+
+                <div class="profile-score">
+                    ${achievementScore}G
+                </div>
+
+                <div class="score-detail">
+                    ${progress.completed} / ${progress.total}
+                    achievements
+                    · ${percentage}%
+                </div>
+
+                <div class="profile-progress">
+
+                    <div class="progress-bar">
+
+                        <div
+                            class="progress-fill"
+                            style="width:${percentage}%"
+                        ></div>
+
+                    </div>
+
+                </div>
+
+                <div class="profile-score">
+                    <span style="
+                        font-size:0.72rem;
+                        color:var(--muted);
+                        font-weight:500;
+                    ">
+                        ${escapeHtml(nextText)}
+                    </span>
+                </div>
+
+                <div class="profile-actions">
+
+                    <button
+                        class="button select-profile"
+                        data-id="${escapeAttr(profile.id)}"
+                        type="button"
+                    >
+                        ${
+                            profile.id === activeProfileId
+                                ? "Selected"
+                                : "Select"
+                        }
+                    </button>
+
+                    <button
+                        class="button edit-profile"
+                        data-id="${escapeAttr(profile.id)}"
+                        type="button"
+                    >
+                        Edit
+                    </button>
+
+                    <button
+                        class="button delete-profile"
+                        data-id="${escapeAttr(profile.id)}"
+                        type="button"
+                    >
+                        Delete
+                    </button>
+
+                </div>
+
+            `;
+
+
+            profilesGrid.appendChild(
+                card
+            );
+
+        }
+
+
+        profilesGrid
+            .querySelectorAll(
+                ".select-profile"
+            )
+            .forEach(
+                button => {
+
+                    button.addEventListener(
+                        "click",
+                        () => {
+
+                            selectProfile(
+                                button.dataset.id
+                            );
+
+                        }
+                    );
+
+                }
+            );
+
+
+        profilesGrid
+            .querySelectorAll(
+                ".edit-profile"
+            )
+            .forEach(
+                button => {
+
+                    button.addEventListener(
+                        "click",
+                        () => {
+
+                            openProfileModal(
+                                button.dataset.id
+                            );
+
+                        }
+                    );
+
+                }
+            );
+
+
+        profilesGrid
+            .querySelectorAll(
+                ".delete-profile"
+            )
+            .forEach(
+                button => {
+
+                    button.addEventListener(
+                        "click",
+                        () => {
+
+                            deleteProfile(
+                                button.dataset.id
+                            );
+
+                        }
+                    );
+
+                }
+            );
+
+    }
+
+
+    function selectProfile(id) {
+
+        if (
+            !profiles.some(
+                profile =>
+                    profile.id === id
+            )
+        ) {
+
+            return;
+
+        }
+
+
+        activeProfileId = id;
+
+        saveProfiles();
+
+        render();
+
+    }
+
+
+    /* RENDER CATEGORIES */
+
+
+    function renderCategories() {
+
+        categoriesElement.innerHTML = "";
+
+
+        if (!goalsData) {
+
+            categoriesElement.innerHTML = `
+                <div class="empty">
+                    Loading checklist...
+                </div>
+            `;
+
+            return;
+
+        }
+
+
+        const search =
+            searchInput.value
+                .trim()
+                .toLowerCase();
+
+
+        const sharedGoals =
+            loadSharedGoals();
+
+
+        const activeProfile =
+            getActiveProfile();
+
+
+        const usedCategories = [];
+
+
+        function findCategories(
+            object,
+            path = []
+        ) {
+
+            if (
+                Array.isArray(object)
+            ) {
+
+                return;
+
+            }
+
+
+            if (
+                !object ||
+                typeof object !== "object"
+            ) {
+
+                return;
+
+            }
+
+
+            for (
+                const [
+                    key,
+                    value
+                ] of Object.entries(object)
+            ) {
+
+                if (
+                    Array.isArray(value)
+                ) {
+
+                    const items =
+                        value.filter(
+                            item =>
+                                item &&
+                                typeof item === "object"
+                        );
+
+
+                    if (
+                        items.length
+                    ) {
+
+                        usedCategories.push({
+                            name: key,
+                            items
+                        });
+
+                    }
+
+                } else if (
+                    value &&
+                    typeof value === "object"
+                ) {
+
+                    findCategories(
+                        value,
+                        path.concat(key)
+                    );
+
+                }
+
+            }
+
+        }
+
+
+        findCategories(
+            goalsData
+        );
+
+
+        /*
+            If the JSON uses the common structure:
+
+            {
+                "categories": {
+                    "Mining": [...],
+                    "Nether": [...]
+                }
+            }
+
+            the recursive scan above handles it.
+
+            If the root itself is an array, create one
+            general category.
+        */
+
+        if (
+            Array.isArray(
+                goalsData
+            )
+        ) {
+
+            usedCategories.length = 0;
+
+            usedCategories.push({
+                name: "Survival Goals",
+                items: goalsData
+            });
+
+        }
+
+
+        if (
+            usedCategories.length === 0
+        ) {
+
+            categoriesElement.innerHTML = `
+                <div class="empty">
+                    No checklist categories found.
+                </div>
+            `;
+
+            return;
+
+        }
+
+
+        let visibleCategoryCount = 0;
+
+
+        usedCategories.forEach(
+            category => {
+
+                const filtered =
+                    category.items
+                        .map(
+                            (item, originalIndex) => ({
+                                item,
+                                originalIndex
+                            })
+                        )
+                        .filter(
+                            ({ item }) => {
+
+                                if (
+                                    !search
+                                ) {
+
+                                    return true;
+
+                                }
+
+
+                                const searchable =
+                                    [
+                                        getItemName(item),
+                                        getItemDescription(item),
+                                        item.difficulty,
+                                        item.type,
+                                        item.category
+                                    ]
+                                        .filter(Boolean)
+                                        .join(" ")
+                                        .toLowerCase();
+
+
+                                return searchable.includes(
+                                    search
+                                );
+
+                            }
+                        );
+
+
+                if (
+                    filtered.length === 0
+                ) {
+
+                    return;
+
+                }
+
+
+                visibleCategoryCount++;
+
+
+                const categoryElement =
+                    document.createElement(
+                        "section"
+                    );
+
+
+                categoryElement.className =
+                    "category";
+
+
+                const header =
+                    document.createElement(
+                        "button"
+                    );
+
+
+                header.className =
+                    "category-header";
+
+                header.type =
+                    "button";
+
+
+                header.innerHTML = `
+
+                    <div class="category-title">
+
+                        <strong>
+                            ${escapeHtml(category.name)}
+                        </strong>
+
+                        <span>
+                            ${filtered.length}
+                            ${filtered.length === 1 ? "item" : "items"}
+                        </span>
+
+                    </div>
+
+                    <span class="category-arrow">
+                        ▼
+                    </span>
+
+                `;
+
+
+                const content =
+                    document.createElement(
+                        "div"
+                    );
+
+
+                content.className =
+                    "category-content";
+
+
+                filtered.forEach(
+                    ({
+                        item,
+                        originalIndex
+                    }) => {
+
+                        const globalIndex =
+                            getGoalItems().indexOf(
+                                item
+                            );
+
+
+                        const id =
+                            getAchievementId(
+                                item,
+                                globalIndex >= 0
+                                    ? globalIndex
+                                    : originalIndex
+                            );
+
+
+                        const achievement =
+                            isAchievement(
+                                item
+                            );
+
+
+                        const checked =
+                            achievement
+                                ? Boolean(
+                                    activeProfile
+                                        ?.achievements
+                                        ?.[
+                                            id
+                                        ]
+                                )
+                                : Boolean(
+                                    sharedGoals[id]
+                                );
+
+
+                        const goal =
+                            document.createElement(
+                                "div"
+                            );
+
+
+                        goal.className =
+                            "goal" +
+                            (
+                                checked
+                                    ? " checked"
+                                    : ""
+                            );
+
+
+                        const score =
+                            achievement
+                                ? getAchievementGamerscore(
+                                    item
+                                )
+                                : getGoalScore(
+                                    item
+                                );
+
+
+                        goal.innerHTML = `
+
+                            <input
+                                class="goal-checkbox"
+                                type="checkbox"
+                                ${
+                                    checked
+                                        ? "checked"
+                                        : ""
+                                }
+                            >
+
+                            <div class="goal-main">
+
+                                <div class="goal-name">
+                                    ${escapeHtml(
+                                        getItemName(item)
+                                    )}
+                                </div>
+
+                                ${
+                                    getItemDescription(item)
+                                        ? `
+                                            <div class="goal-description">
+                                                ${escapeHtml(
+                                                    getItemDescription(item)
+                                                )}
+                                            </div>
+                                        `
+                                        : ""
+                                }
+
+                            </div>
+
+                            <div class="goal-score">
+                                ${score}G
+                            </div>
+
+                        `;
+
+
+                        const checkbox =
+                            goal.querySelector(
+                                ".goal-checkbox"
+                            );
+
+
+                        checkbox.addEventListener(
+                            "change",
+                            () => {
+
+                                if (
+                                    achievement
+                                ) {
+
+                                    if (
+                                        !activeProfile
+                                    ) {
+
+                                        checkbox.checked =
+                                            false;
+
+                                        openProfileModal();
+
+                                        return;
+
+                                    }
+
+
+                                    if (
+                                        checkbox.checked
+                                    ) {
+
+                                        activeProfile
+                                            .achievements
+                                            [id] =
+                                            true;
+
+                                    } else {
+
+                                        delete activeProfile
+                                            .achievements
+                                            [id];
+
+                                    }
+
+
+                                    saveProfiles();
+
+                                } else {
+
+                                    const goals =
+                                        loadSharedGoals();
+
+
+                                    if (
+                                        checkbox.checked
+                                    ) {
+
+                                        goals[id] =
+                                            true;
+
+                                    } else {
+
+                                        delete goals[id];
+
+                                    }
+
+
+                                    saveSharedGoals(
+                                        goals
+                                    );
+
+                                }
+
+
+                                goal.classList.toggle(
+                                    "checked",
+                                    checkbox.checked
+                                );
+
+
+                                updateScores();
+
+                                renderProfiles();
+
+                            }
+                        );
+
+
+                        content.appendChild(
                             goal
                         );
 
-                    total +=
-                        DIFFICULTY_SCORES[
-                            difficulty
-                        ];
-                }
-            }
-
-            return total;
-        }
-
-        function getSharedGoalScore() {
-            let score = 0;
-
-            for (
-                const category
-                of goalsData
-            ) {
-                if (
-                    isAchievementCategory(
-                        category
-                    )
-                ) {
-                    continue;
-                }
-
-                for (
-                    const goal
-                    of getCategoryItems(
-                        category
-                    )
-                ) {
-                    const id =
-                        getGoalId(goal);
-
-                    if (
-                        id &&
-                        sharedGoals[id]
-                    ) {
-                        score +=
-                            DIFFICULTY_SCORES[
-                                getGoalDifficulty(
-                                    goal
-                                )
-                            ];
-                    }
-                }
-            }
-
-            return score;
-        }
-
-        function getCompletedGoalCount() {
-            let count = 0;
-
-            for (
-                const category
-                of goalsData
-            ) {
-                if (
-                    isAchievementCategory(
-                        category
-                    )
-                ) {
-                    continue;
-                }
-
-                for (
-                    const goal
-                    of getCategoryItems(
-                        category
-                    )
-                ) {
-                    const id =
-                        getGoalId(goal);
-
-                    if (
-                        id &&
-                        sharedGoals[id]
-                    ) {
-                        count++;
-                    }
-                }
-            }
-
-            return count;
-        }
-
-        function getTotalGoalCount() {
-            let count = 0;
-
-            for (
-                const category
-                of goalsData
-            ) {
-                if (
-                    isAchievementCategory(
-                        category
-                    )
-                ) {
-                    continue;
-                }
-
-                count +=
-                    getCategoryItems(
-                        category
-                    ).length;
-            }
-
-            return count;
-        }
-
-        function getCurrentGlobalScore() {
-            let score =
-                getSharedGoalScore();
-
-            for (
-                const profile
-                of profiles
-            ) {
-                score +=
-                    getProfileAchievementScore(
-                        profile
-                    );
-            }
-
-            return score;
-        }
-
-        function getGlobalTotalPossible() {
-            const goalScore =
-                getTotalGoalScore();
-
-            const achievementScore =
-                getTotalAchievementGamerscore();
-
-            return (
-                goalScore +
-                achievementScore *
-                profiles.length
-            );
-        }
-
-        function getInitial(name) {
-            const trimmed =
-                String(name || "").trim();
-
-            return trimmed
-                ? trimmed
-                    .charAt(0)
-                    .toUpperCase()
-                : "?";
-        }
-
-        function renderProfiles() {
-            profilesListElement.innerHTML = "";
-
-            profileCountElement.textContent =
-                `${profiles.length} / ${MAX_PROFILES}`;
-
-            for (
-                const profile
-                of profiles
-            ) {
-                const score =
-                    getProfileAchievementScore(
-                        profile
-                    );
-
-                const count =
-                    getProfileAchievementCount(
-                        profile
-                    );
-
-                const totalScore =
-                    getTotalAchievementGamerscore();
-
-                const percent =
-                    totalScore > 0
-                        ? Math.round(
-                            score /
-                            totalScore *
-                            100
-                        )
-                        : 0;
-
-                const rank =
-                    getProfileRank(
-                        profile
-                    );
-
-                const card =
-                    document.createElement(
-                        "div"
-                    );
-
-                card.className =
-                    "profile-card " +
-                    rank.className;
-
-                if (
-                    profile.id ===
-                    activeProfileId
-                ) {
-                    card.classList.add(
-                        "active"
-                    );
-                }
-
-                const selected =
-                    document.createElement(
-                        "div"
-                    );
-
-                selected.className =
-                    "profile-selected";
-
-                card.appendChild(
-                    selected
-                );
-
-                const top =
-                    document.createElement(
-                        "div"
-                    );
-
-                top.className =
-                    "profile-card-top";
-
-                const avatar =
-                    document.createElement(
-                        "div"
-                    );
-
-                avatar.className =
-                    "profile-avatar";
-
-                avatar.textContent =
-                    getInitial(
-                        profile.name
-                    );
-
-                const heading =
-                    document.createElement(
-                        "div"
-                    );
-
-                heading.className =
-                    "profile-heading";
-
-                const name =
-                    document.createElement(
-                        "div"
-                    );
-
-                name.className =
-                    "profile-name";
-
-                name.textContent =
-                    profile.name;
-
-                const rankElement =
-                    document.createElement(
-                        "div"
-                    );
-
-                rankElement.className =
-                    "profile-rank " +
-                    rank.className;
-
-                rankElement.textContent =
-                    rank.name;
-
-                heading.appendChild(name);
-                heading.appendChild(
-                    rankElement
-                );
-
-                top.appendChild(avatar);
-                top.appendChild(heading);
-
-                card.appendChild(top);
-
-                const stats =
-                    document.createElement(
-                        "div"
-                    );
-
-                stats.className =
-                    "profile-card-stats";
-
-                const scoreText =
-                    document.createElement(
-                        "span"
-                    );
-
-                scoreText.innerHTML =
-                    `<strong>${score}G</strong> achievements`;
-
-                const percentText =
-                    document.createElement(
-                        "span"
-                    );
-
-                percentText.textContent =
-                    `${percent}%`;
-
-                stats.appendChild(scoreText);
-                stats.appendChild(percentText);
-
-                card.appendChild(stats);
-
-                const progress =
-                    document.createElement(
-                        "div"
-                    );
-
-                progress.className =
-                    "profile-card-progress " +
-                    rank.className;
-
-                const progressBar =
-                    document.createElement(
-                        "div"
-                    );
-
-                progressBar.className =
-                    "profile-card-progress-bar";
-
-                progressBar.style.width =
-                    `${percent}%`;
-
-                progress.appendChild(
-                    progressBar
-                );
-
-                card.appendChild(progress);
-
-                const actions =
-                    document.createElement(
-                        "div"
-                    );
-
-                actions.className =
-                    "profile-actions";
-
-                const editButton =
-                    document.createElement(
-                        "button"
-                    );
-
-                editButton.type =
-                    "button";
-
-                editButton.className =
-                    "profile-action";
-
-                editButton.textContent =
-                    "Edit";
-
-                editButton.addEventListener(
-                    "click",
-                    event => {
-                        event.stopPropagation();
-
-                        openProfileModal(
-                            "edit",
-                            profile
-                        );
                     }
                 );
 
-                const deleteButton =
-                    document.createElement(
-                        "button"
-                    );
 
-                deleteButton.type =
-                    "button";
-
-                deleteButton.className =
-                    "profile-action delete";
-
-                deleteButton.textContent =
-                    "Delete";
-
-                deleteButton.addEventListener(
-                    "click",
-                    event => {
-                        event.stopPropagation();
-
-                        deleteProfile(
-                            profile.id
-                        );
-                    }
-                );
-
-                actions.appendChild(
-                    editButton
-                );
-
-                actions.appendChild(
-                    deleteButton
-                );
-
-                card.appendChild(actions);
-
-                card.addEventListener(
+                header.addEventListener(
                     "click",
                     () => {
-                        activeProfileId =
-                            profile.id;
 
-                        saveActiveProfile();
+                        /*
+                            Only one category may be open
+                            at a time.
+                        */
 
-                        renderProfiles();
-                        renderCategories();
-                        updateScores();
+                        document
+                            .querySelectorAll(
+                                ".category.open"
+                            )
+                            .forEach(
+                                openCategory => {
+
+                                    if (
+                                        openCategory !==
+                                        categoryElement
+                                    ) {
+
+                                        openCategory
+                                            .classList
+                                            .remove(
+                                                "open"
+                                            );
+
+                                    }
+
+                                }
+                            );
+
+
+                        categoryElement
+                            .classList
+                            .toggle(
+                                "open"
+                            );
+
                     }
                 );
 
-                profilesListElement.appendChild(
-                    card
+
+                categoryElement.appendChild(
+                    header
                 );
+
+                categoryElement.appendChild(
+                    content
+                );
+
+                categoriesElement.appendChild(
+                    categoryElement
+                );
+
             }
+        );
 
-            if (
-                profiles.length <
-                MAX_PROFILES
-            ) {
-                const add =
-                    document.createElement(
-                        "button"
-                    );
 
-                add.type = "button";
-                add.className =
-                    "add-profile";
-
-                add.textContent =
-                    "+ Add Profile";
-
-                add.addEventListener(
-                    "click",
-                    () => {
-                        openProfileModal(
-                            "create"
-                        );
-                    }
-                );
-
-                profilesListElement.appendChild(
-                    add
-                );
-            }
-        }
-
-        function openProfileModal(
-            mode,
-            profile = null
+        if (
+            visibleCategoryCount === 0
         ) {
-            editingProfileId =
-                mode === "edit"
-                    ? profile.id
-                    : null;
 
-            profileModalTitle.textContent =
-                mode === "edit"
-                    ? "Edit Profile"
-                    : "Add Profile";
+            categoriesElement.innerHTML = `
+                <div class="empty">
+                    No goals or achievements match your search.
+                </div>
+            `;
 
-            profileModalDescription.textContent =
-                mode === "edit"
-                    ? "Change this player's profile name."
-                    : "Create a player profile for achievement progress.";
+        }
 
-            profileSaveButton.textContent =
-                mode === "edit"
-                    ? "Save"
-                    : "Create";
+    }
 
-            profileModalError.textContent =
-                "";
 
-            profileNameInput.value =
+    /* SCORE UI */
+
+
+    function updateScores() {
+
+        const sharedScore =
+            getSharedGoalScore();
+
+
+        const profile =
+            getActiveProfile();
+
+
+        const profileAchievementScore =
+            getProfileAchievementScore(
                 profile
-                    ? profile.name
-                    : "";
-
-            profileModal.classList.add(
-                "open"
             );
 
-            setTimeout(
-                () => {
-                    profileNameInput.focus();
-                },
-                0
+
+        const profileScore =
+            profile
+                ? profileAchievementScore
+                : 0;
+
+
+        const globalScore =
+            getCurrentGlobalScore();
+
+
+        const totalPossible =
+            getGlobalTotalPossible();
+
+
+        const globalPercentage =
+            totalPossible > 0
+                ? Math.round(
+                    (
+                        globalScore /
+                        totalPossible
+                    ) *
+                    100
+                )
+                : 0;
+
+
+        const sharedProgress =
+            getSharedGoalProgress();
+
+
+        const profileProgress =
+            getProfileAchievementProgress(
+                profile
             );
-        }
 
-        function closeProfileModal() {
-            profileModal.classList.remove(
-                "open"
+
+        document.getElementById(
+            "globalScore"
+        ).textContent =
+            `${globalScore}G`;
+
+
+        document.getElementById(
+            "globalScoreDetail"
+        ).textContent =
+            `${globalScore} / ${totalPossible}G`;
+
+
+        document.getElementById(
+            "goalsScore"
+        ).textContent =
+            `${sharedScore}G`;
+
+
+        document.getElementById(
+            "goalsScoreDetail"
+        ).textContent =
+            `${sharedProgress.completed} / ${sharedProgress.total} completed`;
+
+
+        document.getElementById(
+            "globalProgress"
+        ).textContent =
+            `${globalPercentage}%`;
+
+
+        document.getElementById(
+            "globalProgressDetail"
+        ).textContent =
+            `${globalScore} / ${totalPossible} points`;
+
+
+        document.getElementById(
+            "progressText"
+        ).textContent =
+            `${globalPercentage}%`;
+
+
+        document.getElementById(
+            "progressFill"
+        ).style.width =
+            `${globalPercentage}%`;
+
+
+        const nameElement =
+            document.getElementById(
+                "currentProfileName"
             );
 
-            editingProfileId = null;
-            profileNameInput.value = "";
-            profileModalError.textContent =
-                "";
-        }
 
-        function saveProfileFromModal() {
-            const name =
-                profileNameInput.value.trim();
+        nameElement.textContent =
+            profile
+                ? `${profile.name}'s`
+                : "Your";
 
-            if (!name) {
-                profileModalError.textContent =
-                    "Enter a player name.";
-                return;
-            }
 
-            if (name.length > 30) {
-                profileModalError.textContent =
-                    "Player names can be up to 30 characters.";
-                return;
-            }
+        document.getElementById(
+            "profileScore"
+        ).textContent =
+            profile
+                ? `${profileScore}G`
+                : "0G";
 
-            if (editingProfileId) {
-                const profile =
-                    profiles.find(
-                        item =>
-                            item.id ===
-                            editingProfileId
-                    );
 
-                if (!profile) {
-                    return;
-                }
+        document.getElementById(
+            "profileScoreDetail"
+        ).textContent =
+            profile
+                ? `${profileProgress.completed} / ${profileProgress.total} achievements`
+                : "Select a profile";
 
-                profile.name = name;
 
-            } else {
-                if (
-                    profiles.length >=
-                    MAX_PROFILES
-                ) {
-                    profileModalError.textContent =
-                        `You can have up to ${MAX_PROFILES} profiles.`;
+        const rankElement =
+            document.getElementById(
+                "currentRank"
+            );
 
-                    return;
-                }
 
-                const profile = {
-                    id:
-                        `${Date.now()}-${Math.random()
-                            .toString(36)
-                            .slice(2, 8)}`,
+        const rank =
+            profile
+                ? getProfileRank(profile)
+                : RANKS[0];
 
-                    name,
-                    achievements: {}
-                };
 
-                profiles.push(profile);
+        rankElement.className =
+            `rank-badge ${rank.className}`;
 
-                activeProfileId =
-                    profile.id;
 
-                saveActiveProfile();
-            }
+        rankElement.textContent =
+            profile
+                ? rank.name
+                : "Dirt";
 
-            saveProfiles();
+    }
 
-            closeProfileModal();
 
-            renderProfiles();
-            renderCategories();
-            updateScores();
-        }
+    /* PROFILE MODAL */
 
-        function deleteProfile(profileId) {
+
+    const profileModal =
+        document.getElementById(
+            "profileModal"
+        );
+
+    const profileNameInput =
+        document.getElementById(
+            "profileNameInput"
+        );
+
+
+    function openProfileModal(
+        profileId = null
+    ) {
+
+        editingProfileId =
+            profileId;
+
+
+        document.getElementById(
+            "profileModalTitle"
+        ).textContent =
+            profileId
+                ? "Edit Profile"
+                : "Add Profile";
+
+
+        if (
+            profileId
+        ) {
+
             const profile =
                 profiles.find(
                     item =>
@@ -2665,1031 +3181,552 @@
                         profileId
                 );
 
-            if (!profile) {
-                return;
-            }
 
-            if (
-                profiles.length === 1
-            ) {
-                showConfirm(
-                    "Delete Profile?",
-                    "This will delete the only profile. Its achievement progress will be removed.",
-                    () => {
-                        profiles = [];
-                        activeProfileId = null;
+            profileNameInput.value =
+                profile?.name || "";
 
-                        saveProfiles();
-                        saveActiveProfile();
+        } else {
 
-                        renderProfiles();
-                        renderCategories();
-                        updateScores();
-                    }
-                );
+            profileNameInput.value =
+                "";
 
-                return;
-            }
-
-            showConfirm(
-                "Delete Profile?",
-                `Delete "${profile.name}" and its achievement progress?`,
-                () => {
-                    profiles =
-                        profiles.filter(
-                            item =>
-                                item.id !==
-                                profileId
-                        );
-
-                    if (
-                        activeProfileId ===
-                        profileId
-                    ) {
-                        activeProfileId =
-                            profiles[0]?.id ||
-                            null;
-
-                        saveActiveProfile();
-                    }
-
-                    saveProfiles();
-
-                    renderProfiles();
-                    renderCategories();
-                    updateScores();
-                }
-            );
         }
 
-        function getCategoryName(
-            category,
-            index
+
+        profileModal.classList.add(
+            "show"
+        );
+
+
+        profileModal.setAttribute(
+            "aria-hidden",
+            "false"
+        );
+
+
+        setTimeout(
+            () => {
+
+                profileNameInput.focus();
+
+            },
+            50
+        );
+
+    }
+
+
+    function closeProfileModal() {
+
+        profileModal.classList.remove(
+            "show"
+        );
+
+
+        profileModal.setAttribute(
+            "aria-hidden",
+            "true"
+        );
+
+
+        editingProfileId =
+            null;
+
+    }
+
+
+    function saveProfileFromModal() {
+
+        const name =
+            profileNameInput.value
+                .trim();
+
+
+        if (!name) {
+
+            profileNameInput.focus();
+
+            return;
+
+        }
+
+
+        if (
+            editingProfileId
         ) {
-            return String(
-                category.name ||
-                category.title ||
-                `Category ${index + 1}`
-            );
-        }
-
-        function getItemTitle(item) {
-            return String(
-                item.title ||
-                item.name ||
-                "Untitled"
-            );
-        }
-
-        function getItemDescription(item) {
-            return String(
-                item.description ||
-                item.desc ||
-                item.text ||
-                ""
-            );
-        }
-
-        function renderCategories() {
-            categoriesElement.innerHTML = "";
-
-            const query =
-                searchInput.value
-                    .trim()
-                    .toLowerCase();
-
-            goalsData.forEach(
-                (
-                    category,
-                    categoryIndex
-                ) => {
-                    const items =
-                        getCategoryItems(
-                            category
-                        );
-
-                    const achievementCategory =
-                        isAchievementCategory(
-                            category
-                        );
-
-                    const filteredItems =
-                        items.filter(
-                            item => {
-                                if (!query) {
-                                    return true;
-                                }
-
-                                const searchable =
-                                    [
-                                        getItemTitle(
-                                            item
-                                        ),
-                                        getItemDescription(
-                                            item
-                                        ),
-                                        item.difficulty,
-                                        item.gamerscore,
-                                        item.score,
-                                        item.points
-                                    ]
-                                        .filter(
-                                            value =>
-                                                value != null
-                                        )
-                                        .join(" ")
-                                        .toLowerCase();
-
-                                return searchable.includes(
-                                    query
-                                );
-                            }
-                        );
-
-                    if (
-                        query &&
-                        filteredItems.length === 0
-                    ) {
-                        return;
-                    }
-
-                    const categoryElement =
-                        document.createElement(
-                            "section"
-                        );
-
-                    categoryElement.className =
-                        "category";
-
-                    const header =
-                        document.createElement(
-                            "button"
-                        );
-
-                    header.type =
-                        "button";
-
-                    header.className =
-                        "category-header";
-
-                    const info =
-                        document.createElement(
-                            "div"
-                        );
-
-                    info.className =
-                        "category-info";
-
-                    const categoryName =
-                        document.createElement(
-                            "div"
-                        );
-
-                    categoryName.className =
-                        "category-name";
-
-                    categoryName.textContent =
-                        getCategoryName(
-                            category,
-                            categoryIndex
-                        );
-
-                    const completed =
-                        filteredItems.filter(
-                            item => {
-                                if (
-                                    achievementCategory
-                                ) {
-                                    const profile =
-                                        getCurrentProfile();
-
-                                    if (!profile) {
-                                        return false;
-                                    }
-
-                                    const id =
-                                        getAchievementId(
-                                            item
-                                        );
-
-                                    return Boolean(
-                                        id &&
-                                        profile
-                                            .achievements?.[id]
-                                    );
-                                }
-
-                                const id =
-                                    getGoalId(
-                                        item
-                                    );
-
-                                return Boolean(
-                                    id &&
-                                    sharedGoals[id]
-                                );
-                            }
-                        ).length;
-
-                    const categoryCount =
-                        document.createElement(
-                            "div"
-                        );
-
-                    categoryCount.className =
-                        "category-count";
-
-                    categoryCount.textContent =
-                        `${completed} / ${filteredItems.length} completed`;
-
-                    info.appendChild(
-                        categoryName
-                    );
-
-                    info.appendChild(
-                        categoryCount
-                    );
-
-                    const right =
-                        document.createElement(
-                            "div"
-                        );
-
-                    right.className =
-                        "category-right";
-
-                    const categoryScore =
-                        document.createElement(
-                            "div"
-                        );
-
-                    categoryScore.className =
-                        "category-score";
-
-                    let categoryPossibleScore =
-                        0;
-
-                    for (
-                        const item
-                        of filteredItems
-                    ) {
-                        categoryPossibleScore +=
-                            achievementCategory
-                                ? getAchievementGamerscore(
-                                    item
-                                )
-                                : DIFFICULTY_SCORES[
-                                    getGoalDifficulty(
-                                        item
-                                    )
-                                ];
-                    }
-
-                    categoryScore.textContent =
-                        achievementCategory
-                            ? `${categoryPossibleScore}G`
-                            : `${categoryPossibleScore} pts`;
-
-                    const arrow =
-                        document.createElement(
-                            "div"
-                        );
-
-                    arrow.className =
-                        "category-arrow";
-
-                    arrow.textContent =
-                        "▼";
-
-                    right.appendChild(
-                        categoryScore
-                    );
-
-                    right.appendChild(
-                        arrow
-                    );
-
-                    header.appendChild(
-                        info
-                    );
-
-                    header.appendChild(
-                        right
-                    );
-
-                    const content =
-                        document.createElement(
-                            "div"
-                        );
-
-                    content.className =
-                        "category-content";
-
-                    for (
-                        const item
-                        of filteredItems
-                    ) {
-                        content.appendChild(
-                            createItemElement(
-                                item,
-                                achievementCategory
-                            )
-                        );
-                    }
-
-                    categoryElement.appendChild(
-                        header
-                    );
-
-                    categoryElement.appendChild(
-                        content
-                    );
-
-                    header.addEventListener(
-                        "click",
-                        () => {
-                            const isOpen =
-                                categoryElement
-                                    .classList
-                                    .contains(
-                                        "open"
-                                    );
-
-                            document
-                                .querySelectorAll(
-                                    ".category.open"
-                                )
-                                .forEach(
-                                    categoryNode =>
-                                        categoryNode
-                                            .classList
-                                            .remove(
-                                                "open"
-                                            )
-                                );
-
-                            if (!isOpen) {
-                                categoryElement
-                                    .classList
-                                    .add(
-                                        "open"
-                                    );
-                            }
-                        }
-                    );
-
-                    categoriesElement.appendChild(
-                        categoryElement
-                    );
-                }
-            );
-
-            if (
-                !categoriesElement.children.length
-            ) {
-                const empty =
-                    document.createElement(
-                        "div"
-                    );
-
-                empty.className =
-                    "empty";
-
-                empty.textContent =
-                    query
-                        ? "No matching goals or achievements."
-                        : "No goals found.";
-
-                categoriesElement.appendChild(
-                    empty
-                );
-            }
-        }
-
-        function createItemElement(
-            item,
-            isAchievement
-        ) {
-            const wrapper =
-                document.createElement(
-                    "label"
-                );
-
-            wrapper.className =
-                isAchievement
-                    ? "achievement"
-                    : "goal";
-
-            const checkbox =
-                document.createElement(
-                    "input"
-                );
-
-            checkbox.type =
-                "checkbox";
-
-            const info =
-                document.createElement(
-                    "div"
-                );
-
-            info.className =
-                isAchievement
-                    ? "achievement-info"
-                    : "goal-info";
-
-            const title =
-                document.createElement(
-                    "div"
-                );
-
-            title.className =
-                isAchievement
-                    ? "achievement-title"
-                    : "goal-title";
-
-            title.textContent =
-                getItemTitle(item);
-
-            const description =
-                getItemDescription(item);
-
-            if (description) {
-                const descriptionElement =
-                    document.createElement(
-                        "div"
-                    );
-
-                descriptionElement.className =
-                    isAchievement
-                        ? "achievement-description"
-                        : "goal-description";
-
-                descriptionElement.textContent =
-                    description;
-
-                info.appendChild(title);
-                info.appendChild(
-                    descriptionElement
-                );
-
-            } else {
-                info.appendChild(title);
-            }
-
-            if (isAchievement) {
-                const id =
-                    getAchievementId(
-                        item
-                    );
-
-                const profile =
-                    getCurrentProfile();
-
-                checkbox.checked =
-                    Boolean(
-                        profile &&
-                        id &&
-                        profile
-                            .achievements?.[id]
-                    );
-
-                const points =
-                    document.createElement(
-                        "div"
-                    );
-
-                points.className =
-                    "achievement-points";
-
-                points.textContent =
-                    `${getAchievementGamerscore(item)}G`;
-
-                checkbox.addEventListener(
-                    "change",
-                    () => {
-                        const currentProfile =
-                            getCurrentProfile();
-
-                        if (
-                            !currentProfile ||
-                            !id
-                        ) {
-                            checkbox.checked =
-                                false;
-                            return;
-                        }
-
-                        if (
-                            checkbox.checked
-                        ) {
-                            currentProfile
-                                .achievements[id] =
-                                true;
-                        } else {
-                            delete currentProfile
-                                .achievements[id];
-                        }
-
-                        saveProfiles();
-
-                        renderProfiles();
-                        updateScores();
-                        renderCategories();
-                    }
-                );
-
-                wrapper.appendChild(
-                    checkbox
-                );
-
-                wrapper.appendChild(
-                    info
-                );
-
-                wrapper.appendChild(
-                    points
-                );
-
-            } else {
-                const id =
-                    getGoalId(item);
-
-                checkbox.checked =
-                    Boolean(
-                        id &&
-                        sharedGoals[id]
-                    );
-
-                const meta =
-                    document.createElement(
-                        "div"
-                    );
-
-                meta.className =
-                    "goal-meta";
-
-                const difficulty =
-                    getGoalDifficulty(
-                        item
-                    );
-
-                const difficultyElement =
-                    document.createElement(
-                        "span"
-                    );
-
-                difficultyElement.className =
-                    `difficulty ${difficulty}`;
-
-                difficultyElement.textContent =
-                    difficulty;
-
-                const points =
-                    document.createElement(
-                        "span"
-                    );
-
-                points.className =
-                    "points";
-
-                points.textContent =
-                    `+${DIFFICULTY_SCORES[difficulty]} pts`;
-
-                meta.appendChild(
-                    difficultyElement
-                );
-
-                meta.appendChild(points);
-
-                info.appendChild(meta);
-
-                checkbox.addEventListener(
-                    "change",
-                    () => {
-                        if (!id) {
-                            return;
-                        }
-
-                        if (
-                            checkbox.checked
-                        ) {
-                            sharedGoals[id] =
-                                true;
-                        } else {
-                            delete sharedGoals[id];
-                        }
-
-                        saveSharedGoals();
-
-                        updateScores();
-                        renderCategories();
-                    }
-                );
-
-                wrapper.appendChild(
-                    checkbox
-                );
-
-                wrapper.appendChild(
-                    info
-                );
-            }
-
-            return wrapper;
-        }
-
-        function updateScores() {
-            const globalScore =
-                getCurrentGlobalScore();
-
-            const globalTotal =
-                getGlobalTotalPossible();
-
-            const goalScore =
-                getSharedGoalScore();
-
-            const goalTotal =
-                getTotalGoalScore();
-
-            const completedGoals =
-                getCompletedGoalCount();
-
-            const totalGoals =
-                getTotalGoalCount();
 
             const profile =
-                getCurrentProfile();
+                profiles.find(
+                    item =>
+                        item.id ===
+                        editingProfileId
+                );
 
-            globalScoreElement.textContent =
-                globalScore;
-
-            globalScoreDetailElement.textContent =
-                `${globalScore} / ${globalTotal} points`;
-
-            goalsScoreElement.textContent =
-                goalScore;
-
-            goalsScoreDetailElement.textContent =
-                `${completedGoals} / ${totalGoals} goals`;
 
             if (profile) {
-                const profileScore =
-                    getProfileAchievementScore(
-                        profile
-                    );
 
-                const achievementCount =
-                    getProfileAchievementCount(
-                        profile
-                    );
+                profile.name =
+                    name;
 
-                const rank =
-                    getProfileRank(
-                        profile
-                    );
-
-                const nextRank =
-                    getNextRank(
-                        profile
-                    );
-
-                currentProfileNameElement.textContent =
-                    profile.name + "'s";
-
-                userScoreElement.textContent =
-                    profileScore;
-
-                currentProfileRankElement.textContent =
-                    rank.name;
-
-                currentProfileRankElement.className =
-                    "current-rank " +
-                    rank.className;
-
-                let rankDetail =
-                    `${achievementCount} achievements`;
-
-                if (nextRank) {
-                    const difference =
-                        nextRank.min -
-                        profileScore;
-
-                    rankDetail +=
-                        ` • ${difference}G to ${nextRank.name}`;
-                } else {
-                    rankDetail +=
-                        " • Highest rank";
-                }
-
-                userScoreDetailElement.textContent =
-                    rankDetail;
-
-            } else {
-                currentProfileNameElement.textContent =
-                    "Your";
-
-                userScoreElement.textContent =
-                    "0";
-
-                currentProfileRankElement.textContent =
-                    "Dirt";
-
-                currentProfileRankElement.className =
-                    "current-rank rank-dirt";
-
-                userScoreDetailElement.textContent =
-                    "Create a profile to track achievements";
             }
 
-            const globalPercent =
-                globalTotal > 0
-                    ? Math.round(
-                        globalScore /
-                        globalTotal *
-                        100
-                    )
-                    : 0;
+        } else {
 
-            globalPercentElement.textContent =
-                `${globalPercent}%`;
+            if (
+                profiles.length >=
+                MAX_PROFILES
+            ) {
 
-            progressText.textContent =
-                `${globalPercent}%`;
+                closeProfileModal();
 
-            globalProgressBar.style.width =
-                `${globalPercent}%`;
-
-            const achievementTotal =
-                getTotalAchievementGamerscore();
-
-            const achievementProfilesScore =
-                profiles.reduce(
-                    (
-                        total,
-                        currentProfile
-                    ) =>
-                        total +
-                        getProfileAchievementScore(
-                            currentProfile
-                        ),
-                    0
+                showConfirm(
+                    "Profile Limit",
+                    `You can have up to ${MAX_PROFILES} profiles.`,
+                    null,
+                    true
                 );
 
-            achievementGlobalDetailElement.textContent =
-                `${achievementProfilesScore}G / ${
-                    achievementTotal *
-                    profiles.length
-                }G achievements`;
-        }
+                return;
 
-        function showConfirm(
-            title,
-            description,
-            action
-        ) {
-            document.getElementById(
-                "confirmModalTitle"
-            ).textContent =
-                title;
+            }
 
-            document.getElementById(
-                "confirmModalDescription"
-            ).textContent =
-                description;
 
-            pendingConfirmAction =
-                action;
+            const profile = {
 
-            confirmModal.classList.add(
-                "open"
-            );
-        }
+                id:
+                    Date.now().toString(36) +
+                    Math.random()
+                        .toString(36)
+                        .slice(2),
 
-        function closeConfirm() {
-            confirmModal.classList.remove(
-                "open"
+                name,
+
+                achievements: {}
+
+            };
+
+
+            profiles.push(
+                profile
             );
 
-            pendingConfirmAction =
-                null;
+
+            activeProfileId =
+                profile.id;
+
         }
 
-        function resetSharedGoals() {
-            showConfirm(
-                "Reset Goals?",
-                "This will reset all shared survival goal progress. Achievement progress for every profile will stay untouched.",
-                () => {
-                    sharedGoals = {};
 
-                    saveSharedGoals();
+        saveProfiles();
 
-                    renderCategories();
-                    updateScores();
+        closeProfileModal();
+
+        render();
+
+    }
+
+
+    function deleteProfile(id) {
+
+        const profile =
+            profiles.find(
+                item =>
+                    item.id === id
+            );
+
+
+        if (!profile) {
+            return;
+        }
+
+
+        showConfirm(
+            "Delete Profile",
+            `Delete "${profile.name}" and its achievement progress?`,
+            () => {
+
+                profiles =
+                    profiles.filter(
+                        item =>
+                            item.id !== id
+                    );
+
+
+                if (
+                    activeProfileId === id
+                ) {
+
+                    activeProfileId =
+                        profiles[0]?.id ||
+                        null;
+
                 }
-            );
-        }
 
-        searchInput.addEventListener(
-            "input",
-            renderCategories
+
+                saveProfiles();
+
+                render();
+
+            }
         );
 
-        addProfileButton.addEventListener(
-            "click",
-            () => {
-                if (
-                    profiles.length >=
-                    MAX_PROFILES
-                ) {
-                    return;
-                }
+    }
 
-                openProfileModal(
-                    "create"
+
+    /* CONFIRMATION */
+
+
+    const confirmModal =
+        document.getElementById(
+            "confirmModal"
+        );
+
+
+    function showConfirm(
+        title,
+        message,
+        action,
+        okayOnly = false
+    ) {
+
+        document.getElementById(
+            "confirmTitle"
+        ).textContent =
+            title;
+
+
+        document.getElementById(
+            "confirmMessage"
+        ).textContent =
+            message;
+
+
+        confirmAction =
+            action;
+
+
+        document.getElementById(
+            "confirmCancelButton"
+        ).style.display =
+            okayOnly
+                ? "none"
+                : "";
+
+
+        confirmModal.classList.add(
+            "show"
+        );
+
+
+        confirmModal.setAttribute(
+            "aria-hidden",
+            "false"
+        );
+
+    }
+
+
+    function closeConfirm() {
+
+        confirmModal.classList.remove(
+            "show"
+        );
+
+
+        confirmModal.setAttribute(
+            "aria-hidden",
+            "true"
+        );
+
+
+        confirmAction =
+            null;
+
+    }
+
+
+    /* RESET */
+
+
+    function resetGoals() {
+
+        showConfirm(
+            "Reset Goals",
+            "This will reset shared survival-goal progress. Achievement progress for every profile will stay intact.",
+            () => {
+
+                localStorage.removeItem(
+                    GOALS_STORAGE_KEY
                 );
+
+
+                render();
+
             }
         );
 
-        profileCancelButton.addEventListener(
-            "click",
-            closeProfileModal
-        );
+    }
 
-        profileSaveButton.addEventListener(
-            "click",
-            saveProfileFromModal
-        );
 
-        profileNameInput.addEventListener(
-            "keydown",
-            event => {
-                if (
-                    event.key ===
-                    "Enter"
-                ) {
-                    saveProfileFromModal();
-                }
+    /* SEARCH */
 
-                if (
-                    event.key ===
-                    "Escape"
-                ) {
-                    closeProfileModal();
-                }
+
+    searchInput.addEventListener(
+        "input",
+        () => {
+
+            renderCategories();
+
+        }
+    );
+
+
+    /* BUTTONS */
+
+
+    document.getElementById(
+        "addProfileButton"
+    ).addEventListener(
+        "click",
+        () => {
+
+            openProfileModal();
+
+        }
+    );
+
+
+    document.getElementById(
+        "addProfileButton2"
+    ).addEventListener(
+        "click",
+        () => {
+
+            openProfileModal();
+
+        }
+    );
+
+
+    document.getElementById(
+        "profileCancelButton"
+    ).addEventListener(
+        "click",
+        closeProfileModal
+    );
+
+
+    document.getElementById(
+        "profileSaveButton"
+    ).addEventListener(
+        "click",
+        saveProfileFromModal
+    );
+
+
+    document.getElementById(
+        "resetButton"
+    ).addEventListener(
+        "click",
+        resetGoals
+    );
+
+
+    document.getElementById(
+        "confirmCancelButton"
+    ).addEventListener(
+        "click",
+        closeConfirm
+    );
+
+
+    document.getElementById(
+        "confirmOkayButton"
+    ).addEventListener(
+        "click",
+        () => {
+
+            const action =
+                confirmAction;
+
+
+            closeConfirm();
+
+
+            if (
+                typeof action ===
+                "function"
+            ) {
+
+                action();
+
             }
-        );
 
-        resetButton.addEventListener(
-            "click",
-            resetSharedGoals
-        );
+        }
+    );
 
-        confirmCancelButton.addEventListener(
-            "click",
-            closeConfirm
-        );
 
-        confirmYesButton.addEventListener(
-            "click",
-            () => {
-                if (
-                    typeof pendingConfirmAction ===
-                    "function"
-                ) {
-                    const action =
-                        pendingConfirmAction;
+    profileNameInput.addEventListener(
+        "keydown",
+        event => {
 
-                    closeConfirm();
+            if (
+                event.key ===
+                "Enter"
+            ) {
 
-                    action();
+                saveProfileFromModal();
 
-                } else {
-                    closeConfirm();
-                }
             }
-        );
 
-        profileModal.addEventListener(
-            "click",
-            event => {
-                if (
-                    event.target ===
-                    profileModal
-                ) {
-                    closeProfileModal();
-                }
+            if (
+                event.key ===
+                "Escape"
+            ) {
+
+                closeProfileModal();
+
             }
-        );
 
-        confirmModal.addEventListener(
-            "click",
-            event => {
-                if (
-                    event.target ===
-                    confirmModal
-                ) {
-                    closeConfirm();
-                }
+        }
+    );
+
+
+    document.addEventListener(
+        "keydown",
+        event => {
+
+            if (
+                event.key ===
+                "Escape"
+            ) {
+
+                closeProfileModal();
+
+                closeConfirm();
+
             }
+
+        }
+    );
+
+
+    /* ESCAPE HTML */
+
+
+    function escapeHtml(value) {
+
+        return String(value)
+            .replace(
+                /&/g,
+                "&amp;"
+            )
+            .replace(
+                /</g,
+                "&lt;"
+            )
+            .replace(
+                />/g,
+                "&gt;"
+            )
+            .replace(
+                /"/g,
+                "&quot;"
+            )
+            .replace(
+                /'/g,
+                "&#039;"
+            );
+
+    }
+
+
+    function escapeAttr(value) {
+
+        return escapeHtml(
+            value
         );
 
-        document.addEventListener(
-            "keydown",
-            event => {
-                if (
-                    event.key !==
-                    "Escape"
-                ) {
-                    return;
-                }
+    }
 
-                if (
-                    profileModal.classList
-                        .contains("open")
-                ) {
-                    closeProfileModal();
 
-                } else if (
-                    confirmModal.classList
-                        .contains("open")
-                ) {
-                    closeConfirm();
-                }
-            }
-        );
+    /* MAIN RENDER */
 
-        loadSharedGoals();
-        loadProfiles();
-        loadActiveProfile();
+
+    function render() {
 
         renderProfiles();
+
+        renderCategories();
+
         updateScores();
 
-        fetch("goals.json")
-            .then(
-                response => {
-                    if (!response.ok) {
-                        throw new Error(
-                            `HTTP ${response.status}`
-                        );
-                    }
+    }
 
-                    return response.json();
-                }
-            )
-            .then(
-                data => {
-                    if (Array.isArray(data)) {
-                        goalsData = data;
 
-                    } else if (
-                        Array.isArray(
-                            data.categories
-                        )
-                    ) {
-                        goalsData =
-                            data.categories;
+    /* INITIALIZE */
 
-                    } else {
-                        throw new Error(
-                            "goals.json does not contain a valid category array."
-                        );
-                    }
 
-                    renderProfiles();
-                    renderCategories();
-                    updateScores();
-                }
-            )
-            .catch(
-                error => {
-                    console.error(
-                        "Could not load goals.json:",
-                        error
+    loadProfiles();
+
+
+    fetch(
+        "goals.json",
+        {
+            cache: "no-store"
+        }
+    )
+        .then(
+            response => {
+
+                if (
+                    !response.ok
+                ) {
+
+                    throw new Error(
+                        "Could not load goals.json"
                     );
 
-                    categoriesElement.innerHTML = "";
-
-                    const errorElement =
-                        document.createElement(
-                            "div"
-                        );
-
-                    errorElement.className =
-                        "empty";
-
-                    errorElement.textContent =
-                        "Could not load goals.json.";
-
-                    categoriesElement.appendChild(
-                        errorElement
-                    );
-
-                    updateScores();
                 }
-            );
-    </script>
+
+
+                return response.json();
+
+            }
+        )
+        .then(
+            data => {
+
+                goalsData =
+                    data;
+
+                render();
+
+            }
+        )
+        .catch(
+            error => {
+
+                console.error(
+                    error
+                );
+
+
+                categoriesElement.innerHTML = `
+                    <div class="empty">
+                        Could not load goals.json.
+                    </div>
+                `;
+
+
+                updateScores();
+
+                renderProfiles();
+
+            }
+        );
+
+</script>
 
 </body>
 </html>
