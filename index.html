@@ -506,6 +506,7 @@
         }
 
         @media (max-width: 600px) {
+
             .page {
                 padding-top: 36px;
             }
@@ -530,6 +531,7 @@
         }
 
         @media (max-width: 380px) {
+
             .versions {
                 grid-template-columns:
                     repeat(
@@ -686,9 +688,15 @@
 
         /*
             Change ONLY this number.
+
+            Example:
+
+            2 = v2.0
+            10 = v10.0
+            27 = v27.0
         */
 
-        const versionCount = 2000;
+        const versionCount = 20000;
 
 
         /*
@@ -742,6 +750,20 @@
 
 
         /*
+            Format the version for display.
+
+            2 becomes 2.0
+            10 becomes 10.0
+        */
+
+        function formatVersion(version) {
+
+            return version + ".0";
+
+        }
+
+
+        /*
             Set latest version.
         */
 
@@ -751,14 +773,18 @@
 
         latestVersionText.textContent =
             "v" +
-            latestVersion;
+            formatVersion(
+                latestVersion
+            );
 
 
         /*
             Generate ALL versions.
 
-            The newest version is also shown
-            inside this list with "(Latest)".
+            Newest version appears first.
+
+            The newest version is included in
+            the full list and marked "(Latest)".
         */
 
         for (
@@ -775,9 +801,19 @@
             link.className =
                 "version";
 
+            /*
+                Keep the actual URL as /v2,
+                /v3, etc.
+            */
+
             link.href =
                 "./v" +
                 version;
+
+            /*
+                Store the plain number so searching
+                works with both 2 and 2.0.
+            */
 
             link.dataset.version =
                 String(version);
@@ -793,7 +829,9 @@
 
             number.textContent =
                 "v" +
-                version;
+                formatVersion(
+                    version
+                );
 
 
             if (
@@ -829,6 +867,15 @@
 
         /*
             Search versions.
+
+            Examples:
+
+            2
+            2.0
+            v2
+            v2.0
+            version 2
+            version 2.0
         */
 
         function filterVersions() {
@@ -845,6 +892,20 @@
                         /^v/,
                         ""
                     );
+
+
+            /*
+                Normalize searches such as:
+
+                2.0 -> 2
+                2 -> 2
+            */
+
+            const normalizedQuery =
+                query.replace(
+                    /\.0$/,
+                    ""
+                );
 
 
             const versionLinks =
@@ -864,9 +925,9 @@
 
 
                     const matches =
-                        query === "" ||
+                        normalizedQuery === "" ||
                         version.includes(
-                            query
+                            normalizedQuery
                         );
 
 
@@ -901,8 +962,7 @@
         /*
             Show all versions.
 
-            The separate latest button disappears
-            while the complete version list is open.
+            The separate latest button disappears.
         */
 
         oldVersionsButton.addEventListener(
