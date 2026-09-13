@@ -5,7 +5,7 @@
 
     <meta
         name="viewport"
-        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, viewport-fit=cover"
     >
 
     <meta
@@ -34,8 +34,15 @@
         html {
             margin: 0;
             padding: 0;
+
             background: #090b10;
+
             touch-action: manipulation;
+
+            -ms-touch-action: manipulation;
+
+            -webkit-text-size-adjust: 100%;
+            text-size-adjust: 100%;
         }
 
         body {
@@ -61,13 +68,31 @@
                 sans-serif;
 
             -webkit-text-size-adjust: 100%;
-            overscroll-behavior-x: none;
+            text-size-adjust: 100%;
+
+            overscroll-behavior: none;
+
+            touch-action: manipulation;
+
+            -ms-touch-action: manipulation;
         }
 
         a,
         button,
-        input {
+        input,
+        select,
+        textarea {
             touch-action: manipulation;
+
+            -ms-touch-action: manipulation;
+
+            -webkit-user-select: none;
+            user-select: none;
+        }
+
+        input {
+            -webkit-user-select: text;
+            user-select: text;
         }
 
         .page {
@@ -76,12 +101,16 @@
 
             padding:
                 64px 20px
-                calc(64px + env(safe-area-inset-bottom));
+                calc(
+                    64px +
+                    env(safe-area-inset-bottom)
+                );
         }
 
         .container {
             width: 100%;
             max-width: 900px;
+
             margin: 0 auto;
         }
 
@@ -104,7 +133,13 @@
         h1 {
             margin: 0;
 
-            font-size: clamp(32px, 7vw, 48px);
+            font-size:
+                clamp(
+                    32px,
+                    7vw,
+                    48px
+                );
+
             line-height: 1.05;
 
             letter-spacing: -0.04em;
@@ -131,7 +166,7 @@
 
             width: 100%;
 
-            padding: 18px 20px;
+            padding: 17px 19px;
 
             margin-bottom: 20px;
 
@@ -144,7 +179,12 @@
 
             border:
                 1px solid
-                rgba(255, 255, 255, 0.12);
+                rgba(
+                    255,
+                    255,
+                    255,
+                    0.12
+                );
 
             border-radius: 14px;
 
@@ -154,7 +194,12 @@
 
             box-shadow:
                 0 12px 35px
-                rgba(79, 70, 229, 0.2);
+                rgba(
+                    79,
+                    70,
+                    229,
+                    0.2
+                );
 
             transition:
                 transform 0.2s ease,
@@ -166,7 +211,12 @@
 
             box-shadow:
                 0 16px 40px
-                rgba(79, 70, 229, 0.3);
+                rgba(
+                    79,
+                    70,
+                    229,
+                    0.3
+                );
         }
 
         .latest:active {
@@ -179,7 +229,12 @@
             margin-bottom: 3px;
 
             color:
-                rgba(255, 255, 255, 0.7);
+                rgba(
+                    255,
+                    255,
+                    255,
+                    0.7
+                );
 
             font-size: 11px;
             font-weight: 700;
@@ -197,6 +252,7 @@
 
         .latest-arrow {
             flex-shrink: 0;
+
             font-size: 22px;
         }
 
@@ -212,6 +268,7 @@
 
         .search {
             position: relative;
+
             flex: 1;
         }
 
@@ -270,7 +327,12 @@
 
             box-shadow:
                 0 0 0 3px
-                rgba(99, 102, 241, 0.12);
+                rgba(
+                    99,
+                    102,
+                    241,
+                    0.12
+                );
         }
 
         .count {
@@ -299,12 +361,18 @@
             align-items: center;
             justify-content: space-between;
 
-            min-height: 68px;
+            min-height: 64px;
 
-            padding: 14px 16px;
+            padding:
+                12px 15px;
 
             background:
-                rgba(17, 21, 29, 0.92);
+                rgba(
+                    17,
+                    21,
+                    29,
+                    0.92
+                );
 
             border:
                 1px solid
@@ -391,11 +459,13 @@
             }
 
             .latest {
-                padding: 17px 18px;
+                padding:
+                    16px 18px;
             }
 
             .toolbar {
                 align-items: stretch;
+
                 flex-direction: column;
             }
 
@@ -748,6 +818,107 @@
         search.addEventListener(
             "input",
             filterVersions
+        );
+
+
+        /*
+            Prevent browser gesture zoom.
+        */
+
+        document.addEventListener(
+            "gesturestart",
+            function (event) {
+                event.preventDefault();
+            },
+            {
+                passive: false
+            }
+        );
+
+        document.addEventListener(
+            "gesturechange",
+            function (event) {
+                event.preventDefault();
+            },
+            {
+                passive: false
+            }
+        );
+
+        document.addEventListener(
+            "gestureend",
+            function (event) {
+                event.preventDefault();
+            },
+            {
+                passive: false
+            }
+        );
+
+
+        /*
+            Prevent multi-touch pinch zoom.
+        */
+
+        document.addEventListener(
+            "touchstart",
+            function (event) {
+
+                if (
+                    event.touches.length > 1
+                ) {
+                    event.preventDefault();
+                }
+
+            },
+            {
+                passive: false
+            }
+        );
+
+
+        document.addEventListener(
+            "touchmove",
+            function (event) {
+
+                if (
+                    event.touches.length > 1
+                ) {
+                    event.preventDefault();
+                }
+
+            },
+            {
+                passive: false
+            }
+        );
+
+
+        /*
+            Prevent double-tap zoom.
+        */
+
+        let lastTouchEnd = 0;
+
+        document.addEventListener(
+            "touchend",
+            function (event) {
+
+                const now =
+                    Date.now();
+
+                if (
+                    now - lastTouchEnd <= 300
+                ) {
+                    event.preventDefault();
+                }
+
+                lastTouchEnd = now;
+
+            },
+            {
+                passive: false
+            }
         );
 
 
