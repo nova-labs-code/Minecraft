@@ -1,0 +1,300 @@
+{
+  "Basic Survival": [
+    {
+      "id": "full-iron-armor",
+      "name": "Full Set Of Iron Armor"
+    },
+    {
+      "id": "iron-tools",
+      "name": "Iron Tools"
+    },
+    {
+      "id": "shield",
+      "name": "Shield"
+    },
+    {
+      "id": "potion-of-regeneration",
+      "name": "Potion Of Regeneration"
+    },
+    {
+      "id": "enchanting-table",
+      "name": "Enchanting Table"
+    },
+    {
+      "id": "brewing-stand",
+      "name": "Brewing Stand"
+    },
+    {
+      "id": "anvil",
+      "name": "Anvil"
+    },
+    {
+      "id": "full-diamond-armor",
+      "name": "Full Set Of Diamond"
+    },
+    {
+      "id": "diamond-tools",
+      "name": "Diamond Tools"
+    },
+    {
+      "id": "netherite-armor",
+      "name": "Netherite Armor"
+    },
+    {
+      "id": "netherite-tools",
+      "name": "Netherite Tools"
+    },
+    {
+      "id": "ender-chest",
+      "name": "Ender Chest"
+    },
+    {
+      "id": "elytra",
+      "name": "Elytra"
+    },
+    {
+      "id": "beacon",
+      "name": "Beacon"
+    }
+  ],
+  "Base": [
+    {
+      "id": "main-base",
+      "name": "Main Base"
+    },
+    {
+      "id": "storage-room",
+      "name": "Storage Room"
+    },
+    {
+      "id": "secure-base",
+      "name": "Secure Base"
+    },
+    {
+      "id": "organized-mine-entrance",
+      "name": "Organized Mine Entrance"
+    },
+    {
+      "id": "enchanting-area",
+      "name": "Enchanting Area"
+    },
+    {
+      "id": "brewing-area",
+      "name": "Brewing Area"
+    },
+    {
+      "id": "armory",
+      "name": "Armory"
+    },
+    {
+      "id": "secure-nether-portal",
+      "name": "Secure Nether Portal"
+    }
+  ],
+  "Farms and Automations": [
+    {
+      "id": "iron-farm",
+      "name": "Iron Farm"
+    },
+    {
+      "id": "mob-farm",
+      "name": "Mob Farm"
+    },
+    {
+      "id": "creeper-farm",
+      "name": "Creeper Farm"
+    },
+    {
+      "id": "xp-farm",
+      "name": "XP Farm"
+    },
+    {
+      "id": "slime-farm",
+      "name": "Slime Farm"
+    },
+    {
+      "id": "raid-farm",
+      "name": "Raid Farm"
+    },
+    {
+      "id": "gold-farm",
+      "name": "Gold Farm"
+    },
+    {
+      "id": "lava-farm",
+      "name": "Lava Farm"
+    },
+    {
+      "id": "honey-farm",
+      "name": "Honey Farm"
+    },
+    {
+      "id": "wool-farm",
+      "name": "Wool Farm"
+    },
+    {
+      "id": "bamboo-farm",
+      "name": "Bamboo Farm"
+    },
+    {
+      "id": "kelp-farm",
+      "name": "Kelp Farm"
+    },
+    {
+      "id": "item-sorter",
+      "name": "Item Sorter"
+    },
+    {
+      "id": "automatic-storage",
+      "name": "Automatic Storage System"
+    },
+    {
+      "id": "crop-farm",
+      "name": "Crop Farm"
+    },
+    {
+      "id": "bonemeal-farm",
+      "name": "Bonemeal Farm"
+    },
+    {
+      "id": "tree-farm",
+      "name": "Tree Farm"
+    },
+    {
+      "id": "cobblestone-generator",
+      "name": "Cobblestone Generator"
+    },
+    {
+      "id": "stone-generator",
+      "name": "Stone Generator"
+    },
+    {
+      "id": "cactus-farm",
+      "name": "Cactus Farm"
+    },
+    {
+      "id": "sugarcane-farm",
+      "name": "Sugarcane Farm"
+    },
+    {
+      "id": "auto-smelt",
+      "name": "Auto Smelt"
+    },
+    {
+      "id": "super-smelter",
+      "name": "Super Smelter"
+    },
+    {
+      "id": "auto-cook",
+      "name": "Auto Cook"
+    },
+    {
+      "id": "animal-farms",
+      "name": "Animal Farms"
+    },
+    {
+      "id": "auto-villager-breeder",
+      "name": "Auto Villager Breeder"
+    }
+  ],
+  "Villagers": [
+    {
+      "id": "villager-trading-hall",
+      "name": "Villager Trading Hall"
+    },
+    {
+      "id": "librarian-trades",
+      "name": "Librarian Trades"
+    },
+    {
+      "id": "armorers",
+      "name": "Armorers"
+    },
+    {
+      "id": "toolsmiths",
+      "name": "Toolsmiths"
+    },
+    {
+      "id": "weaponsmiths",
+      "name": "Weaponsmiths"
+    },
+    {
+      "id": "farmer-villagers",
+      "name": "Farmer Villagers"
+    }
+  ],
+  "Loot": [
+    {
+      "id": "golden-apples",
+      "name": "Golden Apples"
+    },
+    {
+      "id": "totems",
+      "name": "Totems"
+    },
+    {
+      "id": "ender-pearls",
+      "name": "Ender Pearls"
+    },
+    {
+      "id": "blaze-rods",
+      "name": "Blaze Rods"
+    },
+    {
+      "id": "eyes-of-ender",
+      "name": "Eyes of Ender"
+    }
+  ],
+  "Nether": [
+    {
+      "id": "nether-portal",
+      "name": "Nether Portal"
+    },
+    {
+      "id": "nether-fortress",
+      "name": "Nether Fortress"
+    },
+    {
+      "id": "nether-wart",
+      "name": "Nether Wart"
+    },
+    {
+      "id": "wither-skeleton-skulls",
+      "name": "Wither Skeleton Skulls"
+    },
+    {
+      "id": "piglin-bartering",
+      "name": "Piglin Bartering"
+    },
+    {
+      "id": "ancient-debris",
+      "name": "Ancient Debris"
+    },
+    {
+      "id": "safe-nether-tunnel",
+      "name": "Safe Nether Tunnel"
+    }
+  ],
+  "End": [
+    {
+      "id": "stronghold",
+      "name": "Stronghold"
+    },
+    {
+      "id": "end-portal",
+      "name": "End Portal"
+    },
+    {
+      "id": "ender-dragon",
+      "name": "Ender Dragon"
+    },
+    {
+      "id": "end-city",
+      "name": "End City"
+    },
+    {
+      "id": "shulker-shells",
+      "name": "Shulker Shells"
+    }
+  ]
+}
