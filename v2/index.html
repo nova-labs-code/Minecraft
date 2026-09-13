@@ -8,7 +8,7 @@
         content="width=device-width, initial-scale=1.0"
     >
 
-    <title>Minecraft Survival To-Do</title>
+    <title>Minecraft Survival Checklist</title>
 
     <style>
         * {
@@ -16,17 +16,15 @@
         }
 
         :root {
-            --bg: #090b10;
-            --panel: #11151d;
-            --panel-2: #171c25;
-            --border: #272e3a;
-            --text: #f1f3f5;
-            --muted: #929aa8;
-            --accent: #5b8cff;
-            --accent-hover: #4a7bea;
-            --danger: #e05252;
-            --danger-hover: #c94141;
-            --success: #55b879;
+            --bg: #0b0f0c;
+            --panel: #121814;
+            --panel-2: #182019;
+            --border: #2a382d;
+            --text: #edf5ee;
+            --muted: #9baa9d;
+            --green: #55c96b;
+            --green-dark: #245d30;
+            --red: #d95757;
         }
 
         html,
@@ -40,8 +38,6 @@
                 -apple-system,
                 BlinkMacSystemFont,
                 "Segoe UI",
-                Roboto,
-                Arial,
                 sans-serif;
         }
 
@@ -50,7 +46,8 @@
         }
 
         button,
-        input {
+        input,
+        select {
             font: inherit;
         }
 
@@ -65,254 +62,321 @@
         }
 
         header {
-            margin-bottom: 20px;
+            margin-bottom: 24px;
+        }
+
+        .topbar {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
         }
 
         h1 {
-            margin: 0 0 6px;
-            font-size: 28px;
-            line-height: 1.2;
+            margin: 0;
+            font-size: clamp(24px, 5vw, 36px);
         }
 
         .subtitle {
-            margin: 0;
+            margin: 6px 0 0;
             color: var(--muted);
-            font-size: 14px;
         }
 
-        .toolbar {
+        .controls {
             display: flex;
-            flex-wrap: wrap;
             gap: 10px;
-            margin-bottom: 20px;
+            flex-wrap: wrap;
+            margin-top: 18px;
         }
 
-        .toolbar input {
-            flex: 1 1 250px;
-            min-width: 0;
-            padding: 12px 14px;
+        select,
+        input[type="search"] {
+            min-height: 44px;
             border: 1px solid var(--border);
             border-radius: 8px;
-            outline: none;
             background: var(--panel);
             color: var(--text);
+            padding: 0 13px;
+            outline: none;
         }
 
-        .toolbar input:focus {
-            border-color: var(--accent);
+        select {
+            min-width: 180px;
         }
 
-        .toolbar input::placeholder {
-            color: var(--muted);
+        input[type="search"] {
+            flex: 1;
+            min-width: 200px;
+        }
+
+        select:focus,
+        input[type="search"]:focus {
+            border-color: var(--green);
         }
 
         .button {
-            padding: 11px 15px;
+            min-height: 44px;
             border: 1px solid var(--border);
             border-radius: 8px;
             background: var(--panel-2);
             color: var(--text);
-            transition:
-                background 0.15s ease,
-                border-color 0.15s ease;
+            padding: 0 15px;
         }
 
         .button:hover {
-            border-color: #394354;
+            border-color: var(--green);
         }
 
         .button.primary {
-            background: var(--accent);
-            border-color: var(--accent);
-            color: white;
-        }
-
-        .button.primary:hover {
-            background: var(--accent-hover);
-            border-color: var(--accent-hover);
+            background: var(--green-dark);
+            border-color: var(--green);
         }
 
         .button.danger {
-            color: #ff8585;
-        }
-
-        .button.danger:hover {
-            background: var(--danger-hover);
-            border-color: var(--danger-hover);
-            color: white;
-        }
-
-        .panel {
-            background: var(--panel);
-            border: 1px solid var(--border);
-            border-radius: 10px;
-        }
-
-        .world-panel {
-            padding: 16px;
-            margin-bottom: 20px;
-        }
-
-        .world-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 12px;
-            margin-bottom: 14px;
-        }
-
-        .world-header h2 {
-            margin: 0;
-            font-size: 18px;
-        }
-
-        .world-actions {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-        }
-
-        .world-list {
-            display: grid;
-            grid-template-columns:
-                repeat(auto-fill, minmax(220px, 1fr));
-            gap: 10px;
-        }
-
-        .world-card {
-            padding: 14px;
-            background: var(--panel-2);
-            border: 1px solid var(--border);
-            border-radius: 8px;
-        }
-
-        .world-card.current {
-            border-color: var(--accent);
-        }
-
-        .world-card-title {
-            margin-bottom: 5px;
-            font-weight: 600;
-            word-break: break-word;
-        }
-
-        .world-card-status {
-            margin-bottom: 10px;
-            color: var(--muted);
-            font-size: 12px;
-        }
-
-        .world-card-progress {
-            height: 6px;
-            margin-bottom: 10px;
-            overflow: hidden;
-            background: #242a34;
-            border-radius: 999px;
-        }
-
-        .world-card-progress-fill {
-            width: 0%;
-            height: 100%;
-            background: var(--success);
-            transition: width 0.2s ease;
-        }
-
-        .world-card-actions {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 6px;
-        }
-
-        .small-button {
-            padding: 7px 9px;
-            border: 1px solid var(--border);
-            border-radius: 6px;
-            background: #1b212b;
-            color: var(--text);
-            font-size: 12px;
-        }
-
-        .small-button:hover {
-            border-color: #394354;
-        }
-
-        .small-button.danger {
-            color: #ff8585;
+            color: #ff8a8a;
         }
 
         .progress-panel {
+            margin-top: 18px;
             padding: 16px;
-            margin-bottom: 20px;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            background: var(--panel);
         }
 
-        .progress-top {
+        .progress-header {
             display: flex;
-            align-items: center;
             justify-content: space-between;
-            gap: 10px;
+            gap: 12px;
             margin-bottom: 10px;
-        }
-
-        .current-world-name {
-            font-size: 18px;
-            font-weight: 600;
         }
 
         .progress-text {
             color: var(--muted);
-            font-size: 14px;
-            white-space: nowrap;
         }
 
         .progress-bar {
-            width: 100%;
             height: 12px;
             overflow: hidden;
-            background: #242a34;
             border-radius: 999px;
+            background: #202a22;
         }
 
         .progress-fill {
             width: 0%;
             height: 100%;
-            background: var(--success);
-            transition: width 0.2s ease;
+            background: var(--green);
+            transition: width 0.25s ease;
+        }
+
+        #worldManager {
+            margin-bottom: 25px;
+        }
+
+        .world-manager-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            margin-bottom: 12px;
+            flex-wrap: wrap;
+        }
+
+        .world-manager-header h2 {
+            margin: 0;
+        }
+
+        .world-count {
+            color: var(--muted);
+        }
+
+        .world-grid {
+            display: grid;
+            grid-template-columns: repeat(
+                auto-fill,
+                minmax(240px, 1fr)
+            );
+            gap: 12px;
+        }
+
+        .world-card {
+            padding: 15px;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            background: var(--panel);
+        }
+
+        .world-card.current {
+            border-color: var(--green);
+        }
+
+        .world-card h3 {
+            margin: 0 0 8px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .world-progress {
+            color: var(--muted);
+            font-size: 14px;
+            margin-bottom: 12px;
+        }
+
+        .world-actions {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .world-actions button {
+            min-height: 36px;
+            border: 1px solid var(--border);
+            border-radius: 7px;
+            background: var(--panel-2);
+            color: var(--text);
+            padding: 0 10px;
+        }
+
+        .world-actions button:hover {
+            border-color: var(--green);
+        }
+
+        .world-actions .delete-world {
+            color: #ff8a8a;
         }
 
         #checklist {
-            display: flex;
-            flex-direction: column;
+            display: grid;
             gap: 16px;
         }
 
         .section {
+            border: 1px solid var(--border);
+            border-radius: 12px;
             overflow: hidden;
+            background: var(--panel);
+
+            /*
+             * Small animation when sections are created
+             * or updated.
+             */
+            animation:
+                sectionAppear 0.25s ease both;
+        }
+
+        @keyframes sectionAppear {
+            from {
+                opacity: 0;
+                transform: translateY(5px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         .section-header {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            gap: 10px;
+            gap: 12px;
+            min-height: 56px;
             padding: 15px 16px;
-            border-bottom: 1px solid var(--border);
             background: var(--panel-2);
+            border-bottom: 1px solid transparent;
+
+            cursor: pointer;
+
+            user-select: none;
+
+            transition:
+                background 0.2s ease,
+                border-color 0.2s ease;
         }
 
-        .section-title {
+        .section-header:hover {
+            background: #1c261e;
+        }
+
+        .section.open .section-header {
+            border-bottom-color: var(--border);
+        }
+
+        .section-title-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            min-width: 0;
+        }
+
+        .section-arrow {
+            width: 18px;
+            height: 18px;
+            flex: 0 0 auto;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            color: var(--muted);
+            font-size: 13px;
+
+            transition:
+                transform 0.3s ease,
+                color 0.2s ease;
+        }
+
+        .section.open .section-arrow {
+            transform: rotate(90deg);
+            color: var(--green);
+        }
+
+        .section-header h2 {
             margin: 0;
-            font-size: 17px;
+            font-size: 19px;
+
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
         }
 
         .section-count {
             color: var(--muted);
-            font-size: 12px;
+            font-size: 14px;
             white-space: nowrap;
         }
 
-        .task-list {
-            display: flex;
-            flex-direction: column;
+        /*
+         * The task area is animated using grid rows.
+         *
+         * 0fr = completely collapsed.
+         * 1fr = expanded.
+         *
+         * This gives us a smooth height animation without
+         * needing JavaScript to calculate the height.
+         */
+        .section-content {
+            display: grid;
+            grid-template-rows: 0fr;
+
+            transition:
+                grid-template-rows 0.3s ease;
+        }
+
+        .section.open .section-content {
+            grid-template-rows: 1fr;
+        }
+
+        .section-content-inner {
+            min-height: 0;
+            overflow: hidden;
+        }
+
+        .tasks {
+            padding: 6px 16px;
         }
 
         .task {
@@ -320,58 +384,51 @@
             align-items: center;
             gap: 12px;
             min-height: 48px;
-            padding: 10px 16px;
-            border-bottom: 1px solid var(--border);
+            border-bottom: 1px solid #202a22;
+
+            opacity: 0;
+            transform: translateY(-4px);
+
+            transition:
+                opacity 0.2s ease,
+                transform 0.2s ease;
+        }
+
+        .section.open .task {
+            opacity: 1;
+            transform: translateY(0);
         }
 
         .task:last-child {
-            border-bottom: none;
+            border-bottom: 0;
         }
 
-        .task:hover {
-            background: #141923;
-        }
-
-        .task input[type="checkbox"] {
+        .task input {
+            width: 19px;
+            height: 19px;
             flex: 0 0 auto;
-            width: 18px;
-            height: 18px;
-            margin: 0;
-            accent-color: var(--accent);
+            accent-color: var(--green);
             cursor: pointer;
         }
 
-        .task-label {
+        .task label {
             flex: 1;
-            min-width: 0;
-            color: var(--text);
-            font-size: 14px;
-            line-height: 1.4;
+            padding: 12px 0;
             cursor: pointer;
-            word-break: break-word;
+            line-height: 1.4;
         }
 
-        .task.completed .task-label {
+        .task.completed label {
             color: var(--muted);
             text-decoration: line-through;
         }
 
-        .empty-state {
-            padding: 30px 20px;
-            color: var(--muted);
+        .empty {
+            padding: 30px;
             text-align: center;
-        }
-
-        .error {
-            padding: 15px;
-            border: 1px solid #713535;
-            border-radius: 8px;
-            background: #251416;
-            color: #ff9b9b;
-        }
-
-        .hidden {
-            display: none !important;
+            color: var(--muted);
+            border: 1px dashed var(--border);
+            border-radius: 12px;
         }
 
         @media (max-width: 600px) {
@@ -379,31 +436,37 @@
                 padding: 12px;
             }
 
-            h1 {
-                font-size: 24px;
-            }
-
-            .world-header,
-            .progress-top {
-                align-items: flex-start;
+            .controls {
                 flex-direction: column;
             }
 
-            .progress-text {
-                white-space: normal;
-            }
-
-            .world-list {
-                grid-template-columns: 1fr;
-            }
-
-            .toolbar {
-                flex-direction: column;
-            }
-
-            .toolbar input,
-            .toolbar .button {
+            select,
+            input[type="search"],
+            .button {
                 width: 100%;
+            }
+
+            .section-header {
+                align-items: center;
+            }
+
+            .section-header h2 {
+                font-size: 17px;
+            }
+
+            .section-count {
+                font-size: 13px;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                scroll-behavior: auto !important;
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
             }
         }
     </style>
@@ -411,118 +474,140 @@
 
 <body>
 
-<div class="container">
+<main class="container">
 
     <header>
-        <h1>Minecraft Survival To-Do</h1>
 
-        <p class="subtitle">
-            Track your survival progress across multiple worlds.
-        </p>
+        <div class="topbar">
+
+            <div>
+
+                <h1>
+                    Minecraft Survival Checklist
+                </h1>
+
+                <p class="subtitle">
+                    Track your survival progress across your worlds.
+                </p>
+
+            </div>
+
+        </div>
+
+        <div class="controls">
+
+            <select
+                id="worldSelect"
+                aria-label="Select world"
+            ></select>
+
+            <button
+                class="button primary"
+                id="newWorldButton"
+                type="button"
+            >
+                New World
+            </button>
+
+            <input
+                id="searchInput"
+                type="search"
+                placeholder="Search checklist..."
+                autocomplete="off"
+            >
+
+            <button
+                class="button danger"
+                id="resetButton"
+                type="button"
+            >
+                Reset Current World
+            </button>
+
+        </div>
+
+        <div class="progress-panel">
+
+            <div class="progress-header">
+
+                <strong id="currentWorldName">
+                    World 1
+                </strong>
+
+                <span
+                    class="progress-text"
+                    id="overallProgress"
+                >
+                    0 / 0 complete
+                </span>
+
+            </div>
+
+            <div class="progress-bar">
+
+                <div
+                    class="progress-fill"
+                    id="progressFill"
+                ></div>
+
+            </div>
+
+        </div>
+
     </header>
 
-    <div class="toolbar">
 
-        <input
-            id="searchInput"
-            type="search"
-            placeholder="Search checklist..."
-            autocomplete="off"
-        >
+    <section id="worldManager">
 
-        <button
-            id="newWorldButton"
-            class="button primary"
-            type="button"
-        >
-            New World
-        </button>
+        <div class="world-manager-header">
 
-        <button
-            id="resetWorldButton"
-            class="button danger"
-            type="button"
-        >
-            Reset Current World
-        </button>
+            <div>
 
-    </div>
+                <h2>
+                    Your Worlds
+                </h2>
 
-    <section class="world-panel panel">
-
-        <div class="world-header">
-
-            <h2>Worlds</h2>
-
-            <div class="world-actions">
-
-                <button
-                    id="renameWorldButton"
-                    class="button"
-                    type="button"
+                <div
+                    class="world-count"
+                    id="worldCount"
                 >
-                    Rename World
-                </button>
+                    0 / 100 worlds
+                </div>
 
             </div>
 
         </div>
 
         <div
-            id="worldList"
-            class="world-list"
+            class="world-grid"
+            id="worldGrid"
         ></div>
 
     </section>
 
-    <section class="progress-panel panel">
 
-        <div class="progress-top">
+    <section id="checklist"></section>
 
-            <div
-                id="currentWorldName"
-                class="current-world-name"
-            >
-                Loading...
-            </div>
+</main>
 
-            <div
-                id="progressText"
-                class="progress-text"
-            >
-                0 / 0 completed
-            </div>
-
-        </div>
-
-        <div class="progress-bar">
-
-            <div
-                id="progressFill"
-                class="progress-fill"
-            ></div>
-
-        </div>
-
-    </section>
-
-    <main id="checklist"></main>
-
-</div>
 
 <script>
+
     const WORLDS_STORAGE_KEY =
         "minecraft-survival-todo-worlds";
 
     const CURRENT_WORLD_STORAGE_KEY =
         "minecraft-survival-todo-worlds-current";
 
-    const MAX_WORLDS = 100;
+    const MAX_WORLDS =
+        100;
 
     const CHECKLIST_URL =
-        "./checklist.json";
+        "checklist.json";
 
-    const JSON_CHECK_INTERVAL = 2000;
+    const JSON_CHECK_INTERVAL =
+        2000;
+
 
     let checklist = {};
 
@@ -531,6 +616,42 @@
     let currentWorldId = null;
 
     let checklistSignature = "";
+
+
+    const checklistElement =
+        document.getElementById(
+            "checklist"
+        );
+
+    const worldSelect =
+        document.getElementById(
+            "worldSelect"
+        );
+
+    const worldGrid =
+        document.getElementById(
+            "worldGrid"
+        );
+
+    const worldCount =
+        document.getElementById(
+            "worldCount"
+        );
+
+    const currentWorldName =
+        document.getElementById(
+            "currentWorldName"
+        );
+
+    const overallProgress =
+        document.getElementById(
+            "overallProgress"
+        );
+
+    const progressFill =
+        document.getElementById(
+            "progressFill"
+        );
 
     const searchInput =
         document.getElementById(
@@ -542,53 +663,38 @@
             "newWorldButton"
         );
 
-    const resetWorldButton =
+    const resetButton =
         document.getElementById(
-            "resetWorldButton"
+            "resetButton"
         );
 
-    const renameWorldButton =
-        document.getElementById(
-            "renameWorldButton"
+
+    function generateWorldId() {
+
+        return (
+            Date.now().toString(36) +
+            Math.random()
+                .toString(36)
+                .substring(2, 9)
         );
 
-    const worldList =
-        document.getElementById(
-            "worldList"
-        );
-
-    const currentWorldName =
-        document.getElementById(
-            "currentWorldName"
-        );
-
-    const progressText =
-        document.getElementById(
-            "progressText"
-        );
-
-    const progressFill =
-        document.getElementById(
-            "progressFill"
-        );
-
-    const checklistElement =
-        document.getElementById(
-            "checklist"
-        );
+    }
 
 
     function saveWorlds() {
 
         localStorage.setItem(
             WORLDS_STORAGE_KEY,
-            JSON.stringify(worlds)
+            JSON.stringify(
+                worlds
+            )
         );
 
         localStorage.setItem(
             CURRENT_WORLD_STORAGE_KEY,
             currentWorldId
         );
+
     }
 
 
@@ -596,28 +702,49 @@
 
         try {
 
-            const saved =
+            const savedWorlds =
                 localStorage.getItem(
                     WORLDS_STORAGE_KEY
                 );
 
-            if (saved) {
+
+            if (savedWorlds) {
 
                 worlds =
-                    JSON.parse(saved);
+                    JSON.parse(
+                        savedWorlds
+                    );
 
             }
 
         } catch (error) {
 
+            console.error(
+                "Could not read saved worlds:",
+                error
+            );
+
             worlds = {};
 
         }
+
+
+        if (
+            !worlds ||
+            typeof worlds !== "object" ||
+            Array.isArray(worlds)
+        ) {
+
+            worlds = {};
+
+        }
+
 
         const savedCurrentWorld =
             localStorage.getItem(
                 CURRENT_WORLD_STORAGE_KEY
             );
+
 
         if (
             savedCurrentWorld &&
@@ -629,15 +756,21 @@
 
         }
 
+
         if (
             !currentWorldId ||
             !worlds[currentWorldId]
         ) {
 
             const worldIds =
-                Object.keys(worlds);
+                Object.keys(
+                    worlds
+                );
 
-            if (worldIds.length > 0) {
+
+            if (
+                worldIds.length > 0
+            ) {
 
                 currentWorldId =
                     worldIds[0];
@@ -650,18 +783,34 @@
 
         }
 
-        saveWorlds();
+
+        for (
+            const world of Object.values(
+                worlds
+            )
+        ) {
+
+            if (
+                !world.progress ||
+                typeof world.progress !== "object"
+            ) {
+
+                world.progress = {};
+
+            }
+
+        }
+
     }
 
 
     function createInitialWorld() {
 
         const id =
-            createWorldId();
+            generateWorldId();
+
 
         worlds[id] = {
-
-            id: id,
 
             name: "World 1",
 
@@ -669,204 +818,217 @@
 
         };
 
-        currentWorldId = id;
+
+        currentWorldId =
+            id;
+
+
+        saveWorlds();
+
     }
 
 
-    function createWorldId() {
+    function createWorld() {
 
-        return (
-            "world-" +
-            Date.now() +
-            "-" +
-            Math.random()
-                .toString(36)
-                .slice(2, 9)
-        );
-    }
+        const worldIds =
+            Object.keys(
+                worlds
+            );
 
-
-    function getWorldCount() {
-
-        return Object.keys(worlds).length;
-    }
-
-
-    function createNewWorld() {
 
         if (
-            getWorldCount() >=
+            worldIds.length >=
             MAX_WORLDS
         ) {
 
             alert(
-                "You can have up to 100 worlds."
+                "You already have 100 worlds."
             );
 
             return;
+
         }
 
-        const worldNumber =
-            getNextWorldNumber();
 
-        const name =
+        const requestedName =
             prompt(
                 "Enter a name for the new world:",
-                "World " + worldNumber
+                "World " +
+                (
+                    worldIds.length +
+                    1
+                )
             );
 
+
         if (
-            name === null
+            requestedName === null
         ) {
 
             return;
 
         }
 
-        const trimmedName =
-            name.trim();
 
-        const finalName =
-            trimmedName ||
-            "World " + worldNumber;
+        const name =
+            requestedName.trim();
+
+
+        if (!name) {
+
+            alert(
+                "World name cannot be empty."
+            );
+
+            return;
+
+        }
+
 
         const id =
-            createWorldId();
+            generateWorldId();
+
 
         worlds[id] = {
 
-            id: id,
-
-            name: finalName,
+            name,
 
             progress: {}
 
         };
 
-        currentWorldId = id;
+
+        currentWorldId =
+            id;
+
 
         saveWorlds();
 
-        renderWorlds();
+        searchInput.value = "";
 
-        renderChecklist();
+        renderAll();
 
-        updateProgress();
     }
 
 
-    function getNextWorldNumber() {
-
-        const numbers = [];
-
-        for (
-            const world of Object.values(worlds)
-        ) {
-
-            const match =
-                world.name.match(
-                    /^World (\d+)$/
-                );
-
-            if (match) {
-
-                numbers.push(
-                    Number(match[1])
-                );
-
-            }
-
-        }
-
-        let number = 1;
-
-        while (
-            numbers.includes(number)
-        ) {
-
-            number++;
-
-        }
-
-        return number;
-    }
-
-
-    function renameCurrentWorld() {
+    function switchWorld(id) {
 
         if (
-            !currentWorldId ||
-            !worlds[currentWorldId]
+            !worlds[id]
         ) {
 
             return;
+
         }
 
-        const world =
-            worlds[currentWorldId];
 
-        const name =
+        currentWorldId =
+            id;
+
+
+        saveWorlds();
+
+
+        searchInput.value =
+            "";
+
+
+        renderAll();
+
+    }
+
+
+    function renameWorld(id) {
+
+        if (
+            !worlds[id]
+        ) {
+
+            return;
+
+        }
+
+
+        const newName =
             prompt(
-                "Enter a new name for this world:",
-                world.name
+                "Enter a new world name:",
+                worlds[id].name
             );
 
+
         if (
-            name === null
+            newName === null
         ) {
 
             return;
+
         }
 
-        const trimmedName =
-            name.trim();
 
-        if (!trimmedName) {
+        const name =
+            newName.trim();
+
+
+        if (!name) {
+
+            alert(
+                "World name cannot be empty."
+            );
 
             return;
+
         }
 
-        world.name =
-            trimmedName;
+
+        worlds[id].name =
+            name;
+
 
         saveWorlds();
 
-        renderWorlds();
+        renderAll();
 
-        updateProgress();
     }
 
 
-    function deleteWorld(
-        worldId
-    ) {
+    function deleteWorld(id) {
 
         if (
-            !worlds[worldId]
+            !worlds[id]
         ) {
 
             return;
+
         }
 
-        const world =
-            worlds[worldId];
+
+        const name =
+            worlds[id].name;
+
 
         const confirmed =
             confirm(
                 'Delete "' +
-                world.name +
-                '"? This cannot be undone.'
+                name +
+                '"? This will permanently delete its checklist progress.'
             );
+
 
         if (!confirmed) {
 
             return;
+
         }
 
-        delete worlds[worldId];
+
+        delete worlds[id];
+
 
         const remainingIds =
-            Object.keys(worlds);
+            Object.keys(
+                worlds
+            );
+
 
         if (
             remainingIds.length === 0
@@ -875,7 +1037,7 @@
             createInitialWorld();
 
         } else if (
-            currentWorldId === worldId
+            id === currentWorldId
         ) {
 
             currentWorldId =
@@ -883,61 +1045,88 @@
 
         }
 
+
         saveWorlds();
 
-        renderWorlds();
+        renderAll();
 
-        renderChecklist();
-
-        updateProgress();
     }
 
 
-    function selectWorld(
-        worldId
-    ) {
+    function resetCurrentWorld() {
 
         if (
-            !worlds[worldId]
+            !worlds[currentWorldId]
         ) {
 
             return;
+
         }
 
-        currentWorldId =
-            worldId;
+
+        const confirmed =
+            confirm(
+                'Reset all checklist progress for "' +
+                worlds[currentWorldId].name +
+                '"?'
+            );
+
+
+        if (!confirmed) {
+
+            return;
+
+        }
+
+
+        worlds[currentWorldId].progress =
+            {};
+
 
         saveWorlds();
 
-        renderWorlds();
+        renderAll();
 
-        renderChecklist();
-
-        updateProgress();
     }
 
 
+    /*
+     * The JSON uses:
+     *
+     * {
+     *     "id": "...",
+     *     "name": "..."
+     * }
+     *
+     * So everything below correctly uses task.name.
+     */
     function getAllTasks() {
 
-        const allTasks = [];
+        const tasks = [];
+
 
         for (
             const [
                 sectionName,
-                tasks
-            ]
-            of Object.entries(checklist)
+                sectionTasks
+            ] of Object.entries(
+                checklist
+            )
         ) {
 
             if (
-                !Array.isArray(tasks)
+                !Array.isArray(
+                    sectionTasks
+                )
             ) {
 
                 continue;
+
             }
 
+
             for (
-                const task of tasks
+                const task of sectionTasks
             ) {
 
                 if (
@@ -946,11 +1135,10 @@
                     task.name
                 ) {
 
-                    allTasks.push({
+                    tasks.push({
                         id: task.id,
                         name: task.name,
-                        section:
-                            sectionName
+                        section: sectionName
                     });
 
                 }
@@ -959,18 +1147,21 @@
 
         }
 
-        return allTasks;
+
+        return tasks;
+
     }
 
 
-    function getTaskCountForWorld(
-        world
-    ) {
+    function getWorldProgress(world) {
 
         const tasks =
             getAllTasks();
 
-        let completed = 0;
+
+        let completed =
+            0;
+
 
         for (
             const task of tasks
@@ -978,7 +1169,9 @@
 
             if (
                 world.progress &&
-                world.progress[task.id]
+                world.progress[
+                    task.id
+                ] === true
             ) {
 
                 completed++;
@@ -987,257 +1180,704 @@
 
         }
 
+
         return {
-            completed: completed,
-            total: tasks.length
+
+            completed,
+
+            total:
+                tasks.length
+
         };
+
     }
 
 
-    function renderWorlds() {
+    function renderWorldSelector() {
 
-        worldList.innerHTML = "";
+        worldSelect.innerHTML =
+            "";
 
-        const worldEntries =
-            Object.values(worlds);
 
-        if (
-            worldEntries.length === 0
-        ) {
+        Object.entries(
+            worlds
+        ).forEach(
+            (
+                [id, world]
+            ) => {
 
-            worldList.innerHTML =
-                '<div class="empty-state">' +
-                'No worlds found.' +
-                '</div>';
+                const option =
+                    document.createElement(
+                        "option"
+                    );
 
-            return;
-        }
 
-        for (
-            const world of worldEntries
-        ) {
+                option.value =
+                    id;
 
-            const stats =
-                getTaskCountForWorld(
-                    world
-                );
 
-            const percentage =
-                stats.total > 0
-                    ? (
-                        stats.completed /
-                        stats.total
-                    ) * 100
-                    : 0;
+                option.textContent =
+                    world.name;
 
-            const card =
-                document.createElement(
-                    "div"
-                );
 
-            card.className =
-                "world-card";
+                if (
+                    id ===
+                    currentWorldId
+                ) {
 
-            if (
-                world.id ===
-                currentWorldId
-            ) {
+                    option.selected =
+                        true;
 
-                card.classList.add(
-                    "current"
+                }
+
+
+                worldSelect.appendChild(
+                    option
                 );
 
             }
+        );
 
-            const title =
-                document.createElement(
-                    "div"
-                );
+    }
 
-            title.className =
-                "world-card-title";
 
-            title.textContent =
-                world.name;
+    function renderWorldManager() {
 
-            const status =
-                document.createElement(
-                    "div"
-                );
-
-            status.className =
-                "world-card-status";
-
-            status.textContent =
-                stats.completed +
-                " / " +
-                stats.total +
-                " completed";
-
-            const progress =
-                document.createElement(
-                    "div"
-                );
-
-            progress.className =
-                "world-card-progress";
-
-            const progressInner =
-                document.createElement(
-                    "div"
-                );
-
-            progressInner.className =
-                "world-card-progress-fill";
-
-            progressInner.style.width =
-                percentage + "%";
-
-            progress.appendChild(
-                progressInner
+        const worldEntries =
+            Object.entries(
+                worlds
             );
 
-            const actions =
-                document.createElement(
-                    "div"
-                );
 
-            actions.className =
-                "world-card-actions";
+        worldCount.textContent =
+            worldEntries.length +
+            " / " +
+            MAX_WORLDS +
+            " worlds";
 
-            const openButton =
-                document.createElement(
-                    "button"
-                );
 
-            openButton.type =
-                "button";
+        worldGrid.innerHTML =
+            "";
 
-            openButton.className =
-                "small-button";
 
-            openButton.textContent =
-                world.id ===
-                currentWorldId
-                    ? "Current"
-                    : "Open";
+        worldEntries.forEach(
+            (
+                [id, world]
+            ) => {
 
-            openButton.addEventListener(
-                "click",
-                function () {
-
-                    selectWorld(
-                        world.id
+                const card =
+                    document.createElement(
+                        "article"
                     );
+
+
+                card.className =
+                    "world-card";
+
+
+                if (
+                    id ===
+                    currentWorldId
+                ) {
+
+                    card.classList.add(
+                        "current"
+                    );
+
+                }
+
+
+                const progress =
+                    getWorldProgress(
+                        world
+                    );
+
+
+                const percentage =
+                    progress.total === 0
+                        ? 0
+                        : Math.round(
+                            (
+                                progress.completed /
+                                progress.total
+                            ) *
+                            100
+                        );
+
+
+                card.innerHTML = `
+                    <h3></h3>
+
+                    <div class="world-progress">
+                        ${progress.completed}
+                        /
+                        ${progress.total}
+                        complete
+                        (${percentage}%)
+                    </div>
+
+                    <div class="world-actions">
+
+                        <button
+                            type="button"
+                            class="open-world"
+                        >
+                            Open
+                        </button>
+
+                        <button
+                            type="button"
+                            class="rename-world"
+                        >
+                            Rename
+                        </button>
+
+                        <button
+                            type="button"
+                            class="delete-world"
+                        >
+                            Delete
+                        </button>
+
+                    </div>
+                `;
+
+
+                card.querySelector(
+                    "h3"
+                ).textContent =
+                    world.name;
+
+
+                card.querySelector(
+                    ".open-world"
+                ).addEventListener(
+                    "click",
+                    () => switchWorld(id)
+                );
+
+
+                card.querySelector(
+                    ".rename-world"
+                ).addEventListener(
+                    "click",
+                    () => renameWorld(id)
+                );
+
+
+                card.querySelector(
+                    ".delete-world"
+                ).addEventListener(
+                    "click",
+                    () => deleteWorld(id)
+                );
+
+
+                worldGrid.appendChild(
+                    card
+                );
+
+            }
+        );
+
+    }
+
+
+    /*
+     * Opens one section and closes every other section.
+     */
+    function openSection(
+        section
+    ) {
+
+        document
+            .querySelectorAll(
+                ".section.open"
+            )
+            .forEach(
+                openSectionElement => {
+
+                    if (
+                        openSectionElement !==
+                        section
+                    ) {
+
+                        openSectionElement.classList.remove(
+                            "open"
+                        );
+
+                    }
 
                 }
             );
 
-            actions.appendChild(
-                openButton
+
+        section.classList.add(
+            "open"
+        );
+
+    }
+
+
+    function toggleSection(
+        section
+    ) {
+
+        const isOpen =
+            section.classList.contains(
+                "open"
             );
 
-            if (
-                getWorldCount() > 1
-            ) {
 
-                const deleteButton =
+        if (isOpen) {
+
+            section.classList.remove(
+                "open"
+            );
+
+        } else {
+
+            openSection(
+                section
+            );
+
+        }
+
+    }
+
+
+    function createSection(
+        sectionName,
+        matchingTasks,
+        world
+    ) {
+
+        const section =
+            document.createElement(
+                "section"
+            );
+
+
+        section.className =
+            "section";
+
+
+        /*
+         * Every newly rendered section starts
+         * collapsed.
+         */
+        section.classList.remove(
+            "open"
+        );
+
+
+        const sectionHeader =
+            document.createElement(
+                "div"
+            );
+
+
+        sectionHeader.className =
+            "section-header";
+
+
+        sectionHeader.setAttribute(
+            "role",
+            "button"
+        );
+
+
+        sectionHeader.setAttribute(
+            "tabindex",
+            "0"
+        );
+
+
+        sectionHeader.setAttribute(
+            "aria-expanded",
+            "false"
+        );
+
+
+        const titleWrapper =
+            document.createElement(
+                "div"
+            );
+
+
+        titleWrapper.className =
+            "section-title-wrapper";
+
+
+        const arrow =
+            document.createElement(
+                "span"
+            );
+
+
+        arrow.className =
+            "section-arrow";
+
+
+        arrow.textContent =
+            "▶";
+
+
+        const title =
+            document.createElement(
+                "h2"
+            );
+
+
+        title.textContent =
+            sectionName;
+
+
+        titleWrapper.appendChild(
+            arrow
+        );
+
+
+        titleWrapper.appendChild(
+            title
+        );
+
+
+        const count =
+            document.createElement(
+                "span"
+            );
+
+
+        count.className =
+            "section-count";
+
+
+        const allSectionTasks =
+            Array.isArray(
+                checklist[
+                    sectionName
+                ]
+            )
+                ? checklist[
+                    sectionName
+                ]
+                : [];
+
+
+        const completed =
+            allSectionTasks.filter(
+                task =>
+                    task &&
+                    task.id &&
+                    world.progress[
+                        task.id
+                    ] === true
+            ).length;
+
+
+        count.textContent =
+            completed +
+            " / " +
+            allSectionTasks.length;
+
+
+        sectionHeader.appendChild(
+            titleWrapper
+        );
+
+
+        sectionHeader.appendChild(
+            count
+        );
+
+
+        const sectionContent =
+            document.createElement(
+                "div"
+            );
+
+
+        sectionContent.className =
+            "section-content";
+
+
+        const sectionContentInner =
+            document.createElement(
+                "div"
+            );
+
+
+        sectionContentInner.className =
+            "section-content-inner";
+
+
+        const tasksContainer =
+            document.createElement(
+                "div"
+            );
+
+
+        tasksContainer.className =
+            "tasks";
+
+
+        matchingTasks.forEach(
+            task => {
+
+                const row =
                     document.createElement(
-                        "button"
+                        "div"
                     );
 
-                deleteButton.type =
-                    "button";
 
-                deleteButton.className =
-                    "small-button danger";
+                row.className =
+                    "task";
 
-                deleteButton.textContent =
-                    "Delete";
 
-                deleteButton.addEventListener(
-                    "click",
-                    function () {
+                const isCompleted =
+                    world.progress[
+                        task.id
+                    ] === true;
 
-                        deleteWorld(
-                            world.id
+
+                if (
+                    isCompleted
+                ) {
+
+                    row.classList.add(
+                        "completed"
+                    );
+
+                }
+
+
+                const checkbox =
+                    document.createElement(
+                        "input"
+                    );
+
+
+                checkbox.type =
+                    "checkbox";
+
+
+                checkbox.id =
+                    "task-" +
+                    task.id;
+
+
+                checkbox.checked =
+                    isCompleted;
+
+
+                const label =
+                    document.createElement(
+                        "label"
+                    );
+
+
+                label.htmlFor =
+                    checkbox.id;
+
+
+                label.textContent =
+                    task.name;
+
+
+                checkbox.addEventListener(
+                    "change",
+                    event => {
+
+                        event.stopPropagation();
+
+
+                        if (
+                            !world.progress
+                        ) {
+
+                            world.progress =
+                                {};
+
+                        }
+
+
+                        world.progress[
+                            task.id
+                        ] =
+                            checkbox.checked;
+
+
+                        row.classList.toggle(
+                            "completed",
+                            checkbox.checked
                         );
+
+
+                        saveWorlds();
+
+
+                        updateProgress();
+
+                        renderWorldManager();
+
+                        updateSectionCounts();
 
                     }
                 );
 
-                actions.appendChild(
-                    deleteButton
+
+                row.appendChild(
+                    checkbox
+                );
+
+
+                row.appendChild(
+                    label
+                );
+
+
+                tasksContainer.appendChild(
+                    row
                 );
 
             }
+        );
 
-            card.appendChild(
-                title
-            );
 
-            card.appendChild(
-                status
-            );
+        sectionContentInner.appendChild(
+            tasksContainer
+        );
 
-            card.appendChild(
-                progress
-            );
 
-            card.appendChild(
-                actions
-            );
+        sectionContent.appendChild(
+            sectionContentInner
+        );
 
-            worldList.appendChild(
-                card
-            );
-        }
+
+        sectionHeader.addEventListener(
+            "click",
+            () => {
+
+                toggleSection(
+                    section
+                );
+
+
+                sectionHeader.setAttribute(
+                    "aria-expanded",
+                    section.classList.contains(
+                        "open"
+                    )
+                );
+
+            }
+        );
+
+
+        sectionHeader.addEventListener(
+            "keydown",
+            event => {
+
+                if (
+                    event.key ===
+                    "Enter" ||
+                    event.key ===
+                    " "
+                ) {
+
+                    event.preventDefault();
+
+
+                    toggleSection(
+                        section
+                    );
+
+
+                    sectionHeader.setAttribute(
+                        "aria-expanded",
+                        section.classList.contains(
+                            "open"
+                        )
+                    );
+
+                }
+
+            }
+        );
+
+
+        section.appendChild(
+            sectionHeader
+        );
+
+
+        section.appendChild(
+            sectionContent
+        );
+
+
+        return section;
+
     }
 
 
     function renderChecklist() {
 
-        checklistElement.innerHTML = "";
+        checklistElement.innerHTML =
+            "";
 
-        if (
-            !currentWorldId ||
-            !worlds[currentWorldId]
-        ) {
-
-            checklistElement.innerHTML =
-                '<div class="empty-state">' +
-                'No current world.' +
-                '</div>';
-
-            return;
-        }
 
         const world =
             worlds[currentWorldId];
+
+
+        if (!world) {
+
+            return;
+
+        }
+
+
+        if (!world.progress) {
+
+            world.progress =
+                {};
+
+        }
+
 
         const search =
             searchInput.value
                 .trim()
                 .toLowerCase();
 
-        let sectionCount = 0;
+
+        let visibleTasks =
+            0;
+
 
         for (
             const [
                 sectionName,
                 tasks
-            ]
-            of Object.entries(checklist)
+            ] of Object.entries(
+                checklist
+            )
         ) {
 
             if (
-                !Array.isArray(tasks)
+                !Array.isArray(
+                    tasks
+                )
             ) {
 
                 continue;
+
             }
 
-            const visibleTasks =
+
+            const matchingTasks =
                 tasks.filter(
                     task =>
                         task &&
@@ -1258,307 +1898,209 @@
                         )
                 );
 
+
             if (
-                visibleTasks.length === 0
+                matchingTasks.length === 0
             ) {
 
                 continue;
 
             }
 
-            sectionCount++;
+
+            visibleTasks +=
+                matchingTasks.length;
+
 
             const section =
-                document.createElement(
-                    "section"
+                createSection(
+                    sectionName,
+                    matchingTasks,
+                    world
                 );
 
-            section.className =
-                "section";
-
-            const sectionHeader =
-                document.createElement(
-                    "div"
-                );
-
-            sectionHeader.className =
-                "section-header";
-
-            const title =
-                document.createElement(
-                    "h2"
-                );
-
-            title.className =
-                "section-title";
-
-            title.textContent =
-                sectionName;
-
-            const count =
-                document.createElement(
-                    "div"
-                );
-
-            count.className =
-                "section-count";
-
-            let completedCount = 0;
-
-            for (
-                const task of visibleTasks
-            ) {
-
-                if (
-                    world.progress &&
-                    world.progress[task.id]
-                ) {
-
-                    completedCount++;
-
-                }
-
-            }
-
-            count.textContent =
-                completedCount +
-                " / " +
-                visibleTasks.length;
-
-            sectionHeader.appendChild(
-                title
-            );
-
-            sectionHeader.appendChild(
-                count
-            );
-
-            const taskList =
-                document.createElement(
-                    "div"
-                );
-
-            taskList.className =
-                "task-list";
-
-            for (
-                const task of visibleTasks
-            ) {
-
-                const taskElement =
-                    document.createElement(
-                        "label"
-                    );
-
-                taskElement.className =
-                    "task";
-
-                const checkbox =
-                    document.createElement(
-                        "input"
-                    );
-
-                checkbox.type =
-                    "checkbox";
-
-                checkbox.checked =
-                    !!(
-                        world.progress &&
-                        world.progress[
-                            task.id
-                        ]
-                    );
-
-                const label =
-                    document.createElement(
-                        "span"
-                    );
-
-                label.className =
-                    "task-label";
-
-                label.textContent =
-                    task.name;
-
-                if (
-                    checkbox.checked
-                ) {
-
-                    taskElement.classList.add(
-                        "completed"
-                    );
-
-                }
-
-                checkbox.addEventListener(
-                    "change",
-                    function () {
-
-                        if (
-                            !world.progress
-                        ) {
-
-                            world.progress =
-                                {};
-
-                        }
-
-                        world.progress[
-                            task.id
-                        ] =
-                            checkbox.checked;
-
-                        if (
-                            checkbox.checked
-                        ) {
-
-                            taskElement.classList.add(
-                                "completed"
-                            );
-
-                        } else {
-
-                            taskElement.classList.remove(
-                                "completed"
-                            );
-
-                        }
-
-                        saveWorlds();
-
-                        renderWorlds();
-
-                        updateProgress();
-
-                    }
-                );
-
-                taskElement.appendChild(
-                    checkbox
-                );
-
-                taskElement.appendChild(
-                    label
-                );
-
-                taskList.appendChild(
-                    taskElement
-                );
-            }
-
-            section.appendChild(
-                sectionHeader
-            );
-
-            section.appendChild(
-                taskList
-            );
 
             checklistElement.appendChild(
                 section
             );
+
         }
+
 
         if (
-            sectionCount === 0
+            visibleTasks === 0
         ) {
 
-            checklistElement.innerHTML =
-                '<div class="empty-state">' +
-                'No checklist items match your search.' +
-                '</div>';
+            const empty =
+                document.createElement(
+                    "div"
+                );
+
+
+            empty.className =
+                "empty";
+
+
+            empty.textContent =
+                "No checklist items match your search.";
+
+
+            checklistElement.appendChild(
+                empty
+            );
 
         }
+
+
+        updateProgress();
+
     }
 
 
     function updateProgress() {
 
-        if (
-            !currentWorldId ||
-            !worlds[currentWorldId]
-        ) {
-
-            currentWorldName.textContent =
-                "No World";
-
-            progressText.textContent =
-                "0 / 0 completed";
-
-            progressFill.style.width =
-                "0%";
-
-            return;
-        }
-
         const world =
             worlds[currentWorldId];
 
-        const stats =
-            getTaskCountForWorld(
+
+        if (!world) {
+
+            return;
+
+        }
+
+
+        const progress =
+            getWorldProgress(
                 world
             );
 
+
         const percentage =
-            stats.total > 0
-                ? (
-                    stats.completed /
-                    stats.total
-                ) * 100
-                : 0;
+            progress.total === 0
+                ? 0
+                : Math.round(
+                    (
+                        progress.completed /
+                        progress.total
+                    ) *
+                    100
+                );
+
 
         currentWorldName.textContent =
             world.name;
 
-        progressText.textContent =
-            stats.completed +
+
+        overallProgress.textContent =
+            progress.completed +
             " / " +
-            stats.total +
-            " completed";
+            progress.total +
+            " complete";
+
 
         progressFill.style.width =
-            percentage + "%";
+            percentage +
+            "%";
+
     }
 
 
-    function resetCurrentWorld() {
-
-        if (
-            !currentWorldId ||
-            !worlds[currentWorldId]
-        ) {
-
-            return;
-        }
+    function updateSectionCounts() {
 
         const world =
             worlds[currentWorldId];
 
-        const confirmed =
-            confirm(
-                'Reset all checklist progress for "' +
-                world.name +
-                '"?'
-            );
 
-        if (!confirmed) {
+        if (!world) {
 
             return;
+
         }
 
-        world.progress = {};
 
-        saveWorlds();
+        document
+            .querySelectorAll(
+                ".section"
+            )
+            .forEach(
+                section => {
 
-        renderWorlds();
+                    const title =
+                        section.querySelector(
+                            "h2"
+                        );
 
-        renderChecklist();
 
-        updateProgress();
+                    const count =
+                        section.querySelector(
+                            ".section-count"
+                        );
+
+
+                    if (
+                        !title ||
+                        !count
+                    ) {
+
+                        return;
+
+                    }
+
+
+                    const tasks =
+                        checklist[
+                            title.textContent
+                        ];
+
+
+                    if (
+                        !Array.isArray(
+                            tasks
+                        )
+                    ) {
+
+                        return;
+
+                    }
+
+
+                    const completed =
+                        tasks.filter(
+                            task =>
+                                task &&
+                                task.id &&
+                                world.progress[
+                                    task.id
+                                ] === true
+                        ).length;
+
+
+                    count.textContent =
+                        completed +
+                        " / " +
+                        tasks.length;
+
+                }
+            );
+
     }
 
 
-    async function loadChecklist() {
+    function renderAll() {
+
+        renderWorldSelector();
+
+        renderWorldManager();
+
+        renderChecklist();
+
+    }
+
+
+    async function loadChecklist(
+        forceRender = true
+    ) {
 
         try {
 
@@ -1568,11 +2110,15 @@
                     "?updated=" +
                     Date.now(),
                     {
-                        cache: "no-store"
+                        cache:
+                            "no-store"
                     }
                 );
 
-            if (!response.ok) {
+
+            if (
+                !response.ok
+            ) {
 
                 throw new Error(
                     "Could not load checklist.json"
@@ -1580,14 +2126,18 @@
 
             }
 
+
             const newChecklist =
                 await response.json();
+
 
             if (
                 !newChecklist ||
                 typeof newChecklist !==
-                "object" ||
-                Array.isArray(newChecklist)
+                    "object" ||
+                Array.isArray(
+                    newChecklist
+                )
             ) {
 
                 throw new Error(
@@ -1596,68 +2146,81 @@
 
             }
 
-            const signature =
+
+            const newSignature =
                 JSON.stringify(
                     newChecklist
                 );
 
+
             if (
-                signature ===
-                checklistSignature
+                !forceRender &&
+                newSignature ===
+                    checklistSignature
             ) {
 
                 return;
 
             }
 
+
             checklist =
                 newChecklist;
 
+
             checklistSignature =
-                signature;
+                newSignature;
 
-            renderWorlds();
 
-            renderChecklist();
-
-            updateProgress();
+            renderAll();
 
         } catch (error) {
 
             console.error(
-                "Checklist loading error:",
+                "Could not load checklist.json:",
                 error
             );
 
+
             if (
-                Object.keys(checklist).length ===
-                0
+                Object.keys(
+                    checklist
+                ).length === 0
             ) {
 
-                checklistElement.innerHTML =
-                    '<div class="error">' +
-                    'Could not load checklist.json.' +
-                    '</div>';
+                checklistElement.innerHTML = `
+                    <div class="empty">
+                        Could not load checklist.json.
+                        Make sure it is in the same folder as index.html.
+                    </div>
+                `;
 
             }
 
         }
+
     }
+
+
+    worldSelect.addEventListener(
+        "change",
+        event => {
+
+            switchWorld(
+                event.target.value
+            );
+
+        }
+    );
 
 
     newWorldButton.addEventListener(
         "click",
-        createNewWorld
+        createWorld
     );
 
 
-    renameWorldButton.addEventListener(
-        "click",
-        renameCurrentWorld
-    );
-
-
-    resetWorldButton.addEventListener(
+    resetButton.addEventListener(
         "click",
         resetCurrentWorld
     );
@@ -1669,19 +2232,47 @@
     );
 
 
+    window.addEventListener(
+        "storage",
+        event => {
+
+            if (
+                event.key ===
+                    WORLDS_STORAGE_KEY ||
+                event.key ===
+                    CURRENT_WORLD_STORAGE_KEY
+            ) {
+
+                loadWorlds();
+
+                renderAll();
+
+            }
+
+        }
+    );
+
+
     loadWorlds();
 
-    renderWorlds();
+    renderAll();
 
-    updateProgress();
-
-    loadChecklist();
+    loadChecklist(
+        true
+    );
 
 
     setInterval(
-        loadChecklist,
+        () => {
+
+            loadChecklist(
+                false
+            );
+
+        },
         JSON_CHECK_INTERVAL
     );
+
 </script>
 
 </body>
