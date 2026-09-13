@@ -567,8 +567,6 @@
             </header>
 
 
-            <!-- Latest version button -->
-
             <a
                 id="latest"
                 class="latest"
@@ -591,8 +589,6 @@
             </a>
 
 
-            <!-- Old versions toggle -->
-
             <button
                 id="oldVersionsButton"
                 class="old-versions-button"
@@ -601,8 +597,6 @@
                 See old versions
             </button>
 
-
-            <!-- All versions -->
 
             <section
                 id="oldVersions"
@@ -689,14 +683,14 @@
         /*
             Change ONLY this number.
 
-            Example:
+            Examples:
 
-            2 = v2.0
-            10 = v10.0
-            27 = v27.0
+            2    = v2
+            10   = v10
+            2000 = v2000
         */
 
-        const versionCount = 20000;
+        const versionCount = 2000;
 
 
         /*
@@ -750,15 +744,15 @@
 
 
         /*
-            Format the version for display.
+            Display version.
 
-            2 becomes 2.0
-            10 becomes 10.0
+            2 -> v2
+            2000 -> v2000
         */
 
         function formatVersion(version) {
 
-            return version + ".0";
+            return "v" + version;
 
         }
 
@@ -772,19 +766,24 @@
             latestVersion;
 
         latestVersionText.textContent =
-            "v" +
             formatVersion(
                 latestVersion
             );
 
 
         /*
-            Generate ALL versions.
+            Generate every version.
 
-            Newest version appears first.
+            Newest first.
 
-            The newest version is included in
-            the full list and marked "(Latest)".
+            Example:
+
+            v2000 (Latest)
+            v1999
+            v1998
+            ...
+            v2
+            v1
         */
 
         for (
@@ -801,19 +800,9 @@
             link.className =
                 "version";
 
-            /*
-                Keep the actual URL as /v2,
-                /v3, etc.
-            */
-
             link.href =
                 "./v" +
                 version;
-
-            /*
-                Store the plain number so searching
-                works with both 2 and 2.0.
-            */
 
             link.dataset.version =
                 String(version);
@@ -828,7 +817,6 @@
                 "version-number";
 
             number.textContent =
-                "v" +
                 formatVersion(
                     version
                 );
@@ -862,6 +850,7 @@
             versions.appendChild(
                 link
             );
+
         }
 
 
@@ -871,11 +860,16 @@
             Examples:
 
             2
-            2.0
             v2
-            v2.0
             version 2
-            version 2.0
+
+            Searching "2" will match:
+
+            v2
+            v20
+            v200
+            v2000
+            etc.
         */
 
         function filterVersions() {
@@ -892,20 +886,6 @@
                         /^v/,
                         ""
                     );
-
-
-            /*
-                Normalize searches such as:
-
-                2.0 -> 2
-                2 -> 2
-            */
-
-            const normalizedQuery =
-                query.replace(
-                    /\.0$/,
-                    ""
-                );
 
 
             const versionLinks =
@@ -925,9 +905,9 @@
 
 
                     const matches =
-                        normalizedQuery === "" ||
+                        query === "" ||
                         version.includes(
-                            normalizedQuery
+                            query
                         );
 
 
@@ -1027,6 +1007,7 @@
             ) {
                 event.preventDefault();
             }
+
         }
 
 
@@ -1062,6 +1043,7 @@
             }
         );
 
+
         document.addEventListener(
             "gesturechange",
             function (event) {
@@ -1071,6 +1053,7 @@
                 passive: false
             }
         );
+
 
         document.addEventListener(
             "gestureend",
@@ -1147,8 +1130,7 @@
 
 
         /*
-            Prevent Ctrl/Cmd keyboard zoom shortcuts
-            where the browser allows cancellation.
+            Prevent Ctrl/Cmd keyboard zoom shortcuts.
         */
 
         document.addEventListener(
