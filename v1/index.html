@@ -5,17 +5,4591 @@
 
     <meta
         name="viewport"
-        content="width=device-width, initial-scale=1.0"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"
     >
 
-    <title>Redirecting</title>
+    <meta
+        name="apple-mobile-web-app-capable"
+        content="yes"
+    >
 
-    <script>
-        window.location.replace("/Minecraft");
-    </script>
+    <meta
+        name="mobile-web-app-capable"
+        content="yes"
+    >
+
+    <meta
+        name="format-detection"
+        content="telephone=no"
+    >
+
+    <title>Minecraft Survival Checklist</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        html {
+            width: 100%;
+            min-height: 100%;
+            touch-action: manipulation;
+            -webkit-text-size-adjust: 100%;
+            -ms-text-size-adjust: 100%;
+        }
+
+        body {
+            margin: 0;
+            width: 100%;
+            min-height: 100vh;
+            min-height: 100dvh;
+
+            background: #030405;
+            color: #f8fafc;
+
+            font-family:
+                -apple-system,
+                BlinkMacSystemFont,
+                "Segoe UI",
+                Roboto,
+                Helvetica,
+                Arial,
+                sans-serif;
+
+            -webkit-text-size-adjust: 100%;
+            -ms-text-size-adjust: 100%;
+            touch-action: manipulation;
+            overflow-x: hidden;
+        }
+
+        button,
+        input,
+        textarea,
+        select {
+            font-family: inherit;
+            touch-action: manipulation;
+        }
+
+        input,
+        textarea,
+        select {
+            font-size: 16px;
+        }
+
+        button {
+            -webkit-user-select: none;
+            user-select: none;
+        }
+
+        :root {
+            --bg: #030405;
+            --panel: #080b0f;
+            --panel-hover: #0d1117;
+            --item: #070a0e;
+
+            --border: #171c23;
+
+            --text: #f8fafc;
+            --text-bright: #ffffff;
+            --muted: #a7b2c1;
+            --muted-dark: #6f7a89;
+
+            --green: #61d77b;
+            --green-dark: #27783b;
+
+            --red: #ef6b6b;
+            --red-dark: #592929;
+
+            --radius: 10px;
+        }
+
+        .container {
+            width: min(1180px, calc(100% - 28px));
+            margin: 0 auto;
+            padding: 20px 0 50px;
+        }
+
+        header {
+            padding: 4px 2px 17px;
+        }
+
+        header h1 {
+            margin: 0;
+            color: var(--text-bright);
+            font-size: 1.9rem;
+            line-height: 1.2;
+            letter-spacing: -0.025em;
+        }
+
+        header p {
+            margin: 7px 0 0;
+            color: var(--muted);
+            font-size: 0.9rem;
+            line-height: 1.45;
+        }
+
+        .controls {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) auto auto;
+            gap: 8px;
+            margin-bottom: 13px;
+        }
+
+        .search-wrap {
+            min-width: 0;
+        }
+
+        .search-wrap input {
+            width: 100%;
+            min-height: 44px;
+            padding: 0 13px;
+
+            border: 1px solid var(--border);
+            border-radius: 9px;
+
+            outline: none;
+
+            background: #06080b;
+            color: var(--text-bright);
+        }
+
+        .search-wrap input::placeholder {
+            color: #788495;
+        }
+
+        .search-wrap input:focus {
+            border-color: #303945;
+        }
+
+        button {
+            min-height: 44px;
+            padding: 0 14px;
+
+            border: 1px solid var(--border);
+            border-radius: 9px;
+
+            background: var(--panel);
+            color: var(--text-bright);
+
+            cursor: pointer;
+            font-weight: 650;
+        }
+
+        button:hover {
+            background: var(--panel-hover);
+        }
+
+        button:active {
+            transform: translateY(1px);
+        }
+
+        .button-primary {
+            background: #246b35;
+            border-color: #246b35;
+            color: #ffffff;
+        }
+
+        .button-primary:hover {
+            background: #2d7c40;
+        }
+
+        .button-danger {
+            background: transparent;
+            border-color: var(--red-dark);
+            color: #ff8b8b;
+        }
+
+        .button-danger:hover {
+            background: #160c0d;
+        }
+
+        .filters {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 8px;
+            margin-bottom: 13px;
+        }
+
+        .filter-group {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+
+            min-width: 0;
+
+            padding: 8px 10px;
+
+            background: var(--panel);
+            border: 1px solid var(--border);
+            border-radius: 9px;
+        }
+
+        .filter-label {
+            flex: 0 0 auto;
+
+            color: var(--muted);
+
+            font-size: 0.72rem;
+            font-weight: 750;
+
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+        }
+
+        .filter-group select {
+            width: 100%;
+            min-width: 0;
+            min-height: 36px;
+
+            padding: 0 9px;
+
+            border: 1px solid var(--border);
+            border-radius: 7px;
+
+            outline: none;
+
+            background: #06080b;
+            color: var(--text-bright);
+
+            cursor: pointer;
+        }
+
+        .filter-group select:focus {
+            border-color: #303945;
+        }
+
+        .score-grid {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 8px;
+            margin-bottom: 13px;
+        }
+
+        .score-box {
+            min-width: 0;
+            padding: 13px 14px;
+
+            background: var(--panel);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+        }
+
+        .score-label {
+            color: var(--muted);
+            font-size: 0.73rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.045em;
+        }
+
+        .score-value {
+            margin-top: 6px;
+            color: var(--text-bright);
+            font-size: 1.55rem;
+            font-weight: 850;
+            line-height: 1.1;
+        }
+
+        .score-subtext {
+            margin-top: 5px;
+            color: var(--muted);
+            font-size: 0.72rem;
+            line-height: 1.35;
+        }
+
+        .rank-row {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            margin-top: 7px;
+            flex-wrap: wrap;
+        }
+
+        .rank-badge {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+
+            padding: 4px 8px;
+
+            border: 1px solid currentColor;
+            border-radius: 5px;
+
+            font-size: 0.68rem;
+            font-weight: 850;
+            line-height: 1;
+
+            white-space: nowrap;
+        }
+
+        .rank-dirt {
+            color: #a47c53;
+            border-color: #60462f;
+        }
+
+        .rank-wood {
+            color: #ca9258;
+            border-color: #79532d;
+        }
+
+        .rank-stone {
+            color: #b7c0c9;
+            border-color: #59616b;
+        }
+
+        .rank-coal {
+            color: #9aa5b2;
+            border-color: #3c434d;
+        }
+
+        .rank-iron {
+            color: #dce2e8;
+            border-color: #727d88;
+        }
+
+        .rank-gold {
+            color: #efd064;
+            border-color: #947b27;
+        }
+
+        .rank-diamond {
+            color: #70e2d8;
+            border-color: #2e8881;
+        }
+
+        .rank-emerald {
+            color: #63dc91;
+            border-color: #2f8050;
+        }
+
+        .rank-netherite {
+            color: #baafca;
+            border-color: #60566d;
+        }
+
+        .rank-ender {
+            color: #cb96ff;
+            border-color: #684895;
+        }
+
+        .progress-section {
+            padding: 13px 14px;
+            margin-bottom: 13px;
+
+            background: var(--panel);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+        }
+
+        .progress-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            gap: 10px;
+            margin-bottom: 8px;
+        }
+
+        .progress-title {
+            color: var(--text-bright);
+            font-size: 0.82rem;
+            font-weight: 750;
+        }
+
+        .progress-percent {
+            color: var(--muted);
+            font-size: 0.77rem;
+        }
+
+        .progress-info {
+            margin-bottom: 8px;
+            color: var(--muted);
+            font-size: 0.72rem;
+            line-height: 1.4;
+        }
+
+        .progress-track {
+            width: 100%;
+            height: 8px;
+            overflow: hidden;
+            border-radius: 999px;
+            background: #14191f;
+        }
+
+        .progress-fill {
+            width: 0%;
+            height: 100%;
+            background: var(--green);
+            border-radius: inherit;
+            transition: width 0.2s ease;
+        }
+
+        .profiles-section {
+            margin-bottom: 13px;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            gap: 12px;
+            margin-bottom: 9px;
+        }
+
+        .section-header h2 {
+            margin: 0;
+            color: var(--text-bright);
+            font-size: 1.15rem;
+        }
+
+        .section-header p {
+            margin: 4px 0 0;
+            color: var(--muted);
+            font-size: 0.76rem;
+            line-height: 1.4;
+        }
+
+        .profiles-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+            gap: 8px;
+        }
+
+        .profile-card {
+            min-width: 0;
+            padding: 13px;
+
+            border: 1px solid;
+            border-radius: 10px;
+
+            transition:
+                filter 0.15s ease,
+                opacity 0.15s ease;
+        }
+
+        .profile-card:hover {
+            filter: brightness(1.08);
+        }
+
+        .profile-card.active {
+            opacity: 0.72;
+        }
+
+        .profile-card.rank-dirt {
+            background: #17100a;
+            border-color: #60462f;
+        }
+
+        .profile-card.rank-wood {
+            background: #1a1209;
+            border-color: #79532d;
+        }
+
+        .profile-card.rank-stone {
+            background: #111419;
+            border-color: #59616b;
+        }
+
+        .profile-card.rank-coal {
+            background: #0d1014;
+            border-color: #3c434d;
+        }
+
+        .profile-card.rank-iron {
+            background: #15191d;
+            border-color: #727d88;
+        }
+
+        .profile-card.rank-gold {
+            background: #1a170b;
+            border-color: #947b27;
+        }
+
+        .profile-card.rank-diamond {
+            background: #081716;
+            border-color: #2e8881;
+        }
+
+        .profile-card.rank-emerald {
+            background: #09170f;
+            border-color: #2f8050;
+        }
+
+        .profile-card.rank-netherite {
+            background: #110e15;
+            border-color: #60566d;
+        }
+
+        .profile-card.rank-ender {
+            background: #120b1b;
+            border-color: #684895;
+        }
+
+        .profile-top {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 8px;
+        }
+
+        .profile-name {
+            min-width: 0;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+
+            color: var(--text-bright);
+            font-size: 0.98rem;
+            font-weight: 800;
+        }
+
+        .profile-current {
+            color: var(--muted);
+            font-size: 0.65rem;
+            font-weight: 800;
+            white-space: nowrap;
+        }
+
+        .profile-rank {
+            margin-top: 7px;
+        }
+
+        .profile-score {
+            margin-top: 9px;
+            color: var(--text-bright);
+            font-size: 1.3rem;
+            font-weight: 850;
+        }
+
+        .profile-score span {
+            color: var(--muted);
+            font-size: 0.7rem;
+            font-weight: 500;
+        }
+
+        .profile-progress {
+            margin-top: 4px;
+            color: var(--muted);
+            font-size: 0.71rem;
+            line-height: 1.4;
+        }
+
+        .profile-next {
+            margin-top: 4px;
+            color: var(--muted-dark);
+            font-size: 0.68rem;
+            line-height: 1.35;
+        }
+
+        .profile-actions {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 5px;
+            margin-top: 11px;
+        }
+
+        .profile-actions button {
+            min-width: 0;
+            min-height: 38px;
+            padding: 6px 4px;
+            font-size: 0.7rem;
+        }
+
+        main {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .category {
+            overflow: hidden;
+            background: var(--panel);
+            border: 1px solid var(--border);
+            border-radius: 9px;
+        }
+
+        .category-header {
+            width: 100%;
+            min-height: 50px;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            gap: 10px;
+            padding: 12px 14px;
+
+            border: 0;
+            border-radius: 0;
+
+            background: transparent;
+
+            text-align: left;
+        }
+
+        .category-header:hover {
+            background: #0c1015;
+        }
+
+        .category-title-wrap {
+            min-width: 0;
+        }
+
+        .category-title {
+            color: var(--text-bright);
+            font-size: 0.9rem;
+            font-weight: 800;
+            overflow-wrap: anywhere;
+        }
+
+        .category-description {
+            margin-top: 3px;
+            color: var(--muted);
+            font-size: 0.72rem;
+            line-height: 1.35;
+        }
+
+        .category-right {
+            flex: 0 0 auto;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .category-count {
+            color: var(--muted);
+            font-size: 0.69rem;
+            font-weight: 700;
+            white-space: nowrap;
+        }
+
+        .category-arrow {
+            color: #8290a1;
+            font-size: 0.72rem;
+
+            transition:
+                transform 0.15s ease;
+        }
+
+        .category.open .category-arrow {
+            transform: rotate(180deg);
+        }
+
+        .category-content {
+            display: none;
+            padding: 0 7px 7px;
+            border-top: 1px solid var(--border);
+        }
+
+        .category.open > .category-content {
+            display: block;
+        }
+
+        .goal-list {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            padding-top: 7px;
+        }
+
+        .goal-item {
+            display: flex;
+            align-items: flex-start;
+
+            gap: 9px;
+            min-width: 0;
+            padding: 10px;
+
+            background: var(--item);
+            border: 1px solid #131820;
+            border-radius: 8px;
+
+            cursor: pointer;
+
+            touch-action: manipulation;
+            -webkit-user-select: none;
+            user-select: none;
+
+            transition:
+                background 0.12s ease,
+                border-color 0.12s ease;
+        }
+
+        .goal-item:hover {
+            background: #0b0f14;
+            border-color: #1b222c;
+        }
+
+        .goal-item:active {
+            background: #0e1319;
+        }
+
+        .goal-item.completed {
+            opacity: 0.58;
+        }
+
+        .goal-item input[type="checkbox"] {
+            width: 19px;
+            height: 19px;
+
+            flex: 0 0 19px;
+
+            margin: 1px 0 0;
+
+            cursor: pointer;
+
+            accent-color: var(--green);
+
+            pointer-events: none;
+        }
+
+        .goal-info {
+            flex: 1;
+            min-width: 0;
+            pointer-events: none;
+        }
+
+        .goal-name {
+            color: var(--text-bright);
+            font-size: 0.87rem;
+            font-weight: 700;
+            line-height: 1.35;
+            overflow-wrap: anywhere;
+        }
+
+        .goal-item.completed .goal-name {
+            text-decoration: line-through;
+        }
+
+        .goal-description {
+            margin-top: 3px;
+            color: var(--muted);
+            font-size: 0.74rem;
+            line-height: 1.45;
+            overflow-wrap: anywhere;
+        }
+
+        .goal-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+            margin-top: 6px;
+        }
+
+        .tag {
+            display: inline-flex;
+            align-items: center;
+
+            min-height: 21px;
+            padding: 3px 7px;
+
+            border-radius: 4px;
+
+            background: #151a21;
+            color: #d3dae3;
+
+            font-size: 0.63rem;
+            font-weight: 700;
+
+            white-space: nowrap;
+        }
+
+        .tag-score {
+            color: #efd064;
+        }
+
+        .empty-state {
+            padding: 20px 12px;
+            color: var(--muted);
+            text-align: center;
+            font-size: 0.82rem;
+        }
+
+        footer {
+            margin-top: 14px;
+            color: #566171;
+            text-align: center;
+            font-size: 0.68rem;
+        }
+
+        .modal {
+            position: fixed;
+            inset: 0;
+            z-index: 1000;
+
+            display: none;
+            align-items: center;
+            justify-content: center;
+
+            padding: 12px;
+
+            background: rgba(0, 0, 0, 0.84);
+
+            overscroll-behavior: contain;
+        }
+
+        .modal.show {
+            display: flex;
+        }
+
+        .modal-card {
+            width: min(440px, 100%);
+            max-height: calc(100dvh - 24px);
+
+            overflow-y: auto;
+
+            padding: 19px;
+
+            background: #080b0f;
+            border: 1px solid #202732;
+            border-radius: 11px;
+
+            box-shadow:
+                0 20px 60px rgba(0, 0, 0, 0.7);
+        }
+
+        .modal-card h2 {
+            margin: 0;
+            color: var(--text-bright);
+            font-size: 1.15rem;
+        }
+
+        .modal-card p {
+            margin: 7px 0 0;
+            color: var(--muted);
+            font-size: 0.78rem;
+            line-height: 1.45;
+        }
+
+        .form-group {
+            margin-top: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 6px;
+            color: var(--text);
+            font-size: 0.75rem;
+            font-weight: 700;
+        }
+
+        .form-group input {
+            width: 100%;
+            min-height: 44px;
+            padding: 0 11px;
+
+            border: 1px solid var(--border);
+            border-radius: 8px;
+
+            outline: none;
+
+            background: #05070a;
+            color: var(--text-bright);
+        }
+
+        .form-group input:focus {
+            border-color: #34404e;
+        }
+
+        .modal-actions {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 7px;
+            margin-top: 17px;
+        }
+
+        .modal-actions button {
+            width: 100%;
+            min-height: 44px;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        @media (max-width: 800px) {
+
+            .container {
+                width: min(100% - 20px, 600px);
+                padding: 16px 0 35px;
+            }
+
+            header {
+                padding: 2px 1px 14px;
+            }
+
+            header h1 {
+                font-size: 1.6rem;
+            }
+
+            header p {
+                font-size: 0.83rem;
+            }
+
+            .controls {
+                grid-template-columns: 1fr;
+                gap: 7px;
+            }
+
+            .controls button {
+                width: 100%;
+            }
+
+            .filters {
+                grid-template-columns: 1fr;
+                gap: 7px;
+            }
+
+            .filter-group {
+                width: 100%;
+            }
+
+            .score-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 7px;
+            }
+
+            .score-box {
+                padding: 12px 10px;
+            }
+
+            .score-value {
+                font-size: 1.4rem;
+            }
+
+            .profiles-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .section-header {
+                align-items: stretch;
+                flex-direction: column;
+                gap: 8px;
+            }
+
+            .section-header button {
+                width: 100%;
+            }
+
+            .profile-card {
+                padding: 12px;
+            }
+
+            .category-header {
+                padding: 12px;
+            }
+
+            .goal-item {
+                padding: 10px 9px;
+            }
+
+            .modal-card {
+                width: calc(100% - 24px);
+                padding: 17px;
+            }
+
+            .modal-actions {
+                grid-template-columns: 1fr;
+            }
+
+        }
+
+        @media (max-width: 480px) {
+
+            .container {
+                width: calc(100% - 14px);
+                padding-top: 10px;
+            }
+
+            header h1 {
+                font-size: 1.4rem;
+            }
+
+            header p {
+                font-size: 0.79rem;
+            }
+
+            .score-grid {
+                gap: 6px;
+            }
+
+            .score-box {
+                padding: 11px 7px;
+            }
+
+            .score-label {
+                font-size: 0.68rem;
+            }
+
+            .score-value {
+                font-size: 1.22rem;
+            }
+
+            .score-subtext {
+                font-size: 0.67rem;
+            }
+
+            .rank-badge {
+                font-size: 0.63rem;
+                padding: 3px 6px;
+            }
+
+            .filter-group {
+                padding: 7px 8px;
+            }
+
+            .filter-label {
+                font-size: 0.67rem;
+            }
+
+            .filter-group select {
+                min-height: 35px;
+            }
+
+            .profile-card {
+                padding: 11px;
+            }
+
+            .profile-name {
+                font-size: 0.96rem;
+            }
+
+            .profile-score {
+                font-size: 1.2rem;
+            }
+
+            .profile-actions button {
+                font-size: 0.68rem;
+                padding: 6px 2px;
+            }
+
+            .category-header {
+                padding: 11px 9px;
+            }
+
+            .category-title {
+                font-size: 0.86rem;
+            }
+
+            .category-count {
+                font-size: 0.65rem;
+            }
+
+            .category-content {
+                padding: 0 5px 5px;
+            }
+
+            .goal-list {
+                padding-top: 5px;
+            }
+
+            .goal-item {
+                padding: 9px 7px;
+                gap: 8px;
+            }
+
+            .goal-name {
+                font-size: 0.84rem;
+            }
+
+            .goal-description {
+                font-size: 0.72rem;
+            }
+
+        }
+
+        @media (max-width: 360px) {
+
+            .score-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .profile-actions {
+                grid-template-columns: 1fr;
+            }
+
+            .profile-actions button {
+                width: 100%;
+            }
+
+            .category-right {
+                gap: 5px;
+            }
+
+            .category-count {
+                display: none;
+            }
+
+        }
+
+    </style>
 </head>
 
 <body>
-    <h1>Redirecting</h1>
+
+<div class="container">
+
+    <header>
+
+        <h1>
+            Minecraft Survival Checklist
+        </h1>
+
+        <p>
+            Track survival goals, achievements, Gamerscore,
+            profiles, and Minecraft-themed ranks.
+        </p>
+
+    </header>
+
+
+    <div class="controls">
+
+        <div class="search-wrap">
+
+            <input
+                id="searchInput"
+                type="search"
+                placeholder="Search goals and achievements..."
+                autocomplete="off"
+                autocapitalize="off"
+                spellcheck="false"
+            >
+
+        </div>
+
+
+        <button
+            id="addProfileButton"
+            class="button-primary"
+            type="button"
+        >
+            Add Profile
+        </button>
+
+
+        <button
+            id="resetButton"
+            class="button-danger"
+            type="button"
+        >
+            Reset Goals
+        </button>
+
+    </div>
+
+
+    <div class="filters">
+
+        <div class="filter-group">
+
+            <label
+                class="filter-label"
+                for="completionFilter"
+            >
+                Show
+            </label>
+
+            <select
+                id="completionFilter"
+            >
+
+                <option value="all">
+                    All
+                </option>
+
+                <option value="completed">
+                    Completed
+                </option>
+
+                <option value="incomplete">
+                    Incomplete
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <div class="filter-group">
+
+            <label
+                class="filter-label"
+                for="difficultyFilter"
+            >
+                Difficulty
+            </label>
+
+            <select
+                id="difficultyFilter"
+            >
+
+                <option value="all">
+                    All Difficulties
+                </option>
+
+                <option value="easy">
+                    Easy
+                </option>
+
+                <option value="medium">
+                    Medium
+                </option>
+
+                <option value="hard">
+                    Hard
+                </option>
+
+                <option value="epic">
+                    Epic
+                </option>
+
+            </select>
+
+        </div>
+
+    </div>
+
+
+    <section class="score-grid">
+
+        <div class="score-box">
+
+            <div class="score-label">
+                Global Score
+            </div>
+
+            <div
+                id="globalScore"
+                class="score-value"
+            >
+                0G
+            </div>
+
+            <div
+                id="globalScoreSubtext"
+                class="score-subtext"
+            >
+                0 / 0 possible
+            </div>
+
+        </div>
+
+
+        <div class="score-box">
+
+            <div class="score-label">
+
+                <span id="currentProfileName">
+                    Your
+                </span>
+
+                Score
+
+            </div>
+
+            <div
+                id="profileScore"
+                class="score-value"
+            >
+                0G
+            </div>
+
+            <div
+                id="profileScoreSubtext"
+                class="score-subtext"
+            >
+                No profile selected
+            </div>
+
+            <div class="rank-row">
+
+                <span
+                    id="currentRankBadge"
+                    class="rank-badge rank-dirt"
+                >
+                    Dirt
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <div class="score-box">
+
+            <div class="score-label">
+                Achievements
+            </div>
+
+            <div
+                id="achievementScore"
+                class="score-value"
+            >
+                0G
+            </div>
+
+            <div
+                id="achievementScoreSubtext"
+                class="score-subtext"
+            >
+                0 completed
+            </div>
+
+        </div>
+
+
+        <div class="score-box">
+
+            <div class="score-label">
+                Goals
+            </div>
+
+            <div
+                id="goalScore"
+                class="score-value"
+            >
+                0G
+            </div>
+
+            <div
+                id="goalScoreSubtext"
+                class="score-subtext"
+            >
+                0 completed
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <section class="progress-section">
+
+        <div class="progress-header">
+
+            <div class="progress-title">
+                Overall Progress
+            </div>
+
+            <div
+                id="progressPercent"
+                class="progress-percent"
+            >
+                0%
+            </div>
+
+        </div>
+
+
+        <div
+            id="progressInfo"
+            class="progress-info"
+        >
+            0 / 0 completed · All goals and achievements across all users
+        </div>
+
+
+        <div class="progress-track">
+
+            <div
+                id="progressFill"
+                class="progress-fill"
+            ></div>
+
+        </div>
+
+    </section>
+
+
+    <section class="profiles-section">
+
+        <div class="section-header">
+
+            <div>
+
+                <h2>
+                    Profiles
+                </h2>
+
+                <p>
+                    Each profile tracks its own achievements and Gamerscore.
+                </p>
+
+            </div>
+
+
+            <button
+                id="addProfileButtonSecondary"
+                class="button-primary"
+                type="button"
+            >
+                Add Profile
+            </button>
+
+        </div>
+
+
+        <div
+            id="profilesGrid"
+            class="profiles-grid"
+        ></div>
+
+    </section>
+
+
+    <main id="categories"></main>
+
+
+    <footer>
+        Minecraft Survival Checklist
+    </footer>
+
+</div>
+
+
+<div
+    id="profileModal"
+    class="modal"
+    aria-hidden="true"
+>
+
+    <div
+        class="modal-card"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="profileModalTitle"
+    >
+
+        <h2 id="profileModalTitle">
+            Add Profile
+        </h2>
+
+        <p id="profileModalDescription">
+            Create a profile for achievement progress.
+        </p>
+
+
+        <div class="form-group">
+
+            <label for="profileNameInput">
+                Profile Name
+            </label>
+
+            <input
+                id="profileNameInput"
+                type="text"
+                maxlength="32"
+                autocomplete="off"
+                placeholder="Player name"
+            >
+
+        </div>
+
+
+        <div class="modal-actions">
+
+            <button
+                id="profileCancelButton"
+                type="button"
+            >
+                Cancel
+            </button>
+
+            <button
+                id="profileSaveButton"
+                class="button-primary"
+                type="button"
+            >
+                Save Profile
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<div
+    id="confirmModal"
+    class="modal"
+    aria-hidden="true"
+>
+
+    <div
+        class="modal-card"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="confirmModalTitle"
+    >
+
+        <h2 id="confirmModalTitle">
+            Confirm
+        </h2>
+
+        <p id="confirmModalMessage">
+            Are you sure?
+        </p>
+
+
+        <div class="modal-actions">
+
+            <button
+                id="confirmCancelButton"
+                type="button"
+            >
+                Cancel
+            </button>
+
+            <button
+                id="confirmAcceptButton"
+                class="button-danger"
+                type="button"
+            >
+                Confirm
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+
+    const GOALS_STORAGE_KEY =
+        "minecraft-survival-goals-v1";
+
+    const PROFILES_STORAGE_KEY =
+        "minecraft-survival-profiles-v2";
+
+    const ACTIVE_PROFILE_STORAGE_KEY =
+        "minecraft-active-profile-v2";
+
+
+    const DIFFICULTY_SCORES = {
+        easy: 10,
+        medium: 25,
+        hard: 50,
+        epic: 100
+    };
+
+
+    const DEFAULT_DIFFICULTY =
+        "medium";
+
+
+    const MAX_PROFILES =
+        12;
+
+
+    const RANKS = [
+
+        {
+            name: "Dirt",
+            min: 0,
+            max: 49,
+            className: "rank-dirt"
+        },
+
+        {
+            name: "Wood",
+            min: 50,
+            max: 149,
+            className: "rank-wood"
+        },
+
+        {
+            name: "Stone",
+            min: 150,
+            max: 299,
+            className: "rank-stone"
+        },
+
+        {
+            name: "Coal",
+            min: 300,
+            max: 499,
+            className: "rank-coal"
+        },
+
+        {
+            name: "Iron",
+            min: 500,
+            max: 749,
+            className: "rank-iron"
+        },
+
+        {
+            name: "Gold",
+            min: 750,
+            max: 999,
+            className: "rank-gold"
+        },
+
+        {
+            name: "Diamond",
+            min: 1000,
+            max: 1499,
+            className: "rank-diamond"
+        },
+
+        {
+            name: "Emerald",
+            min: 1500,
+            max: 1999,
+            className: "rank-emerald"
+        },
+
+        {
+            name: "Netherite",
+            min: 2000,
+            max: 2499,
+            className: "rank-netherite"
+        },
+
+        {
+            name: "Ender Dragon",
+            min: 2500,
+            max: 2980,
+            className: "rank-ender"
+        }
+
+    ];
+
+
+    let goalsData = null;
+
+    let profiles = [];
+
+    let activeProfileId = null;
+
+    let editingProfileId = null;
+
+    let confirmAction = null;
+
+    let openCategoryId = null;
+
+
+    const searchInput =
+        document.getElementById(
+            "searchInput"
+        );
+
+    const completionFilter =
+        document.getElementById(
+            "completionFilter"
+        );
+
+    const difficultyFilter =
+        document.getElementById(
+            "difficultyFilter"
+        );
+
+    const categoriesElement =
+        document.getElementById(
+            "categories"
+        );
+
+    const profilesGrid =
+        document.getElementById(
+            "profilesGrid"
+        );
+
+    const profileModal =
+        document.getElementById(
+            "profileModal"
+        );
+
+    const confirmModal =
+        document.getElementById(
+            "confirmModal"
+        );
+
+    const profileNameInput =
+        document.getElementById(
+            "profileNameInput"
+        );
+
+
+    function loadProfiles() {
+
+        try {
+
+            const stored =
+                JSON.parse(
+                    localStorage.getItem(
+                        PROFILES_STORAGE_KEY
+                    )
+                );
+
+            if (
+                Array.isArray(stored)
+            ) {
+
+                profiles =
+                    stored;
+
+            }
+
+        } catch (error) {
+
+            profiles = [];
+
+        }
+
+
+        const storedActiveProfile =
+            localStorage.getItem(
+                ACTIVE_PROFILE_STORAGE_KEY
+            );
+
+
+        if (
+            storedActiveProfile &&
+            profiles.some(
+                profile =>
+                    profile.id ===
+                    storedActiveProfile
+            )
+        ) {
+
+            activeProfileId =
+                storedActiveProfile;
+
+        } else if (
+            profiles.length > 0
+        ) {
+
+            activeProfileId =
+                profiles[0].id;
+
+        } else {
+
+            activeProfileId =
+                null;
+
+        }
+
+
+        saveProfiles();
+
+    }
+
+
+    function saveProfiles() {
+
+        localStorage.setItem(
+            PROFILES_STORAGE_KEY,
+            JSON.stringify(profiles)
+        );
+
+
+        if (activeProfileId) {
+
+            localStorage.setItem(
+                ACTIVE_PROFILE_STORAGE_KEY,
+                activeProfileId
+            );
+
+        } else {
+
+            localStorage.removeItem(
+                ACTIVE_PROFILE_STORAGE_KEY
+            );
+
+        }
+
+    }
+
+
+    function loadSharedGoals() {
+
+        try {
+
+            const stored =
+                JSON.parse(
+                    localStorage.getItem(
+                        GOALS_STORAGE_KEY
+                    )
+                );
+
+
+            if (
+                stored &&
+                typeof stored === "object"
+            ) {
+
+                return stored;
+
+            }
+
+        } catch (error) {
+        }
+
+
+        return {};
+
+    }
+
+
+    function saveSharedGoals(
+        progress
+    ) {
+
+        localStorage.setItem(
+            GOALS_STORAGE_KEY,
+            JSON.stringify(progress)
+        );
+
+    }
+
+
+    function getActiveProfile() {
+
+        return profiles.find(
+            profile =>
+                profile.id ===
+                activeProfileId
+        ) || null;
+
+    }
+
+
+    function getCategories() {
+
+        if (
+            !goalsData ||
+            !Array.isArray(
+                goalsData.categories
+            )
+        ) {
+
+            return [];
+
+        }
+
+
+        return goalsData.categories;
+
+    }
+
+
+    function getAllItems() {
+
+        const result = [];
+
+
+        getCategories().forEach(
+            category => {
+
+                if (
+                    !category ||
+                    !Array.isArray(
+                        category.items
+                    )
+                ) {
+
+                    return;
+
+                }
+
+
+                category.items.forEach(
+                    item => {
+
+                        if (
+                            item &&
+                            typeof item === "object"
+                        ) {
+
+                            result.push(
+                                item
+                            );
+
+                        }
+
+                    }
+                );
+
+            }
+        );
+
+
+        return result;
+
+    }
+
+
+    function getAllAchievements() {
+
+        return getAllItems().filter(
+            item =>
+                isAchievement(item)
+        );
+
+    }
+
+
+    function getAllNormalGoals() {
+
+        return getAllItems().filter(
+            item =>
+                !isAchievement(item)
+        );
+
+    }
+
+
+    function getItemName(item) {
+
+        return String(
+            item.text ??
+            item.name ??
+            item.title ??
+            item.label ??
+            "Unnamed Goal"
+        );
+
+    }
+
+
+    function getItemDescription(item) {
+
+        return String(
+            item.requirement ??
+            item.description ??
+            item.desc ??
+            ""
+        );
+
+    }
+
+
+    function getItemDifficulty(item) {
+
+        const difficulty =
+            String(
+                item.difficulty ??
+                DEFAULT_DIFFICULTY
+            ).toLowerCase();
+
+
+        if (
+            Object.prototype.hasOwnProperty.call(
+                DIFFICULTY_SCORES,
+                difficulty
+            )
+        ) {
+
+            return difficulty;
+
+        }
+
+
+        return DEFAULT_DIFFICULTY;
+
+    }
+
+
+    function isAchievement(item) {
+
+        return Boolean(
+
+            item.achievement === true ||
+
+            item.type === "achievement" ||
+
+            item.category === "Achievements" ||
+
+            item.isAchievement === true ||
+
+            item.gamerscore !== undefined ||
+
+            item.Gamerscore !== undefined
+
+        );
+
+    }
+
+
+    function getAchievementGamerscore(
+        item
+    ) {
+
+        const value =
+            Number(
+                item.gamerscore ??
+                item.Gamerscore ??
+                item.score ??
+                0
+            );
+
+
+        return Number.isFinite(value)
+            ? value
+            : 0;
+
+    }
+
+
+    function getAchievementId(item) {
+
+        return String(
+            item.id ??
+            item.key ??
+            item.name ??
+            item.text ??
+            ""
+        );
+
+    }
+
+
+    function getGoalScore(item) {
+
+        if (
+            isAchievement(item)
+        ) {
+
+            return getAchievementGamerscore(
+                item
+            );
+
+        }
+
+
+        const explicit =
+            Number(
+                item.points ??
+                item.score ??
+                item.value
+            );
+
+
+        if (
+            Number.isFinite(explicit)
+        ) {
+
+            return explicit;
+
+        }
+
+
+        return DIFFICULTY_SCORES[
+            getItemDifficulty(item)
+        ];
+
+    }
+
+
+    function getSharedGoalScore() {
+
+        const progress =
+            loadSharedGoals();
+
+        let score = 0;
+
+
+        getAllNormalGoals()
+            .forEach(
+                item => {
+
+                    const id =
+                        String(
+                            item.id ?? ""
+                        );
+
+
+                    if (
+                        id &&
+                        progress[id]
+                    ) {
+
+                        score +=
+                            getGoalScore(
+                                item
+                            );
+
+                    }
+
+                }
+            );
+
+
+        return score;
+
+    }
+
+
+    function getTotalGoalScore() {
+
+        let score = 0;
+
+
+        getAllNormalGoals()
+            .forEach(
+                item => {
+
+                    score +=
+                        getGoalScore(
+                            item
+                        );
+
+                }
+            );
+
+
+        return score;
+
+    }
+
+
+    function getProfileAchievementScore(
+        profile
+    ) {
+
+        if (!profile) {
+            return 0;
+        }
+
+
+        const achievements =
+            profile.achievements || {};
+
+        let score = 0;
+
+
+        getAllAchievements()
+            .forEach(
+                item => {
+
+                    const id =
+                        getAchievementId(
+                            item
+                        );
+
+
+                    if (
+                        id &&
+                        achievements[id]
+                    ) {
+
+                        score +=
+                            getAchievementGamerscore(
+                                item
+                            );
+
+                    }
+
+                }
+            );
+
+
+        return score;
+
+    }
+
+
+    function getTotalAchievementGamerscore() {
+
+        let score = 0;
+
+
+        getAllAchievements()
+            .forEach(
+                item => {
+
+                    score +=
+                        getAchievementGamerscore(
+                            item
+                        );
+
+                }
+            );
+
+
+        return score;
+
+    }
+
+
+    function getProfileAchievementCount(
+        profile
+    ) {
+
+        if (!profile) {
+            return 0;
+        }
+
+
+        const achievements =
+            profile.achievements || {};
+
+        let count = 0;
+
+
+        getAllAchievements()
+            .forEach(
+                item => {
+
+                    const id =
+                        getAchievementId(
+                            item
+                        );
+
+
+                    if (
+                        id &&
+                        achievements[id]
+                    ) {
+
+                        count++;
+
+                    }
+
+                }
+            );
+
+
+        return count;
+
+    }
+
+
+    function getTotalAchievementCount() {
+
+        return getAllAchievements().length;
+
+    }
+
+
+    function getCurrentGlobalScore() {
+
+        let score =
+            getSharedGoalScore();
+
+
+        profiles.forEach(
+            profile => {
+
+                score +=
+                    getProfileAchievementScore(
+                        profile
+                    );
+
+            }
+        );
+
+
+        return score;
+
+    }
+
+
+    function getGlobalTotalPossible() {
+
+        const goalScore =
+            getTotalGoalScore();
+
+        const achievementScore =
+            getTotalAchievementGamerscore();
+
+
+        return (
+            goalScore +
+            achievementScore *
+            profiles.length
+        );
+
+    }
+
+
+    function getTotalProgressItems() {
+
+        const goalCount =
+            getAllNormalGoals().length;
+
+
+        const achievementCount =
+            getTotalAchievementCount();
+
+
+        return (
+            goalCount +
+            (
+                achievementCount *
+                profiles.length
+            )
+        );
+
+    }
+
+
+    function getCompletedProgressItems() {
+
+        const sharedProgress =
+            loadSharedGoals();
+
+
+        let completed =
+            getAllNormalGoals()
+                .filter(
+                    item => {
+
+                        const id =
+                            String(
+                                item.id ?? ""
+                            );
+
+
+                        return Boolean(
+                            id &&
+                            sharedProgress[id]
+                        );
+
+                    }
+                )
+                .length;
+
+
+        profiles.forEach(
+            profile => {
+
+                completed +=
+                    getProfileAchievementCount(
+                        profile
+                    );
+
+            }
+        );
+
+
+        return completed;
+
+    }
+
+
+    function getCurrentProfileScore() {
+
+        const profile =
+            getActiveProfile();
+
+
+        if (!profile) {
+            return 0;
+        }
+
+
+        return (
+            getSharedGoalScore() +
+            getProfileAchievementScore(
+                profile
+            )
+        );
+
+    }
+
+
+    function getProfileRank(profile) {
+
+        const score =
+            getProfileAchievementScore(
+                profile
+            );
+
+
+        let rank =
+            RANKS[0];
+
+
+        RANKS.forEach(
+            candidate => {
+
+                if (
+                    score >=
+                    candidate.min
+                ) {
+
+                    rank =
+                        candidate;
+
+                }
+
+            }
+        );
+
+
+        return rank;
+
+    }
+
+
+    function getNextRank(profile) {
+
+        const score =
+            getProfileAchievementScore(
+                profile
+            );
+
+
+        return (
+            RANKS.find(
+                rank =>
+                    rank.min > score
+            ) || null
+        );
+
+    }
+
+
+    function getAchievementPercentage(
+        profile
+    ) {
+
+        const total =
+            getTotalAchievementGamerscore();
+
+
+        if (!total) {
+            return 0;
+        }
+
+
+        return Math.min(
+            100,
+            (
+                getProfileAchievementScore(
+                    profile
+                ) /
+                total
+            ) *
+            100
+        );
+
+    }
+
+
+    function renderProfiles() {
+
+        profilesGrid.innerHTML =
+            "";
+
+
+        if (
+            profiles.length === 0
+        ) {
+
+            profilesGrid.innerHTML = `
+                <div class="empty-state">
+                    No profiles yet. Create one to track achievement progress.
+                </div>
+            `;
+
+            return;
+
+        }
+
+
+        profiles.forEach(
+            profile => {
+
+                const rank =
+                    getProfileRank(
+                        profile
+                    );
+
+
+                const nextRank =
+                    getNextRank(
+                        profile
+                    );
+
+
+                const achievementScore =
+                    getProfileAchievementScore(
+                        profile
+                    );
+
+
+                const achievementCount =
+                    getProfileAchievementCount(
+                        profile
+                    );
+
+
+                const totalAchievements =
+                    getTotalAchievementCount();
+
+
+                const percentage =
+                    getAchievementPercentage(
+                        profile
+                    );
+
+
+                const isActive =
+                    profile.id ===
+                    activeProfileId;
+
+
+                const card =
+                    document.createElement(
+                        "div"
+                    );
+
+
+                card.className =
+                    "profile-card " +
+                    rank.className +
+                    (
+                        isActive
+                            ? " active"
+                            : ""
+                    );
+
+
+                card.innerHTML = `
+
+                    <div class="profile-top">
+
+                        <div class="profile-name">
+                            ${escapeHTML(
+                                profile.name
+                            )}
+                        </div>
+
+                        ${
+                            isActive
+                                ? `
+                                    <div class="profile-current">
+                                        ACTIVE
+                                    </div>
+                                `
+                                : ""
+                        }
+
+                    </div>
+
+
+                    <div class="profile-rank">
+
+                        <span
+                            class="rank-badge ${rank.className}"
+                        >
+                            ${escapeHTML(
+                                rank.name
+                            )}
+                        </span>
+
+                    </div>
+
+
+                    <div class="profile-score">
+
+                        ${achievementScore}G
+
+                        <span>
+                            achievements
+                        </span>
+
+                    </div>
+
+
+                    <div class="profile-progress">
+
+                        ${achievementCount}
+                        /
+                        ${totalAchievements}
+                        achievements completed
+                        ·
+                        ${percentage.toFixed(1)}%
+
+                    </div>
+
+
+                    <div class="profile-next">
+
+                        ${escapeHTML(
+                            nextRank
+                                ? `${nextRank.min - achievementScore}G until ${nextRank.name}`
+                                : "Highest rank"
+                        )}
+
+                    </div>
+
+
+                    <div class="profile-actions">
+
+                        <button
+                            type="button"
+                            data-action="select"
+                            data-id="${escapeHTML(
+                                profile.id
+                            )}"
+                        >
+                            ${
+                                isActive
+                                    ? "Selected"
+                                    : "Select"
+                            }
+                        </button>
+
+
+                        <button
+                            type="button"
+                            data-action="edit"
+                            data-id="${escapeHTML(
+                                profile.id
+                            )}"
+                        >
+                            Edit
+                        </button>
+
+
+                        <button
+                            type="button"
+                            data-action="delete"
+                            data-id="${escapeHTML(
+                                profile.id
+                            )}"
+                        >
+                            Delete
+                        </button>
+
+                    </div>
+
+                `;
+
+
+                profilesGrid.appendChild(
+                    card
+                );
+
+            }
+        );
+
+    }
+
+
+    function itemMatchesFilters(
+        item,
+        completed
+    ) {
+
+        const completion =
+            completionFilter.value;
+
+
+        const difficulty =
+            difficultyFilter.value;
+
+
+        if (
+            completion === "completed" &&
+            !completed
+        ) {
+
+            return false;
+
+        }
+
+
+        if (
+            completion === "incomplete" &&
+            completed
+        ) {
+
+            return false;
+
+        }
+
+
+        /*
+            Difficulty applies to both
+            normal goals and achievements.
+        */
+
+        if (
+            difficulty !== "all" &&
+            getItemDifficulty(item) !==
+                difficulty
+        ) {
+
+            return false;
+
+        }
+
+
+        return true;
+
+    }
+
+
+    function itemMatchesSearch(
+        item,
+        search
+    ) {
+
+        if (!search) {
+            return true;
+        }
+
+
+        const text =
+            [
+                item.text,
+                item.name,
+                item.title,
+                item.label,
+                item.requirement,
+                item.description,
+                item.desc,
+                item.difficulty,
+                item.type,
+                item.category
+            ]
+                .filter(
+                    value =>
+                        value !== undefined &&
+                        value !== null
+                )
+                .join(" ")
+                .toLowerCase();
+
+
+        return text.includes(
+            search
+        );
+
+    }
+
+
+    function isItemCompleted(
+        item,
+        activeProfile,
+        sharedProgress
+    ) {
+
+        if (
+            isAchievement(item)
+        ) {
+
+            return Boolean(
+                activeProfile &&
+                activeProfile.achievements &&
+                activeProfile.achievements[
+                    getAchievementId(
+                        item
+                    )
+                ]
+            );
+
+        }
+
+
+        const id =
+            String(
+                item.id ?? ""
+            );
+
+
+        return Boolean(
+            id &&
+            sharedProgress[id]
+        );
+
+    }
+
+
+    function countCompleted(
+        items,
+        activeProfile,
+        sharedProgress
+    ) {
+
+        let completed = 0;
+
+
+        items.forEach(
+            item => {
+
+                if (
+                    isItemCompleted(
+                        item,
+                        activeProfile,
+                        sharedProgress
+                    )
+                ) {
+
+                    completed++;
+
+                }
+
+            }
+        );
+
+
+        return {
+            completed,
+            total: items.length
+        };
+
+    }
+
+
+    function renderCategories() {
+
+        categoriesElement.innerHTML =
+            "";
+
+
+        if (!goalsData) {
+
+            categoriesElement.innerHTML = `
+                <div class="empty-state">
+                    Loading goals...
+                </div>
+            `;
+
+            return;
+
+        }
+
+
+        const search =
+            searchInput.value
+                .trim()
+                .toLowerCase();
+
+
+        const sharedProgress =
+            loadSharedGoals();
+
+
+        const activeProfile =
+            getActiveProfile();
+
+
+        getCategories().forEach(
+            (
+                category,
+                categoryIndex
+            ) => {
+
+                if (
+                    !category ||
+                    !Array.isArray(
+                        category.items
+                    )
+                ) {
+
+                    return;
+
+                }
+
+
+                const items =
+                    category.items.filter(
+                        item => {
+
+                            if (
+                                !itemMatchesSearch(
+                                    item,
+                                    search
+                                )
+                            ) {
+
+                                return false;
+
+                            }
+
+
+                            const completed =
+                                isItemCompleted(
+                                    item,
+                                    activeProfile,
+                                    sharedProgress
+                                );
+
+
+                            return itemMatchesFilters(
+                                item,
+                                completed
+                            );
+
+                        }
+                    );
+
+
+                if (
+                    items.length === 0
+                ) {
+
+                    return;
+
+                }
+
+
+                const categoryId =
+                    String(
+                        category.id ??
+                        categoryIndex
+                    );
+
+
+                const element =
+                    document.createElement(
+                        "section"
+                    );
+
+
+                element.className =
+                    "category";
+
+
+                if (
+                    categoryId ===
+                    openCategoryId
+                ) {
+
+                    element.classList.add(
+                        "open"
+                    );
+
+                }
+
+
+                const completed =
+                    countCompleted(
+                        items,
+                        activeProfile,
+                        sharedProgress
+                    );
+
+
+                const header =
+                    document.createElement(
+                        "button"
+                    );
+
+
+                header.type =
+                    "button";
+
+                header.className =
+                    "category-header";
+
+
+                header.innerHTML = `
+
+                    <div class="category-title-wrap">
+
+                        <div class="category-title">
+                            ${escapeHTML(
+                                category.title ??
+                                category.name ??
+                                `Category ${categoryIndex + 1}`
+                            )}
+                        </div>
+
+                        ${
+                            category.description
+                                ? `
+                                    <div class="category-description">
+                                        ${escapeHTML(
+                                            category.description
+                                        )}
+                                    </div>
+                                `
+                                : ""
+                        }
+
+                    </div>
+
+
+                    <div class="category-right">
+
+                        <span class="category-count">
+                            ${completed.completed}/${items.length}
+                        </span>
+
+                        <span class="category-arrow">
+                            ▼
+                        </span>
+
+                    </div>
+
+                `;
+
+
+                header.addEventListener(
+                    "click",
+                    () => {
+
+                        const wasOpen =
+                            element.classList.contains(
+                                "open"
+                            );
+
+
+                        document
+                            .querySelectorAll(
+                                "#categories > .category.open"
+                            )
+                            .forEach(
+                                other => {
+
+                                    other.classList.remove(
+                                        "open"
+                                    );
+
+                                }
+                            );
+
+
+                        if (wasOpen) {
+
+                            openCategoryId =
+                                null;
+
+                            return;
+
+                        }
+
+
+                        element.classList.add(
+                            "open"
+                        );
+
+
+                        openCategoryId =
+                            categoryId;
+
+                    }
+                );
+
+
+                element.appendChild(
+                    header
+                );
+
+
+                const content =
+                    document.createElement(
+                        "div"
+                    );
+
+
+                content.className =
+                    "category-content";
+
+
+                const list =
+                    document.createElement(
+                        "div"
+                    );
+
+
+                list.className =
+                    "goal-list";
+
+
+                items.forEach(
+                    (
+                        item,
+                        itemIndex
+                    ) => {
+
+                        const goal =
+                            createGoalItem(
+                                item,
+                                activeProfile,
+                                sharedProgress,
+                                categoryId +
+                                "-" +
+                                itemIndex
+                            );
+
+
+                        if (goal) {
+
+                            list.appendChild(
+                                goal
+                            );
+
+                        }
+
+                    }
+                );
+
+
+                if (
+                    list.children.length > 0
+                ) {
+
+                    content.appendChild(
+                        list
+                    );
+
+                } else {
+
+                    content.innerHTML = `
+                        <div class="empty-state">
+                            No matching goals.
+                        </div>
+                    `;
+
+                }
+
+
+                element.appendChild(
+                    content
+                );
+
+
+                categoriesElement.appendChild(
+                    element
+                );
+
+            }
+        );
+
+
+        if (
+            categoriesElement.children.length === 0
+        ) {
+
+            categoriesElement.innerHTML = `
+                <div class="empty-state">
+                    No matching goals found.
+                </div>
+            `;
+
+        }
+
+    }
+
+
+    function createGoalItem(
+        item,
+        activeProfile,
+        sharedProgress,
+        fallbackId
+    ) {
+
+        const achievement =
+            isAchievement(item);
+
+
+        const itemId =
+            achievement
+                ? getAchievementId(
+                    item
+                )
+                : String(
+                    item.id ??
+                    fallbackId
+                );
+
+
+        const completed =
+            achievement
+                ? Boolean(
+                    activeProfile &&
+                    activeProfile.achievements &&
+                    activeProfile.achievements[
+                        itemId
+                    ]
+                )
+                : Boolean(
+                    sharedProgress[
+                        itemId
+                    ]
+                );
+
+
+        const element =
+            document.createElement(
+                "div"
+            );
+
+
+        element.className =
+            "goal-item";
+
+
+        if (completed) {
+
+            element.classList.add(
+                "completed"
+            );
+
+        }
+
+
+        const checkbox =
+            document.createElement(
+                "input"
+            );
+
+
+        checkbox.type =
+            "checkbox";
+
+        checkbox.checked =
+            completed;
+
+        checkbox.tabIndex =
+            -1;
+
+        checkbox.setAttribute(
+            "aria-label",
+            getItemName(item)
+        );
+
+
+        element.addEventListener(
+            "click",
+            event => {
+
+                if (
+                    event.target.closest(
+                        "button, a, input, select, textarea"
+                    )
+                ) {
+
+                    return;
+
+                }
+
+
+                toggleGoal(
+                    item,
+                    itemId
+                );
+
+            }
+        );
+
+
+        element.setAttribute(
+            "role",
+            "checkbox"
+        );
+
+        element.setAttribute(
+            "aria-checked",
+            String(completed)
+        );
+
+        element.tabIndex =
+            0;
+
+
+        element.addEventListener(
+            "keydown",
+            event => {
+
+                if (
+                    event.key === " " ||
+                    event.key === "Enter"
+                ) {
+
+                    event.preventDefault();
+
+                    toggleGoal(
+                        item,
+                        itemId
+                    );
+
+                }
+
+            }
+        );
+
+
+        const info =
+            document.createElement(
+                "div"
+            );
+
+
+        info.className =
+            "goal-info";
+
+
+        const name =
+            document.createElement(
+                "div"
+            );
+
+
+        name.className =
+            "goal-name";
+
+
+        name.textContent =
+            getItemName(item);
+
+
+        info.appendChild(
+            name
+        );
+
+
+        const description =
+            getItemDescription(
+                item
+            );
+
+
+        if (description) {
+
+            const descriptionElement =
+                document.createElement(
+                    "div"
+                );
+
+
+            descriptionElement.className =
+                "goal-description";
+
+
+            descriptionElement.textContent =
+                description;
+
+
+            info.appendChild(
+                descriptionElement
+            );
+
+        }
+
+
+        const meta =
+            document.createElement(
+                "div"
+            );
+
+
+        meta.className =
+            "goal-meta";
+
+
+        if (achievement) {
+
+    const difficultyTag =
+        document.createElement(
+            "span"
+        );
+
+    difficultyTag.className =
+        "tag";
+
+    difficultyTag.textContent =
+        capitalize(
+            getItemDifficulty(
+                item
+            )
+        );
+
+
+    const scoreTag =
+        document.createElement(
+            "span"
+        );
+
+    scoreTag.className =
+        "tag tag-score";
+
+    scoreTag.textContent =
+        `${getAchievementGamerscore(
+            item
+        )}G`;
+
+
+    meta.appendChild(
+        difficultyTag
+    );
+
+    meta.appendChild(
+        scoreTag
+    );
+
+} else {
+
+            const difficultyTag =
+                document.createElement(
+                    "span"
+                );
+
+
+            difficultyTag.className =
+                "tag";
+
+
+            difficultyTag.textContent =
+                capitalize(
+                    getItemDifficulty(
+                        item
+                    )
+                );
+
+
+            const scoreTag =
+                document.createElement(
+                    "span"
+                );
+
+
+            scoreTag.className =
+                "tag tag-score";
+
+
+            scoreTag.textContent =
+                `+${getGoalScore(
+                    item
+                )}G`;
+
+
+            meta.appendChild(
+                difficultyTag
+            );
+
+
+            meta.appendChild(
+                scoreTag
+            );
+
+        }
+
+
+        info.appendChild(
+            meta
+        );
+
+
+        element.appendChild(
+            checkbox
+        );
+
+
+        element.appendChild(
+            info
+        );
+
+
+        return element;
+
+    }
+
+
+    function toggleGoal(
+        item,
+        itemId
+    ) {
+
+        const achievement =
+            isAchievement(item);
+
+
+        if (achievement) {
+
+            const profile =
+                getActiveProfile();
+
+
+            if (!profile) {
+
+                alert(
+                    "Create or select a profile first."
+                );
+
+                return;
+
+            }
+
+
+            if (
+                !profile.achievements
+            ) {
+
+                profile.achievements =
+                    {};
+
+            }
+
+
+            const current =
+                Boolean(
+                    profile.achievements[
+                        itemId
+                    ]
+                );
+
+
+            profile.achievements[
+                itemId
+            ] =
+                !current;
+
+
+            saveProfiles();
+
+        } else {
+
+            const progress =
+                loadSharedGoals();
+
+
+            const current =
+                Boolean(
+                    progress[itemId]
+                );
+
+
+            progress[itemId] =
+                !current;
+
+
+            saveSharedGoals(
+                progress
+            );
+
+        }
+
+
+        render();
+
+    }
+
+
+    function updateScores() {
+
+        const globalScore =
+            getCurrentGlobalScore();
+
+
+        const globalTotal =
+            getGlobalTotalPossible();
+
+
+        document.getElementById(
+            "globalScore"
+        ).textContent =
+            `${globalScore}G`;
+
+
+        document.getElementById(
+            "globalScoreSubtext"
+        ).textContent =
+            `${globalScore} / ${globalTotal} possible`;
+
+
+        const profile =
+            getActiveProfile();
+
+
+        const currentProfileScore =
+            getCurrentProfileScore();
+
+
+        document.getElementById(
+            "profileScore"
+        ).textContent =
+            `${currentProfileScore}G`;
+
+
+        const profileNameElement =
+            document.getElementById(
+                "currentProfileName"
+            );
+
+
+        const profileScoreSubtext =
+            document.getElementById(
+                "profileScoreSubtext"
+            );
+
+
+        const rankBadge =
+            document.getElementById(
+                "currentRankBadge"
+            );
+
+
+        if (profile) {
+
+            profileNameElement.textContent =
+                profile.name + "'s";
+
+
+            profileScoreSubtext.textContent =
+                `${getSharedGoalScore()}G shared + ${getProfileAchievementScore(
+                    profile
+                )}G achievements`;
+
+
+            const rank =
+                getProfileRank(
+                    profile
+                );
+
+
+            rankBadge.textContent =
+                rank.name;
+
+
+            rankBadge.className =
+                "rank-badge " +
+                rank.className;
+
+        } else {
+
+            profileNameElement.textContent =
+                "Your";
+
+
+            profileScoreSubtext.textContent =
+                "No profile selected";
+
+
+            rankBadge.textContent =
+                "Dirt";
+
+
+            rankBadge.className =
+                "rank-badge rank-dirt";
+
+        }
+
+
+        const achievementScore =
+            profile
+                ? getProfileAchievementScore(
+                    profile
+                )
+                : 0;
+
+
+        const achievementCount =
+            profile
+                ? getProfileAchievementCount(
+                    profile
+                )
+                : 0;
+
+
+        document.getElementById(
+            "achievementScore"
+        ).textContent =
+            `${achievementScore}G`;
+
+
+        document.getElementById(
+            "achievementScoreSubtext"
+        ).textContent =
+            profile
+                ? `${achievementCount} completed`
+                : "Select a profile";
+
+
+        const sharedProgress =
+            loadSharedGoals();
+
+
+        const goalScore =
+            getSharedGoalScore();
+
+
+        const goalCount =
+            getAllNormalGoals()
+                .filter(
+                    item =>
+                        sharedProgress[
+                            String(
+                                item.id ?? ""
+                            )
+                        ]
+                )
+                .length;
+
+
+        document.getElementById(
+            "goalScore"
+        ).textContent =
+            `${goalScore}G`;
+
+
+        document.getElementById(
+            "goalScoreSubtext"
+        ).textContent =
+            `${goalCount} completed`;
+
+
+        const completedItems =
+            getCompletedProgressItems();
+
+
+        const totalItems =
+            getTotalProgressItems();
+
+
+        const progress =
+            totalItems > 0
+                ? Math.min(
+                    100,
+                    (
+                        completedItems /
+                        totalItems
+                    ) *
+                    100
+                )
+                : 0;
+
+
+        document.getElementById(
+            "progressPercent"
+        ).textContent =
+            `${progress.toFixed(1)}%`;
+
+
+        document.getElementById(
+            "progressInfo"
+        ).textContent =
+            `${completedItems} / ${totalItems} completed · All goals and achievements across all users`;
+
+
+        document.getElementById(
+            "progressFill"
+        ).style.width =
+            `${progress}%`;
+
+    }
+
+
+    function selectProfile(id) {
+
+        const profile =
+            profiles.find(
+                item =>
+                    item.id === id
+            );
+
+
+        if (!profile) {
+            return;
+        }
+
+
+        activeProfileId =
+            profile.id;
+
+
+        saveProfiles();
+
+        render();
+
+    }
+
+
+    function openProfileModal(
+        profile = null
+    ) {
+
+        editingProfileId =
+            profile
+                ? profile.id
+                : null;
+
+
+        document.getElementById(
+            "profileModalTitle"
+        ).textContent =
+            profile
+                ? "Edit Profile"
+                : "Add Profile";
+
+
+        document.getElementById(
+            "profileModalDescription"
+        ).textContent =
+            profile
+                ? "Change this profile's name."
+                : "Create a profile for achievement progress.";
+
+
+        profileNameInput.value =
+            profile
+                ? profile.name
+                : "";
+
+
+        profileModal.classList.add(
+            "show"
+        );
+
+
+        profileModal.setAttribute(
+            "aria-hidden",
+            "false"
+        );
+
+
+        setTimeout(
+            () => {
+
+                profileNameInput.focus();
+
+            },
+            50
+        );
+
+    }
+
+
+    function closeProfileModal() {
+
+        profileModal.classList.remove(
+            "show"
+        );
+
+
+        profileModal.setAttribute(
+            "aria-hidden",
+            "true"
+        );
+
+
+        editingProfileId =
+            null;
+
+    }
+
+
+    function saveProfileFromModal() {
+
+        const name =
+            profileNameInput.value
+                .trim();
+
+
+        if (!name) {
+            return;
+        }
+
+
+        if (editingProfileId) {
+
+            const profile =
+                profiles.find(
+                    item =>
+                        item.id ===
+                        editingProfileId
+                );
+
+
+            if (profile) {
+
+                profile.name =
+                    name;
+
+            }
+
+        } else {
+
+            if (
+                profiles.length >=
+                MAX_PROFILES
+            ) {
+
+                closeProfileModal();
+
+
+                openConfirmModal(
+                    "Profile Limit",
+                    `You can have up to ${MAX_PROFILES} profiles.`,
+                    null,
+                    "Close"
+                );
+
+
+                return;
+
+            }
+
+
+            const profile = {
+
+                id:
+                    createId(),
+
+                name,
+
+                achievements: {}
+
+            };
+
+
+            profiles.push(
+                profile
+            );
+
+
+            if (!activeProfileId) {
+
+                activeProfileId =
+                    profile.id;
+
+            }
+
+        }
+
+
+        saveProfiles();
+
+        closeProfileModal();
+
+        render();
+
+    }
+
+
+    function deleteProfile(id) {
+
+        const profile =
+            profiles.find(
+                item =>
+                    item.id === id
+            );
+
+
+        if (!profile) {
+            return;
+        }
+
+
+        openConfirmModal(
+            "Delete Profile",
+            `Delete "${profile.name}" and all of its achievement progress?`,
+            () => {
+
+                profiles =
+                    profiles.filter(
+                        item =>
+                            item.id !== id
+                    );
+
+
+                if (
+                    activeProfileId === id
+                ) {
+
+                    activeProfileId =
+                        profiles.length
+                            ? profiles[0].id
+                            : null;
+
+                }
+
+
+                saveProfiles();
+
+                render();
+
+            },
+            "Delete"
+        );
+
+    }
+
+
+    function openConfirmModal(
+        title,
+        message,
+        action,
+        buttonText = "Confirm"
+    ) {
+
+        document.getElementById(
+            "confirmModalTitle"
+        ).textContent =
+            title;
+
+
+        document.getElementById(
+            "confirmModalMessage"
+        ).textContent =
+            message;
+
+
+        document.getElementById(
+            "confirmAcceptButton"
+        ).textContent =
+            buttonText;
+
+
+        confirmAction =
+            action;
+
+
+        confirmModal.classList.add(
+            "show"
+        );
+
+
+        confirmModal.setAttribute(
+            "aria-hidden",
+            "false"
+        );
+
+    }
+
+
+    function closeConfirmModal() {
+
+        confirmModal.classList.remove(
+            "show"
+        );
+
+
+        confirmModal.setAttribute(
+            "aria-hidden",
+            "true"
+        );
+
+
+        confirmAction =
+            null;
+
+    }
+
+
+    function resetSharedGoals() {
+
+        openConfirmModal(
+            "Reset Goals",
+            "Reset all shared survival goal progress? Achievement progress on profiles will not be changed.",
+            () => {
+
+                localStorage.removeItem(
+                    GOALS_STORAGE_KEY
+                );
+
+
+                render();
+
+            },
+            "Reset"
+        );
+
+    }
+
+
+    function render() {
+
+        updateScores();
+
+        renderProfiles();
+
+        renderCategories();
+
+    }
+
+
+    function createId() {
+
+        return (
+            Date.now().toString(36) +
+            Math.random()
+                .toString(36)
+                .slice(2, 8)
+        );
+
+    }
+
+
+    function capitalize(value) {
+
+        if (!value) {
+            return "";
+        }
+
+
+        return (
+            value.charAt(0).toUpperCase() +
+            value.slice(1)
+        );
+
+    }
+
+
+    function escapeHTML(value) {
+
+        return String(value)
+
+            .replaceAll(
+                "&",
+                "&amp;"
+            )
+
+            .replaceAll(
+                "<",
+                "&lt;"
+            )
+
+            .replaceAll(
+                ">",
+                "&gt;"
+            )
+
+            .replaceAll(
+                '"',
+                "&quot;"
+            )
+
+            .replaceAll(
+                "'",
+                "&#039;"
+            );
+
+    }
+
+
+    profilesGrid.addEventListener(
+        "click",
+        event => {
+
+            const button =
+                event.target.closest(
+                    "button[data-action]"
+                );
+
+
+            if (!button) {
+                return;
+            }
+
+
+            const id =
+                button.dataset.id;
+
+
+            const action =
+                button.dataset.action;
+
+
+            if (
+                action ===
+                "select"
+            ) {
+
+                selectProfile(
+                    id
+                );
+
+            }
+
+
+            if (
+                action ===
+                "edit"
+            ) {
+
+                const profile =
+                    profiles.find(
+                        item =>
+                            item.id === id
+                    );
+
+
+                if (profile) {
+
+                    openProfileModal(
+                        profile
+                    );
+
+                }
+
+            }
+
+
+            if (
+                action ===
+                "delete"
+            ) {
+
+                deleteProfile(
+                    id
+                );
+
+            }
+
+        }
+    );
+
+
+    document
+        .getElementById(
+            "addProfileButton"
+        )
+        .addEventListener(
+            "click",
+            () => {
+
+                openProfileModal();
+
+            }
+        );
+
+
+    document
+        .getElementById(
+            "addProfileButtonSecondary"
+        )
+        .addEventListener(
+            "click",
+            () => {
+
+                openProfileModal();
+
+            }
+        );
+
+
+    document
+        .getElementById(
+            "profileCancelButton"
+        )
+        .addEventListener(
+            "click",
+            closeProfileModal
+        );
+
+
+    document
+        .getElementById(
+            "profileSaveButton"
+        )
+        .addEventListener(
+            "click",
+            saveProfileFromModal
+        );
+
+
+    document
+        .getElementById(
+            "confirmCancelButton"
+        )
+        .addEventListener(
+            "click",
+            closeConfirmModal
+        );
+
+
+    document
+        .getElementById(
+            "confirmAcceptButton"
+        )
+        .addEventListener(
+            "click",
+            () => {
+
+                if (
+                    typeof confirmAction ===
+                    "function"
+                ) {
+
+                    const action =
+                        confirmAction;
+
+
+                    closeConfirmModal();
+
+                    action();
+
+                } else {
+
+                    closeConfirmModal();
+
+                }
+
+            }
+        );
+
+
+    document
+        .getElementById(
+            "resetButton"
+        )
+        .addEventListener(
+            "click",
+            resetSharedGoals
+        );
+
+
+    searchInput.addEventListener(
+        "input",
+        () => {
+
+            renderCategories();
+
+        }
+    );
+
+
+    completionFilter.addEventListener(
+        "change",
+        () => {
+
+            renderCategories();
+
+        }
+    );
+
+
+    difficultyFilter.addEventListener(
+        "change",
+        () => {
+
+            renderCategories();
+
+        }
+    );
+
+
+    profileModal.addEventListener(
+        "click",
+        event => {
+
+            if (
+                event.target ===
+                profileModal
+            ) {
+
+                closeProfileModal();
+
+            }
+
+        }
+    );
+
+
+    confirmModal.addEventListener(
+        "click",
+        event => {
+
+            if (
+                event.target ===
+                confirmModal
+            ) {
+
+                closeConfirmModal();
+
+            }
+
+        }
+    );
+
+
+    profileNameInput.addEventListener(
+        "keydown",
+        event => {
+
+            if (
+                event.key ===
+                "Enter"
+            ) {
+
+                saveProfileFromModal();
+
+            }
+
+        }
+    );
+
+
+    document.addEventListener(
+        "keydown",
+        event => {
+
+            if (
+                event.key !==
+                "Escape"
+            ) {
+
+                return;
+
+            }
+
+
+            if (
+                profileModal.classList.contains(
+                    "show"
+                )
+            ) {
+
+                closeProfileModal();
+
+                return;
+
+            }
+
+
+            if (
+                confirmModal.classList.contains(
+                    "show"
+                )
+            ) {
+
+                closeConfirmModal();
+
+            }
+
+        }
+    );
+
+
+    let lastTouchEnd = 0;
+
+
+    document.addEventListener(
+        "touchend",
+        event => {
+
+            const now =
+                Date.now();
+
+
+            if (
+                now - lastTouchEnd <=
+                300
+            ) {
+
+                event.preventDefault();
+
+            }
+
+
+            lastTouchEnd =
+                now;
+
+        },
+        {
+            passive: false
+        }
+    );
+
+
+    document.addEventListener(
+        "touchmove",
+        event => {
+
+            if (
+                event.touches &&
+                event.touches.length > 1
+            ) {
+
+                event.preventDefault();
+
+            }
+
+        },
+        {
+            passive: false
+        }
+    );
+
+
+    document.addEventListener(
+        "gesturestart",
+        event => {
+
+            event.preventDefault();
+
+        }
+    );
+
+
+    document.addEventListener(
+        "gesturechange",
+        event => {
+
+            event.preventDefault();
+
+        }
+    );
+
+
+    document.addEventListener(
+        "gestureend",
+        event => {
+
+            event.preventDefault();
+
+        }
+    );
+
+
+    loadProfiles();
+
+
+    fetch("goals.json")
+        .then(
+            response => {
+
+                if (!response.ok) {
+
+                    throw new Error(
+                        "Could not load goals.json"
+                    );
+
+                }
+
+
+                return response.json();
+
+            }
+        )
+        .then(
+            data => {
+
+                goalsData =
+                    data;
+
+                render();
+
+            }
+        )
+        .catch(
+            error => {
+
+                console.error(
+                    error
+                );
+
+
+                categoriesElement.innerHTML = `
+                    <div class="empty-state">
+                        Could not load goals.json.
+                    </div>
+                `;
+
+
+                updateScores();
+
+                renderProfiles();
+
+            }
+        );
+
+</script>
+
 </body>
 </html>
