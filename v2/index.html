@@ -258,10 +258,6 @@
             overflow: hidden;
             background: var(--panel);
 
-            /*
-             * Small animation when sections are created
-             * or updated.
-             */
             animation:
                 sectionAppear 0.25s ease both;
         }
@@ -289,7 +285,6 @@
             border-bottom: 1px solid transparent;
 
             cursor: pointer;
-
             user-select: none;
 
             transition:
@@ -349,15 +344,6 @@
             white-space: nowrap;
         }
 
-        /*
-         * The task area is animated using grid rows.
-         *
-         * 0fr = completely collapsed.
-         * 1fr = expanded.
-         *
-         * This gives us a smooth height animation without
-         * needing JavaScript to calculate the height.
-         */
         .section-content {
             display: grid;
             grid-template-rows: 0fr;
@@ -928,10 +914,8 @@
 
         saveWorlds();
 
-
         searchInput.value =
             "";
-
 
         renderAll();
 
@@ -986,7 +970,11 @@
 
         saveWorlds();
 
-        renderAll();
+        renderWorldSelector();
+
+        renderWorldManager();
+
+        updateProgress();
 
     }
 
@@ -1085,21 +1073,17 @@
 
         saveWorlds();
 
-        renderAll();
+        renderChecklist();
+
+        renderWorldManager();
+
+        updateProgress();
+
+        updateSectionCounts();
 
     }
 
 
-    /*
-     * The JSON uses:
-     *
-     * {
-     *     "id": "...",
-     *     "name": "..."
-     * }
-     *
-     * So everything below correctly uses task.name.
-     */
     function getAllTasks() {
 
         const tasks = [];
@@ -1383,9 +1367,6 @@
     }
 
 
-    /*
-     * Opens one section and closes every other section.
-     */
     function openSection(
         section
     ) {
@@ -1405,6 +1386,20 @@
                         openSectionElement.classList.remove(
                             "open"
                         );
+
+                        const header =
+                            openSectionElement.querySelector(
+                                ".section-header"
+                            );
+
+                        if (header) {
+
+                            header.setAttribute(
+                                "aria-expanded",
+                                "false"
+                            );
+
+                        }
 
                     }
 
@@ -1446,10 +1441,200 @@
     }
 
 
+    function createTaskRow(
+        task,
+        world
+    ) {
+
+        const row =
+            document.createElement(
+                "div"
+            );
+
+
+        row.className =
+            "task";
+
+
+        row.dataset.taskId =
+            task.id;
+
+
+        const isCompleted =
+            world.progress[
+                task.id
+            ] === true;
+
+
+        if (
+            isCompleted
+        ) {
+
+            row.classList.add(
+                "completed"
+            );
+
+        }
+
+
+        const checkbox =
+            document.createElement(
+                "input"
+            );
+
+
+        checkbox.type =
+            "checkbox";
+
+
+        checkbox.id =
+            "task-" +
+            task.id;
+
+
+        checkbox.checked =
+            isCompleted;
+
+
+        const label =
+            document.createElement(
+                "label"
+            );
+
+
+        label.htmlFor =
+            checkbox.id;
+
+
+        label.textContent =
+            task.name;
+
+
+        checkbox.addEventListener(
+            "change",
+            event => {
+
+                event.stopPropagation();
+
+
+                if (
+                    !world.progress
+                ) {
+
+                    world.progress =
+                        {};
+
+                }
+
+
+                world.progress[
+                    task.id
+                ] =
+                    checkbox.checked;
+
+
+                row.classList.toggle(
+                    "completed",
+                    checkbox.checked
+                );
+
+
+                saveWorlds();
+
+                updateProgress();
+
+                renderWorldManager();
+
+                updateSectionCounts();
+
+            }
+        );
+
+
+        row.appendChild(
+            checkbox
+        );
+
+        row.appendChild(
+            label
+        );
+
+
+        return row;
+
+    }
+
+
+    function updateSectionCount(
+        sectionElement
+    ) {
+
+        const sectionName =
+            sectionElement.dataset.section;
+
+
+        const tasks =
+            checklist[
+                sectionName
+            ];
+
+
+        if (
+            !Array.isArray(
+                tasks
+            )
+        ) {
+
+            return;
+
+        }
+
+
+        const world =
+            worlds[currentWorldId];
+
+
+        if (!world) {
+
+            return;
+
+        }
+
+
+        const completed =
+            tasks.filter(
+                task =>
+                    task &&
+                    task.id &&
+                    world.progress[
+                        task.id
+                    ] === true
+            ).length;
+
+
+        const count =
+            sectionElement.querySelector(
+                ".section-count"
+            );
+
+
+        if (count) {
+
+            count.textContent =
+                completed +
+                " / " +
+                tasks.length;
+
+        }
+
+    }
+
+
     function createSection(
         sectionName,
-        matchingTasks,
-        world
+        tasks,
+        world,
+        open = false
     ) {
 
         const section =
@@ -1462,13 +1647,17 @@
             "section";
 
 
-        /*
-         * Every newly rendered section starts
-         * collapsed.
-         */
-        section.classList.remove(
-            "open"
-        );
+        section.dataset.section =
+            sectionName;
+
+
+        if (open) {
+
+            section.classList.add(
+                "open"
+            );
+
+        }
 
 
         const sectionHeader =
@@ -1495,7 +1684,9 @@
 
         sectionHeader.setAttribute(
             "aria-expanded",
-            "false"
+            open
+                ? "true"
+                : "false"
         );
 
 
@@ -1537,7 +1728,6 @@
             arrow
         );
 
-
         titleWrapper.appendChild(
             title
         );
@@ -1553,39 +1743,9 @@
             "section-count";
 
 
-        const allSectionTasks =
-            Array.isArray(
-                checklist[
-                    sectionName
-                ]
-            )
-                ? checklist[
-                    sectionName
-                ]
-                : [];
-
-
-        const completed =
-            allSectionTasks.filter(
-                task =>
-                    task &&
-                    task.id &&
-                    world.progress[
-                        task.id
-                    ] === true
-            ).length;
-
-
-        count.textContent =
-            completed +
-            " / " +
-            allSectionTasks.length;
-
-
         sectionHeader.appendChild(
             titleWrapper
         );
-
 
         sectionHeader.appendChild(
             count
@@ -1622,123 +1782,14 @@
             "tasks";
 
 
-        matchingTasks.forEach(
+        tasks.forEach(
             task => {
 
-                const row =
-                    document.createElement(
-                        "div"
-                    );
-
-
-                row.className =
-                    "task";
-
-
-                const isCompleted =
-                    world.progress[
-                        task.id
-                    ] === true;
-
-
-                if (
-                    isCompleted
-                ) {
-
-                    row.classList.add(
-                        "completed"
-                    );
-
-                }
-
-
-                const checkbox =
-                    document.createElement(
-                        "input"
-                    );
-
-
-                checkbox.type =
-                    "checkbox";
-
-
-                checkbox.id =
-                    "task-" +
-                    task.id;
-
-
-                checkbox.checked =
-                    isCompleted;
-
-
-                const label =
-                    document.createElement(
-                        "label"
-                    );
-
-
-                label.htmlFor =
-                    checkbox.id;
-
-
-                label.textContent =
-                    task.name;
-
-
-                checkbox.addEventListener(
-                    "change",
-                    event => {
-
-                        event.stopPropagation();
-
-
-                        if (
-                            !world.progress
-                        ) {
-
-                            world.progress =
-                                {};
-
-                        }
-
-
-                        world.progress[
-                            task.id
-                        ] =
-                            checkbox.checked;
-
-
-                        row.classList.toggle(
-                            "completed",
-                            checkbox.checked
-                        );
-
-
-                        saveWorlds();
-
-
-                        updateProgress();
-
-                        renderWorldManager();
-
-                        updateSectionCounts();
-
-                    }
-                );
-
-
-                row.appendChild(
-                    checkbox
-                );
-
-
-                row.appendChild(
-                    label
-                );
-
-
                 tasksContainer.appendChild(
-                    row
+                    createTaskRow(
+                        task,
+                        world
+                    )
                 );
 
             }
@@ -1811,9 +1862,13 @@
             sectionHeader
         );
 
-
         section.appendChild(
             sectionContent
+        );
+
+
+        updateSectionCount(
+            section
         );
 
 
@@ -1822,11 +1877,93 @@
     }
 
 
+    function getSectionElement(
+        sectionName
+    ) {
+
+        return Array.from(
+            checklistElement.querySelectorAll(
+                ".section"
+            )
+        ).find(
+            section =>
+                section.dataset.section ===
+                sectionName
+        ) || null;
+
+    }
+
+
+    function getCurrentSectionOpenState() {
+
+        const states = {};
+
+
+        checklistElement
+            .querySelectorAll(
+                ".section"
+            )
+            .forEach(
+                section => {
+
+                    states[
+                        section.dataset.section
+                    ] =
+                        section.classList.contains(
+                            "open"
+                        );
+
+                }
+            );
+
+
+        return states;
+
+    }
+
+
+    function getMatchingTasks(
+        sectionName,
+        tasks
+    ) {
+
+        const search =
+            searchInput.value
+                .trim()
+                .toLowerCase();
+
+
+        return tasks.filter(
+            task =>
+                task &&
+                task.id &&
+                task.name &&
+                (
+                    !search ||
+                    task.name
+                        .toLowerCase()
+                        .includes(
+                            search
+                        ) ||
+                    sectionName
+                        .toLowerCase()
+                        .includes(
+                            search
+                        )
+                )
+        );
+
+    }
+
+
+    /*
+     * Rebuilds the checklist only when the search
+     * changes what should be visible.
+     *
+     * JSON updates use updateChecklistDOM()
+     * instead, so sections do not collapse.
+     */
     function renderChecklist() {
-
-        checklistElement.innerHTML =
-            "";
-
 
         const world =
             worlds[currentWorldId];
@@ -1847,10 +1984,8 @@
         }
 
 
-        const search =
-            searchInput.value
-                .trim()
-                .toLowerCase();
+        checklistElement.innerHTML =
+            "";
 
 
         let visibleTasks =
@@ -1878,24 +2013,9 @@
 
 
             const matchingTasks =
-                tasks.filter(
-                    task =>
-                        task &&
-                        task.id &&
-                        task.name &&
-                        (
-                            !search ||
-                            task.name
-                                .toLowerCase()
-                                .includes(
-                                    search
-                                ) ||
-                            sectionName
-                                .toLowerCase()
-                                .includes(
-                                    search
-                                )
-                        )
+                getMatchingTasks(
+                    sectionName,
+                    tasks
                 );
 
 
@@ -1916,7 +2036,8 @@
                 createSection(
                     sectionName,
                     matchingTasks,
-                    world
+                    world,
+                    false
                 );
 
 
@@ -1953,6 +2074,368 @@
 
 
         updateProgress();
+
+    }
+
+
+    /*
+     * Updates only the DOM pieces affected by the
+     * checklist.json change.
+     *
+     * Existing sections stay alive.
+     * Existing section open/closed state stays alive.
+     * Existing task rows stay alive.
+     */
+    function updateChecklistDOM() {
+
+        const world =
+            worlds[currentWorldId];
+
+
+        if (!world) {
+
+            return;
+
+        }
+
+
+        if (!world.progress) {
+
+            world.progress =
+                {};
+
+        }
+
+
+        const search =
+            searchInput.value
+                .trim()
+                .toLowerCase();
+
+
+        const hasSearch =
+            search.length > 0;
+
+
+        /*
+         * Search results are a different view, so
+         * rebuild that view normally.
+         */
+        if (hasSearch) {
+
+            renderChecklist();
+
+            return;
+
+        }
+
+
+        const existingSections =
+            new Map();
+
+
+        checklistElement
+            .querySelectorAll(
+                ".section"
+            )
+            .forEach(
+                section => {
+
+                    existingSections.set(
+                        section.dataset.section,
+                        section
+                    );
+
+                }
+            );
+
+
+        /*
+         * Remove sections that no longer exist.
+         */
+        existingSections.forEach(
+            (
+                section,
+                sectionName
+            ) => {
+
+                if (
+                    !Array.isArray(
+                        checklist[
+                            sectionName
+                        ]
+                    )
+                ) {
+
+                    section.remove();
+
+                }
+
+            }
+        );
+
+
+        /*
+         * Process every current section.
+         */
+        Object.entries(
+            checklist
+        ).forEach(
+            (
+                [sectionName, tasks]
+            ) => {
+
+                if (
+                    !Array.isArray(
+                        tasks
+                    )
+                ) {
+
+                    return;
+
+                }
+
+
+                let section =
+                    getSectionElement(
+                        sectionName
+                    );
+
+
+                /*
+                 * If the section is new,
+                 * add only this section.
+                 */
+                if (!section) {
+
+                    section =
+                        createSection(
+                            sectionName,
+                            tasks,
+                            world,
+                            false
+                        );
+
+
+                    checklistElement.appendChild(
+                        section
+                    );
+
+
+                    return;
+
+                }
+
+
+                const tasksContainer =
+                    section.querySelector(
+                        ".tasks"
+                    );
+
+
+                if (!tasksContainer) {
+
+                    return;
+
+                }
+
+
+                const currentRows =
+                    new Map();
+
+
+                tasksContainer
+                    .querySelectorAll(
+                        ".task"
+                    )
+                    .forEach(
+                        row => {
+
+                            currentRows.set(
+                                row.dataset.taskId,
+                                row
+                            );
+
+                        }
+                    );
+
+
+                const currentTaskIds =
+                    new Set(
+                        tasks.map(
+                            task =>
+                                task &&
+                                task.id
+                        )
+                    );
+
+
+                /*
+                 * Remove task rows whose IDs
+                 * disappeared from JSON.
+                 */
+                currentRows.forEach(
+                    (
+                        row,
+                        taskId
+                    ) => {
+
+                        if (
+                            !currentTaskIds.has(
+                                taskId
+                            )
+                        ) {
+
+                            row.remove();
+
+                        }
+
+                    }
+                );
+
+
+                /*
+                 * Add only new task rows.
+                 *
+                 * Existing rows are untouched.
+                 */
+                tasks.forEach(
+                    task => {
+
+                        if (
+                            !task ||
+                            !task.id ||
+                            !task.name
+                        ) {
+
+                            return;
+
+                        }
+
+
+                        const existingRow =
+                            currentRows.get(
+                                task.id
+                            );
+
+
+                        if (
+                            existingRow
+                        ) {
+
+                            /*
+                             * Update the text if the
+                             * item's name changed.
+                             */
+                            const label =
+                                existingRow.querySelector(
+                                    "label"
+                                );
+
+
+                            if (
+                                label &&
+                                label.textContent !==
+                                    task.name
+                            ) {
+
+                                label.textContent =
+                                    task.name;
+
+                            }
+
+
+                            return;
+
+                        }
+
+
+                        /*
+                         * New task.
+                         */
+                        const row =
+                            createTaskRow(
+                                task,
+                                world
+                            );
+
+
+                        tasksContainer.appendChild(
+                            row
+                        );
+
+                    }
+                );
+
+
+                updateSectionCount(
+                    section
+                );
+
+            }
+        );
+
+
+        /*
+         * Remove the empty message if checklist
+         * now contains sections.
+         */
+        const empty =
+            checklistElement.querySelector(
+                ".empty"
+            );
+
+
+        if (
+            empty &&
+            checklistElement.querySelector(
+                ".section"
+            )
+        ) {
+
+            empty.remove();
+
+        }
+
+
+        /*
+         * If everything disappeared, show the
+         * empty message.
+         */
+        if (
+            !checklistElement.querySelector(
+                ".section"
+            )
+        ) {
+
+            if (!empty) {
+
+                const newEmpty =
+                    document.createElement(
+                        "div"
+                    );
+
+
+                newEmpty.className =
+                    "empty";
+
+
+                newEmpty.textContent =
+                    "No checklist items match your search.";
+
+
+                checklistElement.appendChild(
+                    newEmpty
+                );
+
+            }
+
+        }
+
+
+        updateProgress();
+
+        updateSectionCounts();
 
     }
 
@@ -2019,67 +2502,16 @@
         }
 
 
-        document
+        checklistElement
             .querySelectorAll(
                 ".section"
             )
             .forEach(
                 section => {
 
-                    const title =
-                        section.querySelector(
-                            "h2"
-                        );
-
-
-                    const count =
-                        section.querySelector(
-                            ".section-count"
-                        );
-
-
-                    if (
-                        !title ||
-                        !count
-                    ) {
-
-                        return;
-
-                    }
-
-
-                    const tasks =
-                        checklist[
-                            title.textContent
-                        ];
-
-
-                    if (
-                        !Array.isArray(
-                            tasks
-                        )
-                    ) {
-
-                        return;
-
-                    }
-
-
-                    const completed =
-                        tasks.filter(
-                            task =>
-                                task &&
-                                task.id &&
-                                world.progress[
-                                    task.id
-                                ] === true
-                        ).length;
-
-
-                    count.textContent =
-                        completed +
-                        " / " +
-                        tasks.length;
+                    updateSectionCount(
+                        section
+                    );
 
                 }
             );
@@ -2094,6 +2526,115 @@
         renderWorldManager();
 
         renderChecklist();
+
+    }
+
+
+    /*
+     * Removes all saved progress for task IDs
+     * that no longer exist in checklist.json.
+     *
+     * This runs for EVERY world.
+     */
+    function cleanRemovedTaskProgress(
+        newChecklist
+    ) {
+
+        const validTaskIds =
+            new Set();
+
+
+        for (
+            const tasks of Object.values(
+                newChecklist
+            )
+        ) {
+
+            if (
+                !Array.isArray(
+                    tasks
+                )
+            ) {
+
+                continue;
+
+            }
+
+
+            for (
+                const task of tasks
+            ) {
+
+                if (
+                    task &&
+                    task.id
+                ) {
+
+                    validTaskIds.add(
+                        task.id
+                    );
+
+                }
+
+            }
+
+        }
+
+
+        let changed =
+            false;
+
+
+        for (
+            const world of Object.values(
+                worlds
+            )
+        ) {
+
+            if (
+                !world.progress ||
+                typeof world.progress !== "object"
+            ) {
+
+                world.progress =
+                    {};
+
+                continue;
+
+            }
+
+
+            for (
+                const taskId of Object.keys(
+                    world.progress
+                )
+            ) {
+
+                if (
+                    !validTaskIds.has(
+                        taskId
+                    )
+                ) {
+
+                    delete world.progress[
+                        taskId
+                    ];
+
+                    changed =
+                        true;
+
+                }
+
+            }
+
+        }
+
+
+        if (changed) {
+
+            saveWorlds();
+
+        }
 
     }
 
@@ -2164,6 +2705,10 @@
             }
 
 
+            const oldChecklist =
+                checklist;
+
+
             checklist =
                 newChecklist;
 
@@ -2172,7 +2717,37 @@
                 newSignature;
 
 
-            renderAll();
+            /*
+             * Remove progress belonging to
+             * deleted JSON items.
+             */
+            cleanRemovedTaskProgress(
+                newChecklist
+            );
+
+
+            /*
+             * First load:
+             * build everything normally.
+             */
+            if (
+                Object.keys(
+                    oldChecklist
+                ).length === 0
+            ) {
+
+                renderAll();
+
+                return;
+
+            }
+
+
+            /*
+             * Later JSON updates:
+             * modify only changed DOM nodes.
+             */
+            updateChecklistDOM();
 
         } catch (error) {
 
