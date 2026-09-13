@@ -170,6 +170,63 @@
             transition: width 0.25s ease;
         }
 
+        .day-tracker {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            margin-top: 12px;
+            padding: 14px 16px;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            background: var(--panel);
+        }
+
+        .day-label {
+            font-weight: 700;
+        }
+
+        .day-controls {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .day-button {
+            width: 40px;
+            height: 40px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            background: var(--panel-2);
+            color: var(--text);
+            padding: 0;
+            font-size: 22px;
+            font-weight: 700;
+            line-height: 1;
+        }
+
+        .day-button:hover {
+            border-color: var(--green);
+            background: #1c261e;
+        }
+
+        #minecraftDay {
+            width: 90px;
+            height: 40px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            background: var(--bg);
+            color: var(--text);
+            padding: 0 8px;
+            text-align: center;
+            outline: none;
+            font-weight: 700;
+        }
+
+        #minecraftDay:focus {
+            border-color: var(--green);
+        }
+
         #worldManager {
             margin-bottom: 25px;
         }
@@ -432,6 +489,15 @@
                 width: 100%;
             }
 
+            .day-tracker {
+                align-items: stretch;
+                flex-direction: column;
+            }
+
+            .day-controls {
+                justify-content: center;
+            }
+
             .section-header {
                 align-items: center;
             }
@@ -540,6 +606,45 @@
 
         </div>
 
+        <div class="day-tracker">
+
+            <span class="day-label">
+                Minecraft Day
+            </span>
+
+            <div class="day-controls">
+
+                <button
+                    type="button"
+                    class="day-button"
+                    id="dayMinus"
+                    aria-label="Decrease Minecraft day"
+                >
+                    −
+                </button>
+
+                <input
+                    type="number"
+                    id="minecraftDay"
+                    min="1"
+                    step="1"
+                    inputmode="numeric"
+                    aria-label="Minecraft Day"
+                >
+
+                <button
+                    type="button"
+                    class="day-button"
+                    id="dayPlus"
+                    aria-label="Increase Minecraft day"
+                >
+                    +
+                </button>
+
+            </div>
+
+        </div>
+
     </header>
 
 
@@ -584,6 +689,9 @@
 
     const CURRENT_WORLD_STORAGE_KEY =
         "minecraft-survival-todo-worlds-current";
+
+    const DAY_STORAGE_KEY =
+        "minecraft-survival-todo-day";
 
     const MAX_WORLDS =
         100;
@@ -653,6 +761,231 @@
         document.getElementById(
             "resetButton"
         );
+
+    const minecraftDayInput =
+        document.getElementById(
+            "minecraftDay"
+        );
+
+    const dayMinus =
+        document.getElementById(
+            "dayMinus"
+        );
+
+    const dayPlus =
+        document.getElementById(
+            "dayPlus"
+        );
+
+
+    /*
+     * Minecraft Day
+     */
+
+    function getMinecraftDay() {
+
+        const savedDay =
+            Number(
+                localStorage.getItem(
+                    DAY_STORAGE_KEY
+                )
+            );
+
+
+        if (
+            Number.isInteger(savedDay) &&
+            savedDay >= 1
+        ) {
+
+            return savedDay;
+
+        }
+
+
+        return 1;
+
+    }
+
+
+    function saveMinecraftDay(
+        day
+    ) {
+
+        localStorage.setItem(
+            DAY_STORAGE_KEY,
+            String(day)
+        );
+
+    }
+
+
+    function setMinecraftDay(
+        day
+    ) {
+
+        day =
+            Number(day);
+
+
+        if (
+            !Number.isInteger(day) ||
+            day < 1
+        ) {
+
+            return false;
+
+        }
+
+
+        minecraftDayInput.value =
+            String(day);
+
+
+        saveMinecraftDay(
+            day
+        );
+
+
+        return true;
+
+    }
+
+
+    minecraftDayInput.value =
+        getMinecraftDay();
+
+
+    dayMinus.addEventListener(
+        "click",
+        () => {
+
+            const currentDay =
+                Number(
+                    minecraftDayInput.value
+                );
+
+
+            if (
+                !Number.isInteger(
+                    currentDay
+                )
+            ) {
+
+                setMinecraftDay(1);
+
+                return;
+
+            }
+
+
+            if (
+                currentDay > 1
+            ) {
+
+                setMinecraftDay(
+                    currentDay - 1
+                );
+
+            }
+
+        }
+    );
+
+
+    dayPlus.addEventListener(
+        "click",
+        () => {
+
+            const currentDay =
+                Number(
+                    minecraftDayInput.value
+                );
+
+
+            if (
+                !Number.isInteger(
+                    currentDay
+                )
+            ) {
+
+                setMinecraftDay(2);
+
+                return;
+
+            }
+
+
+            setMinecraftDay(
+                currentDay + 1
+            );
+
+        }
+    );
+
+
+    minecraftDayInput.addEventListener(
+        "change",
+        () => {
+
+            const value =
+                Number(
+                    minecraftDayInput.value
+                );
+
+
+            if (
+                Number.isInteger(value) &&
+                value >= 1
+            ) {
+
+                saveMinecraftDay(
+                    value
+                );
+
+            }
+
+        }
+    );
+
+
+    minecraftDayInput.addEventListener(
+        "keydown",
+        event => {
+
+            if (
+                event.key ===
+                "Enter"
+            ) {
+
+                event.preventDefault();
+
+
+                const value =
+                    Number(
+                        minecraftDayInput.value
+                    );
+
+
+                if (
+                    Number.isInteger(value) &&
+                    value >= 1
+                ) {
+
+                    saveMinecraftDay(
+                        value
+                    );
+
+                }
+
+                /*
+                 * Do NOT re-render anything here.
+                 * This keeps the input exactly as entered.
+                 */
+
+            }
+
+        }
+    );
 
 
     function generateWorldId() {
@@ -1890,34 +2223,6 @@
                 section.dataset.section ===
                 sectionName
         ) || null;
-
-    }
-
-
-    function getCurrentSectionOpenState() {
-
-        const states = {};
-
-
-        checklistElement
-            .querySelectorAll(
-                ".section"
-            )
-            .forEach(
-                section => {
-
-                    states[
-                        section.dataset.section
-                    ] =
-                        section.classList.contains(
-                            "open"
-                        );
-
-                }
-            );
-
-
-        return states;
 
     }
 
