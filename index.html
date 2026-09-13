@@ -857,24 +857,29 @@
         /*
             Search versions.
 
-            Examples:
+            Normal searches are partial:
 
             2
             v2
             version 2
 
-            Searching "2" will match:
+            "2" matches:
 
             v2
             v20
             v200
             v2000
-            etc.
+
+            Adding .0 makes it exact:
+
+            2.0  -> v2 only
+            v2.0 -> v2 only
+            2000.0 -> v2000 only
         */
 
         function filterVersions() {
 
-            const query =
+            const rawQuery =
                 search.value
                     .trim()
                     .toLowerCase()
@@ -886,6 +891,18 @@
                         /^v/,
                         ""
                     );
+
+
+            const exactVersion =
+                rawQuery.match(
+                    /^(\d+)\.0$/
+                );
+
+
+            const query =
+                exactVersion
+                    ? exactVersion[1]
+                    : rawQuery;
 
 
             const versionLinks =
@@ -905,10 +922,12 @@
 
 
                     const matches =
-                        query === "" ||
-                        version.includes(
-                            query
-                        );
+                        exactVersion
+                            ? version === query
+                            : query === "" ||
+                              version.includes(
+                                  query
+                              );
 
 
                     link.style.display =
@@ -1095,8 +1114,7 @@
 
 
         /*
-            Prevent double-click zoom where
-            the browser supports cancelling it.
+            Prevent double-click zoom.
         */
 
         document.addEventListener(
