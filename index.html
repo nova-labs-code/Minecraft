@@ -35,7 +35,6 @@
             margin: 0;
             padding: 0;
             background: #090b10;
-
             touch-action: manipulation;
         }
 
@@ -83,7 +82,6 @@
         .container {
             width: 100%;
             max-width: 900px;
-
             margin: 0 auto;
         }
 
@@ -115,8 +113,7 @@
         .description {
             max-width: 600px;
 
-            margin:
-                14px 0 0;
+            margin: 14px 0 0;
 
             color: #9da4b3;
 
@@ -134,9 +131,9 @@
 
             width: 100%;
 
-            padding: 22px 24px;
+            padding: 18px 20px;
 
-            margin-bottom: 24px;
+            margin-bottom: 20px;
 
             background:
                 linear-gradient(
@@ -149,7 +146,7 @@
                 1px solid
                 rgba(255, 255, 255, 0.12);
 
-            border-radius: 16px;
+            border-radius: 14px;
 
             color: #ffffff;
 
@@ -179,12 +176,12 @@
         .latest-label {
             display: block;
 
-            margin-bottom: 5px;
+            margin-bottom: 3px;
 
             color:
                 rgba(255, 255, 255, 0.7);
 
-            font-size: 12px;
+            font-size: 11px;
             font-weight: 700;
 
             letter-spacing: 0.08em;
@@ -194,14 +191,13 @@
         .latest-version {
             display: block;
 
-            font-size: 22px;
+            font-size: 19px;
             font-weight: 700;
         }
 
         .latest-arrow {
             flex-shrink: 0;
-
-            font-size: 25px;
+            font-size: 22px;
         }
 
         .toolbar {
@@ -211,12 +207,11 @@
 
             gap: 12px;
 
-            margin-bottom: 18px;
+            margin-bottom: 16px;
         }
 
         .search {
             position: relative;
-
             flex: 1;
         }
 
@@ -224,10 +219,10 @@
             position: absolute;
 
             top: 50%;
-            left: 16px;
+            left: 14px;
 
-            width: 18px;
-            height: 18px;
+            width: 17px;
+            height: 17px;
 
             transform:
                 translateY(-50%);
@@ -240,11 +235,11 @@
         .search input {
             width: 100%;
 
-            min-height: 52px;
+            min-height: 48px;
 
             padding:
-                0 18px
-                0 46px;
+                0 16px
+                0 43px;
 
             background: #11151d;
 
@@ -252,7 +247,7 @@
                 1px solid
                 #252c39;
 
-            border-radius: 12px;
+            border-radius: 11px;
 
             outline: none;
 
@@ -283,7 +278,7 @@
 
             color: #747d8f;
 
-            font-size: 14px;
+            font-size: 13px;
         }
 
         .versions {
@@ -292,20 +287,21 @@
             grid-template-columns:
                 repeat(
                     auto-fill,
-                    minmax(190px, 1fr)
+                    minmax(150px, 1fr)
                 );
 
-            gap: 14px;
+            gap: 10px;
         }
 
         .version {
             display: flex;
 
-            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
 
-            min-height: 112px;
+            min-height: 68px;
 
-            padding: 20px;
+            padding: 14px 16px;
 
             background:
                 rgba(17, 21, 29, 0.92);
@@ -314,7 +310,7 @@
                 1px solid
                 #202633;
 
-            border-radius: 14px;
+            border-radius: 11px;
 
             color: #ffffff;
 
@@ -335,20 +331,28 @@
         }
 
         .version:active {
-            transform: scale(0.99);
+            transform: scale(0.98);
         }
 
         .version-number {
-            font-size: 20px;
+            font-size: 17px;
             font-weight: 700;
         }
 
-        .version-path {
-            margin-top: 7px;
+        .version-arrow {
+            color: #667085;
 
-            color: #737d8f;
+            font-size: 17px;
 
-            font-size: 13px;
+            transition:
+                color 0.2s ease,
+                transform 0.2s ease;
+        }
+
+        .version:hover .version-arrow {
+            color: #818cf8;
+
+            transform: translateX(2px);
         }
 
         .empty {
@@ -381,17 +385,17 @@
         }
 
         @media (max-width: 600px) {
+
             .page {
                 padding-top: 40px;
             }
 
             .latest {
-                padding: 19px 20px;
+                padding: 17px 18px;
             }
 
             .toolbar {
                 align-items: stretch;
-
                 flex-direction: column;
             }
 
@@ -409,6 +413,7 @@
         }
 
         @media (max-width: 380px) {
+
             .versions {
                 grid-template-columns: 1fr;
             }
@@ -446,6 +451,7 @@
             >
 
                 <span>
+
                     <span class="latest-label">
                         Latest Version
                     </span>
@@ -454,6 +460,7 @@
                         id="latestVersion"
                         class="latest-version"
                     ></span>
+
                 </span>
 
                 <span
@@ -489,6 +496,7 @@
                         <path
                             d="m20 20-4-4"
                         ></path>
+
                     </svg>
 
                     <input
@@ -540,6 +548,7 @@
 
 
     <script>
+
         /*
             Change ONLY this number.
         */
@@ -639,17 +648,16 @@
                 version;
 
 
-            const path =
+            const arrow =
                 document.createElement(
                     "div"
                 );
 
-            path.className =
-                "version-path";
+            arrow.className =
+                "version-arrow";
 
-            path.textContent =
-                "./v" +
-                version;
+            arrow.textContent =
+                "→";
 
 
             link.appendChild(
@@ -657,7 +665,7 @@
             );
 
             link.appendChild(
-                path
+                arrow
             );
 
             versions.appendChild(
@@ -748,6 +756,7 @@
         */
 
         filterVersions();
+
     </script>
 
 </body>
