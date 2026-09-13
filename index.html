@@ -38,7 +38,6 @@
             background: #090b10;
 
             touch-action: manipulation;
-
             -ms-touch-action: manipulation;
 
             -webkit-text-size-adjust: 100%;
@@ -73,7 +72,6 @@
             overscroll-behavior: none;
 
             touch-action: manipulation;
-
             -ms-touch-action: manipulation;
         }
 
@@ -83,7 +81,6 @@
         select,
         textarea {
             touch-action: manipulation;
-
             -ms-touch-action: manipulation;
 
             -webkit-user-select: none;
@@ -109,21 +106,21 @@
 
         .container {
             width: 100%;
-            max-width: 900px;
+            max-width: 760px;
 
             margin: 0 auto;
         }
 
         .header {
-            margin-bottom: 32px;
+            margin-bottom: 28px;
         }
 
         .eyebrow {
-            margin-bottom: 10px;
+            margin-bottom: 9px;
 
             color: #818cf8;
 
-            font-size: 13px;
+            font-size: 12px;
             font-weight: 700;
 
             letter-spacing: 0.12em;
@@ -137,7 +134,7 @@
                 clamp(
                     32px,
                     7vw,
-                    48px
+                    46px
                 );
 
             line-height: 1.05;
@@ -146,14 +143,14 @@
         }
 
         .description {
-            max-width: 600px;
+            max-width: 560px;
 
-            margin: 14px 0 0;
+            margin: 12px 0 0;
 
             color: #9da4b3;
 
-            font-size: 16px;
-            line-height: 1.6;
+            font-size: 15px;
+            line-height: 1.55;
         }
 
         .latest {
@@ -162,13 +159,11 @@
             align-items: center;
             justify-content: space-between;
 
-            gap: 20px;
-
             width: 100%;
 
-            padding: 17px 19px;
+            padding: 16px 18px;
 
-            margin-bottom: 20px;
+            margin-bottom: 18px;
 
             background:
                 linear-gradient(
@@ -186,19 +181,19 @@
                     0.12
                 );
 
-            border-radius: 14px;
+            border-radius: 12px;
 
             color: #ffffff;
 
             text-decoration: none;
 
             box-shadow:
-                0 12px 35px
+                0 10px 28px
                 rgba(
                     79,
                     70,
                     229,
-                    0.2
+                    0.18
                 );
 
             transition:
@@ -210,12 +205,12 @@
             transform: translateY(-2px);
 
             box-shadow:
-                0 16px 40px
+                0 14px 34px
                 rgba(
                     79,
                     70,
                     229,
-                    0.3
+                    0.28
                 );
         }
 
@@ -226,7 +221,7 @@
         .latest-label {
             display: block;
 
-            margin-bottom: 3px;
+            margin-bottom: 2px;
 
             color:
                 rgba(
@@ -236,7 +231,7 @@
                     0.7
                 );
 
-            font-size: 11px;
+            font-size: 10px;
             font-weight: 700;
 
             letter-spacing: 0.08em;
@@ -246,14 +241,8 @@
         .latest-version {
             display: block;
 
-            font-size: 19px;
+            font-size: 18px;
             font-weight: 700;
-        }
-
-        .latest-arrow {
-            flex-shrink: 0;
-
-            font-size: 22px;
         }
 
         .toolbar {
@@ -261,9 +250,9 @@
 
             align-items: center;
 
-            gap: 12px;
+            gap: 10px;
 
-            margin-bottom: 16px;
+            margin-bottom: 14px;
         }
 
         .search {
@@ -276,10 +265,10 @@
             position: absolute;
 
             top: 50%;
-            left: 14px;
+            left: 13px;
 
-            width: 17px;
-            height: 17px;
+            width: 16px;
+            height: 16px;
 
             transform:
                 translateY(-50%);
@@ -292,11 +281,11 @@
         .search input {
             width: 100%;
 
-            min-height: 48px;
+            min-height: 44px;
 
             padding:
-                0 16px
-                0 43px;
+                0 14px
+                0 40px;
 
             background: #11151d;
 
@@ -304,14 +293,14 @@
                 1px solid
                 #252c39;
 
-            border-radius: 11px;
+            border-radius: 10px;
 
             outline: none;
 
             color: #ffffff;
 
             font-family: inherit;
-            font-size: 16px;
+            font-size: 15px;
 
             transition:
                 border-color 0.2s ease,
@@ -340,7 +329,7 @@
 
             color: #747d8f;
 
-            font-size: 13px;
+            font-size: 12px;
         }
 
         .versions {
@@ -349,22 +338,22 @@
             grid-template-columns:
                 repeat(
                     auto-fill,
-                    minmax(150px, 1fr)
+                    minmax(120px, 1fr)
                 );
 
-            gap: 10px;
+            gap: 8px;
         }
 
         .version {
             display: flex;
 
             align-items: center;
-            justify-content: space-between;
+            justify-content: center;
 
-            min-height: 64px;
+            min-height: 52px;
 
             padding:
-                12px 15px;
+                10px 12px;
 
             background:
                 rgba(
@@ -378,7 +367,7 @@
                 1px solid
                 #202633;
 
-            border-radius: 11px;
+            border-radius: 9px;
 
             color: #ffffff;
 
@@ -403,36 +392,20 @@
         }
 
         .version-number {
-            font-size: 17px;
+            font-size: 16px;
             font-weight: 700;
-        }
-
-        .version-arrow {
-            color: #667085;
-
-            font-size: 17px;
-
-            transition:
-                color 0.2s ease,
-                transform 0.2s ease;
-        }
-
-        .version:hover .version-arrow {
-            color: #818cf8;
-
-            transform: translateX(2px);
         }
 
         .empty {
             display: none;
 
-            padding: 40px 20px;
+            padding: 36px 20px;
 
             border:
                 1px dashed
                 #2a3140;
 
-            border-radius: 14px;
+            border-radius: 12px;
 
             color: #7f8898;
 
@@ -440,16 +413,16 @@
         }
 
         .empty-title {
-            margin-bottom: 6px;
+            margin-bottom: 5px;
 
             color: #c5cad3;
 
-            font-size: 17px;
+            font-size: 16px;
             font-weight: 600;
         }
 
         .empty-description {
-            font-size: 14px;
+            font-size: 13px;
         }
 
         @media (max-width: 600px) {
@@ -460,7 +433,7 @@
 
             .latest {
                 padding:
-                    16px 18px;
+                    15px 16px;
             }
 
             .toolbar {
@@ -476,7 +449,7 @@
             .versions {
                 grid-template-columns:
                     repeat(
-                        2,
+                        3,
                         minmax(0, 1fr)
                     );
             }
@@ -485,7 +458,11 @@
         @media (max-width: 380px) {
 
             .versions {
-                grid-template-columns: 1fr;
+                grid-template-columns:
+                    repeat(
+                        2,
+                        minmax(0, 1fr)
+                    );
             }
         }
     </style>
@@ -531,13 +508,6 @@
                         class="latest-version"
                     ></span>
 
-                </span>
-
-                <span
-                    class="latest-arrow"
-                    aria-hidden="true"
-                >
-                    →
                 </span>
 
             </a>
@@ -718,24 +688,8 @@
                 version;
 
 
-            const arrow =
-                document.createElement(
-                    "div"
-                );
-
-            arrow.className =
-                "version-arrow";
-
-            arrow.textContent =
-                "→";
-
-
             link.appendChild(
                 number
-            );
-
-            link.appendChild(
-                arrow
             );
 
             versions.appendChild(
