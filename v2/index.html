@@ -67,10 +67,28 @@
         .day-editor-value,
         .name-editor-value {
             font: inherit;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        /*
+            Prevent browser double-tap gesture zoom on controls
+            while keeping normal text selection inside editors.
+        */
+
+        button,
+        .world-card,
+        .section-header,
+        .task-check,
+        .day-button,
+        .day-display,
+        .action-button,
+        .modal-layer {
+            touch-action: manipulation;
         }
 
         button {
-            -webkit-tap-highlight-color: transparent;
+            -webkit-user-select: none;
+            user-select: none;
         }
 
         .app {
@@ -108,7 +126,11 @@
                 inset 0 1px rgba(255, 255, 255, 0.025);
         }
 
-        /* ---------------- WORLD MANAGER ---------------- */
+        /*
+            --------------------------------------------------------
+            WORLD MANAGER
+            --------------------------------------------------------
+        */
 
         .world-panel {
             padding: 16px;
@@ -152,7 +174,7 @@
             caret-color: #77c47f;
             -webkit-user-select: text;
             user-select: text;
-            touch-action: manipulation;
+            cursor: text;
         }
 
         .world-search-box:focus,
@@ -207,6 +229,11 @@
                 transform 0.15s ease,
                 border-color 0.15s ease,
                 background 0.15s ease;
+        }
+
+        .world-card:hover {
+            background: #141e16;
+            border-color: #3b523f;
         }
 
         .world-card:active {
@@ -304,7 +331,11 @@
             background: #351b1b;
         }
 
-        /* ---------------- DAY TRACKER ---------------- */
+        /*
+            --------------------------------------------------------
+            DAY TRACKER
+            --------------------------------------------------------
+        */
 
         .day-tracker {
             display: flex;
@@ -358,7 +389,11 @@
             transform: scale(0.97);
         }
 
-        /* ---------------- CHECKLIST ---------------- */
+        /*
+            --------------------------------------------------------
+            PROGRESS
+            --------------------------------------------------------
+        */
 
         .progress-panel {
             padding: 16px;
@@ -400,9 +435,25 @@
             transition: width 0.25s ease;
         }
 
+        /*
+            --------------------------------------------------------
+            SEARCH
+            --------------------------------------------------------
+        */
+
         .search-panel {
+            padding: 0;
             margin-bottom: 16px;
+            background: transparent;
+            border: 0;
+            box-shadow: none;
         }
+
+        /*
+            --------------------------------------------------------
+            CHECKLIST SECTIONS
+            --------------------------------------------------------
+        */
 
         .section {
             border: 1px solid #263529;
@@ -491,6 +542,11 @@
             background: #111a13;
         }
 
+        /*
+            Custom checkbox button.
+            No <input> element is used.
+        */
+
         .task-check {
             appearance: none;
             -webkit-appearance: none;
@@ -498,6 +554,7 @@
             height: 20px;
             flex: 0 0 20px;
             margin: 0;
+            padding: 0;
             border-radius: 5px;
             border: 1px solid #4a5d4c;
             background: #0c130e;
@@ -505,20 +562,20 @@
             position: relative;
         }
 
-        .task-check:checked {
+        .task-check.checked {
             background: #397241;
             border-color: #5b9e64;
         }
 
-        .task-check:checked::after {
+        .task-check.checked::after {
             content: "";
             position: absolute;
             left: 6px;
             top: 2px;
             width: 5px;
             height: 10px;
-            border-right: 2px solid #fff;
-            border-bottom: 2px solid #fff;
+            border-right: 2px solid #ffffff;
+            border-bottom: 2px solid #ffffff;
             transform: rotate(45deg);
         }
 
@@ -529,6 +586,8 @@
             font-size: 14px;
             line-height: 1.4;
             cursor: pointer;
+            -webkit-user-select: none;
+            user-select: none;
         }
 
         .task.completed .task-label {
@@ -544,7 +603,11 @@
             font-size: 13px;
         }
 
-        /* ---------------- MODALS ---------------- */
+        /*
+            --------------------------------------------------------
+            MODALS
+            --------------------------------------------------------
+        */
 
         .modal-layer {
             position: fixed;
@@ -606,6 +669,7 @@
             caret-color: #77c47f;
             -webkit-user-select: text;
             user-select: text;
+            cursor: text;
         }
 
         .modal-actions {
@@ -615,7 +679,11 @@
             margin-top: 14px;
         }
 
-        /* ---------------- TOAST ---------------- */
+        /*
+            --------------------------------------------------------
+            TOAST
+            --------------------------------------------------------
+        */
 
         .toast {
             position: fixed;
@@ -666,6 +734,7 @@
         }
 
         @media (max-width: 600px) {
+
             .app {
                 padding-left: 12px;
                 padding-right: 12px;
@@ -701,16 +770,29 @@
 <div class="app">
 
     <header class="header">
-        <h1 class="title">Minecraft Survival To-Do</h1>
+
+        <h1 class="title">
+            Minecraft Survival To-Do
+        </h1>
+
         <p class="subtitle">
             Track your survival worlds and everything you want to accomplish.
         </p>
+
     </header>
+
+
+    <!-- =========================================================
+         WORLDS
+         ========================================================= -->
 
     <section class="panel world-panel">
 
         <div class="panel-title-row">
-            <h2 class="panel-title">Worlds</h2>
+
+            <h2 class="panel-title">
+                Worlds
+            </h2>
 
             <span
                 class="world-count"
@@ -718,7 +800,9 @@
             >
                 0 / 100
             </span>
+
         </div>
+
 
         <div
             class="world-search-box"
@@ -733,10 +817,12 @@
             autocorrect="off"
         ></div>
 
+
         <div
             class="worlds"
             id="worlds"
         ></div>
+
 
         <div class="world-actions">
 
@@ -748,6 +834,7 @@
                 + New World
             </button>
 
+
             <button
                 type="button"
                 class="action-button"
@@ -756,6 +843,7 @@
                 Rename World
             </button>
 
+
             <button
                 type="button"
                 class="action-button danger"
@@ -763,6 +851,7 @@
             >
                 Delete World
             </button>
+
 
             <button
                 type="button"
@@ -774,11 +863,13 @@
 
         </div>
 
+
         <section class="day-tracker">
 
             <span class="day-label">
                 Minecraft Day
             </span>
+
 
             <div class="day-controls">
 
@@ -791,6 +882,7 @@
                     −
                 </button>
 
+
                 <button
                     type="button"
                     class="day-display"
@@ -799,6 +891,7 @@
                 >
                     Day 1
                 </button>
+
 
                 <button
                     type="button"
@@ -814,6 +907,11 @@
         </section>
 
     </section>
+
+
+    <!-- =========================================================
+         PROGRESS
+         ========================================================= -->
 
     <section class="panel progress-panel">
 
@@ -832,16 +930,24 @@
 
         </div>
 
+
         <div class="progress-track">
+
             <div
                 class="progress-fill"
                 id="progressFill"
             ></div>
+
         </div>
 
     </section>
 
-    <section class="panel search-panel">
+
+    <!-- =========================================================
+         CHECKLIST SEARCH
+         ========================================================= -->
+
+    <section class="search-panel">
 
         <div
             class="search-box"
@@ -858,626 +964,1318 @@
 
     </section>
 
+
+    <!-- =========================================================
+         CHECKLIST
+         ========================================================= -->
+
     <main id="checklist"></main>
 
 </div>
+
+
+<!-- =============================================================
+     MODAL
+     ============================================================= -->
 
 <div
     class="modal-layer"
     id="modalLayer"
 >
+
     <div
         class="modal"
         id="modal"
     ></div>
+
 </div>
+
+
+<!-- =============================================================
+     TOAST
+     ============================================================= -->
 
 <div
     class="toast"
     id="toast"
 ></div>
 
+
 <script>
-    "use strict";
-
-    /*
-        ------------------------------------------------------------
-        STORAGE
-        ------------------------------------------------------------
-    */
-
-    const WORLDS_STORAGE_KEY =
-        "minecraft-survival-todo-worlds";
-
-    const CURRENT_WORLD_STORAGE_KEY =
-        "minecraft-survival-todo-worlds-current";
-
-    const CHECKLIST_URL =
-        "checklist.json";
-
-    const MAX_WORLDS = 100;
-
-    const CHECKLIST_POLL_INTERVAL = 2000;
+"use strict";
 
 
-    /*
-        ------------------------------------------------------------
-        ELEMENTS
-        ------------------------------------------------------------
-    */
+/*
+    ============================================================
+    CONSTANTS
+    ============================================================
+*/
 
-    const worldsElement =
-        document.getElementById("worlds");
+const WORLDS_STORAGE_KEY =
+    "minecraft-survival-todo-worlds";
 
-    const worldCountElement =
-        document.getElementById("worldCount");
+const CURRENT_WORLD_STORAGE_KEY =
+    "minecraft-survival-todo-worlds-current";
 
-    const worldSearchBox =
-        document.getElementById("worldSearchBox");
+const CHECKLIST_URL =
+    "checklist.json";
 
-    const checklistElement =
-        document.getElementById("checklist");
+const MAX_WORLDS =
+    100;
 
-    const searchBox =
-        document.getElementById("searchBox");
-
-    const progressNumber =
-        document.getElementById("progressNumber");
-
-    const progressFill =
-        document.getElementById("progressFill");
-
-    const newWorldButton =
-        document.getElementById("newWorld");
-
-    const renameWorldButton =
-        document.getElementById("renameWorld");
-
-    const deleteWorldButton =
-        document.getElementById("deleteWorld");
-
-    const resetWorldButton =
-        document.getElementById("resetWorld");
-
-    const dayMinusButton =
-        document.getElementById("dayMinus");
-
-    const dayPlusButton =
-        document.getElementById("dayPlus");
-
-    const minecraftDay =
-        document.getElementById("minecraftDay");
-
-    const modalLayer =
-        document.getElementById("modalLayer");
-
-    const modal =
-        document.getElementById("modal");
-
-    const toast =
-        document.getElementById("toast");
+const CHECKLIST_POLL_INTERVAL =
+    2000;
 
 
-    /*
-        ------------------------------------------------------------
-        STATE
-        ------------------------------------------------------------
-    */
+/*
+    ============================================================
+    ELEMENTS
+    ============================================================
+*/
 
-    let worlds = [];
+const worldsElement =
+    document.getElementById("worlds");
 
-    let currentWorldId = null;
+const worldCountElement =
+    document.getElementById("worldCount");
 
-    let checklist = {};
+const worldSearchBox =
+    document.getElementById("worldSearchBox");
 
-    let checklistSignature = "";
+const checklistElement =
+    document.getElementById("checklist");
 
-    let toastTimer = null;
+const searchBox =
+    document.getElementById("searchBox");
+
+const progressNumber =
+    document.getElementById("progressNumber");
+
+const progressFill =
+    document.getElementById("progressFill");
+
+const newWorldButton =
+    document.getElementById("newWorld");
+
+const renameWorldButton =
+    document.getElementById("renameWorld");
+
+const deleteWorldButton =
+    document.getElementById("deleteWorld");
+
+const resetWorldButton =
+    document.getElementById("resetWorld");
+
+const dayMinusButton =
+    document.getElementById("dayMinus");
+
+const dayPlusButton =
+    document.getElementById("dayPlus");
+
+const minecraftDay =
+    document.getElementById("minecraftDay");
+
+const modalLayer =
+    document.getElementById("modalLayer");
+
+const modal =
+    document.getElementById("modal");
+
+const toast =
+    document.getElementById("toast");
 
 
-    /*
-        ------------------------------------------------------------
-        BASIC HELPERS
-        ------------------------------------------------------------
-    */
+/*
+    ============================================================
+    STATE
+    ============================================================
+*/
 
-    function createId() {
-        return (
-            Date.now().toString(36) +
-            Math.random().toString(36).slice(2, 9)
-        );
-    }
+let worlds = [];
 
+let currentWorldId = null;
 
-    function escapeHTML(value) {
-        return String(value)
-            .replaceAll("&", "&amp;")
-            .replaceAll("<", "&lt;")
-            .replaceAll(">", "&gt;")
-            .replaceAll('"', "&quot;")
-            .replaceAll("'", "&#039;");
-    }
+let checklist = {};
+
+let checklistSignature = "";
+
+let toastTimer = null;
 
 
-    function getCurrentWorld() {
-        return worlds.find(
-            world => world.id === currentWorldId
-        ) || null;
-    }
+/*
+    ============================================================
+    BASIC HELPERS
+    ============================================================
+*/
+
+function createId() {
+
+    return (
+        Date.now().toString(36) +
+        Math.random().toString(36).slice(2, 9)
+    );
+}
 
 
-    function getAllTasks() {
-        const tasks = [];
+function escapeHTML(value) {
 
-        for (const sectionName of Object.keys(checklist)) {
+    return String(value)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+}
 
-            const sectionTasks =
-                Array.isArray(checklist[sectionName])
-                    ? checklist[sectionName]
-                    : [];
 
-            for (const task of sectionTasks) {
+function getCurrentWorld() {
+
+    return worlds.find(
+        world =>
+            world.id === currentWorldId
+    ) || null;
+}
+
+
+function getAllTasks() {
+
+    const tasks = [];
+
+
+    for (
+        const sectionName
+        of Object.keys(checklist)
+    ) {
+
+        const sectionTasks =
+            Array.isArray(
+                checklist[sectionName]
+            )
+                ? checklist[sectionName]
+                : [];
+
+
+        for (const task of sectionTasks) {
+
+            if (
+                task &&
+                typeof task.id === "string"
+            ) {
+
                 tasks.push(task);
             }
         }
-
-        return tasks;
     }
 
 
-    function getTotalTaskCount() {
-        return getAllTasks().length;
+    return tasks;
+}
+
+
+function getTotalTaskCount() {
+
+    return getAllTasks().length;
+}
+
+
+function getCompletedTaskCount(
+    world
+) {
+
+    if (!world) {
+        return 0;
     }
 
 
-    function getCompletedTaskCount(world) {
+    let count = 0;
 
-        if (!world) {
-            return 0;
+
+    for (
+        const task
+        of getAllTasks()
+    ) {
+
+        if (
+            world.progress &&
+            world.progress[task.id] === true
+        ) {
+
+            count++;
         }
-
-        let count = 0;
-
-        for (const task of getAllTasks()) {
-
-            if (
-                world.progress &&
-                world.progress[task.id] === true
-            ) {
-                count++;
-            }
-        }
-
-        return count;
     }
 
 
-    /*
-        ------------------------------------------------------------
-        WORLD STORAGE
-        ------------------------------------------------------------
-    */
-
-    function saveWorlds() {
-
-        localStorage.setItem(
-            WORLDS_STORAGE_KEY,
-            JSON.stringify(worlds)
-        );
-
-        localStorage.setItem(
-            CURRENT_WORLD_STORAGE_KEY,
-            String(currentWorldId)
-        );
-    }
+    return count;
+}
 
 
-    function loadWorlds() {
+/*
+    ============================================================
+    WORLD STORAGE
+    ============================================================
+*/
 
-        try {
+function saveWorlds() {
 
-            const savedWorlds =
-                JSON.parse(
-                    localStorage.getItem(
-                        WORLDS_STORAGE_KEY
-                    )
-                );
-
-            if (Array.isArray(savedWorlds)) {
-                worlds = savedWorlds;
-            }
-
-        } catch {
-            worlds = [];
-        }
+    localStorage.setItem(
+        WORLDS_STORAGE_KEY,
+        JSON.stringify(worlds)
+    );
 
 
-        worlds = worlds
-            .filter(world =>
-                world &&
-                typeof world === "object" &&
-                typeof world.id === "string"
-            )
-            .slice(0, MAX_WORLDS);
+    localStorage.setItem(
+        CURRENT_WORLD_STORAGE_KEY,
+        String(currentWorldId)
+    );
+}
 
 
-        for (const world of worlds) {
+function loadWorlds() {
 
-            if (
-                !world.progress ||
-                typeof world.progress !== "object"
-            ) {
-                world.progress = {};
-            }
+    try {
 
-            if (
-                !Number.isInteger(world.day) ||
-                world.day < 1
-            ) {
-                world.day = 1;
-            }
-
-            if (
-                typeof world.name !== "string" ||
-                !world.name.trim()
-            ) {
-                world.name = "Unnamed World";
-            }
-        }
-
-
-        const savedCurrentWorld =
-            localStorage.getItem(
-                CURRENT_WORLD_STORAGE_KEY
+        const saved =
+            JSON.parse(
+                localStorage.getItem(
+                    WORLDS_STORAGE_KEY
+                )
             );
 
 
-        if (
-            savedCurrentWorld &&
-            worlds.some(
+        if (Array.isArray(saved)) {
+            worlds = saved;
+        }
+
+    } catch {
+
+        worlds = [];
+    }
+
+
+    worlds =
+        worlds
+            .filter(
                 world =>
-                    world.id === savedCurrentWorld
+                    world &&
+                    typeof world === "object" &&
+                    typeof world.id === "string"
             )
+            .slice(
+                0,
+                MAX_WORLDS
+            );
+
+
+    for (const world of worlds) {
+
+        if (
+            !world.progress ||
+            typeof world.progress !== "object"
         ) {
-            currentWorldId =
-                savedCurrentWorld;
 
-        } else if (worlds.length > 0) {
-
-            currentWorldId =
-                worlds[0].id;
-
-        } else {
-
-            const world =
-                createWorld("World 1");
-
-            worlds.push(world);
-
-            currentWorldId =
-                world.id;
+            world.progress = {};
         }
 
 
-        saveWorlds();
+        if (
+            !Number.isInteger(world.day) ||
+            world.day < 1
+        ) {
+
+            world.day = 1;
+        }
+
+
+        if (
+            typeof world.name !== "string" ||
+            !world.name.trim()
+        ) {
+
+            world.name =
+                "Unnamed World";
+        }
     }
 
 
-    function createWorld(name) {
+    const savedCurrent =
+        localStorage.getItem(
+            CURRENT_WORLD_STORAGE_KEY
+        );
 
-        return {
-            id: createId(),
-            name: name,
-            progress: {},
-            day: 1
-        };
+
+    if (
+        savedCurrent &&
+        worlds.some(
+            world =>
+                world.id === savedCurrent
+        )
+    ) {
+
+        currentWorldId =
+            savedCurrent;
+
+    } else if (worlds.length > 0) {
+
+        currentWorldId =
+            worlds[0].id;
+
+    } else {
+
+        const world =
+            createWorld(
+                "World 1"
+            );
+
+
+        worlds.push(world);
+
+        currentWorldId =
+            world.id;
     }
 
 
-    /*
-        ------------------------------------------------------------
-        WORLD SEARCH
-        ------------------------------------------------------------
-    */
-
-    function getWorldSearchText() {
-
-        return worldSearchBox
-            .textContent
-            .trim()
-            .toLowerCase();
-    }
+    saveWorlds();
+}
 
 
-    /*
-        ------------------------------------------------------------
-        RENDER WORLDS
-        ------------------------------------------------------------
-    */
+function createWorld(
+    name
+) {
 
-    function renderWorlds() {
+    return {
+        id: createId(),
+        name: name,
+        progress: {},
+        day: 1
+    };
+}
 
-        const search =
-            getWorldSearchText();
 
-        const filteredWorlds =
-            worlds.filter(world => {
+/*
+    ============================================================
+    WORLD SEARCH
+    ============================================================
+*/
+
+function getWorldSearchText() {
+
+    return worldSearchBox
+        .textContent
+        .replace(/[\r\n]+/g, " ")
+        .trim()
+        .toLowerCase();
+}
+
+
+/*
+    ============================================================
+    RENDER WORLDS
+    ============================================================
+*/
+
+function renderWorlds() {
+
+    const search =
+        getWorldSearchText();
+
+
+    const filteredWorlds =
+        worlds.filter(
+            world => {
 
                 if (!search) {
                     return true;
                 }
 
+
+                /*
+                    includes() means the search can match
+                    anywhere in the world name.
+
+                    "survival" matches:
+                    "My Survival World"
+
+                    "world" matches:
+                    "Creative World 2"
+                */
+
                 return world.name
                     .toLowerCase()
                     .includes(search);
-            });
+            }
+        );
 
 
-        worldsElement.innerHTML = "";
+    worldsElement.innerHTML = "";
 
 
-        worldCountElement.textContent =
-            search
-                ? `${filteredWorlds.length} shown / ${worlds.length}`
-                : `${worlds.length} / ${MAX_WORLDS}`;
+    worldCountElement.textContent =
+        search
+            ? `${filteredWorlds.length} shown / ${worlds.length}`
+            : `${worlds.length} / ${MAX_WORLDS}`;
 
 
-        if (filteredWorlds.length === 0) {
+    if (
+        filteredWorlds.length === 0
+    ) {
 
-            worldsElement.innerHTML =
-                `
-                <div class="world-empty">
-                    No worlds match your search.
-                </div>
-                `;
+        worldsElement.innerHTML =
+            `
+            <div class="world-empty">
+                No worlds match your search.
+            </div>
+            `;
 
-            return;
-        }
-
-
-        for (const world of filteredWorlds) {
-
-            const completed =
-                getCompletedTaskCount(world);
-
-            const total =
-                getTotalTaskCount();
-
-
-            const card =
-                document.createElement("div");
-
-            card.className =
-                "world-card" +
-                (
-                    world.id === currentWorldId
-                        ? " current"
-                        : ""
-                );
-
-
-            card.dataset.worldId =
-                world.id;
-
-
-            card.innerHTML =
-                `
-                <div class="world-name">
-                    ${escapeHTML(world.name)}
-                </div>
-
-                <div class="world-meta">
-                    ${completed} / ${total} tasks complete
-                    <br>
-                    Minecraft Day ${world.day}
-                </div>
-
-                ${
-                    world.id === currentWorldId
-                        ? `
-                            <span class="world-current">
-                                Current World
-                            </span>
-                        `
-                        : ""
-                }
-                `;
-
-
-            card.addEventListener(
-                "click",
-                () => {
-
-                    currentWorldId =
-                        world.id;
-
-                    saveWorlds();
-
-                    renderWorlds();
-                    renderChecklist();
-                    updateDayDisplay();
-                }
-            );
-
-
-            worldsElement.appendChild(card);
-        }
+        return;
     }
 
 
-    /*
-        ------------------------------------------------------------
-        DAY TRACKER
-        ------------------------------------------------------------
-    */
+    for (const world of filteredWorlds) {
 
-    function getCurrentDay() {
-
-        const world =
-            getCurrentWorld();
-
-        if (!world) {
-            return 1;
-        }
-
-        return world.day;
-    }
-
-
-    function setCurrentDay(day) {
-
-        const world =
-            getCurrentWorld();
-
-        if (!world) {
-            return;
-        }
-
-        world.day =
-            Math.max(
-                1,
-                Math.floor(Number(day) || 1)
+        const completed =
+            getCompletedTaskCount(
+                world
             );
 
-
-        saveWorlds();
-
-        updateDayDisplay();
-        renderWorlds();
-    }
-
-
-    function updateDayDisplay() {
-
-        minecraftDay.textContent =
-            `Day ${getCurrentDay()}`;
-    }
-
-
-    dayMinusButton.addEventListener(
-        "click",
-        () => {
-            setCurrentDay(
-                getCurrentDay() - 1
-            );
-        }
-    );
-
-
-    dayPlusButton.addEventListener(
-        "click",
-        () => {
-            setCurrentDay(
-                getCurrentDay() + 1
-            );
-        }
-    );
-
-
-    minecraftDay.addEventListener(
-        "click",
-        () => {
-
-            createDayEditor(
-                getCurrentDay()
-            );
-        }
-    );
-
-
-    /*
-        ------------------------------------------------------------
-        CHECKLIST PROGRESS
-        ------------------------------------------------------------
-    */
-
-    function updateProgress() {
-
-        const world =
-            getCurrentWorld();
 
         const total =
             getTotalTaskCount();
 
-        const completed =
-            getCompletedTaskCount(world);
+
+        const card =
+            document.createElement(
+                "div"
+            );
 
 
-        progressNumber.textContent =
-            `${completed} / ${total}`;
+        card.className =
+            "world-card";
 
 
-        const percentage =
-            total > 0
-                ? (completed / total) * 100
-                : 0;
+        if (
+            world.id === currentWorldId
+        ) {
+
+            card.classList.add(
+                "current"
+            );
+        }
 
 
-        progressFill.style.width =
-            `${percentage}%`;
+        card.dataset.worldId =
+            world.id;
+
+
+        card.innerHTML =
+            `
+            <div class="world-name">
+                ${escapeHTML(world.name)}
+            </div>
+
+            <div class="world-meta">
+                ${completed} / ${total} tasks complete
+                <br>
+                Minecraft Day ${world.day}
+            </div>
+
+            ${
+                world.id === currentWorldId
+                    ? `
+                        <span class="world-current">
+                            Current World
+                        </span>
+                    `
+                    : ""
+            }
+            `;
+
+
+        card.addEventListener(
+            "click",
+            () => {
+
+                currentWorldId =
+                    world.id;
+
+
+                saveWorlds();
+
+                renderWorlds();
+                renderChecklist();
+                updateDayDisplay();
+            }
+        );
+
+
+        worldsElement.appendChild(
+            card
+        );
+    }
+}
+
+
+/*
+    ============================================================
+    DAY
+    ============================================================
+*/
+
+function getCurrentDay() {
+
+    const world =
+        getCurrentWorld();
+
+
+    if (!world) {
+        return 1;
     }
 
 
-    function updateSectionCounts() {
-
-        const world =
-            getCurrentWorld();
+    return world.day;
+}
 
 
-        document
-            .querySelectorAll(".section")
-            .forEach(section => {
+function setCurrentDay(
+    day
+) {
 
-                const sectionName =
-                    section.dataset.section;
-
-
-                const tasks =
-                    Array.isArray(
-                        checklist[sectionName]
-                    )
-                        ? checklist[sectionName]
-                        : [];
+    const world =
+        getCurrentWorld();
 
 
-                let completed = 0;
-
-
-                for (const task of tasks) {
-
-                    if (
-                        world &&
-                        world.progress &&
-                        world.progress[task.id] === true
-                    ) {
-                        completed++;
-                    }
-                }
-
-
-                const count =
-                    section.querySelector(
-                        ".section-count"
-                    );
-
-
-                if (count) {
-
-                    count.textContent =
-                        `${completed} / ${tasks.length}`;
-                }
-            });
+    if (!world) {
+        return;
     }
 
 
-    function updateSectionCount(
-        sectionElement,
-        sectionName
+    const numericDay =
+        Number(day);
+
+
+    if (
+        !Number.isFinite(
+            numericDay
+        )
     ) {
 
-        const world =
+        return;
+    }
+
+
+    world.day =
+        Math.max(
+            1,
+            Math.floor(
+                numericDay
+            )
+        );
+
+
+    saveWorlds();
+
+    updateDayDisplay();
+    renderWorlds();
+}
+
+
+function updateDayDisplay() {
+
+    minecraftDay.textContent =
+        `Day ${getCurrentDay()}`;
+}
+
+
+dayMinusButton.addEventListener(
+    "click",
+    () => {
+
+        setCurrentDay(
+            getCurrentDay() - 1
+        );
+    }
+);
+
+
+dayPlusButton.addEventListener(
+    "click",
+    () => {
+
+        setCurrentDay(
+            getCurrentDay() + 1
+        );
+    }
+);
+
+
+minecraftDay.addEventListener(
+    "click",
+    () => {
+
+        createDayEditor(
+            getCurrentDay()
+        );
+    }
+);
+
+
+/*
+    ============================================================
+    PROGRESS
+    ============================================================
+*/
+
+function updateProgress() {
+
+    const world =
+        getCurrentWorld();
+
+
+    const total =
+        getTotalTaskCount();
+
+
+    const completed =
+        getCompletedTaskCount(
+            world
+        );
+
+
+    progressNumber.textContent =
+        `${completed} / ${total}`;
+
+
+    const percentage =
+        total > 0
+            ? (
+                completed /
+                total
+            ) * 100
+            : 0;
+
+
+    progressFill.style.width =
+        `${percentage}%`;
+}
+
+
+function updateSectionCount(
+    sectionElement,
+    sectionName
+) {
+
+    const world =
+        getCurrentWorld();
+
+
+    const tasks =
+        Array.isArray(
+            checklist[sectionName]
+        )
+            ? checklist[sectionName]
+            : [];
+
+
+    let completed = 0;
+
+
+    for (const task of tasks) {
+
+        if (
+            world &&
+            world.progress &&
+            world.progress[task.id] === true
+        ) {
+
+            completed++;
+        }
+    }
+
+
+    const count =
+        sectionElement.querySelector(
+            ".section-count"
+        );
+
+
+    if (count) {
+
+        count.textContent =
+            `${completed} / ${tasks.length}`;
+    }
+}
+
+
+function updateSectionCounts() {
+
+    document
+        .querySelectorAll(".section")
+        .forEach(
+            section => {
+
+                updateSectionCount(
+                    section,
+                    section.dataset.section
+                );
+            }
+        );
+}
+
+
+/*
+    ============================================================
+    CUSTOM CHECKBOX
+    ============================================================
+*/
+
+function createTaskCheckbox(
+    checked
+) {
+
+    const checkbox =
+        document.createElement(
+            "button"
+        );
+
+
+    checkbox.type =
+        "button";
+
+
+    checkbox.className =
+        "task-check";
+
+
+    checkbox.setAttribute(
+        "role",
+        "checkbox"
+    );
+
+
+    checkbox.setAttribute(
+        "aria-checked",
+        checked
+            ? "true"
+            : "false"
+    );
+
+
+    checkbox.setAttribute(
+        "aria-label",
+        checked
+            ? "Completed"
+            : "Not completed"
+    );
+
+
+    if (checked) {
+
+        checkbox.classList.add(
+            "checked"
+        );
+    }
+
+
+    return checkbox;
+}
+
+
+/*
+    ============================================================
+    TASK ELEMENT
+    ============================================================
+*/
+
+function createTaskElement(
+    sectionName,
+    task,
+    delay = 0
+) {
+
+    const world =
+        getCurrentWorld();
+
+
+    const isChecked =
+        Boolean(
+            world &&
+            world.progress &&
+            world.progress[task.id]
+        );
+
+
+    const taskElement =
+        document.createElement(
+            "div"
+        );
+
+
+    taskElement.className =
+        "task";
+
+
+    taskElement.dataset.taskId =
+        task.id;
+
+
+    if (isChecked) {
+
+        taskElement.classList.add(
+            "completed"
+        );
+    }
+
+
+    taskElement.style.animationDelay =
+        `${delay}ms`;
+
+
+    const checkbox =
+        createTaskCheckbox(
+            isChecked
+        );
+
+
+    const label =
+        document.createElement(
+            "div"
+        );
+
+
+    label.className =
+        "task-label";
+
+
+    label.textContent =
+        task.name;
+
+
+    function toggleTask() {
+
+        const currentWorld =
             getCurrentWorld();
 
+
+        if (!currentWorld) {
+            return;
+        }
+
+
+        if (!currentWorld.progress) {
+
+            currentWorld.progress = {};
+        }
+
+
+        const newValue =
+            !(
+                currentWorld.progress[
+                    task.id
+                ] === true
+            );
+
+
+        currentWorld.progress[
+            task.id
+        ] = newValue;
+
+
+        checkbox.classList.toggle(
+            "checked",
+            newValue
+        );
+
+
+        checkbox.setAttribute(
+            "aria-checked",
+            newValue
+                ? "true"
+                : "false"
+        );
+
+
+        checkbox.setAttribute(
+            "aria-label",
+            newValue
+                ? "Completed"
+                : "Not completed"
+        );
+
+
+        taskElement.classList.toggle(
+            "completed",
+            newValue
+        );
+
+
+        saveWorlds();
+
+        updateProgress();
+        updateSectionCounts();
+        renderWorlds();
+    }
+
+
+    checkbox.addEventListener(
+        "click",
+        event => {
+
+            event.stopPropagation();
+
+            toggleTask();
+        }
+    );
+
+
+    label.addEventListener(
+        "click",
+        toggleTask
+    );
+
+
+    taskElement.appendChild(
+        checkbox
+    );
+
+
+    taskElement.appendChild(
+        label
+    );
+
+
+    return taskElement;
+}
+
+
+/*
+    ============================================================
+    SECTION
+    ============================================================
+*/
+
+function createSectionElement(
+    sectionName,
+    tasks
+) {
+
+    const section =
+        document.createElement(
+            "section"
+        );
+
+
+    section.className =
+        "section";
+
+
+    section.dataset.section =
+        sectionName;
+
+
+    const header =
+        document.createElement(
+            "button"
+        );
+
+
+    header.type =
+        "button";
+
+
+    header.className =
+        "section-header";
+
+
+    header.innerHTML =
+        `
+        <span class="section-arrow">
+            ›
+        </span>
+
+        <span class="section-title">
+            ${escapeHTML(sectionName)}
+        </span>
+
+        <span class="section-count">
+            0 / ${tasks.length}
+        </span>
+        `;
+
+
+    const body =
+        document.createElement(
+            "div"
+        );
+
+
+    body.className =
+        "section-body";
+
+
+    const inner =
+        document.createElement(
+            "div"
+        );
+
+
+    inner.className =
+        "section-inner";
+
+
+    const tasksElement =
+        document.createElement(
+            "div"
+        );
+
+
+    tasksElement.className =
+        "tasks";
+
+
+    tasks.forEach(
+        (task, index) => {
+
+            tasksElement.appendChild(
+                createTaskElement(
+                    sectionName,
+                    task,
+                    index * 18
+                )
+            );
+        }
+    );
+
+
+    inner.appendChild(
+        tasksElement
+    );
+
+
+    body.appendChild(
+        inner
+    );
+
+
+    section.appendChild(
+        header
+    );
+
+
+    section.appendChild(
+        body
+    );
+
+
+    header.addEventListener(
+        "click",
+        () => {
+
+            const wasOpen =
+                section.classList.contains(
+                    "open"
+                );
+
+
+            /*
+                Only one section can be open.
+            */
+
+            document
+                .querySelectorAll(
+                    ".section.open"
+                )
+                .forEach(
+                    openSection => {
+
+                        openSection.classList.remove(
+                            "open"
+                        );
+                    }
+                );
+
+
+            if (!wasOpen) {
+
+                section.classList.add(
+                    "open"
+                );
+            }
+        }
+    );
+
+
+    updateSectionCount(
+        section,
+        sectionName
+    );
+
+
+    return section;
+}
+
+
+/*
+    ============================================================
+    FULL CHECKLIST RENDER
+    ============================================================
+*/
+
+function renderChecklist() {
+
+    const search =
+        searchBox
+            .textContent
+            .replace(/[\r\n]+/g, " ")
+            .trim()
+            .toLowerCase();
+
+
+    checklistElement.innerHTML = "";
+
+
+    let sectionCount = 0;
+
+
+    for (
+        const sectionName
+        of Object.keys(checklist)
+    ) {
+
+        const originalTasks =
+            Array.isArray(
+                checklist[sectionName]
+            )
+                ? checklist[sectionName]
+                : [];
+
+
+        const visibleTasks =
+            search
+                ? originalTasks.filter(
+                    task =>
+                        String(
+                            task.name || ""
+                        )
+                            .toLowerCase()
+                            .includes(search)
+                )
+                : originalTasks;
+
+
+        if (
+            search &&
+            visibleTasks.length === 0
+        ) {
+
+            continue;
+        }
+
+
+        const section =
+            createSectionElement(
+                sectionName,
+                visibleTasks
+            );
+
+
+        checklistElement.appendChild(
+            section
+        );
+
+
+        sectionCount++;
+    }
+
+
+    if (sectionCount === 0) {
+
+        checklistElement.innerHTML =
+            `
+            <div class="empty-state">
+                No checklist items match your search.
+            </div>
+            `;
+    }
+
+
+    updateProgress();
+    updateSectionCounts();
+}
+
+
+/*
+    ============================================================
+    INCREMENTAL CHECKLIST UPDATE
+    ============================================================
+*/
+
+function updateChecklistDOM() {
+
+    /*
+        Searching changes the visible task list,
+        so rebuilding is appropriate.
+    */
+
+    if (
+        searchBox
+            .textContent
+            .trim()
+    ) {
+
+        renderChecklist();
+
+        return;
+    }
+
+
+    const existingSections =
+        new Map();
+
+
+    document
+        .querySelectorAll(".section")
+        .forEach(
+            section => {
+
+                existingSections.set(
+                    section.dataset.section,
+                    section
+                );
+            }
+        );
+
+
+    /*
+        Remove deleted sections.
+    */
+
+    for (
+        const [
+            sectionName,
+            sectionElement
+        ]
+        of existingSections
+    ) {
+
+        if (
+            !Object.prototype.hasOwnProperty.call(
+                checklist,
+                sectionName
+            )
+        ) {
+
+            sectionElement.remove();
+        }
+    }
+
+
+    /*
+        Add or update sections.
+    */
+
+    for (
+        const sectionName
+        of Object.keys(checklist)
+    ) {
 
         const tasks =
             Array.isArray(
@@ -1487,372 +2285,28 @@
                 : [];
 
 
-        let completed = 0;
-
-
-        for (const task of tasks) {
-
-            if (
-                world &&
-                world.progress &&
-                world.progress[task.id] === true
-            ) {
-                completed++;
-            }
-        }
-
-
-        const count =
-            sectionElement.querySelector(
-                ".section-count"
-            );
-
-
-        if (count) {
-
-            count.textContent =
-                `${completed} / ${tasks.length}`;
-        }
-    }
-
-
-    /*
-        ------------------------------------------------------------
-        TASK ROW
-        ------------------------------------------------------------
-    */
-
-    function createTaskElement(
-        sectionName,
-        task,
-        delay = 0
-    ) {
-
-        const world =
-            getCurrentWorld();
-
-
-        const taskElement =
-            document.createElement("div");
-
-
-        taskElement.className =
-            "task";
-
-
-        taskElement.dataset.taskId =
-            task.id;
-
-
-        if (
-            world &&
-            world.progress &&
-            world.progress[task.id] === true
-        ) {
-            taskElement.classList.add(
-                "completed"
-            );
-        }
-
-
-        taskElement.style.animationDelay =
-            `${delay}ms`;
-
-
-        const checkbox =
-            document.createElement("input");
-
-
-        checkbox.type =
-            "checkbox";
-
-
-        checkbox.className =
-            "task-check";
-
-
-        checkbox.checked =
-            Boolean(
-                world &&
-                world.progress &&
-                world.progress[task.id]
-            );
-
-
-        checkbox.addEventListener(
-            "change",
-            () => {
-
-                const currentWorld =
-                    getCurrentWorld();
-
-                if (!currentWorld) {
-                    return;
-                }
-
-
-                if (!currentWorld.progress) {
-                    currentWorld.progress = {};
-                }
-
-
-                currentWorld.progress[task.id] =
-                    checkbox.checked;
-
-
-                taskElement.classList.toggle(
-                    "completed",
-                    checkbox.checked
-                );
-
-
-                saveWorlds();
-
-                updateProgress();
-                updateSectionCounts();
-                renderWorlds();
-            }
-        );
-
-
-        const label =
-            document.createElement("label");
-
-
-        label.className =
-            "task-label";
-
-
-        label.textContent =
-            task.name;
-
-
-        label.addEventListener(
-            "click",
-            () => {
-                checkbox.click();
-            }
-        );
-
-
-        taskElement.appendChild(
-            checkbox
-        );
-
-        taskElement.appendChild(
-            label
-        );
-
-
-        return taskElement;
-    }
-
-
-    /*
-        ------------------------------------------------------------
-        SECTION ELEMENT
-        ------------------------------------------------------------
-    */
-
-    function createSectionElement(
-        sectionName,
-        tasks
-    ) {
-
-        const section =
-            document.createElement("section");
-
-
-        section.className =
-            "section";
-
-
-        section.dataset.section =
-            sectionName;
-
-
-        const header =
-            document.createElement("button");
-
-
-        header.type =
-            "button";
-
-
-        header.className =
-            "section-header";
-
-
-        header.innerHTML =
-            `
-            <span class="section-arrow">
-                ›
-            </span>
-
-            <span class="section-title">
-                ${escapeHTML(sectionName)}
-            </span>
-
-            <span class="section-count">
-                0 / ${tasks.length}
-            </span>
-            `;
-
-
-        const body =
-            document.createElement("div");
-
-
-        body.className =
-            "section-body";
-
-
-        const inner =
-            document.createElement("div");
-
-
-        inner.className =
-            "section-inner";
-
-
-        const tasksElement =
-            document.createElement("div");
-
-
-        tasksElement.className =
-            "tasks";
-
-
-        tasks.forEach(
-            (task, index) => {
-
-                tasksElement.appendChild(
-                    createTaskElement(
-                        sectionName,
-                        task,
-                        index * 18
-                    )
-                );
-            }
-        );
-
-
-        inner.appendChild(
-            tasksElement
-        );
-
-        body.appendChild(
-            inner
-        );
-
-
-        section.appendChild(
-            header
-        );
-
-        section.appendChild(
-            body
-        );
-
-
-        header.addEventListener(
-            "click",
-            () => {
-
-                const wasOpen =
-                    section.classList.contains(
-                        "open"
-                    );
-
-
-                document
-                    .querySelectorAll(
-                        ".section.open"
-                    )
-                    .forEach(openSection => {
-
-                        openSection.classList.remove(
-                            "open"
-                        );
-                    });
-
-
-                if (!wasOpen) {
-
-                    section.classList.add(
-                        "open"
-                    );
-                }
-            }
-        );
-
-
-        updateSectionCount(
-            section,
-            sectionName
-        );
-
-
-        return section;
-    }
-
-
-    /*
-        ------------------------------------------------------------
-        FULL CHECKLIST RENDER
-        ------------------------------------------------------------
-    */
-
-    function renderChecklist() {
-
-        const search =
-            searchBox
-                .textContent
-                .trim()
-                .toLowerCase();
-
-
-        checklistElement.innerHTML = "";
-
-
-        let sectionCount = 0;
-
-
-        for (
-            const sectionName
-            of Object.keys(checklist)
-        ) {
-
-            const originalTasks =
-                Array.isArray(
-                    checklist[sectionName]
+        let section =
+            Array.from(
+                document.querySelectorAll(
+                    ".section"
                 )
-                    ? checklist[sectionName]
-                    : [];
+            ).find(
+                element =>
+                    element.dataset.section ===
+                    sectionName
+            );
 
 
-            const visibleTasks =
-                search
-                    ? originalTasks.filter(task =>
-                        String(task.name || "")
-                            .toLowerCase()
-                            .includes(search)
-                    )
-                    : originalTasks;
+        /*
+            New section.
+        */
 
+        if (!section) {
 
-            if (
-                search &&
-                visibleTasks.length === 0
-            ) {
-                continue;
-            }
-
-
-            const section =
+            section =
                 createSectionElement(
                     sectionName,
-                    visibleTasks
+                    tasks
                 );
 
 
@@ -1861,119 +2315,88 @@
             );
 
 
-            sectionCount++;
+            continue;
         }
 
 
-        if (sectionCount === 0) {
-
-            checklistElement.innerHTML =
-                `
-                <div class="empty-state">
-                    No checklist items match your search.
-                </div>
-                `;
-        }
+        const taskContainer =
+            section.querySelector(
+                ".tasks"
+            );
 
 
-        updateProgress();
-        updateSectionCounts();
-    }
-
-
-    /*
-        ------------------------------------------------------------
-        INCREMENTAL CHECKLIST UPDATE
-        ------------------------------------------------------------
-    */
-
-    function updateChecklistDOM() {
-
-        /*
-            When searching, the visible checklist is dependent
-            on the search text, so rebuilding is safe here.
-        */
-
-        if (
-            searchBox
-                .textContent
-                .trim()
-        ) {
-            renderChecklist();
-            return;
-        }
-
-
-        const existingSections =
+        const existingTasks =
             new Map();
 
 
-        document
-            .querySelectorAll(".section")
-            .forEach(section => {
+        taskContainer
+            .querySelectorAll(".task")
+            .forEach(
+                taskElement => {
 
-                existingSections.set(
-                    section.dataset.section,
-                    section
-                );
-            });
+                    existingTasks.set(
+                        taskElement.dataset.taskId,
+                        taskElement
+                    );
+                }
+            );
+
+
+        const newTaskIds =
+            new Set(
+                tasks.map(
+                    task =>
+                        task.id
+                )
+            );
 
 
         /*
-            Remove sections that no longer exist.
+            Remove deleted tasks.
         */
 
         for (
-            const [sectionName, sectionElement]
-            of existingSections
+            const [
+                taskId,
+                taskElement
+            ]
+            of existingTasks
         ) {
 
             if (
-                !Object.prototype.hasOwnProperty.call(
-                    checklist,
-                    sectionName
-                )
+                !newTaskIds.has(taskId)
             ) {
 
-                sectionElement.remove();
+                taskElement.remove();
             }
         }
 
 
         /*
-            Add/update sections.
+            Add new tasks and update existing tasks.
         */
 
-        for (
-            const sectionName
-            of Object.keys(checklist)
-        ) {
+        for (const task of tasks) {
 
-            const tasks =
-                Array.isArray(
-                    checklist[sectionName]
-                )
-                    ? checklist[sectionName]
-                    : [];
-
-
-            let section =
-                document.querySelector(
-                    `.section[data-section="${CSS.escape(sectionName)}"]`
+            const existing =
+                Array.from(
+                    taskContainer.querySelectorAll(
+                        ".task"
+                    )
+                ).find(
+                    element =>
+                        element.dataset.taskId ===
+                        task.id
                 );
 
 
-            if (!section) {
+            if (!existing) {
 
-                section =
-                    createSectionElement(
+                taskContainer.appendChild(
+                    createTaskElement(
                         sectionName,
-                        tasks
-                    );
-
-
-                checklistElement.appendChild(
-                    section
+                        task
+                    )
                 );
 
 
@@ -1981,538 +2404,573 @@
             }
 
 
-            const taskContainer =
-                section.querySelector(
-                    ".tasks"
+            const label =
+                existing.querySelector(
+                    ".task-label"
                 );
 
 
-            const existingTasks =
-                new Map();
-
-
-            taskContainer
-                .querySelectorAll(".task")
-                .forEach(taskElement => {
-
-                    existingTasks.set(
-                        taskElement.dataset.taskId,
-                        taskElement
-                    );
-                });
-
-
-            const newTaskIds =
-                new Set(
-                    tasks.map(
-                        task => task.id
-                    )
-                );
-
-
-            /*
-                Remove deleted tasks.
-            */
-
-            for (
-                const [taskId, taskElement]
-                of existingTasks
+            if (
+                label &&
+                label.textContent !==
+                    task.name
             ) {
 
-                if (
-                    !newTaskIds.has(taskId)
-                ) {
-
-                    taskElement.remove();
-                }
+                label.textContent =
+                    task.name;
             }
 
 
-            /*
-                Add new tasks.
-            */
-
-            for (const task of tasks) {
-
-                const existing =
-                    taskContainer.querySelector(
-                        `.task[data-task-id="${CSS.escape(task.id)}"]`
-                    );
+            const world =
+                getCurrentWorld();
 
 
-                if (!existing) {
-
-                    taskContainer.appendChild(
-                        createTaskElement(
-                            sectionName,
-                            task
-                        )
-                    );
-
-                    continue;
-                }
+            const checked =
+                Boolean(
+                    world &&
+                    world.progress &&
+                    world.progress[task.id]
+                );
 
 
-                /*
-                    If an existing task was renamed,
-                    update its text without replacing
-                    the row.
-                */
-
-                const label =
-                    existing.querySelector(
-                        ".task-label"
-                    );
+            const checkbox =
+                existing.querySelector(
+                    ".task-check"
+                );
 
 
-                if (
-                    label &&
-                    label.textContent !== task.name
-                ) {
+            if (checkbox) {
 
-                    label.textContent =
-                        task.name;
-                }
+                checkbox.classList.toggle(
+                    "checked",
+                    checked
+                );
 
 
-                const world =
-                    getCurrentWorld();
+                checkbox.setAttribute(
+                    "aria-checked",
+                    checked
+                        ? "true"
+                        : "false"
+                );
 
 
-                const shouldBeChecked =
-                    Boolean(
-                        world &&
-                        world.progress &&
-                        world.progress[task.id]
-                    );
-
-
-                const checkbox =
-                    existing.querySelector(
-                        ".task-check"
-                    );
-
-
-                if (
-                    checkbox &&
-                    checkbox.checked !== shouldBeChecked
-                ) {
-
-                    checkbox.checked =
-                        shouldBeChecked;
-
-                    existing.classList.toggle(
-                        "completed",
-                        shouldBeChecked
-                    );
-                }
+                checkbox.setAttribute(
+                    "aria-label",
+                    checked
+                        ? "Completed"
+                        : "Not completed"
+                );
             }
 
 
-            updateSectionCount(
-                section,
-                sectionName
+            existing.classList.toggle(
+                "completed",
+                checked
             );
         }
 
 
-        updateProgress();
-        updateSectionCounts();
+        updateSectionCount(
+            section,
+            sectionName
+        );
     }
 
 
-    /*
-        ------------------------------------------------------------
-        CLEAN REMOVED TASK PROGRESS
-        ------------------------------------------------------------
-    */
+    updateProgress();
+    updateSectionCounts();
+}
 
-    function cleanRemovedTaskProgress(
-        newChecklist
+
+/*
+    ============================================================
+    REMOVE OLD TASK PROGRESS
+    ============================================================
+*/
+
+function cleanRemovedTaskProgress(
+    newChecklist
+) {
+
+    const validTaskIds =
+        new Set();
+
+
+    for (
+        const sectionName
+        of Object.keys(newChecklist)
     ) {
 
-        const validTaskIds =
-            new Set();
+        const tasks =
+            Array.isArray(
+                newChecklist[sectionName]
+            )
+                ? newChecklist[sectionName]
+                : [];
+
+
+        for (const task of tasks) {
+
+            if (
+                task &&
+                typeof task.id === "string"
+            ) {
+
+                validTaskIds.add(
+                    task.id
+                );
+            }
+        }
+    }
+
+
+    let changed = false;
+
+
+    for (const world of worlds) {
+
+        if (!world.progress) {
+
+            world.progress = {};
+        }
 
 
         for (
-            const sectionName
-            of Object.keys(newChecklist)
+            const taskId
+            of Object.keys(
+                world.progress
+            )
         ) {
 
-            const tasks =
-                Array.isArray(
-                    newChecklist[sectionName]
+            if (
+                !validTaskIds.has(
+                    taskId
                 )
-                    ? newChecklist[sectionName]
-                    : [];
-
-
-            for (const task of tasks) {
-
-                if (
-                    task &&
-                    typeof task.id === "string"
-                ) {
-
-                    validTaskIds.add(
-                        task.id
-                    );
-                }
-            }
-        }
-
-
-        let changed = false;
-
-
-        for (const world of worlds) {
-
-            if (!world.progress) {
-                world.progress = {};
-            }
-
-
-            for (
-                const taskId
-                of Object.keys(world.progress)
             ) {
 
-                if (
-                    !validTaskIds.has(taskId)
-                ) {
+                delete world.progress[
+                    taskId
+                ];
 
-                    delete world.progress[taskId];
-
-                    changed = true;
-                }
+                changed = true;
             }
-        }
-
-
-        if (changed) {
-            saveWorlds();
         }
     }
 
 
-    /*
-        ------------------------------------------------------------
-        CHECKLIST LOADING
-        ------------------------------------------------------------
-    */
+    if (changed) {
 
-    function makeChecklistSignature(
+        saveWorlds();
+    }
+}
+
+
+/*
+    ============================================================
+    CHECKLIST LOADING
+    ============================================================
+*/
+
+function makeChecklistSignature(
+    data
+) {
+
+    return JSON.stringify(
         data
-    ) {
-
-        return JSON.stringify(data);
-    }
+    );
+}
 
 
-    async function loadChecklist(
-        forceRender = true
-    ) {
+async function loadChecklist(
+    forceRender = true
+) {
 
-        try {
+    try {
 
-            const response =
-                await fetch(
-                    `${CHECKLIST_URL}?t=${Date.now()}`,
-                    {
-                        cache: "no-store"
-                    }
-                );
-
-
-            if (!response.ok) {
-                throw new Error(
-                    "Checklist request failed."
-                );
-            }
-
-
-            const data =
-                await response.json();
-
-
-            if (
-                !data ||
-                typeof data !== "object" ||
-                Array.isArray(data)
-            ) {
-                throw new Error(
-                    "Invalid checklist format."
-                );
-            }
-
-
-            const newSignature =
-                makeChecklistSignature(data);
-
-
-            if (
-                newSignature ===
-                checklistSignature
-            ) {
-                return;
-            }
-
-
-            const oldChecklist =
-                checklist;
-
-
-            checklist =
-                data;
-
-
-            checklistSignature =
-                newSignature;
-
-
-            cleanRemovedTaskProgress(
-                checklist
+        const response =
+            await fetch(
+                `${CHECKLIST_URL}?t=${Date.now()}`,
+                {
+                    cache: "no-store"
+                }
             );
 
 
-            /*
-                First load.
-            */
+        if (!response.ok) {
 
-            if (
-                Object.keys(oldChecklist).length === 0
-            ) {
+            throw new Error(
+                "Checklist request failed."
+            );
+        }
 
-                if (forceRender) {
-                    renderChecklist();
-                }
 
-                renderWorlds();
-                updateDayDisplay();
+        const data =
+            await response.json();
 
-                return;
+
+        if (
+            !data ||
+            typeof data !== "object" ||
+            Array.isArray(data)
+        ) {
+
+            throw new Error(
+                "Invalid checklist format."
+            );
+        }
+
+
+        const newSignature =
+            makeChecklistSignature(
+                data
+            );
+
+
+        /*
+            Nothing changed.
+        */
+
+        if (
+            newSignature ===
+            checklistSignature
+        ) {
+
+            return;
+        }
+
+
+        const oldChecklist =
+            checklist;
+
+
+        checklist =
+            data;
+
+
+        checklistSignature =
+            newSignature;
+
+
+        cleanRemovedTaskProgress(
+            checklist
+        );
+
+
+        /*
+            Initial load.
+        */
+
+        if (
+            Object.keys(
+                oldChecklist
+            ).length === 0
+        ) {
+
+            if (forceRender) {
+
+                renderChecklist();
             }
 
-
-            /*
-                Later updates use the incremental
-                renderer so open sections remain open.
-            */
-
-            updateChecklistDOM();
 
             renderWorlds();
             updateDayDisplay();
 
-        } catch {
+            return;
+        }
 
-            if (
-                Object.keys(checklist).length === 0
-            ) {
 
-                checklistElement.innerHTML =
-                    `
-                    <div class="empty-state">
-                        Unable to load checklist.json.
-                    </div>
-                    `;
-            }
+        /*
+            Subsequent updates preserve
+            currently open sections.
+        */
+
+        updateChecklistDOM();
+
+        renderWorlds();
+        updateDayDisplay();
+
+    } catch {
+
+        if (
+            Object.keys(
+                checklist
+            ).length === 0
+        ) {
+
+            checklistElement.innerHTML =
+                `
+                <div class="empty-state">
+                    Unable to load checklist.json.
+                </div>
+                `;
         }
     }
+}
+
+
+/*
+    ============================================================
+    CONTENTEDITABLE SETUP
+    ============================================================
+*/
+
+function setupEditable(
+    element
+) {
+
+    /*
+        Prevent Enter from creating a new line.
+    */
+
+    element.addEventListener(
+        "keydown",
+        event => {
+
+            if (
+                event.key === "Enter"
+            ) {
+
+                event.preventDefault();
+            }
+        }
+    );
 
 
     /*
-        ------------------------------------------------------------
-        SEARCH
-        ------------------------------------------------------------
+        Paste plain text only.
     */
 
-    function setupSearchPlaceholder(
-        element
-    ) {
+    element.addEventListener(
+        "paste",
+        event => {
 
-        /*
-            contenteditable already gives us normal browser
-            text selection and caret placement.
-
-            We only need to prevent accidental line breaks.
-        */
-
-        element.addEventListener(
-            "keydown",
-            event => {
-
-                if (
-                    event.key === "Enter"
-                ) {
-
-                    event.preventDefault();
-                }
-            }
-        );
+            event.preventDefault();
 
 
-        /*
-            Prevent pasting formatted HTML.
-            Only plain text is inserted.
-        */
-
-        element.addEventListener(
-            "paste",
-            event => {
-
-                event.preventDefault();
+            const clipboard =
+                event.clipboardData ||
+                window.clipboardData;
 
 
-                const text =
-                    (
-                        event.clipboardData ||
-                        window.clipboardData
-                    ).getData("text/plain");
+            const text =
+                clipboard
+                    .getData("text/plain")
+                    .replace(
+                        /[\r\n]+/g,
+                        " "
+                    );
 
+
+            /*
+                Insert text at the current caret/selection.
+
+                This is important because the user can click
+                anywhere in the field and paste exactly there.
+            */
+
+            if (
+                document.queryCommandSupported &&
+                document.queryCommandSupported(
+                    "insertText"
+                )
+            ) {
 
                 document.execCommand(
                     "insertText",
                     false,
-                    text.replace(
-                        /[\r\n]+/g,
-                        " "
-                    )
+                    text
+                );
+
+            } else {
+
+                insertTextAtSelection(
+                    text
                 );
             }
-        );
-    }
-
-
-    setupSearchPlaceholder(
-        searchBox
-    );
-
-    setupSearchPlaceholder(
-        worldSearchBox
-    );
-
-
-    searchBox.addEventListener(
-        "input",
-        () => {
-            renderChecklist();
         }
     );
+}
 
 
-    worldSearchBox.addEventListener(
-        "input",
-        () => {
-            renderWorlds();
-        }
-    );
+function insertTextAtSelection(
+    text
+) {
+
+    const selection =
+        window.getSelection();
 
 
-    /*
-        ------------------------------------------------------------
-        CUSTOM TEXT EDITOR HELPERS
-        ------------------------------------------------------------
-    */
-
-    function getEditableText(
-        element
+    if (
+        !selection ||
+        selection.rangeCount === 0
     ) {
 
-        return element
-            .textContent
-            .replace(/[\r\n]+/g, " ")
-            .trim();
+        return;
     }
 
 
-    function setEditableText(
-        element,
-        text
-    ) {
-
-        element.textContent =
-            String(text ?? "");
+    const range =
+        selection.getRangeAt(0);
 
 
-        /*
-            Put the caret at the end initially.
-            After that, normal clicking works normally.
-        */
-
-        placeCaretAtEnd(element);
-    }
+    range.deleteContents();
 
 
-    function placeCaretAtEnd(
-        element
-    ) {
-
-        element.focus();
-
-
-        const selection =
-            window.getSelection();
-
-
-        const range =
-            document.createRange();
-
-
-        range.selectNodeContents(
-            element
+    const textNode =
+        document.createTextNode(
+            text
         );
 
 
-        range.collapse(false);
+    range.insertNode(
+        textNode
+    );
 
 
-        selection.removeAllRanges();
+    range.setStartAfter(
+        textNode
+    );
 
-        selection.addRange(range);
+
+    range.collapse(
+        true
+    );
+
+
+    selection.removeAllRanges();
+
+    selection.addRange(
+        range
+    );
+}
+
+
+function getEditableText(
+    element
+) {
+
+    return element
+        .textContent
+        .replace(
+            /[\r\n]+/g,
+            " "
+        )
+        .trim();
+}
+
+
+function placeCaretAtEnd(
+    element
+) {
+
+    element.focus();
+
+
+    const selection =
+        window.getSelection();
+
+
+    const range =
+        document.createRange();
+
+
+    range.selectNodeContents(
+        element
+    );
+
+
+    range.collapse(
+        false
+    );
+
+
+    selection.removeAllRanges();
+
+    selection.addRange(
+        range
+    );
+}
+
+
+setupEditable(
+    searchBox
+);
+
+
+setupEditable(
+    worldSearchBox
+);
+
+
+/*
+    The browser's native contenteditable behavior handles:
+
+    - Single click = caret placement
+    - Drag = text selection
+    - Double click = word selection
+    - Cmd/Ctrl+A = select all
+    - Arrow keys = caret movement
+    - Home/End = caret movement
+    - Backspace/Delete = editing
+
+    We intentionally do not override those behaviors.
+*/
+
+
+/*
+    ============================================================
+    SEARCH EVENTS
+    ============================================================
+*/
+
+searchBox.addEventListener(
+    "input",
+    () => {
+
+        renderChecklist();
     }
+);
 
 
-    /*
-        Clicking inside a contenteditable element naturally places
-        the caret exactly where the user clicked.
+worldSearchBox.addEventListener(
+    "input",
+    () => {
 
-        Double-clicking naturally performs the browser's classic
-        word selection.
-
-        We deliberately DO NOT replace the selection or caret on
-        every click, because doing that would break normal editing.
-    */
+        renderWorlds();
+    }
+);
 
 
-    /*
-        ------------------------------------------------------------
-        WORLD CREATION
-        ------------------------------------------------------------
-    */
+/*
+    ============================================================
+    NEW WORLD
+    ============================================================
+*/
 
-    newWorldButton.addEventListener(
-        "click",
-        () => {
+newWorldButton.addEventListener(
+    "click",
+    () => {
 
-            if (
-                worlds.length >= MAX_WORLDS
-            ) {
+        if (
+            worlds.length >=
+            MAX_WORLDS
+        ) {
 
-                showMessage(
-                    `You can have up to ${MAX_WORLDS} worlds.`
-                );
+            showMessage(
+                `You can have up to ${MAX_WORLDS} worlds.`
+            );
 
-                return;
-            }
+            return;
+        }
 
 
-            createCustomNameEditor(
-                "",
-                "Create World",
-                "Enter a name for the new world."
-            ).then(name => {
+        createCustomNameEditor(
+            "",
+            "Create World",
+            "Enter a name for the new world."
+        ).then(
+            name => {
 
                 if (name === null) {
                     return;
@@ -2530,7 +2988,10 @@
                     );
 
 
-                worlds.push(world);
+                worlds.push(
+                    world
+                );
+
 
                 currentWorldId =
                     world.id;
@@ -2541,35 +3002,37 @@
                 renderWorlds();
                 renderChecklist();
                 updateDayDisplay();
-            });
-        }
-    );
-
-
-    /*
-        ------------------------------------------------------------
-        RENAME WORLD
-        ------------------------------------------------------------
-    */
-
-    renameWorldButton.addEventListener(
-        "click",
-        () => {
-
-            const world =
-                getCurrentWorld();
-
-
-            if (!world) {
-                return;
             }
+        );
+    }
+);
 
 
-            createCustomNameEditor(
-                world.name,
-                "Rename World",
-                "Choose a new name for this world."
-            ).then(name => {
+/*
+    ============================================================
+    RENAME WORLD
+    ============================================================
+*/
+
+renameWorldButton.addEventListener(
+    "click",
+    () => {
+
+        const world =
+            getCurrentWorld();
+
+
+        if (!world) {
+            return;
+        }
+
+
+        createCustomNameEditor(
+            world.name,
+            "Rename World",
+            "Choose a new name for this world."
+        ).then(
+            name => {
 
                 if (name === null) {
                     return;
@@ -2597,614 +3060,367 @@
                 saveWorlds();
 
                 renderWorlds();
-            });
-        }
-    );
-
-
-    /*
-        ------------------------------------------------------------
-        DELETE WORLD
-        ------------------------------------------------------------
-    */
-
-    deleteWorldButton.addEventListener(
-        "click",
-        () => {
-
-            const world =
-                getCurrentWorld();
-
-
-            if (!world) {
-                return;
-            }
-
-
-            showDeleteUI(
-                world
-            );
-        }
-    );
-
-
-    /*
-        ------------------------------------------------------------
-        RESET WORLD
-        ------------------------------------------------------------
-    */
-
-    resetWorldButton.addEventListener(
-        "click",
-        () => {
-
-            const world =
-                getCurrentWorld();
-
-
-            if (!world) {
-                return;
-            }
-
-
-            showResetUI(
-                world
-            );
-        }
-    );
-
-
-    /*
-        ------------------------------------------------------------
-        DAY EDITOR
-        ------------------------------------------------------------
-    */
-
-    function createDayEditor(
-        currentDay
-    ) {
-
-        modal.innerHTML =
-            `
-            <h2 class="modal-title">
-                Minecraft Day
-            </h2>
-
-            <p class="modal-message">
-                Enter the Minecraft day for this world.
-            </p>
-
-            <div
-                class="day-editor-value"
-                id="dayEditorValue"
-                contenteditable="true"
-                role="textbox"
-                aria-label="Minecraft day"
-                inputmode="numeric"
-                spellcheck="false"
-            ></div>
-
-            <div class="modal-actions">
-
-                <button
-                    type="button"
-                    class="action-button"
-                    id="dayCancel"
-                >
-                    Cancel
-                </button>
-
-                <button
-                    type="button"
-                    class="action-button primary"
-                    id="daySave"
-                >
-                    Save
-                </button>
-
-            </div>
-            `;
-
-
-        modalLayer.classList.add(
-            "visible"
-        );
-
-
-        const editor =
-            document.getElementById(
-                "dayEditorValue"
-            );
-
-
-        editor.textContent =
-            String(currentDay);
-
-
-        editor.focus();
-
-        placeCaretAtEnd(
-            editor
-        );
-
-
-        editor.addEventListener(
-            "keydown",
-            event => {
-
-                if (
-                    event.key === "Enter"
-                ) {
-
-                    event.preventDefault();
-
-                    saveDayEditor();
-                }
-
-
-                if (
-                    event.key === "Escape"
-                ) {
-
-                    event.preventDefault();
-
-                    closeModal();
-                }
             }
         );
+    }
+);
 
 
-        document
-            .getElementById("dayCancel")
-            .addEventListener(
-                "click",
-                closeModal
+/*
+    ============================================================
+    DELETE WORLD
+    ============================================================
+*/
+
+deleteWorldButton.addEventListener(
+    "click",
+    () => {
+
+        const world =
+            getCurrentWorld();
+
+
+        if (!world) {
+            return;
+        }
+
+
+        showDeleteUI(
+            world
+        );
+    }
+);
+
+
+/*
+    ============================================================
+    RESET WORLD
+    ============================================================
+*/
+
+resetWorldButton.addEventListener(
+    "click",
+    () => {
+
+        const world =
+            getCurrentWorld();
+
+
+        if (!world) {
+            return;
+        }
+
+
+        showResetUI(
+            world
+        );
+    }
+);
+
+
+/*
+    ============================================================
+    CUSTOM NAME EDITOR
+    ============================================================
+*/
+
+function createCustomNameEditor(
+    currentName,
+    title,
+    message
+) {
+
+    return new Promise(
+        resolve => {
+
+            let finished =
+                false;
+
+
+            modal.innerHTML =
+                `
+                <h2 class="modal-title">
+                    ${escapeHTML(title)}
+                </h2>
+
+                <p class="modal-message">
+                    ${escapeHTML(message)}
+                </p>
+
+                <div
+                    class="name-editor-value"
+                    id="nameEditorValue"
+                    contenteditable="true"
+                    role="textbox"
+                    aria-label="World name"
+                    spellcheck="false"
+                    autocapitalize="off"
+                    autocomplete="off"
+                    autocorrect="off"
+                ></div>
+
+                <div class="modal-actions">
+
+                    <button
+                        type="button"
+                        class="action-button"
+                        id="nameCancel"
+                    >
+                        Cancel
+                    </button>
+
+                    <button
+                        type="button"
+                        class="action-button primary"
+                        id="nameSave"
+                    >
+                        Save
+                    </button>
+
+                </div>
+                `;
+
+
+            modalLayer.classList.add(
+                "visible"
             );
 
 
-        document
-            .getElementById("daySave")
-            .addEventListener(
-                "click",
-                saveDayEditor
-            );
-
-
-        function saveDayEditor() {
-
-            const raw =
-                getEditableText(
-                    editor
+            const editor =
+                document.getElementById(
+                    "nameEditorValue"
                 );
 
 
-            const day =
-                Number(
-                    raw.replace(
-                        /[^0-9]/g,
-                        ""
-                    )
-                );
+            setupEditable(
+                editor
+            );
 
 
-            if (
-                !Number.isFinite(day) ||
-                day < 1
+            editor.textContent =
+                currentName;
+
+
+            editor.focus();
+
+
+            /*
+                Existing name starts selected.
+
+                After the user clicks somewhere, normal caret
+                placement takes over.
+
+                Double-click continues to select individual words.
+            */
+
+            const selection =
+                window.getSelection();
+
+
+            const range =
+                document.createRange();
+
+
+            range.selectNodeContents(
+                editor
+            );
+
+
+            selection.removeAllRanges();
+
+            selection.addRange(
+                range
+            );
+
+
+            function finish(
+                value
             ) {
 
-                showMessage(
-                    "Enter a valid Minecraft day."
-                );
-
-                return;
-            }
+                if (finished) {
+                    return;
+                }
 
 
-            setCurrentDay(
-                day
-            );
+                finished =
+                    true;
 
 
-            closeModal();
-        }
-    }
+                closeModal();
 
 
-    /*
-        ------------------------------------------------------------
-        CUSTOM WORLD NAME EDITOR
-        ------------------------------------------------------------
-    */
-
-    function createCustomNameEditor(
-        currentName,
-        title,
-        message
-    ) {
-
-        return new Promise(
-            resolve => {
-
-                let finished = false;
-
-
-                modal.innerHTML =
-                    `
-                    <h2 class="modal-title">
-                        ${escapeHTML(title)}
-                    </h2>
-
-                    <p class="modal-message">
-                        ${escapeHTML(message)}
-                    </p>
-
-                    <div
-                        class="name-editor-value"
-                        id="nameEditorValue"
-                        contenteditable="true"
-                        role="textbox"
-                        aria-label="World name"
-                        spellcheck="false"
-                        autocapitalize="off"
-                        autocomplete="off"
-                        autocorrect="off"
-                    ></div>
-
-                    <div class="modal-actions">
-
-                        <button
-                            type="button"
-                            class="action-button"
-                            id="nameCancel"
-                        >
-                            Cancel
-                        </button>
-
-                        <button
-                            type="button"
-                            class="action-button primary"
-                            id="nameSave"
-                        >
-                            Save
-                        </button>
-
-                    </div>
-                    `;
-
-
-                modalLayer.classList.add(
-                    "visible"
-                );
-
-
-                const editor =
-                    document.getElementById(
-                        "nameEditorValue"
-                    );
-
-
-                editor.textContent =
-                    currentName;
-
-
-                editor.focus();
-
-
-                /*
-                    Select the existing name so typing immediately
-                    replaces it, while normal clicks can still put
-                    the caret anywhere and double-click still selects
-                    individual words.
-                */
-
-                const selection =
-                    window.getSelection();
-
-
-                const range =
-                    document.createRange();
-
-
-                range.selectNodeContents(
-                    editor
-                );
-
-
-                selection.removeAllRanges();
-
-                selection.addRange(range);
-
-
-                function finish(
+                resolve(
                     value
-                ) {
-
-                    if (finished) {
-                        return;
-                    }
-
-
-                    finished = true;
-
-                    closeModal();
-
-                    resolve(value);
-                }
-
-
-                function save() {
-
-                    finish(
-                        getEditableText(
-                            editor
-                        )
-                    );
-                }
-
-
-                function cancel() {
-
-                    finish(null);
-                }
-
-
-                editor.addEventListener(
-                    "keydown",
-                    event => {
-
-                        if (
-                            event.key === "Enter"
-                        ) {
-
-                            event.preventDefault();
-
-                            save();
-                        }
-
-
-                        if (
-                            event.key === "Escape"
-                        ) {
-
-                            event.preventDefault();
-
-                            cancel();
-                        }
-                    }
                 );
-
-
-                document
-                    .getElementById("nameCancel")
-                    .addEventListener(
-                        "click",
-                        cancel
-                    );
-
-
-                document
-                    .getElementById("nameSave")
-                    .addEventListener(
-                        "click",
-                        save
-                    );
             }
-        );
-    }
 
 
-    /*
-        ------------------------------------------------------------
-        DELETE UI
-        ------------------------------------------------------------
-    */
+            function save() {
 
-    function showDeleteUI(
-        world
-    ) {
-
-        modal.innerHTML =
-            `
-            <h2 class="modal-title">
-                Delete World
-            </h2>
-
-            <p class="modal-message">
-                Delete "${escapeHTML(world.name)}"?
-                All checklist progress and the Minecraft day
-                for this world will be removed.
-            </p>
-
-            <div class="modal-actions">
-
-                <button
-                    type="button"
-                    class="action-button"
-                    id="deleteCancel"
-                >
-                    Cancel
-                </button>
-
-                <button
-                    type="button"
-                    class="action-button danger"
-                    id="deleteConfirm"
-                >
-                    Delete
-                </button>
-
-            </div>
-            `;
+                finish(
+                    getEditableText(
+                        editor
+                    )
+                );
+            }
 
 
-        modalLayer.classList.add(
-            "visible"
-        );
+            function cancel() {
+
+                finish(
+                    null
+                );
+            }
 
 
-        document
-            .getElementById("deleteCancel")
-            .addEventListener(
-                "click",
-                closeModal
-            );
+            editor.addEventListener(
+                "keydown",
+                event => {
 
+                    if (
+                        event.key === "Enter"
+                    ) {
 
-        document
-            .getElementById("deleteConfirm")
-            .addEventListener(
-                "click",
-                () => {
+                        event.preventDefault();
 
-                    if (worlds.length <= 1) {
-
-                        showMessage(
-                            "You need to keep at least one world."
-                        );
-
-                        closeModal();
-
-                        return;
+                        save();
                     }
-
-
-                    worlds =
-                        worlds.filter(
-                            item =>
-                                item.id !== world.id
-                        );
 
 
                     if (
-                        currentWorldId ===
-                        world.id
+                        event.key === "Escape"
                     ) {
 
-                        currentWorldId =
-                            worlds[0].id;
+                        event.preventDefault();
+
+                        cancel();
                     }
-
-
-                    saveWorlds();
-
-                    closeModal();
-
-                    renderWorlds();
-                    renderChecklist();
-                    updateDayDisplay();
                 }
             );
-    }
 
 
-    /*
-        ------------------------------------------------------------
-        RESET UI
-        ------------------------------------------------------------
-    */
-
-    function showResetUI(
-        world
-    ) {
-
-        modal.innerHTML =
-            `
-            <h2 class="modal-title">
-                Reset World
-            </h2>
-
-            <p class="modal-message">
-                Reset all checklist progress and set
-                Minecraft Day back to Day 1 for
-                "${escapeHTML(world.name)}"?
-            </p>
-
-            <div class="modal-actions">
-
-                <button
-                    type="button"
-                    class="action-button"
-                    id="resetCancel"
-                >
-                    Cancel
-                </button>
-
-                <button
-                    type="button"
-                    class="action-button danger"
-                    id="resetConfirm"
-                >
-                    Reset
-                </button>
-
-            </div>
-            `;
+            document
+                .getElementById(
+                    "nameCancel"
+                )
+                .addEventListener(
+                    "click",
+                    cancel
+                );
 
 
-        modalLayer.classList.add(
-            "visible"
+            document
+                .getElementById(
+                    "nameSave"
+                )
+                .addEventListener(
+                    "click",
+                    save
+                );
+        }
+    );
+}
+
+
+/*
+    ============================================================
+    DAY EDITOR
+    ============================================================
+*/
+
+function createDayEditor(
+    currentDay
+) {
+
+    modal.innerHTML =
+        `
+        <h2 class="modal-title">
+            Minecraft Day
+        </h2>
+
+        <p class="modal-message">
+            Enter the Minecraft day for this world.
+        </p>
+
+        <div
+            class="day-editor-value"
+            id="dayEditorValue"
+            contenteditable="true"
+            role="textbox"
+            aria-label="Minecraft day"
+            inputmode="numeric"
+            spellcheck="false"
+        ></div>
+
+        <div class="modal-actions">
+
+            <button
+                type="button"
+                class="action-button"
+                id="dayCancel"
+            >
+                Cancel
+            </button>
+
+            <button
+                type="button"
+                class="action-button primary"
+                id="daySave"
+            >
+                Save
+            </button>
+
+        </div>
+        `;
+
+
+    modalLayer.classList.add(
+        "visible"
+    );
+
+
+    const editor =
+        document.getElementById(
+            "dayEditorValue"
         );
 
 
-        document
-            .getElementById("resetCancel")
-            .addEventListener(
-                "click",
-                closeModal
-            );
+    setupEditable(
+        editor
+    );
 
 
-        document
-            .getElementById("resetConfirm")
-            .addEventListener(
-                "click",
-                () => {
-
-                    world.progress = {};
-
-                    world.day = 1;
+    editor.textContent =
+        String(currentDay);
 
 
-                    saveWorlds();
-
-                    closeModal();
-
-                    renderWorlds();
-                    renderChecklist();
-                    updateDayDisplay();
-
-                    showMessage(
-                        "World reset."
-                    );
-                }
-            );
-    }
+    editor.focus();
 
 
-    /*
-        ------------------------------------------------------------
-        MODAL HELPERS
-        ------------------------------------------------------------
-    */
-
-    function closeModal() {
-
-        modalLayer.classList.remove(
-            "visible"
-        );
-
-        modal.innerHTML = "";
-    }
+    placeCaretAtEnd(
+        editor
+    );
 
 
-    modalLayer.addEventListener(
-        "click",
+    editor.addEventListener(
+        "keydown",
         event => {
 
             if (
-                event.target ===
-                modalLayer
+                event.key === "Enter"
             ) {
+
+                event.preventDefault();
+
+                saveDay();
+            }
+
+
+            if (
+                event.key === "Escape"
+            ) {
+
+                event.preventDefault();
 
                 closeModal();
             }
@@ -3212,158 +3428,559 @@
     );
 
 
-    /*
-        ------------------------------------------------------------
-        TOAST
-        ------------------------------------------------------------
-    */
-
-    function showMessage(
-        text
-    ) {
-
-        toast.textContent =
-            text;
-
-
-        toast.classList.add(
-            "visible"
+    document
+        .getElementById(
+            "dayCancel"
+        )
+        .addEventListener(
+            "click",
+            closeModal
         );
 
 
-        clearTimeout(
-            toastTimer
+    document
+        .getElementById(
+            "daySave"
+        )
+        .addEventListener(
+            "click",
+            saveDay
         );
 
 
-        toastTimer =
-            setTimeout(
-                () => {
+    function saveDay() {
 
-                    toast.classList.remove(
-                        "visible"
+        const raw =
+            getEditableText(
+                editor
+            );
+
+
+        const digits =
+            raw.replace(
+                /[^0-9]/g,
+                ""
+            );
+
+
+        const day =
+            Number(
+                digits
+            );
+
+
+        if (
+            !Number.isFinite(day) ||
+            day < 1
+        ) {
+
+            showMessage(
+                "Enter a valid Minecraft day."
+            );
+
+            return;
+        }
+
+
+        setCurrentDay(
+            day
+        );
+
+
+        closeModal();
+    }
+}
+
+
+/*
+    ============================================================
+    DELETE MODAL
+    ============================================================
+*/
+
+function showDeleteUI(
+    world
+) {
+
+    modal.innerHTML =
+        `
+        <h2 class="modal-title">
+            Delete World
+        </h2>
+
+        <p class="modal-message">
+            Delete "${escapeHTML(world.name)}"?
+            All checklist progress and the Minecraft day
+            for this world will be removed.
+        </p>
+
+        <div class="modal-actions">
+
+            <button
+                type="button"
+                class="action-button"
+                id="deleteCancel"
+            >
+                Cancel
+            </button>
+
+            <button
+                type="button"
+                class="action-button danger"
+                id="deleteConfirm"
+            >
+                Delete
+            </button>
+
+        </div>
+        `;
+
+
+    modalLayer.classList.add(
+        "visible"
+    );
+
+
+    document
+        .getElementById(
+            "deleteCancel"
+        )
+        .addEventListener(
+            "click",
+            closeModal
+        );
+
+
+    document
+        .getElementById(
+            "deleteConfirm"
+        )
+        .addEventListener(
+            "click",
+            () => {
+
+                if (
+                    worlds.length <= 1
+                ) {
+
+                    closeModal();
+
+
+                    showMessage(
+                        "You need to keep at least one world."
                     );
 
-                },
-                2200
-            );
+
+                    return;
+                }
+
+
+                worlds =
+                    worlds.filter(
+                        item =>
+                            item.id !==
+                            world.id
+                    );
+
+
+                if (
+                    currentWorldId ===
+                    world.id
+                ) {
+
+                    currentWorldId =
+                        worlds[0].id;
+                }
+
+
+                saveWorlds();
+
+                closeModal();
+
+                renderWorlds();
+                renderChecklist();
+                updateDayDisplay();
+            }
+        );
+}
+
+
+/*
+    ============================================================
+    RESET MODAL
+    ============================================================
+*/
+
+function showResetUI(
+    world
+) {
+
+    modal.innerHTML =
+        `
+        <h2 class="modal-title">
+            Reset World
+        </h2>
+
+        <p class="modal-message">
+            Reset all checklist progress and set
+            Minecraft Day back to Day 1 for
+            "${escapeHTML(world.name)}"?
+        </p>
+
+        <div class="modal-actions">
+
+            <button
+                type="button"
+                class="action-button"
+                id="resetCancel"
+            >
+                Cancel
+            </button>
+
+            <button
+                type="button"
+                class="action-button danger"
+                id="resetConfirm"
+            >
+                Reset
+            </button>
+
+        </div>
+        `;
+
+
+    modalLayer.classList.add(
+        "visible"
+    );
+
+
+    document
+        .getElementById(
+            "resetCancel"
+        )
+        .addEventListener(
+            "click",
+            closeModal
+        );
+
+
+    document
+        .getElementById(
+            "resetConfirm"
+        )
+        .addEventListener(
+            "click",
+            () => {
+
+                world.progress = {};
+
+                world.day = 1;
+
+
+                saveWorlds();
+
+                closeModal();
+
+                renderWorlds();
+                renderChecklist();
+                updateDayDisplay();
+
+
+                showMessage(
+                    "World reset."
+                );
+            }
+        );
+}
+
+
+/*
+    ============================================================
+    MODAL
+    ============================================================
+*/
+
+function closeModal() {
+
+    modalLayer.classList.remove(
+        "visible"
+    );
+
+
+    modal.innerHTML = "";
+}
+
+
+modalLayer.addEventListener(
+    "click",
+    event => {
+
+        if (
+            event.target ===
+            modalLayer
+        ) {
+
+            closeModal();
+        }
     }
+);
 
 
-    /*
-        ------------------------------------------------------------
-        ZOOM DISABLING
-        ------------------------------------------------------------
-    */
+/*
+    ============================================================
+    TOAST
+    ============================================================
+*/
 
-    document.addEventListener(
-        "gesturestart",
-        event => {
-            event.preventDefault();
-        },
-        {
-            passive: false
-        }
+function showMessage(
+    text
+) {
+
+    toast.textContent =
+        text;
+
+
+    toast.classList.add(
+        "visible"
     );
 
 
-    document.addEventListener(
-        "gesturechange",
-        event => {
-            event.preventDefault();
-        },
-        {
-            passive: false
-        }
+    clearTimeout(
+        toastTimer
     );
 
 
-    document.addEventListener(
-        "gestureend",
-        event => {
+    toastTimer =
+        setTimeout(
+            () => {
+
+                toast.classList.remove(
+                    "visible"
+                );
+
+            },
+            2200
+        );
+}
+
+
+/*
+    ============================================================
+    ZOOM PREVENTION
+    ============================================================
+*/
+
+/*
+    Safari gesture zoom.
+*/
+
+document.addEventListener(
+    "gesturestart",
+    event => {
+
+        event.preventDefault();
+
+    },
+    {
+        passive: false
+    }
+);
+
+
+document.addEventListener(
+    "gesturechange",
+    event => {
+
+        event.preventDefault();
+
+    },
+    {
+        passive: false
+    }
+);
+
+
+document.addEventListener(
+    "gestureend",
+    event => {
+
+        event.preventDefault();
+
+    },
+    {
+        passive: false
+    }
+);
+
+
+/*
+    Ctrl/Cmd + mouse-wheel zoom.
+*/
+
+document.addEventListener(
+    "wheel",
+    event => {
+
+        if (
+            event.ctrlKey ||
+            event.metaKey
+        ) {
+
             event.preventDefault();
-        },
-        {
-            passive: false
         }
-    );
+
+    },
+    {
+        passive: false
+    }
+);
 
 
-    document.addEventListener(
-        "wheel",
-        event => {
+/*
+    Ctrl/Cmd keyboard zoom.
+*/
+
+document.addEventListener(
+    "keydown",
+    event => {
+
+        if (
+            event.ctrlKey ||
+            event.metaKey
+        ) {
 
             if (
-                event.ctrlKey ||
-                event.metaKey
+                event.key === "+" ||
+                event.key === "-" ||
+                event.key === "=" ||
+                event.key === "0"
             ) {
 
                 event.preventDefault();
             }
-        },
-        {
-            passive: false
         }
-    );
+    }
+);
 
 
-    document.addEventListener(
-        "keydown",
-        event => {
+/*
+    Prevent rapid double-tap browser zoom.
 
-            if (
-                event.ctrlKey ||
-                event.metaKey
-            ) {
+    IMPORTANT:
 
-                if (
-                    event.key === "+" ||
-                    event.key === "-" ||
-                    event.key === "=" ||
-                    event.key === "0"
-                ) {
+    contenteditable elements are deliberately excluded.
 
-                    event.preventDefault();
-                }
-            }
+    That means:
+
+        Double-click word in a custom text field
+        -> selects the word normally.
+
+        Double-click anywhere else
+        -> cannot trigger browser zoom.
+*/
+
+let lastPointerUpTime = 0;
+
+document.addEventListener(
+    "pointerup",
+    event => {
+
+        const now =
+            Date.now();
+
+
+        const timeSinceLast =
+            now -
+            lastPointerUpTime;
+
+
+        const editable =
+            event.target.closest(
+                "[contenteditable='true']"
+            );
+
+
+        if (
+            !editable &&
+            timeSinceLast > 0 &&
+            timeSinceLast < 350
+        ) {
+
+            event.preventDefault();
         }
-    );
 
 
-    /*
-        ------------------------------------------------------------
-        STARTUP
-        ------------------------------------------------------------
-    */
-
-    loadWorlds();
-
-    setupSearchPlaceholder(
-        searchBox
-    );
-
-    setupSearchPlaceholder(
-        worldSearchBox
-    );
-
-    renderWorlds();
-
-    updateDayDisplay();
-
-    loadChecklist(true);
+        lastPointerUpTime =
+            now;
+    },
+    {
+        passive: false
+    }
+);
 
 
-    /*
-        Keep checklist.json updated while the page is open.
-        The incremental renderer preserves which sections are open.
-    */
+/*
+    Also prevent the browser's dblclick action from becoming
+    a page zoom outside custom text editors.
 
-    setInterval(
-        () => {
-            loadChecklist(false);
-        },
-        CHECKLIST_POLL_INTERVAL
-    );
+    Native text selection remains untouched inside editors.
+*/
+
+document.addEventListener(
+    "dblclick",
+    event => {
+
+        const editable =
+            event.target.closest(
+                "[contenteditable='true']"
+            );
+
+
+        if (!editable) {
+
+            event.preventDefault();
+        }
+    },
+    {
+        passive: false
+    }
+);
+
+
+/*
+    ============================================================
+    STARTUP
+    ============================================================
+*/
+
+loadWorlds();
+
+renderWorlds();
+
+updateDayDisplay();
+
+loadChecklist(
+    true
+);
+
+
+/*
+    Poll checklist.json every two seconds.
+
+    Existing sections are updated incrementally so their
+    open/closed state is preserved.
+*/
+
+setInterval(
+    () => {
+
+        loadChecklist(
+            false
+        );
+
+    },
+    CHECKLIST_POLL_INTERVAL
+);
 
 </script>
 
