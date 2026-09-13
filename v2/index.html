@@ -5,324 +5,646 @@
 
     <meta
         name="viewport"
-        content="width=device-width, initial-scale=1.0"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"
     >
 
-    <title>Minecraft Survival Checklist</title>
+    <meta
+        name="apple-mobile-web-app-capable"
+        content="yes"
+    >
+
+    <meta
+        name="apple-mobile-web-app-status-bar-style"
+        content="black-translucent"
+    >
+
+    <meta
+        name="theme-color"
+        content="#0b120d"
+    >
+
+    <title>Minecraft Survival To-Do</title>
 
     <style>
         * {
             box-sizing: border-box;
         }
 
-        :root {
-            --bg: #0b0f0c;
-            --panel: #121814;
-            --panel-2: #182019;
-            --border: #2a382d;
-            --text: #edf5ee;
-            --muted: #9baa9d;
-            --green: #55c96b;
-            --green-dark: #245d30;
-            --red: #d95757;
-        }
-
-        html,
-        body {
+        html {
             margin: 0;
             padding: 0;
-            min-height: 100%;
-            background: var(--bg);
-            color: var(--text);
+            background: #0b120d;
+            color: #e8f0e8;
             font-family:
                 -apple-system,
                 BlinkMacSystemFont,
                 "Segoe UI",
+                Roboto,
+                Arial,
                 sans-serif;
+            overscroll-behavior: none;
         }
 
         body {
-            padding: 20px;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            background:
+                radial-gradient(
+                    circle at top,
+                    #17251a 0%,
+                    #0b120d 45%,
+                    #070b08 100%
+                );
+            color: #e8f0e8;
+            -webkit-text-size-adjust: 100%;
+            overscroll-behavior: none;
         }
 
         button,
-        input,
-        select {
+        .search-box,
+        .world-search-box,
+        .day-editor-value,
+        .name-editor-value {
             font: inherit;
         }
 
         button {
-            cursor: pointer;
+            -webkit-tap-highlight-color: transparent;
         }
 
-        .container {
-            width: 100%;
-            max-width: 1100px;
+        .app {
+            width: min(1100px, 100%);
             margin: 0 auto;
+            padding:
+                max(24px, env(safe-area-inset-top))
+                16px
+                max(30px, env(safe-area-inset-bottom));
         }
 
-        header {
-            margin-bottom: 24px;
+        .header {
+            padding: 20px 0 24px;
         }
 
-        .topbar {
-            display: flex;
-            gap: 12px;
-            align-items: center;
-            justify-content: space-between;
-            flex-wrap: wrap;
-        }
-
-        h1 {
+        .title {
             margin: 0;
-            font-size: clamp(24px, 5vw, 36px);
+            font-size: clamp(28px, 6vw, 42px);
+            font-weight: 800;
+            letter-spacing: -1px;
         }
 
         .subtitle {
-            margin: 6px 0 0;
-            color: var(--muted);
+            margin: 7px 0 0;
+            color: #93a397;
+            font-size: 14px;
         }
 
-        .controls {
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-            margin-top: 18px;
+        .panel {
+            background: rgba(17, 25, 19, 0.92);
+            border: 1px solid #253428;
+            border-radius: 16px;
+            box-shadow:
+                0 12px 35px rgba(0, 0, 0, 0.25),
+                inset 0 1px rgba(255, 255, 255, 0.025);
         }
 
-        select,
-        input[type="search"] {
-            min-height: 44px;
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            background: var(--panel);
-            color: var(--text);
-            padding: 0 13px;
-            outline: none;
-        }
+        /* ---------------- WORLD MANAGER ---------------- */
 
-        select {
-            min-width: 180px;
-        }
-
-        input[type="search"] {
-            flex: 1;
-            min-width: 200px;
-        }
-
-        select:focus,
-        input[type="search"]:focus {
-            border-color: var(--green);
-        }
-
-        .button {
-            min-height: 44px;
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            background: var(--panel-2);
-            color: var(--text);
-            padding: 0 15px;
-        }
-
-        .button:hover {
-            border-color: var(--green);
-        }
-
-        .button.primary {
-            background: var(--green-dark);
-            border-color: var(--green);
-        }
-
-        .button.danger {
-            color: #ff8a8a;
-        }
-
-        .progress-panel {
-            margin-top: 18px;
+        .world-panel {
             padding: 16px;
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            background: var(--panel);
+            margin-bottom: 16px;
         }
 
-        .progress-header {
+        .panel-title-row {
             display: flex;
+            align-items: center;
             justify-content: space-between;
             gap: 12px;
-            margin-bottom: 10px;
+            margin-bottom: 12px;
         }
 
-        .progress-text {
-            color: var(--muted);
+        .panel-title {
+            margin: 0;
+            font-size: 18px;
+            font-weight: 750;
         }
 
-        .progress-bar {
-            height: 12px;
-            overflow: hidden;
+        .world-count {
+            color: #7e8d81;
+            font-size: 12px;
+            white-space: nowrap;
+        }
+
+        .world-search-box,
+        .search-box {
+            width: 100%;
+            min-height: 46px;
+            padding: 12px 14px;
+            border-radius: 11px;
+            border: 1px solid #2a3a2d;
+            background: #0c130e;
+            color: #e8f0e8;
+            outline: none;
+            line-height: 20px;
+            overflow-x: auto;
+            overflow-y: hidden;
+            white-space: nowrap;
+            caret-color: #77c47f;
+            -webkit-user-select: text;
+            user-select: text;
+            touch-action: manipulation;
+        }
+
+        .world-search-box:focus,
+        .search-box:focus,
+        .day-editor-value:focus,
+        .name-editor-value:focus {
+            border-color: #4b8d53;
+            box-shadow: 0 0 0 3px rgba(75, 141, 83, 0.12);
+        }
+
+        .world-search-box:empty::before,
+        .search-box:empty::before {
+            content: attr(data-placeholder);
+            color: #637166;
+            pointer-events: none;
+        }
+
+        .worlds {
+            display: flex;
+            gap: 12px;
+            overflow-x: auto;
+            overflow-y: hidden;
+            padding: 2px 2px 12px;
+            margin-top: 12px;
+            scroll-snap-type: x proximity;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .worlds::-webkit-scrollbar {
+            height: 6px;
+        }
+
+        .worlds::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .worlds::-webkit-scrollbar-thumb {
+            background: #29382c;
             border-radius: 999px;
-            background: #202a22;
         }
 
-        .progress-fill {
-            width: 0%;
-            height: 100%;
-            background: var(--green);
-            transition: width 0.25s ease;
+        .world-card {
+            flex: 0 0 190px;
+            min-width: 190px;
+            padding: 14px;
+            border-radius: 13px;
+            border: 1px solid #29372c;
+            background: #101811;
+            cursor: pointer;
+            scroll-snap-align: start;
+            transition:
+                transform 0.15s ease,
+                border-color 0.15s ease,
+                background 0.15s ease;
         }
+
+        .world-card:active {
+            transform: scale(0.98);
+        }
+
+        .world-card.current {
+            border-color: #4d8d55;
+            background: #132017;
+        }
+
+        .world-name {
+            font-weight: 750;
+            font-size: 15px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .world-meta {
+            margin-top: 7px;
+            color: #829087;
+            font-size: 12px;
+            line-height: 1.55;
+        }
+
+        .world-current {
+            display: inline-block;
+            margin-top: 9px;
+            padding: 4px 7px;
+            border-radius: 6px;
+            background: #1b3420;
+            color: #8bd291;
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .world-empty {
+            width: 100%;
+            padding: 18px 8px;
+            color: #718076;
+            text-align: center;
+            font-size: 13px;
+        }
+
+        .world-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 4px;
+        }
+
+        .action-button {
+            min-height: 40px;
+            padding: 9px 13px;
+            border-radius: 9px;
+            border: 1px solid #304133;
+            background: #172219;
+            color: #dce8dd;
+            cursor: pointer;
+            transition:
+                background 0.15s ease,
+                border-color 0.15s ease,
+                transform 0.1s ease;
+        }
+
+        .action-button:hover {
+            background: #1c2b1f;
+            border-color: #46614a;
+        }
+
+        .action-button:active {
+            transform: scale(0.97);
+        }
+
+        .action-button.primary {
+            background: #204927;
+            border-color: #356b3d;
+            color: #dff4e1;
+        }
+
+        .action-button.primary:hover {
+            background: #285a30;
+        }
+
+        .action-button.danger {
+            background: #2a1717;
+            border-color: #5a2b2b;
+            color: #efcaca;
+        }
+
+        .action-button.danger:hover {
+            background: #351b1b;
+        }
+
+        /* ---------------- DAY TRACKER ---------------- */
 
         .day-tracker {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            gap: 16px;
-            margin-top: 12px;
-            padding: 14px 16px;
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            background: var(--panel);
+            gap: 14px;
+            margin-top: 14px;
+            padding: 12px 14px;
+            border-radius: 11px;
+            background: #0d150f;
+            border: 1px solid #253329;
         }
 
         .day-label {
-            font-weight: 700;
+            color: #aebbb0;
+            font-size: 13px;
+            font-weight: 650;
         }
 
         .day-controls {
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 7px;
+        }
+
+        .day-button,
+        .day-display {
+            border: 1px solid #304233;
+            background: #172219;
+            color: #dfe9e0;
+            min-height: 38px;
+            border-radius: 9px;
+            cursor: pointer;
         }
 
         .day-button {
-            width: 40px;
-            height: 40px;
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            background: var(--panel-2);
-            color: var(--text);
-            padding: 0;
-            font-size: 22px;
-            font-weight: 700;
+            width: 38px;
+            font-size: 21px;
             line-height: 1;
         }
 
-        .day-button:hover {
-            border-color: var(--green);
-            background: #1c261e;
-        }
-
-        #minecraftDay {
-            width: 90px;
-            height: 40px;
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            background: var(--bg);
-            color: var(--text);
-            padding: 0 8px;
-            text-align: center;
-            outline: none;
+        .day-display {
+            min-width: 90px;
+            padding: 7px 12px;
+            font-size: 13px;
             font-weight: 700;
         }
 
-        #minecraftDay:focus {
-            border-color: var(--green);
+        .day-button:active,
+        .day-display:active {
+            transform: scale(0.97);
         }
 
-        #worldManager {
-            margin-bottom: 25px;
+        /* ---------------- CHECKLIST ---------------- */
+
+        .progress-panel {
+            padding: 16px;
+            margin-bottom: 16px;
         }
 
-        .world-manager-header {
+        .progress-top {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            gap: 12px;
-            margin-bottom: 12px;
-            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 10px;
         }
 
-        .world-manager-header h2 {
-            margin: 0;
+        .progress-label {
+            font-size: 13px;
+            color: #aab6ad;
         }
 
-        .world-count {
-            color: var(--muted);
+        .progress-number {
+            font-size: 13px;
+            color: #dce8dd;
+            font-weight: 700;
         }
 
-        .world-grid {
-            display: grid;
-            grid-template-columns: repeat(
-                auto-fill,
-                minmax(240px, 1fr)
-            );
-            gap: 12px;
-        }
-
-        .world-card {
-            padding: 15px;
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            background: var(--panel);
-        }
-
-        .world-card.current {
-            border-color: var(--green);
-        }
-
-        .world-card h3 {
-            margin: 0 0 8px;
+        .progress-track {
+            width: 100%;
+            height: 9px;
+            background: #1a251c;
+            border-radius: 999px;
             overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
         }
 
-        .world-progress {
-            color: var(--muted);
-            font-size: 14px;
-            margin-bottom: 12px;
+        .progress-fill {
+            width: 0%;
+            height: 100%;
+            background: #4d9556;
+            border-radius: inherit;
+            transition: width 0.25s ease;
         }
 
-        .world-actions {
-            display: flex;
-            gap: 8px;
-            flex-wrap: wrap;
-        }
-
-        .world-actions button {
-            min-height: 36px;
-            border: 1px solid var(--border);
-            border-radius: 7px;
-            background: var(--panel-2);
-            color: var(--text);
-            padding: 0 10px;
-        }
-
-        .world-actions button:hover {
-            border-color: var(--green);
-        }
-
-        .world-actions .delete-world {
-            color: #ff8a8a;
-        }
-
-        #checklist {
-            display: grid;
-            gap: 16px;
+        .search-panel {
+            margin-bottom: 16px;
         }
 
         .section {
-            border: 1px solid var(--border);
-            border-radius: 12px;
+            border: 1px solid #263529;
+            border-radius: 14px;
             overflow: hidden;
-            background: var(--panel);
-
-            animation:
-                sectionAppear 0.25s ease both;
+            background: rgba(15, 22, 17, 0.9);
+            margin-bottom: 10px;
         }
 
-        @keyframes sectionAppear {
+        .section-header {
+            width: 100%;
+            min-height: 58px;
+            padding: 13px 15px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border: 0;
+            background: transparent;
+            color: #e3ece4;
+            text-align: left;
+            cursor: pointer;
+        }
+
+        .section-header:active {
+            background: #121b14;
+        }
+
+        .section-arrow {
+            width: 18px;
+            flex: 0 0 18px;
+            color: #7fa885;
+            transition: transform 0.2s ease;
+        }
+
+        .section.open .section-arrow {
+            transform: rotate(90deg);
+        }
+
+        .section-title {
+            flex: 1;
+            min-width: 0;
+            font-size: 15px;
+            font-weight: 750;
+        }
+
+        .section-count {
+            color: #748278;
+            font-size: 12px;
+            white-space: nowrap;
+        }
+
+        .section-body {
+            display: grid;
+            grid-template-rows: 0fr;
+            transition: grid-template-rows 0.22s ease;
+        }
+
+        .section.open .section-body {
+            grid-template-rows: 1fr;
+        }
+
+        .section-inner {
+            min-height: 0;
+            overflow: hidden;
+        }
+
+        .tasks {
+            padding: 0 10px 10px;
+        }
+
+        .task {
+            display: flex;
+            align-items: center;
+            gap: 11px;
+            min-height: 48px;
+            padding: 8px 9px;
+            border-radius: 9px;
+            animation: taskIn 0.18s ease both;
+        }
+
+        .task + .task {
+            margin-top: 2px;
+        }
+
+        .task:hover {
+            background: #111a13;
+        }
+
+        .task-check {
+            appearance: none;
+            -webkit-appearance: none;
+            width: 20px;
+            height: 20px;
+            flex: 0 0 20px;
+            margin: 0;
+            border-radius: 5px;
+            border: 1px solid #4a5d4c;
+            background: #0c130e;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .task-check:checked {
+            background: #397241;
+            border-color: #5b9e64;
+        }
+
+        .task-check:checked::after {
+            content: "";
+            position: absolute;
+            left: 6px;
+            top: 2px;
+            width: 5px;
+            height: 10px;
+            border-right: 2px solid #fff;
+            border-bottom: 2px solid #fff;
+            transform: rotate(45deg);
+        }
+
+        .task-label {
+            min-width: 0;
+            flex: 1;
+            color: #d3ded4;
+            font-size: 14px;
+            line-height: 1.4;
+            cursor: pointer;
+        }
+
+        .task.completed .task-label {
+            color: #718078;
+            text-decoration: line-through;
+            text-decoration-thickness: 1px;
+        }
+
+        .empty-state {
+            padding: 30px 15px;
+            text-align: center;
+            color: #718076;
+            font-size: 13px;
+        }
+
+        /* ---------------- MODALS ---------------- */
+
+        .modal-layer {
+            position: fixed;
+            inset: 0;
+            z-index: 1000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding:
+                max(20px, env(safe-area-inset-top))
+                20px
+                max(20px, env(safe-area-inset-bottom));
+            background: rgba(0, 0, 0, 0.72);
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-layer.visible {
+            display: flex;
+        }
+
+        .modal {
+            width: min(420px, 100%);
+            padding: 18px;
+            border: 1px solid #304033;
+            border-radius: 15px;
+            background: #111912;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.45);
+            animation: modalIn 0.16s ease;
+        }
+
+        .modal-title {
+            margin: 0 0 8px;
+            font-size: 18px;
+            font-weight: 750;
+        }
+
+        .modal-message {
+            margin: 0;
+            color: #94a197;
+            font-size: 13px;
+            line-height: 1.5;
+        }
+
+        .name-editor-value,
+        .day-editor-value {
+            min-height: 45px;
+            width: 100%;
+            margin-top: 14px;
+            padding: 11px 13px;
+            border: 1px solid #304133;
+            border-radius: 10px;
+            background: #0b120d;
+            color: #e8f0e8;
+            outline: none;
+            white-space: nowrap;
+            overflow-x: auto;
+            overflow-y: hidden;
+            line-height: 21px;
+            caret-color: #77c47f;
+            -webkit-user-select: text;
+            user-select: text;
+        }
+
+        .modal-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 8px;
+            margin-top: 14px;
+        }
+
+        /* ---------------- TOAST ---------------- */
+
+        .toast {
+            position: fixed;
+            left: 50%;
+            bottom: max(22px, env(safe-area-inset-bottom));
+            z-index: 2000;
+            transform: translate(-50%, 20px);
+            padding: 10px 14px;
+            border: 1px solid #304033;
+            border-radius: 10px;
+            background: #172119;
+            color: #dce8de;
+            font-size: 13px;
+            opacity: 0;
+            pointer-events: none;
+            transition:
+                opacity 0.18s ease,
+                transform 0.18s ease;
+        }
+
+        .toast.visible {
+            opacity: 1;
+            transform: translate(-50%, 0);
+        }
+
+        @keyframes taskIn {
             from {
                 opacity: 0;
-                transform: translateY(5px);
+                transform: translateY(-3px);
             }
 
             to {
@@ -331,194 +653,44 @@
             }
         }
 
-        .section-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 12px;
-            min-height: 56px;
-            padding: 15px 16px;
-            background: var(--panel-2);
-            border-bottom: 1px solid transparent;
+        @keyframes modalIn {
+            from {
+                opacity: 0;
+                transform: scale(0.97);
+            }
 
-            cursor: pointer;
-            user-select: none;
-
-            transition:
-                background 0.2s ease,
-                border-color 0.2s ease;
-        }
-
-        .section-header:hover {
-            background: #1c261e;
-        }
-
-        .section.open .section-header {
-            border-bottom-color: var(--border);
-        }
-
-        .section-title-wrapper {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            min-width: 0;
-        }
-
-        .section-arrow {
-            width: 18px;
-            height: 18px;
-            flex: 0 0 auto;
-
-            display: flex;
-            align-items: center;
-            justify-content: center;
-
-            color: var(--muted);
-            font-size: 13px;
-
-            transition:
-                transform 0.3s ease,
-                color 0.2s ease;
-        }
-
-        .section.open .section-arrow {
-            transform: rotate(90deg);
-            color: var(--green);
-        }
-
-        .section-header h2 {
-            margin: 0;
-            font-size: 19px;
-
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-        }
-
-        .section-count {
-            color: var(--muted);
-            font-size: 14px;
-            white-space: nowrap;
-        }
-
-        .section-content {
-            display: grid;
-            grid-template-rows: 0fr;
-
-            transition:
-                grid-template-rows 0.3s ease;
-        }
-
-        .section.open .section-content {
-            grid-template-rows: 1fr;
-        }
-
-        .section-content-inner {
-            min-height: 0;
-            overflow: hidden;
-        }
-
-        .tasks {
-            padding: 6px 16px;
-        }
-
-        .task {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            min-height: 48px;
-            border-bottom: 1px solid #202a22;
-
-            opacity: 0;
-            transform: translateY(-4px);
-
-            transition:
-                opacity 0.2s ease,
-                transform 0.2s ease;
-        }
-
-        .section.open .task {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .task:last-child {
-            border-bottom: 0;
-        }
-
-        .task input {
-            width: 19px;
-            height: 19px;
-            flex: 0 0 auto;
-            accent-color: var(--green);
-            cursor: pointer;
-        }
-
-        .task label {
-            flex: 1;
-            padding: 12px 0;
-            cursor: pointer;
-            line-height: 1.4;
-        }
-
-        .task.completed label {
-            color: var(--muted);
-            text-decoration: line-through;
-        }
-
-        .empty {
-            padding: 30px;
-            text-align: center;
-            color: var(--muted);
-            border: 1px dashed var(--border);
-            border-radius: 12px;
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
         }
 
         @media (max-width: 600px) {
-            body {
-                padding: 12px;
+            .app {
+                padding-left: 12px;
+                padding-right: 12px;
             }
 
-            .controls {
-                flex-direction: column;
+            .world-actions {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
             }
 
-            select,
-            input[type="search"],
-            .button {
+            .action-button {
                 width: 100%;
             }
 
             .day-tracker {
-                align-items: stretch;
+                align-items: flex-start;
                 flex-direction: column;
             }
 
             .day-controls {
-                justify-content: center;
+                width: 100%;
             }
 
-            .section-header {
-                align-items: center;
-            }
-
-            .section-header h2 {
-                font-size: 17px;
-            }
-
-            .section-count {
-                font-size: 13px;
-            }
-        }
-
-        @media (prefers-reduced-motion: reduce) {
-            *,
-            *::before,
-            *::after {
-                scroll-behavior: auto !important;
-                animation-duration: 0.01ms !important;
-                animation-iteration-count: 1 !important;
-                transition-duration: 0.01ms !important;
+            .day-display {
+                flex: 1;
             }
         }
     </style>
@@ -526,87 +698,83 @@
 
 <body>
 
-<main class="container">
+<div class="app">
 
-    <header>
+    <header class="header">
+        <h1 class="title">Minecraft Survival To-Do</h1>
+        <p class="subtitle">
+            Track your survival worlds and everything you want to accomplish.
+        </p>
+    </header>
 
-        <div class="topbar">
+    <section class="panel world-panel">
 
-            <div>
+        <div class="panel-title-row">
+            <h2 class="panel-title">Worlds</h2>
 
-                <h1>
-                    Minecraft Survival Checklist
-                </h1>
-
-                <p class="subtitle">
-                    Track your survival progress across your worlds.
-                </p>
-
-            </div>
-
+            <span
+                class="world-count"
+                id="worldCount"
+            >
+                0 / 100
+            </span>
         </div>
 
-        <div class="controls">
+        <div
+            class="world-search-box"
+            id="worldSearchBox"
+            contenteditable="true"
+            role="searchbox"
+            aria-label="Search worlds"
+            data-placeholder="Search worlds..."
+            spellcheck="false"
+            autocapitalize="off"
+            autocomplete="off"
+            autocorrect="off"
+        ></div>
 
-            <select
-                id="worldSelect"
-                aria-label="Select world"
-            ></select>
+        <div
+            class="worlds"
+            id="worlds"
+        ></div>
+
+        <div class="world-actions">
 
             <button
-                class="button primary"
-                id="newWorldButton"
                 type="button"
+                class="action-button primary"
+                id="newWorld"
             >
-                New World
+                + New World
             </button>
 
-            <input
-                id="searchInput"
-                type="search"
-                placeholder="Search checklist..."
-                autocomplete="off"
+            <button
+                type="button"
+                class="action-button"
+                id="renameWorld"
             >
+                Rename World
+            </button>
 
             <button
-                class="button danger"
-                id="resetButton"
                 type="button"
+                class="action-button danger"
+                id="deleteWorld"
+            >
+                Delete World
+            </button>
+
+            <button
+                type="button"
+                class="action-button"
+                id="resetWorld"
             >
                 Reset Current World
             </button>
 
         </div>
 
-        <div class="progress-panel">
-
-            <div class="progress-header">
-
-                <strong id="currentWorldName">
-                    World 1
-                </strong>
-
-                <span
-                    class="progress-text"
-                    id="overallProgress"
-                >
-                    0 / 0 complete
-                </span>
-
-            </div>
-
-            <div class="progress-bar">
-
-                <div
-                    class="progress-fill"
-                    id="progressFill"
-                ></div>
-
-            </div>
-
-        </div>
-
-        <div class="day-tracker">
+        <section class="day-tracker">
 
             <span class="day-label">
                 Minecraft Day
@@ -623,14 +791,14 @@
                     −
                 </button>
 
-                <input
-                    type="number"
+                <button
+                    type="button"
+                    class="day-display"
                     id="minecraftDay"
-                    min="1"
-                    step="1"
-                    inputmode="numeric"
-                    aria-label="Minecraft Day"
+                    aria-label="Edit Minecraft day"
                 >
+                    Day 1
+                </button>
 
                 <button
                     type="button"
@@ -643,46 +811,80 @@
 
             </div>
 
-        </div>
+        </section>
 
-    </header>
+    </section>
 
+    <section class="panel progress-panel">
 
-    <section id="worldManager">
+        <div class="progress-top">
 
-        <div class="world-manager-header">
+            <span class="progress-label">
+                Current World Progress
+            </span>
 
-            <div>
-
-                <h2>
-                    Your Worlds
-                </h2>
-
-                <div
-                    class="world-count"
-                    id="worldCount"
-                >
-                    0 / 100 worlds
-                </div>
-
-            </div>
+            <span
+                class="progress-number"
+                id="progressNumber"
+            >
+                0 / 0
+            </span>
 
         </div>
+
+        <div class="progress-track">
+            <div
+                class="progress-fill"
+                id="progressFill"
+            ></div>
+        </div>
+
+    </section>
+
+    <section class="panel search-panel">
 
         <div
-            class="world-grid"
-            id="worldGrid"
+            class="search-box"
+            id="searchBox"
+            contenteditable="true"
+            role="searchbox"
+            aria-label="Search checklist"
+            data-placeholder="Search checklist..."
+            spellcheck="false"
+            autocapitalize="off"
+            autocomplete="off"
+            autocorrect="off"
         ></div>
 
     </section>
 
+    <main id="checklist"></main>
 
-    <section id="checklist"></section>
+</div>
 
-</main>
+<div
+    class="modal-layer"
+    id="modalLayer"
+>
+    <div
+        class="modal"
+        id="modal"
+    ></div>
+</div>
 
+<div
+    class="toast"
+    id="toast"
+></div>
 
 <script>
+    "use strict";
+
+    /*
+        ------------------------------------------------------------
+        STORAGE
+        ------------------------------------------------------------
+    */
 
     const WORLDS_STORAGE_KEY =
         "minecraft-survival-todo-worlds";
@@ -690,330 +892,183 @@
     const CURRENT_WORLD_STORAGE_KEY =
         "minecraft-survival-todo-worlds-current";
 
-    const DAY_STORAGE_KEY =
-        "minecraft-survival-todo-day";
-
-    const MAX_WORLDS =
-        100;
-
     const CHECKLIST_URL =
         "checklist.json";
 
-    const JSON_CHECK_INTERVAL =
-        2000;
+    const MAX_WORLDS = 100;
 
-
-    let checklist = {};
-
-    let worlds = {};
-
-    let currentWorldId = null;
-
-    let checklistSignature = "";
-
-
-    const checklistElement =
-        document.getElementById(
-            "checklist"
-        );
-
-    const worldSelect =
-        document.getElementById(
-            "worldSelect"
-        );
-
-    const worldGrid =
-        document.getElementById(
-            "worldGrid"
-        );
-
-    const worldCount =
-        document.getElementById(
-            "worldCount"
-        );
-
-    const currentWorldName =
-        document.getElementById(
-            "currentWorldName"
-        );
-
-    const overallProgress =
-        document.getElementById(
-            "overallProgress"
-        );
-
-    const progressFill =
-        document.getElementById(
-            "progressFill"
-        );
-
-    const searchInput =
-        document.getElementById(
-            "searchInput"
-        );
-
-    const newWorldButton =
-        document.getElementById(
-            "newWorldButton"
-        );
-
-    const resetButton =
-        document.getElementById(
-            "resetButton"
-        );
-
-    const minecraftDayInput =
-        document.getElementById(
-            "minecraftDay"
-        );
-
-    const dayMinus =
-        document.getElementById(
-            "dayMinus"
-        );
-
-    const dayPlus =
-        document.getElementById(
-            "dayPlus"
-        );
+    const CHECKLIST_POLL_INTERVAL = 2000;
 
 
     /*
-     * Minecraft Day
-     */
+        ------------------------------------------------------------
+        ELEMENTS
+        ------------------------------------------------------------
+    */
 
-    function getMinecraftDay() {
+    const worldsElement =
+        document.getElementById("worlds");
 
-        const savedDay =
-            Number(
-                localStorage.getItem(
-                    DAY_STORAGE_KEY
-                )
-            );
+    const worldCountElement =
+        document.getElementById("worldCount");
 
+    const worldSearchBox =
+        document.getElementById("worldSearchBox");
 
-        if (
-            Number.isInteger(savedDay) &&
-            savedDay >= 1
-        ) {
+    const checklistElement =
+        document.getElementById("checklist");
 
-            return savedDay;
+    const searchBox =
+        document.getElementById("searchBox");
 
-        }
+    const progressNumber =
+        document.getElementById("progressNumber");
 
+    const progressFill =
+        document.getElementById("progressFill");
 
-        return 1;
+    const newWorldButton =
+        document.getElementById("newWorld");
 
-    }
+    const renameWorldButton =
+        document.getElementById("renameWorld");
 
+    const deleteWorldButton =
+        document.getElementById("deleteWorld");
 
-    function saveMinecraftDay(
-        day
-    ) {
+    const resetWorldButton =
+        document.getElementById("resetWorld");
 
-        localStorage.setItem(
-            DAY_STORAGE_KEY,
-            String(day)
-        );
+    const dayMinusButton =
+        document.getElementById("dayMinus");
 
-    }
+    const dayPlusButton =
+        document.getElementById("dayPlus");
 
+    const minecraftDay =
+        document.getElementById("minecraftDay");
 
-    function setMinecraftDay(
-        day
-    ) {
+    const modalLayer =
+        document.getElementById("modalLayer");
 
-        day =
-            Number(day);
+    const modal =
+        document.getElementById("modal");
 
+    const toast =
+        document.getElementById("toast");
 
-        if (
-            !Number.isInteger(day) ||
-            day < 1
-        ) {
 
-            return false;
+    /*
+        ------------------------------------------------------------
+        STATE
+        ------------------------------------------------------------
+    */
 
-        }
+    let worlds = [];
 
+    let currentWorldId = null;
 
-        minecraftDayInput.value =
-            String(day);
+    let checklist = {};
 
+    let checklistSignature = "";
 
-        saveMinecraftDay(
-            day
-        );
+    let toastTimer = null;
 
 
-        return true;
+    /*
+        ------------------------------------------------------------
+        BASIC HELPERS
+        ------------------------------------------------------------
+    */
 
-    }
-
-
-    minecraftDayInput.value =
-        getMinecraftDay();
-
-
-    dayMinus.addEventListener(
-        "click",
-        () => {
-
-            const currentDay =
-                Number(
-                    minecraftDayInput.value
-                );
-
-
-            if (
-                !Number.isInteger(
-                    currentDay
-                )
-            ) {
-
-                setMinecraftDay(1);
-
-                return;
-
-            }
-
-
-            if (
-                currentDay > 1
-            ) {
-
-                setMinecraftDay(
-                    currentDay - 1
-                );
-
-            }
-
-        }
-    );
-
-
-    dayPlus.addEventListener(
-        "click",
-        () => {
-
-            const currentDay =
-                Number(
-                    minecraftDayInput.value
-                );
-
-
-            if (
-                !Number.isInteger(
-                    currentDay
-                )
-            ) {
-
-                setMinecraftDay(2);
-
-                return;
-
-            }
-
-
-            setMinecraftDay(
-                currentDay + 1
-            );
-
-        }
-    );
-
-
-    minecraftDayInput.addEventListener(
-        "change",
-        () => {
-
-            const value =
-                Number(
-                    minecraftDayInput.value
-                );
-
-
-            if (
-                Number.isInteger(value) &&
-                value >= 1
-            ) {
-
-                saveMinecraftDay(
-                    value
-                );
-
-            }
-
-        }
-    );
-
-
-    minecraftDayInput.addEventListener(
-        "keydown",
-        event => {
-
-            if (
-                event.key ===
-                "Enter"
-            ) {
-
-                event.preventDefault();
-
-
-                const value =
-                    Number(
-                        minecraftDayInput.value
-                    );
-
-
-                if (
-                    Number.isInteger(value) &&
-                    value >= 1
-                ) {
-
-                    saveMinecraftDay(
-                        value
-                    );
-
-                }
-
-                /*
-                 * Do NOT re-render anything here.
-                 * This keeps the input exactly as entered.
-                 */
-
-            }
-
-        }
-    );
-
-
-    function generateWorldId() {
-
+    function createId() {
         return (
             Date.now().toString(36) +
-            Math.random()
-                .toString(36)
-                .substring(2, 9)
+            Math.random().toString(36).slice(2, 9)
         );
-
     }
 
+
+    function escapeHTML(value) {
+        return String(value)
+            .replaceAll("&", "&amp;")
+            .replaceAll("<", "&lt;")
+            .replaceAll(">", "&gt;")
+            .replaceAll('"', "&quot;")
+            .replaceAll("'", "&#039;");
+    }
+
+
+    function getCurrentWorld() {
+        return worlds.find(
+            world => world.id === currentWorldId
+        ) || null;
+    }
+
+
+    function getAllTasks() {
+        const tasks = [];
+
+        for (const sectionName of Object.keys(checklist)) {
+
+            const sectionTasks =
+                Array.isArray(checklist[sectionName])
+                    ? checklist[sectionName]
+                    : [];
+
+            for (const task of sectionTasks) {
+                tasks.push(task);
+            }
+        }
+
+        return tasks;
+    }
+
+
+    function getTotalTaskCount() {
+        return getAllTasks().length;
+    }
+
+
+    function getCompletedTaskCount(world) {
+
+        if (!world) {
+            return 0;
+        }
+
+        let count = 0;
+
+        for (const task of getAllTasks()) {
+
+            if (
+                world.progress &&
+                world.progress[task.id] === true
+            ) {
+                count++;
+            }
+        }
+
+        return count;
+    }
+
+
+    /*
+        ------------------------------------------------------------
+        WORLD STORAGE
+        ------------------------------------------------------------
+    */
 
     function saveWorlds() {
 
         localStorage.setItem(
             WORLDS_STORAGE_KEY,
-            JSON.stringify(
-                worlds
-            )
+            JSON.stringify(worlds)
         );
 
         localStorage.setItem(
             CURRENT_WORLD_STORAGE_KEY,
-            currentWorldId
+            String(currentWorldId)
         );
-
     }
 
 
@@ -1022,40 +1077,52 @@
         try {
 
             const savedWorlds =
-                localStorage.getItem(
-                    WORLDS_STORAGE_KEY
+                JSON.parse(
+                    localStorage.getItem(
+                        WORLDS_STORAGE_KEY
+                    )
                 );
 
-
-            if (savedWorlds) {
-
-                worlds =
-                    JSON.parse(
-                        savedWorlds
-                    );
-
+            if (Array.isArray(savedWorlds)) {
+                worlds = savedWorlds;
             }
 
-        } catch (error) {
-
-            console.error(
-                "Could not read saved worlds:",
-                error
-            );
-
-            worlds = {};
-
+        } catch {
+            worlds = [];
         }
 
 
-        if (
-            !worlds ||
-            typeof worlds !== "object" ||
-            Array.isArray(worlds)
-        ) {
+        worlds = worlds
+            .filter(world =>
+                world &&
+                typeof world === "object" &&
+                typeof world.id === "string"
+            )
+            .slice(0, MAX_WORLDS);
 
-            worlds = {};
 
+        for (const world of worlds) {
+
+            if (
+                !world.progress ||
+                typeof world.progress !== "object"
+            ) {
+                world.progress = {};
+            }
+
+            if (
+                !Number.isInteger(world.day) ||
+                world.day < 1
+            ) {
+                world.day = 1;
+            }
+
+            if (
+                typeof world.name !== "string" ||
+                !world.name.trim()
+            ) {
+                world.name = "Unnamed World";
+            }
         }
 
 
@@ -1067,882 +1134,372 @@
 
         if (
             savedCurrentWorld &&
-            worlds[savedCurrentWorld]
+            worlds.some(
+                world =>
+                    world.id === savedCurrentWorld
+            )
         ) {
-
             currentWorldId =
                 savedCurrentWorld;
 
-        }
-
-
-        if (
-            !currentWorldId ||
-            !worlds[currentWorldId]
-        ) {
-
-            const worldIds =
-                Object.keys(
-                    worlds
-                );
-
-
-            if (
-                worldIds.length > 0
-            ) {
-
-                currentWorldId =
-                    worldIds[0];
-
-            } else {
-
-                createInitialWorld();
-
-            }
-
-        }
-
-
-        for (
-            const world of Object.values(
-                worlds
-            )
-        ) {
-
-            if (
-                !world.progress ||
-                typeof world.progress !== "object"
-            ) {
-
-                world.progress = {};
-
-            }
-
-        }
-
-    }
-
-
-    function createInitialWorld() {
-
-        const id =
-            generateWorldId();
-
-
-        worlds[id] = {
-
-            name: "World 1",
-
-            progress: {}
-
-        };
-
-
-        currentWorldId =
-            id;
-
-
-        saveWorlds();
-
-    }
-
-
-    function createWorld() {
-
-        const worldIds =
-            Object.keys(
-                worlds
-            );
-
-
-        if (
-            worldIds.length >=
-            MAX_WORLDS
-        ) {
-
-            alert(
-                "You already have 100 worlds."
-            );
-
-            return;
-
-        }
-
-
-        const requestedName =
-            prompt(
-                "Enter a name for the new world:",
-                "World " +
-                (
-                    worldIds.length +
-                    1
-                )
-            );
-
-
-        if (
-            requestedName === null
-        ) {
-
-            return;
-
-        }
-
-
-        const name =
-            requestedName.trim();
-
-
-        if (!name) {
-
-            alert(
-                "World name cannot be empty."
-            );
-
-            return;
-
-        }
-
-
-        const id =
-            generateWorldId();
-
-
-        worlds[id] = {
-
-            name,
-
-            progress: {}
-
-        };
-
-
-        currentWorldId =
-            id;
-
-
-        saveWorlds();
-
-        searchInput.value = "";
-
-        renderAll();
-
-    }
-
-
-    function switchWorld(id) {
-
-        if (
-            !worlds[id]
-        ) {
-
-            return;
-
-        }
-
-
-        currentWorldId =
-            id;
-
-
-        saveWorlds();
-
-        searchInput.value =
-            "";
-
-        renderAll();
-
-    }
-
-
-    function renameWorld(id) {
-
-        if (
-            !worlds[id]
-        ) {
-
-            return;
-
-        }
-
-
-        const newName =
-            prompt(
-                "Enter a new world name:",
-                worlds[id].name
-            );
-
-
-        if (
-            newName === null
-        ) {
-
-            return;
-
-        }
-
-
-        const name =
-            newName.trim();
-
-
-        if (!name) {
-
-            alert(
-                "World name cannot be empty."
-            );
-
-            return;
-
-        }
-
-
-        worlds[id].name =
-            name;
-
-
-        saveWorlds();
-
-        renderWorldSelector();
-
-        renderWorldManager();
-
-        updateProgress();
-
-    }
-
-
-    function deleteWorld(id) {
-
-        if (
-            !worlds[id]
-        ) {
-
-            return;
-
-        }
-
-
-        const name =
-            worlds[id].name;
-
-
-        const confirmed =
-            confirm(
-                'Delete "' +
-                name +
-                '"? This will permanently delete its checklist progress.'
-            );
-
-
-        if (!confirmed) {
-
-            return;
-
-        }
-
-
-        delete worlds[id];
-
-
-        const remainingIds =
-            Object.keys(
-                worlds
-            );
-
-
-        if (
-            remainingIds.length === 0
-        ) {
-
-            createInitialWorld();
-
-        } else if (
-            id === currentWorldId
-        ) {
+        } else if (worlds.length > 0) {
 
             currentWorldId =
-                remainingIds[0];
-
-        }
-
-
-        saveWorlds();
-
-        renderAll();
-
-    }
-
-
-    function resetCurrentWorld() {
-
-        if (
-            !worlds[currentWorldId]
-        ) {
-
-            return;
-
-        }
-
-
-        const confirmed =
-            confirm(
-                'Reset all checklist progress for "' +
-                worlds[currentWorldId].name +
-                '"?'
-            );
-
-
-        if (!confirmed) {
-
-            return;
-
-        }
-
-
-        worlds[currentWorldId].progress =
-            {};
-
-
-        saveWorlds();
-
-        renderChecklist();
-
-        renderWorldManager();
-
-        updateProgress();
-
-        updateSectionCounts();
-
-    }
-
-
-    function getAllTasks() {
-
-        const tasks = [];
-
-
-        for (
-            const [
-                sectionName,
-                sectionTasks
-            ] of Object.entries(
-                checklist
-            )
-        ) {
-
-            if (
-                !Array.isArray(
-                    sectionTasks
-                )
-            ) {
-
-                continue;
-
-            }
-
-
-            for (
-                const task of sectionTasks
-            ) {
-
-                if (
-                    task &&
-                    task.id &&
-                    task.name
-                ) {
-
-                    tasks.push({
-                        id: task.id,
-                        name: task.name,
-                        section: sectionName
-                    });
-
-                }
-
-            }
-
-        }
-
-
-        return tasks;
-
-    }
-
-
-    function getWorldProgress(world) {
-
-        const tasks =
-            getAllTasks();
-
-
-        let completed =
-            0;
-
-
-        for (
-            const task of tasks
-        ) {
-
-            if (
-                world.progress &&
-                world.progress[
-                    task.id
-                ] === true
-            ) {
-
-                completed++;
-
-            }
-
-        }
-
-
-        return {
-
-            completed,
-
-            total:
-                tasks.length
-
-        };
-
-    }
-
-
-    function renderWorldSelector() {
-
-        worldSelect.innerHTML =
-            "";
-
-
-        Object.entries(
-            worlds
-        ).forEach(
-            (
-                [id, world]
-            ) => {
-
-                const option =
-                    document.createElement(
-                        "option"
-                    );
-
-
-                option.value =
-                    id;
-
-
-                option.textContent =
-                    world.name;
-
-
-                if (
-                    id ===
-                    currentWorldId
-                ) {
-
-                    option.selected =
-                        true;
-
-                }
-
-
-                worldSelect.appendChild(
-                    option
-                );
-
-            }
-        );
-
-    }
-
-
-    function renderWorldManager() {
-
-        const worldEntries =
-            Object.entries(
-                worlds
-            );
-
-
-        worldCount.textContent =
-            worldEntries.length +
-            " / " +
-            MAX_WORLDS +
-            " worlds";
-
-
-        worldGrid.innerHTML =
-            "";
-
-
-        worldEntries.forEach(
-            (
-                [id, world]
-            ) => {
-
-                const card =
-                    document.createElement(
-                        "article"
-                    );
-
-
-                card.className =
-                    "world-card";
-
-
-                if (
-                    id ===
-                    currentWorldId
-                ) {
-
-                    card.classList.add(
-                        "current"
-                    );
-
-                }
-
-
-                const progress =
-                    getWorldProgress(
-                        world
-                    );
-
-
-                const percentage =
-                    progress.total === 0
-                        ? 0
-                        : Math.round(
-                            (
-                                progress.completed /
-                                progress.total
-                            ) *
-                            100
-                        );
-
-
-                card.innerHTML = `
-                    <h3></h3>
-
-                    <div class="world-progress">
-                        ${progress.completed}
-                        /
-                        ${progress.total}
-                        complete
-                        (${percentage}%)
-                    </div>
-
-                    <div class="world-actions">
-
-                        <button
-                            type="button"
-                            class="open-world"
-                        >
-                            Open
-                        </button>
-
-                        <button
-                            type="button"
-                            class="rename-world"
-                        >
-                            Rename
-                        </button>
-
-                        <button
-                            type="button"
-                            class="delete-world"
-                        >
-                            Delete
-                        </button>
-
-                    </div>
-                `;
-
-
-                card.querySelector(
-                    "h3"
-                ).textContent =
-                    world.name;
-
-
-                card.querySelector(
-                    ".open-world"
-                ).addEventListener(
-                    "click",
-                    () => switchWorld(id)
-                );
-
-
-                card.querySelector(
-                    ".rename-world"
-                ).addEventListener(
-                    "click",
-                    () => renameWorld(id)
-                );
-
-
-                card.querySelector(
-                    ".delete-world"
-                ).addEventListener(
-                    "click",
-                    () => deleteWorld(id)
-                );
-
-
-                worldGrid.appendChild(
-                    card
-                );
-
-            }
-        );
-
-    }
-
-
-    function openSection(
-        section
-    ) {
-
-        document
-            .querySelectorAll(
-                ".section.open"
-            )
-            .forEach(
-                openSectionElement => {
-
-                    if (
-                        openSectionElement !==
-                        section
-                    ) {
-
-                        openSectionElement.classList.remove(
-                            "open"
-                        );
-
-                        const header =
-                            openSectionElement.querySelector(
-                                ".section-header"
-                            );
-
-                        if (header) {
-
-                            header.setAttribute(
-                                "aria-expanded",
-                                "false"
-                            );
-
-                        }
-
-                    }
-
-                }
-            );
-
-
-        section.classList.add(
-            "open"
-        );
-
-    }
-
-
-    function toggleSection(
-        section
-    ) {
-
-        const isOpen =
-            section.classList.contains(
-                "open"
-            );
-
-
-        if (isOpen) {
-
-            section.classList.remove(
-                "open"
-            );
+                worlds[0].id;
 
         } else {
 
-            openSection(
-                section
-            );
+            const world =
+                createWorld("World 1");
 
+            worlds.push(world);
+
+            currentWorldId =
+                world.id;
         }
 
+
+        saveWorlds();
     }
 
 
-    function createTaskRow(
-        task,
-        world
-    ) {
+    function createWorld(name) {
 
-        const row =
-            document.createElement(
-                "div"
-            );
-
-
-        row.className =
-            "task";
+        return {
+            id: createId(),
+            name: name,
+            progress: {},
+            day: 1
+        };
+    }
 
 
-        row.dataset.taskId =
-            task.id;
+    /*
+        ------------------------------------------------------------
+        WORLD SEARCH
+        ------------------------------------------------------------
+    */
+
+    function getWorldSearchText() {
+
+        return worldSearchBox
+            .textContent
+            .trim()
+            .toLowerCase();
+    }
 
 
-        const isCompleted =
-            world.progress[
-                task.id
-            ] === true;
+    /*
+        ------------------------------------------------------------
+        RENDER WORLDS
+        ------------------------------------------------------------
+    */
+
+    function renderWorlds() {
+
+        const search =
+            getWorldSearchText();
+
+        const filteredWorlds =
+            worlds.filter(world => {
+
+                if (!search) {
+                    return true;
+                }
+
+                return world.name
+                    .toLowerCase()
+                    .includes(search);
+            });
 
 
-        if (
-            isCompleted
-        ) {
+        worldsElement.innerHTML = "";
 
-            row.classList.add(
-                "completed"
-            );
 
+        worldCountElement.textContent =
+            search
+                ? `${filteredWorlds.length} shown / ${worlds.length}`
+                : `${worlds.length} / ${MAX_WORLDS}`;
+
+
+        if (filteredWorlds.length === 0) {
+
+            worldsElement.innerHTML =
+                `
+                <div class="world-empty">
+                    No worlds match your search.
+                </div>
+                `;
+
+            return;
         }
 
 
-        const checkbox =
-            document.createElement(
-                "input"
-            );
+        for (const world of filteredWorlds) {
+
+            const completed =
+                getCompletedTaskCount(world);
+
+            const total =
+                getTotalTaskCount();
 
 
-        checkbox.type =
-            "checkbox";
+            const card =
+                document.createElement("div");
 
-
-        checkbox.id =
-            "task-" +
-            task.id;
-
-
-        checkbox.checked =
-            isCompleted;
-
-
-        const label =
-            document.createElement(
-                "label"
-            );
-
-
-        label.htmlFor =
-            checkbox.id;
-
-
-        label.textContent =
-            task.name;
-
-
-        checkbox.addEventListener(
-            "change",
-            event => {
-
-                event.stopPropagation();
-
-
-                if (
-                    !world.progress
-                ) {
-
-                    world.progress =
-                        {};
-
-                }
-
-
-                world.progress[
-                    task.id
-                ] =
-                    checkbox.checked;
-
-
-                row.classList.toggle(
-                    "completed",
-                    checkbox.checked
+            card.className =
+                "world-card" +
+                (
+                    world.id === currentWorldId
+                        ? " current"
+                        : ""
                 );
 
 
-                saveWorlds();
-
-                updateProgress();
-
-                renderWorldManager();
-
-                updateSectionCounts();
-
-            }
-        );
+            card.dataset.worldId =
+                world.id;
 
 
-        row.appendChild(
-            checkbox
-        );
+            card.innerHTML =
+                `
+                <div class="world-name">
+                    ${escapeHTML(world.name)}
+                </div>
 
-        row.appendChild(
-            label
-        );
+                <div class="world-meta">
+                    ${completed} / ${total} tasks complete
+                    <br>
+                    Minecraft Day ${world.day}
+                </div>
+
+                ${
+                    world.id === currentWorldId
+                        ? `
+                            <span class="world-current">
+                                Current World
+                            </span>
+                        `
+                        : ""
+                }
+                `;
 
 
-        return row;
+            card.addEventListener(
+                "click",
+                () => {
 
+                    currentWorldId =
+                        world.id;
+
+                    saveWorlds();
+
+                    renderWorlds();
+                    renderChecklist();
+                    updateDayDisplay();
+                }
+            );
+
+
+            worldsElement.appendChild(card);
+        }
+    }
+
+
+    /*
+        ------------------------------------------------------------
+        DAY TRACKER
+        ------------------------------------------------------------
+    */
+
+    function getCurrentDay() {
+
+        const world =
+            getCurrentWorld();
+
+        if (!world) {
+            return 1;
+        }
+
+        return world.day;
+    }
+
+
+    function setCurrentDay(day) {
+
+        const world =
+            getCurrentWorld();
+
+        if (!world) {
+            return;
+        }
+
+        world.day =
+            Math.max(
+                1,
+                Math.floor(Number(day) || 1)
+            );
+
+
+        saveWorlds();
+
+        updateDayDisplay();
+        renderWorlds();
+    }
+
+
+    function updateDayDisplay() {
+
+        minecraftDay.textContent =
+            `Day ${getCurrentDay()}`;
+    }
+
+
+    dayMinusButton.addEventListener(
+        "click",
+        () => {
+            setCurrentDay(
+                getCurrentDay() - 1
+            );
+        }
+    );
+
+
+    dayPlusButton.addEventListener(
+        "click",
+        () => {
+            setCurrentDay(
+                getCurrentDay() + 1
+            );
+        }
+    );
+
+
+    minecraftDay.addEventListener(
+        "click",
+        () => {
+
+            createDayEditor(
+                getCurrentDay()
+            );
+        }
+    );
+
+
+    /*
+        ------------------------------------------------------------
+        CHECKLIST PROGRESS
+        ------------------------------------------------------------
+    */
+
+    function updateProgress() {
+
+        const world =
+            getCurrentWorld();
+
+        const total =
+            getTotalTaskCount();
+
+        const completed =
+            getCompletedTaskCount(world);
+
+
+        progressNumber.textContent =
+            `${completed} / ${total}`;
+
+
+        const percentage =
+            total > 0
+                ? (completed / total) * 100
+                : 0;
+
+
+        progressFill.style.width =
+            `${percentage}%`;
+    }
+
+
+    function updateSectionCounts() {
+
+        const world =
+            getCurrentWorld();
+
+
+        document
+            .querySelectorAll(".section")
+            .forEach(section => {
+
+                const sectionName =
+                    section.dataset.section;
+
+
+                const tasks =
+                    Array.isArray(
+                        checklist[sectionName]
+                    )
+                        ? checklist[sectionName]
+                        : [];
+
+
+                let completed = 0;
+
+
+                for (const task of tasks) {
+
+                    if (
+                        world &&
+                        world.progress &&
+                        world.progress[task.id] === true
+                    ) {
+                        completed++;
+                    }
+                }
+
+
+                const count =
+                    section.querySelector(
+                        ".section-count"
+                    );
+
+
+                if (count) {
+
+                    count.textContent =
+                        `${completed} / ${tasks.length}`;
+                }
+            });
     }
 
 
     function updateSectionCount(
-        sectionElement
+        sectionElement,
+        sectionName
     ) {
 
-        const sectionName =
-            sectionElement.dataset.section;
+        const world =
+            getCurrentWorld();
 
 
         const tasks =
-            checklist[
-                sectionName
-            ];
-
-
-        if (
-            !Array.isArray(
-                tasks
+            Array.isArray(
+                checklist[sectionName]
             )
-        ) {
+                ? checklist[sectionName]
+                : [];
 
-            return;
 
+        let completed = 0;
+
+
+        for (const task of tasks) {
+
+            if (
+                world &&
+                world.progress &&
+                world.progress[task.id] === true
+            ) {
+                completed++;
+            }
         }
-
-
-        const world =
-            worlds[currentWorldId];
-
-
-        if (!world) {
-
-            return;
-
-        }
-
-
-        const completed =
-            tasks.filter(
-                task =>
-                    task &&
-                    task.id &&
-                    world.progress[
-                        task.id
-                    ] === true
-            ).length;
 
 
         const count =
@@ -1954,26 +1511,156 @@
         if (count) {
 
             count.textContent =
-                completed +
-                " / " +
-                tasks.length;
-
+                `${completed} / ${tasks.length}`;
         }
-
     }
 
 
-    function createSection(
+    /*
+        ------------------------------------------------------------
+        TASK ROW
+        ------------------------------------------------------------
+    */
+
+    function createTaskElement(
         sectionName,
-        tasks,
-        world,
-        open = false
+        task,
+        delay = 0
+    ) {
+
+        const world =
+            getCurrentWorld();
+
+
+        const taskElement =
+            document.createElement("div");
+
+
+        taskElement.className =
+            "task";
+
+
+        taskElement.dataset.taskId =
+            task.id;
+
+
+        if (
+            world &&
+            world.progress &&
+            world.progress[task.id] === true
+        ) {
+            taskElement.classList.add(
+                "completed"
+            );
+        }
+
+
+        taskElement.style.animationDelay =
+            `${delay}ms`;
+
+
+        const checkbox =
+            document.createElement("input");
+
+
+        checkbox.type =
+            "checkbox";
+
+
+        checkbox.className =
+            "task-check";
+
+
+        checkbox.checked =
+            Boolean(
+                world &&
+                world.progress &&
+                world.progress[task.id]
+            );
+
+
+        checkbox.addEventListener(
+            "change",
+            () => {
+
+                const currentWorld =
+                    getCurrentWorld();
+
+                if (!currentWorld) {
+                    return;
+                }
+
+
+                if (!currentWorld.progress) {
+                    currentWorld.progress = {};
+                }
+
+
+                currentWorld.progress[task.id] =
+                    checkbox.checked;
+
+
+                taskElement.classList.toggle(
+                    "completed",
+                    checkbox.checked
+                );
+
+
+                saveWorlds();
+
+                updateProgress();
+                updateSectionCounts();
+                renderWorlds();
+            }
+        );
+
+
+        const label =
+            document.createElement("label");
+
+
+        label.className =
+            "task-label";
+
+
+        label.textContent =
+            task.name;
+
+
+        label.addEventListener(
+            "click",
+            () => {
+                checkbox.click();
+            }
+        );
+
+
+        taskElement.appendChild(
+            checkbox
+        );
+
+        taskElement.appendChild(
+            label
+        );
+
+
+        return taskElement;
+    }
+
+
+    /*
+        ------------------------------------------------------------
+        SECTION ELEMENT
+        ------------------------------------------------------------
+    */
+
+    function createSectionElement(
+        sectionName,
+        tasks
     ) {
 
         const section =
-            document.createElement(
-                "section"
-            );
+            document.createElement("section");
 
 
         section.className =
@@ -1984,365 +1671,188 @@
             sectionName;
 
 
-        if (open) {
-
-            section.classList.add(
-                "open"
-            );
-
-        }
+        const header =
+            document.createElement("button");
 
 
-        const sectionHeader =
-            document.createElement(
-                "div"
-            );
+        header.type =
+            "button";
 
 
-        sectionHeader.className =
+        header.className =
             "section-header";
 
 
-        sectionHeader.setAttribute(
-            "role",
-            "button"
-        );
+        header.innerHTML =
+            `
+            <span class="section-arrow">
+                ›
+            </span>
+
+            <span class="section-title">
+                ${escapeHTML(sectionName)}
+            </span>
+
+            <span class="section-count">
+                0 / ${tasks.length}
+            </span>
+            `;
 
 
-        sectionHeader.setAttribute(
-            "tabindex",
-            "0"
-        );
+        const body =
+            document.createElement("div");
 
 
-        sectionHeader.setAttribute(
-            "aria-expanded",
-            open
-                ? "true"
-                : "false"
-        );
+        body.className =
+            "section-body";
 
 
-        const titleWrapper =
-            document.createElement(
-                "div"
-            );
+        const inner =
+            document.createElement("div");
 
 
-        titleWrapper.className =
-            "section-title-wrapper";
+        inner.className =
+            "section-inner";
 
 
-        const arrow =
-            document.createElement(
-                "span"
-            );
+        const tasksElement =
+            document.createElement("div");
 
 
-        arrow.className =
-            "section-arrow";
-
-
-        arrow.textContent =
-            "▶";
-
-
-        const title =
-            document.createElement(
-                "h2"
-            );
-
-
-        title.textContent =
-            sectionName;
-
-
-        titleWrapper.appendChild(
-            arrow
-        );
-
-        titleWrapper.appendChild(
-            title
-        );
-
-
-        const count =
-            document.createElement(
-                "span"
-            );
-
-
-        count.className =
-            "section-count";
-
-
-        sectionHeader.appendChild(
-            titleWrapper
-        );
-
-        sectionHeader.appendChild(
-            count
-        );
-
-
-        const sectionContent =
-            document.createElement(
-                "div"
-            );
-
-
-        sectionContent.className =
-            "section-content";
-
-
-        const sectionContentInner =
-            document.createElement(
-                "div"
-            );
-
-
-        sectionContentInner.className =
-            "section-content-inner";
-
-
-        const tasksContainer =
-            document.createElement(
-                "div"
-            );
-
-
-        tasksContainer.className =
+        tasksElement.className =
             "tasks";
 
 
         tasks.forEach(
-            task => {
+            (task, index) => {
 
-                tasksContainer.appendChild(
-                    createTaskRow(
+                tasksElement.appendChild(
+                    createTaskElement(
+                        sectionName,
                         task,
-                        world
+                        index * 18
                     )
                 );
-
             }
         );
 
 
-        sectionContentInner.appendChild(
-            tasksContainer
+        inner.appendChild(
+            tasksElement
+        );
+
+        body.appendChild(
+            inner
         );
 
 
-        sectionContent.appendChild(
-            sectionContentInner
+        section.appendChild(
+            header
+        );
+
+        section.appendChild(
+            body
         );
 
 
-        sectionHeader.addEventListener(
+        header.addEventListener(
             "click",
             () => {
 
-                toggleSection(
-                    section
-                );
-
-
-                sectionHeader.setAttribute(
-                    "aria-expanded",
+                const wasOpen =
                     section.classList.contains(
                         "open"
+                    );
+
+
+                document
+                    .querySelectorAll(
+                        ".section.open"
                     )
-                );
+                    .forEach(openSection => {
 
-            }
-        );
-
-
-        sectionHeader.addEventListener(
-            "keydown",
-            event => {
-
-                if (
-                    event.key ===
-                    "Enter" ||
-                    event.key ===
-                    " "
-                ) {
-
-                    event.preventDefault();
-
-
-                    toggleSection(
-                        section
-                    );
-
-
-                    sectionHeader.setAttribute(
-                        "aria-expanded",
-                        section.classList.contains(
+                        openSection.classList.remove(
                             "open"
-                        )
+                        );
+                    });
+
+
+                if (!wasOpen) {
+
+                    section.classList.add(
+                        "open"
                     );
-
                 }
-
             }
-        );
-
-
-        section.appendChild(
-            sectionHeader
-        );
-
-        section.appendChild(
-            sectionContent
         );
 
 
         updateSectionCount(
-            section
+            section,
+            sectionName
         );
 
 
         return section;
-
-    }
-
-
-    function getSectionElement(
-        sectionName
-    ) {
-
-        return Array.from(
-            checklistElement.querySelectorAll(
-                ".section"
-            )
-        ).find(
-            section =>
-                section.dataset.section ===
-                sectionName
-        ) || null;
-
-    }
-
-
-    function getMatchingTasks(
-        sectionName,
-        tasks
-    ) {
-
-        const search =
-            searchInput.value
-                .trim()
-                .toLowerCase();
-
-
-        return tasks.filter(
-            task =>
-                task &&
-                task.id &&
-                task.name &&
-                (
-                    !search ||
-                    task.name
-                        .toLowerCase()
-                        .includes(
-                            search
-                        ) ||
-                    sectionName
-                        .toLowerCase()
-                        .includes(
-                            search
-                        )
-                )
-        );
-
     }
 
 
     /*
-     * Rebuilds the checklist only when the search
-     * changes what should be visible.
-     *
-     * JSON updates use updateChecklistDOM()
-     * instead, so sections do not collapse.
-     */
+        ------------------------------------------------------------
+        FULL CHECKLIST RENDER
+        ------------------------------------------------------------
+    */
+
     function renderChecklist() {
 
-        const world =
-            worlds[currentWorldId];
+        const search =
+            searchBox
+                .textContent
+                .trim()
+                .toLowerCase();
 
 
-        if (!world) {
-
-            return;
-
-        }
+        checklistElement.innerHTML = "";
 
 
-        if (!world.progress) {
-
-            world.progress =
-                {};
-
-        }
-
-
-        checklistElement.innerHTML =
-            "";
-
-
-        let visibleTasks =
-            0;
+        let sectionCount = 0;
 
 
         for (
-            const [
-                sectionName,
-                tasks
-            ] of Object.entries(
-                checklist
-            )
+            const sectionName
+            of Object.keys(checklist)
         ) {
 
-            if (
-                !Array.isArray(
-                    tasks
+            const originalTasks =
+                Array.isArray(
+                    checklist[sectionName]
                 )
-            ) {
-
-                continue;
-
-            }
+                    ? checklist[sectionName]
+                    : [];
 
 
-            const matchingTasks =
-                getMatchingTasks(
-                    sectionName,
-                    tasks
-                );
+            const visibleTasks =
+                search
+                    ? originalTasks.filter(task =>
+                        String(task.name || "")
+                            .toLowerCase()
+                            .includes(search)
+                    )
+                    : originalTasks;
 
 
             if (
-                matchingTasks.length === 0
+                search &&
+                visibleTasks.length === 0
             ) {
-
                 continue;
-
             }
-
-
-            visibleTasks +=
-                matchingTasks.length;
 
 
             const section =
-                createSection(
+                createSectionElement(
                     sectionName,
-                    matchingTasks,
-                    world,
-                    false
+                    visibleTasks
                 );
 
 
@@ -2350,88 +1860,47 @@
                 section
             );
 
+
+            sectionCount++;
         }
 
 
-        if (
-            visibleTasks === 0
-        ) {
+        if (sectionCount === 0) {
 
-            const empty =
-                document.createElement(
-                    "div"
-                );
-
-
-            empty.className =
-                "empty";
-
-
-            empty.textContent =
-                "No checklist items match your search.";
-
-
-            checklistElement.appendChild(
-                empty
-            );
-
+            checklistElement.innerHTML =
+                `
+                <div class="empty-state">
+                    No checklist items match your search.
+                </div>
+                `;
         }
 
 
         updateProgress();
-
+        updateSectionCounts();
     }
 
 
     /*
-     * Updates only the DOM pieces affected by the
-     * checklist.json change.
-     *
-     * Existing sections stay alive.
-     * Existing section open/closed state stays alive.
-     * Existing task rows stay alive.
-     */
+        ------------------------------------------------------------
+        INCREMENTAL CHECKLIST UPDATE
+        ------------------------------------------------------------
+    */
+
     function updateChecklistDOM() {
 
-        const world =
-            worlds[currentWorldId];
-
-
-        if (!world) {
-
-            return;
-
-        }
-
-
-        if (!world.progress) {
-
-            world.progress =
-                {};
-
-        }
-
-
-        const search =
-            searchInput.value
-                .trim()
-                .toLowerCase();
-
-
-        const hasSearch =
-            search.length > 0;
-
-
         /*
-         * Search results are a different view, so
-         * rebuild that view normally.
-         */
-        if (hasSearch) {
+            When searching, the visible checklist is dependent
+            on the search text, so rebuilding is safe here.
+        */
 
+        if (
+            searchBox
+                .textContent
+                .trim()
+        ) {
             renderChecklist();
-
             return;
-
         }
 
 
@@ -2439,408 +1908,225 @@
             new Map();
 
 
-        checklistElement
-            .querySelectorAll(
-                ".section"
-            )
-            .forEach(
-                section => {
-
-                    existingSections.set(
-                        section.dataset.section,
-                        section
-                    );
-
-                }
-            );
-
-
-        /*
-         * Remove sections that no longer exist.
-         */
-        existingSections.forEach(
-            (
-                section,
-                sectionName
-            ) => {
-
-                if (
-                    !Array.isArray(
-                        checklist[
-                            sectionName
-                        ]
-                    )
-                ) {
-
-                    section.remove();
-
-                }
-
-            }
-        );
-
-
-        /*
-         * Process every current section.
-         */
-        Object.entries(
-            checklist
-        ).forEach(
-            (
-                [sectionName, tasks]
-            ) => {
-
-                if (
-                    !Array.isArray(
-                        tasks
-                    )
-                ) {
-
-                    return;
-
-                }
-
-
-                let section =
-                    getSectionElement(
-                        sectionName
-                    );
-
-
-                /*
-                 * If the section is new,
-                 * add only this section.
-                 */
-                if (!section) {
-
-                    section =
-                        createSection(
-                            sectionName,
-                            tasks,
-                            world,
-                            false
-                        );
-
-
-                    checklistElement.appendChild(
-                        section
-                    );
-
-
-                    return;
-
-                }
-
-
-                const tasksContainer =
-                    section.querySelector(
-                        ".tasks"
-                    );
-
-
-                if (!tasksContainer) {
-
-                    return;
-
-                }
-
-
-                const currentRows =
-                    new Map();
-
-
-                tasksContainer
-                    .querySelectorAll(
-                        ".task"
-                    )
-                    .forEach(
-                        row => {
-
-                            currentRows.set(
-                                row.dataset.taskId,
-                                row
-                            );
-
-                        }
-                    );
-
-
-                const currentTaskIds =
-                    new Set(
-                        tasks.map(
-                            task =>
-                                task &&
-                                task.id
-                        )
-                    );
-
-
-                /*
-                 * Remove task rows whose IDs
-                 * disappeared from JSON.
-                 */
-                currentRows.forEach(
-                    (
-                        row,
-                        taskId
-                    ) => {
-
-                        if (
-                            !currentTaskIds.has(
-                                taskId
-                            )
-                        ) {
-
-                            row.remove();
-
-                        }
-
-                    }
-                );
-
-
-                /*
-                 * Add only new task rows.
-                 *
-                 * Existing rows are untouched.
-                 */
-                tasks.forEach(
-                    task => {
-
-                        if (
-                            !task ||
-                            !task.id ||
-                            !task.name
-                        ) {
-
-                            return;
-
-                        }
-
-
-                        const existingRow =
-                            currentRows.get(
-                                task.id
-                            );
-
-
-                        if (
-                            existingRow
-                        ) {
-
-                            /*
-                             * Update the text if the
-                             * item's name changed.
-                             */
-                            const label =
-                                existingRow.querySelector(
-                                    "label"
-                                );
-
-
-                            if (
-                                label &&
-                                label.textContent !==
-                                    task.name
-                            ) {
-
-                                label.textContent =
-                                    task.name;
-
-                            }
-
-
-                            return;
-
-                        }
-
-
-                        /*
-                         * New task.
-                         */
-                        const row =
-                            createTaskRow(
-                                task,
-                                world
-                            );
-
-
-                        tasksContainer.appendChild(
-                            row
-                        );
-
-                    }
-                );
-
-
-                updateSectionCount(
+        document
+            .querySelectorAll(".section")
+            .forEach(section => {
+
+                existingSections.set(
+                    section.dataset.section,
                     section
                 );
-
-            }
-        );
+            });
 
 
         /*
-         * Remove the empty message if checklist
-         * now contains sections.
-         */
-        const empty =
-            checklistElement.querySelector(
-                ".empty"
-            );
+            Remove sections that no longer exist.
+        */
 
-
-        if (
-            empty &&
-            checklistElement.querySelector(
-                ".section"
-            )
+        for (
+            const [sectionName, sectionElement]
+            of existingSections
         ) {
 
-            empty.remove();
+            if (
+                !Object.prototype.hasOwnProperty.call(
+                    checklist,
+                    sectionName
+                )
+            ) {
 
+                sectionElement.remove();
+            }
         }
 
 
         /*
-         * If everything disappeared, show the
-         * empty message.
-         */
-        if (
-            !checklistElement.querySelector(
-                ".section"
-            )
+            Add/update sections.
+        */
+
+        for (
+            const sectionName
+            of Object.keys(checklist)
         ) {
 
-            if (!empty) {
+            const tasks =
+                Array.isArray(
+                    checklist[sectionName]
+                )
+                    ? checklist[sectionName]
+                    : [];
 
-                const newEmpty =
-                    document.createElement(
-                        "div"
+
+            let section =
+                document.querySelector(
+                    `.section[data-section="${CSS.escape(sectionName)}"]`
+                );
+
+
+            if (!section) {
+
+                section =
+                    createSectionElement(
+                        sectionName,
+                        tasks
                     );
 
 
-                newEmpty.className =
-                    "empty";
-
-
-                newEmpty.textContent =
-                    "No checklist items match your search.";
-
-
                 checklistElement.appendChild(
-                    newEmpty
+                    section
                 );
 
+
+                continue;
             }
 
+
+            const taskContainer =
+                section.querySelector(
+                    ".tasks"
+                );
+
+
+            const existingTasks =
+                new Map();
+
+
+            taskContainer
+                .querySelectorAll(".task")
+                .forEach(taskElement => {
+
+                    existingTasks.set(
+                        taskElement.dataset.taskId,
+                        taskElement
+                    );
+                });
+
+
+            const newTaskIds =
+                new Set(
+                    tasks.map(
+                        task => task.id
+                    )
+                );
+
+
+            /*
+                Remove deleted tasks.
+            */
+
+            for (
+                const [taskId, taskElement]
+                of existingTasks
+            ) {
+
+                if (
+                    !newTaskIds.has(taskId)
+                ) {
+
+                    taskElement.remove();
+                }
+            }
+
+
+            /*
+                Add new tasks.
+            */
+
+            for (const task of tasks) {
+
+                const existing =
+                    taskContainer.querySelector(
+                        `.task[data-task-id="${CSS.escape(task.id)}"]`
+                    );
+
+
+                if (!existing) {
+
+                    taskContainer.appendChild(
+                        createTaskElement(
+                            sectionName,
+                            task
+                        )
+                    );
+
+                    continue;
+                }
+
+
+                /*
+                    If an existing task was renamed,
+                    update its text without replacing
+                    the row.
+                */
+
+                const label =
+                    existing.querySelector(
+                        ".task-label"
+                    );
+
+
+                if (
+                    label &&
+                    label.textContent !== task.name
+                ) {
+
+                    label.textContent =
+                        task.name;
+                }
+
+
+                const world =
+                    getCurrentWorld();
+
+
+                const shouldBeChecked =
+                    Boolean(
+                        world &&
+                        world.progress &&
+                        world.progress[task.id]
+                    );
+
+
+                const checkbox =
+                    existing.querySelector(
+                        ".task-check"
+                    );
+
+
+                if (
+                    checkbox &&
+                    checkbox.checked !== shouldBeChecked
+                ) {
+
+                    checkbox.checked =
+                        shouldBeChecked;
+
+                    existing.classList.toggle(
+                        "completed",
+                        shouldBeChecked
+                    );
+                }
+            }
+
+
+            updateSectionCount(
+                section,
+                sectionName
+            );
         }
 
 
         updateProgress();
-
         updateSectionCounts();
-
-    }
-
-
-    function updateProgress() {
-
-        const world =
-            worlds[currentWorldId];
-
-
-        if (!world) {
-
-            return;
-
-        }
-
-
-        const progress =
-            getWorldProgress(
-                world
-            );
-
-
-        const percentage =
-            progress.total === 0
-                ? 0
-                : Math.round(
-                    (
-                        progress.completed /
-                        progress.total
-                    ) *
-                    100
-                );
-
-
-        currentWorldName.textContent =
-            world.name;
-
-
-        overallProgress.textContent =
-            progress.completed +
-            " / " +
-            progress.total +
-            " complete";
-
-
-        progressFill.style.width =
-            percentage +
-            "%";
-
-    }
-
-
-    function updateSectionCounts() {
-
-        const world =
-            worlds[currentWorldId];
-
-
-        if (!world) {
-
-            return;
-
-        }
-
-
-        checklistElement
-            .querySelectorAll(
-                ".section"
-            )
-            .forEach(
-                section => {
-
-                    updateSectionCount(
-                        section
-                    );
-
-                }
-            );
-
-    }
-
-
-    function renderAll() {
-
-        renderWorldSelector();
-
-        renderWorldManager();
-
-        renderChecklist();
-
     }
 
 
     /*
-     * Removes all saved progress for task IDs
-     * that no longer exist in checklist.json.
-     *
-     * This runs for EVERY world.
-     */
+        ------------------------------------------------------------
+        CLEAN REMOVED TASK PROGRESS
+        ------------------------------------------------------------
+    */
+
     function cleanRemovedTaskProgress(
         newChecklist
     ) {
@@ -2850,97 +2136,77 @@
 
 
         for (
-            const tasks of Object.values(
-                newChecklist
-            )
+            const sectionName
+            of Object.keys(newChecklist)
         ) {
 
-            if (
-                !Array.isArray(
-                    tasks
+            const tasks =
+                Array.isArray(
+                    newChecklist[sectionName]
                 )
-            ) {
-
-                continue;
-
-            }
+                    ? newChecklist[sectionName]
+                    : [];
 
 
-            for (
-                const task of tasks
-            ) {
+            for (const task of tasks) {
 
                 if (
                     task &&
-                    task.id
+                    typeof task.id === "string"
                 ) {
 
                     validTaskIds.add(
                         task.id
                     );
-
                 }
-
             }
-
         }
 
 
-        let changed =
-            false;
+        let changed = false;
 
 
-        for (
-            const world of Object.values(
-                worlds
-            )
-        ) {
+        for (const world of worlds) {
 
-            if (
-                !world.progress ||
-                typeof world.progress !== "object"
-            ) {
-
-                world.progress =
-                    {};
-
-                continue;
-
+            if (!world.progress) {
+                world.progress = {};
             }
 
 
             for (
-                const taskId of Object.keys(
-                    world.progress
-                )
+                const taskId
+                of Object.keys(world.progress)
             ) {
 
                 if (
-                    !validTaskIds.has(
-                        taskId
-                    )
+                    !validTaskIds.has(taskId)
                 ) {
 
-                    delete world.progress[
-                        taskId
-                    ];
+                    delete world.progress[taskId];
 
-                    changed =
-                        true;
-
+                    changed = true;
                 }
-
             }
-
         }
 
 
         if (changed) {
-
             saveWorlds();
-
         }
+    }
 
+
+    /*
+        ------------------------------------------------------------
+        CHECKLIST LOADING
+        ------------------------------------------------------------
+    */
+
+    function makeChecklistSignature(
+        data
+    ) {
+
+        return JSON.stringify(data);
     }
 
 
@@ -2952,61 +2218,44 @@
 
             const response =
                 await fetch(
-                    CHECKLIST_URL +
-                    "?updated=" +
-                    Date.now(),
+                    `${CHECKLIST_URL}?t=${Date.now()}`,
                     {
-                        cache:
-                            "no-store"
+                        cache: "no-store"
                     }
                 );
 
 
-            if (
-                !response.ok
-            ) {
-
+            if (!response.ok) {
                 throw new Error(
-                    "Could not load checklist.json"
+                    "Checklist request failed."
                 );
-
             }
 
 
-            const newChecklist =
+            const data =
                 await response.json();
 
 
             if (
-                !newChecklist ||
-                typeof newChecklist !==
-                    "object" ||
-                Array.isArray(
-                    newChecklist
-                )
+                !data ||
+                typeof data !== "object" ||
+                Array.isArray(data)
             ) {
-
                 throw new Error(
-                    "checklist.json has an invalid format."
+                    "Invalid checklist format."
                 );
-
             }
 
 
             const newSignature =
-                JSON.stringify(
-                    newChecklist
-                );
+                makeChecklistSignature(data);
 
 
             if (
-                !forceRender &&
                 newSignature ===
-                    checklistSignature
+                checklistSignature
             ) {
-
                 return;
-
             }
 
 
@@ -3015,142 +2264,1105 @@
 
 
             checklist =
-                newChecklist;
+                data;
 
 
             checklistSignature =
                 newSignature;
 
 
-            /*
-             * Remove progress belonging to
-             * deleted JSON items.
-             */
             cleanRemovedTaskProgress(
-                newChecklist
+                checklist
             );
 
 
             /*
-             * First load:
-             * build everything normally.
-             */
+                First load.
+            */
+
             if (
-                Object.keys(
-                    oldChecklist
-                ).length === 0
+                Object.keys(oldChecklist).length === 0
             ) {
 
-                renderAll();
+                if (forceRender) {
+                    renderChecklist();
+                }
+
+                renderWorlds();
+                updateDayDisplay();
 
                 return;
-
             }
 
 
             /*
-             * Later JSON updates:
-             * modify only changed DOM nodes.
-             */
+                Later updates use the incremental
+                renderer so open sections remain open.
+            */
+
             updateChecklistDOM();
 
-        } catch (error) {
+            renderWorlds();
+            updateDayDisplay();
 
-            console.error(
-                "Could not load checklist.json:",
-                error
-            );
-
+        } catch {
 
             if (
-                Object.keys(
-                    checklist
-                ).length === 0
+                Object.keys(checklist).length === 0
             ) {
 
-                checklistElement.innerHTML = `
-                    <div class="empty">
-                        Could not load checklist.json.
-                        Make sure it is in the same folder as index.html.
+                checklistElement.innerHTML =
+                    `
+                    <div class="empty-state">
+                        Unable to load checklist.json.
                     </div>
-                `;
-
+                    `;
             }
-
         }
-
     }
 
 
-    worldSelect.addEventListener(
-        "change",
-        event => {
+    /*
+        ------------------------------------------------------------
+        SEARCH
+        ------------------------------------------------------------
+    */
 
-            switchWorld(
-                event.target.value
-            );
+    function setupSearchPlaceholder(
+        element
+    ) {
 
+        /*
+            contenteditable already gives us normal browser
+            text selection and caret placement.
+
+            We only need to prevent accidental line breaks.
+        */
+
+        element.addEventListener(
+            "keydown",
+            event => {
+
+                if (
+                    event.key === "Enter"
+                ) {
+
+                    event.preventDefault();
+                }
+            }
+        );
+
+
+        /*
+            Prevent pasting formatted HTML.
+            Only plain text is inserted.
+        */
+
+        element.addEventListener(
+            "paste",
+            event => {
+
+                event.preventDefault();
+
+
+                const text =
+                    (
+                        event.clipboardData ||
+                        window.clipboardData
+                    ).getData("text/plain");
+
+
+                document.execCommand(
+                    "insertText",
+                    false,
+                    text.replace(
+                        /[\r\n]+/g,
+                        " "
+                    )
+                );
+            }
+        );
+    }
+
+
+    setupSearchPlaceholder(
+        searchBox
+    );
+
+    setupSearchPlaceholder(
+        worldSearchBox
+    );
+
+
+    searchBox.addEventListener(
+        "input",
+        () => {
+            renderChecklist();
         }
     );
 
+
+    worldSearchBox.addEventListener(
+        "input",
+        () => {
+            renderWorlds();
+        }
+    );
+
+
+    /*
+        ------------------------------------------------------------
+        CUSTOM TEXT EDITOR HELPERS
+        ------------------------------------------------------------
+    */
+
+    function getEditableText(
+        element
+    ) {
+
+        return element
+            .textContent
+            .replace(/[\r\n]+/g, " ")
+            .trim();
+    }
+
+
+    function setEditableText(
+        element,
+        text
+    ) {
+
+        element.textContent =
+            String(text ?? "");
+
+
+        /*
+            Put the caret at the end initially.
+            After that, normal clicking works normally.
+        */
+
+        placeCaretAtEnd(element);
+    }
+
+
+    function placeCaretAtEnd(
+        element
+    ) {
+
+        element.focus();
+
+
+        const selection =
+            window.getSelection();
+
+
+        const range =
+            document.createRange();
+
+
+        range.selectNodeContents(
+            element
+        );
+
+
+        range.collapse(false);
+
+
+        selection.removeAllRanges();
+
+        selection.addRange(range);
+    }
+
+
+    /*
+        Clicking inside a contenteditable element naturally places
+        the caret exactly where the user clicked.
+
+        Double-clicking naturally performs the browser's classic
+        word selection.
+
+        We deliberately DO NOT replace the selection or caret on
+        every click, because doing that would break normal editing.
+    */
+
+
+    /*
+        ------------------------------------------------------------
+        WORLD CREATION
+        ------------------------------------------------------------
+    */
 
     newWorldButton.addEventListener(
         "click",
-        createWorld
-    );
-
-
-    resetButton.addEventListener(
-        "click",
-        resetCurrentWorld
-    );
-
-
-    searchInput.addEventListener(
-        "input",
-        renderChecklist
-    );
-
-
-    window.addEventListener(
-        "storage",
-        event => {
+        () => {
 
             if (
-                event.key ===
-                    WORLDS_STORAGE_KEY ||
-                event.key ===
-                    CURRENT_WORLD_STORAGE_KEY
+                worlds.length >= MAX_WORLDS
             ) {
 
-                loadWorlds();
+                showMessage(
+                    `You can have up to ${MAX_WORLDS} worlds.`
+                );
 
-                renderAll();
-
+                return;
             }
 
+
+            createCustomNameEditor(
+                "",
+                "Create World",
+                "Enter a name for the new world."
+            ).then(name => {
+
+                if (name === null) {
+                    return;
+                }
+
+
+                const cleanName =
+                    name.trim() ||
+                    `World ${worlds.length + 1}`;
+
+
+                const world =
+                    createWorld(
+                        cleanName
+                    );
+
+
+                worlds.push(world);
+
+                currentWorldId =
+                    world.id;
+
+
+                saveWorlds();
+
+                renderWorlds();
+                renderChecklist();
+                updateDayDisplay();
+            });
         }
     );
 
 
-    loadWorlds();
+    /*
+        ------------------------------------------------------------
+        RENAME WORLD
+        ------------------------------------------------------------
+    */
 
-    renderAll();
+    renameWorldButton.addEventListener(
+        "click",
+        () => {
 
-    loadChecklist(
-        true
+            const world =
+                getCurrentWorld();
+
+
+            if (!world) {
+                return;
+            }
+
+
+            createCustomNameEditor(
+                world.name,
+                "Rename World",
+                "Choose a new name for this world."
+            ).then(name => {
+
+                if (name === null) {
+                    return;
+                }
+
+
+                const cleanName =
+                    name.trim();
+
+
+                if (!cleanName) {
+
+                    showMessage(
+                        "World name cannot be empty."
+                    );
+
+                    return;
+                }
+
+
+                world.name =
+                    cleanName;
+
+
+                saveWorlds();
+
+                renderWorlds();
+            });
+        }
     );
 
 
-    setInterval(
+    /*
+        ------------------------------------------------------------
+        DELETE WORLD
+        ------------------------------------------------------------
+    */
+
+    deleteWorldButton.addEventListener(
+        "click",
         () => {
 
-            loadChecklist(
-                false
+            const world =
+                getCurrentWorld();
+
+
+            if (!world) {
+                return;
+            }
+
+
+            showDeleteUI(
+                world
+            );
+        }
+    );
+
+
+    /*
+        ------------------------------------------------------------
+        RESET WORLD
+        ------------------------------------------------------------
+    */
+
+    resetWorldButton.addEventListener(
+        "click",
+        () => {
+
+            const world =
+                getCurrentWorld();
+
+
+            if (!world) {
+                return;
+            }
+
+
+            showResetUI(
+                world
+            );
+        }
+    );
+
+
+    /*
+        ------------------------------------------------------------
+        DAY EDITOR
+        ------------------------------------------------------------
+    */
+
+    function createDayEditor(
+        currentDay
+    ) {
+
+        modal.innerHTML =
+            `
+            <h2 class="modal-title">
+                Minecraft Day
+            </h2>
+
+            <p class="modal-message">
+                Enter the Minecraft day for this world.
+            </p>
+
+            <div
+                class="day-editor-value"
+                id="dayEditorValue"
+                contenteditable="true"
+                role="textbox"
+                aria-label="Minecraft day"
+                inputmode="numeric"
+                spellcheck="false"
+            ></div>
+
+            <div class="modal-actions">
+
+                <button
+                    type="button"
+                    class="action-button"
+                    id="dayCancel"
+                >
+                    Cancel
+                </button>
+
+                <button
+                    type="button"
+                    class="action-button primary"
+                    id="daySave"
+                >
+                    Save
+                </button>
+
+            </div>
+            `;
+
+
+        modalLayer.classList.add(
+            "visible"
+        );
+
+
+        const editor =
+            document.getElementById(
+                "dayEditorValue"
             );
 
+
+        editor.textContent =
+            String(currentDay);
+
+
+        editor.focus();
+
+        placeCaretAtEnd(
+            editor
+        );
+
+
+        editor.addEventListener(
+            "keydown",
+            event => {
+
+                if (
+                    event.key === "Enter"
+                ) {
+
+                    event.preventDefault();
+
+                    saveDayEditor();
+                }
+
+
+                if (
+                    event.key === "Escape"
+                ) {
+
+                    event.preventDefault();
+
+                    closeModal();
+                }
+            }
+        );
+
+
+        document
+            .getElementById("dayCancel")
+            .addEventListener(
+                "click",
+                closeModal
+            );
+
+
+        document
+            .getElementById("daySave")
+            .addEventListener(
+                "click",
+                saveDayEditor
+            );
+
+
+        function saveDayEditor() {
+
+            const raw =
+                getEditableText(
+                    editor
+                );
+
+
+            const day =
+                Number(
+                    raw.replace(
+                        /[^0-9]/g,
+                        ""
+                    )
+                );
+
+
+            if (
+                !Number.isFinite(day) ||
+                day < 1
+            ) {
+
+                showMessage(
+                    "Enter a valid Minecraft day."
+                );
+
+                return;
+            }
+
+
+            setCurrentDay(
+                day
+            );
+
+
+            closeModal();
+        }
+    }
+
+
+    /*
+        ------------------------------------------------------------
+        CUSTOM WORLD NAME EDITOR
+        ------------------------------------------------------------
+    */
+
+    function createCustomNameEditor(
+        currentName,
+        title,
+        message
+    ) {
+
+        return new Promise(
+            resolve => {
+
+                let finished = false;
+
+
+                modal.innerHTML =
+                    `
+                    <h2 class="modal-title">
+                        ${escapeHTML(title)}
+                    </h2>
+
+                    <p class="modal-message">
+                        ${escapeHTML(message)}
+                    </p>
+
+                    <div
+                        class="name-editor-value"
+                        id="nameEditorValue"
+                        contenteditable="true"
+                        role="textbox"
+                        aria-label="World name"
+                        spellcheck="false"
+                        autocapitalize="off"
+                        autocomplete="off"
+                        autocorrect="off"
+                    ></div>
+
+                    <div class="modal-actions">
+
+                        <button
+                            type="button"
+                            class="action-button"
+                            id="nameCancel"
+                        >
+                            Cancel
+                        </button>
+
+                        <button
+                            type="button"
+                            class="action-button primary"
+                            id="nameSave"
+                        >
+                            Save
+                        </button>
+
+                    </div>
+                    `;
+
+
+                modalLayer.classList.add(
+                    "visible"
+                );
+
+
+                const editor =
+                    document.getElementById(
+                        "nameEditorValue"
+                    );
+
+
+                editor.textContent =
+                    currentName;
+
+
+                editor.focus();
+
+
+                /*
+                    Select the existing name so typing immediately
+                    replaces it, while normal clicks can still put
+                    the caret anywhere and double-click still selects
+                    individual words.
+                */
+
+                const selection =
+                    window.getSelection();
+
+
+                const range =
+                    document.createRange();
+
+
+                range.selectNodeContents(
+                    editor
+                );
+
+
+                selection.removeAllRanges();
+
+                selection.addRange(range);
+
+
+                function finish(
+                    value
+                ) {
+
+                    if (finished) {
+                        return;
+                    }
+
+
+                    finished = true;
+
+                    closeModal();
+
+                    resolve(value);
+                }
+
+
+                function save() {
+
+                    finish(
+                        getEditableText(
+                            editor
+                        )
+                    );
+                }
+
+
+                function cancel() {
+
+                    finish(null);
+                }
+
+
+                editor.addEventListener(
+                    "keydown",
+                    event => {
+
+                        if (
+                            event.key === "Enter"
+                        ) {
+
+                            event.preventDefault();
+
+                            save();
+                        }
+
+
+                        if (
+                            event.key === "Escape"
+                        ) {
+
+                            event.preventDefault();
+
+                            cancel();
+                        }
+                    }
+                );
+
+
+                document
+                    .getElementById("nameCancel")
+                    .addEventListener(
+                        "click",
+                        cancel
+                    );
+
+
+                document
+                    .getElementById("nameSave")
+                    .addEventListener(
+                        "click",
+                        save
+                    );
+            }
+        );
+    }
+
+
+    /*
+        ------------------------------------------------------------
+        DELETE UI
+        ------------------------------------------------------------
+    */
+
+    function showDeleteUI(
+        world
+    ) {
+
+        modal.innerHTML =
+            `
+            <h2 class="modal-title">
+                Delete World
+            </h2>
+
+            <p class="modal-message">
+                Delete "${escapeHTML(world.name)}"?
+                All checklist progress and the Minecraft day
+                for this world will be removed.
+            </p>
+
+            <div class="modal-actions">
+
+                <button
+                    type="button"
+                    class="action-button"
+                    id="deleteCancel"
+                >
+                    Cancel
+                </button>
+
+                <button
+                    type="button"
+                    class="action-button danger"
+                    id="deleteConfirm"
+                >
+                    Delete
+                </button>
+
+            </div>
+            `;
+
+
+        modalLayer.classList.add(
+            "visible"
+        );
+
+
+        document
+            .getElementById("deleteCancel")
+            .addEventListener(
+                "click",
+                closeModal
+            );
+
+
+        document
+            .getElementById("deleteConfirm")
+            .addEventListener(
+                "click",
+                () => {
+
+                    if (worlds.length <= 1) {
+
+                        showMessage(
+                            "You need to keep at least one world."
+                        );
+
+                        closeModal();
+
+                        return;
+                    }
+
+
+                    worlds =
+                        worlds.filter(
+                            item =>
+                                item.id !== world.id
+                        );
+
+
+                    if (
+                        currentWorldId ===
+                        world.id
+                    ) {
+
+                        currentWorldId =
+                            worlds[0].id;
+                    }
+
+
+                    saveWorlds();
+
+                    closeModal();
+
+                    renderWorlds();
+                    renderChecklist();
+                    updateDayDisplay();
+                }
+            );
+    }
+
+
+    /*
+        ------------------------------------------------------------
+        RESET UI
+        ------------------------------------------------------------
+    */
+
+    function showResetUI(
+        world
+    ) {
+
+        modal.innerHTML =
+            `
+            <h2 class="modal-title">
+                Reset World
+            </h2>
+
+            <p class="modal-message">
+                Reset all checklist progress and set
+                Minecraft Day back to Day 1 for
+                "${escapeHTML(world.name)}"?
+            </p>
+
+            <div class="modal-actions">
+
+                <button
+                    type="button"
+                    class="action-button"
+                    id="resetCancel"
+                >
+                    Cancel
+                </button>
+
+                <button
+                    type="button"
+                    class="action-button danger"
+                    id="resetConfirm"
+                >
+                    Reset
+                </button>
+
+            </div>
+            `;
+
+
+        modalLayer.classList.add(
+            "visible"
+        );
+
+
+        document
+            .getElementById("resetCancel")
+            .addEventListener(
+                "click",
+                closeModal
+            );
+
+
+        document
+            .getElementById("resetConfirm")
+            .addEventListener(
+                "click",
+                () => {
+
+                    world.progress = {};
+
+                    world.day = 1;
+
+
+                    saveWorlds();
+
+                    closeModal();
+
+                    renderWorlds();
+                    renderChecklist();
+                    updateDayDisplay();
+
+                    showMessage(
+                        "World reset."
+                    );
+                }
+            );
+    }
+
+
+    /*
+        ------------------------------------------------------------
+        MODAL HELPERS
+        ------------------------------------------------------------
+    */
+
+    function closeModal() {
+
+        modalLayer.classList.remove(
+            "visible"
+        );
+
+        modal.innerHTML = "";
+    }
+
+
+    modalLayer.addEventListener(
+        "click",
+        event => {
+
+            if (
+                event.target ===
+                modalLayer
+            ) {
+
+                closeModal();
+            }
+        }
+    );
+
+
+    /*
+        ------------------------------------------------------------
+        TOAST
+        ------------------------------------------------------------
+    */
+
+    function showMessage(
+        text
+    ) {
+
+        toast.textContent =
+            text;
+
+
+        toast.classList.add(
+            "visible"
+        );
+
+
+        clearTimeout(
+            toastTimer
+        );
+
+
+        toastTimer =
+            setTimeout(
+                () => {
+
+                    toast.classList.remove(
+                        "visible"
+                    );
+
+                },
+                2200
+            );
+    }
+
+
+    /*
+        ------------------------------------------------------------
+        ZOOM DISABLING
+        ------------------------------------------------------------
+    */
+
+    document.addEventListener(
+        "gesturestart",
+        event => {
+            event.preventDefault();
         },
-        JSON_CHECK_INTERVAL
+        {
+            passive: false
+        }
+    );
+
+
+    document.addEventListener(
+        "gesturechange",
+        event => {
+            event.preventDefault();
+        },
+        {
+            passive: false
+        }
+    );
+
+
+    document.addEventListener(
+        "gestureend",
+        event => {
+            event.preventDefault();
+        },
+        {
+            passive: false
+        }
+    );
+
+
+    document.addEventListener(
+        "wheel",
+        event => {
+
+            if (
+                event.ctrlKey ||
+                event.metaKey
+            ) {
+
+                event.preventDefault();
+            }
+        },
+        {
+            passive: false
+        }
+    );
+
+
+    document.addEventListener(
+        "keydown",
+        event => {
+
+            if (
+                event.ctrlKey ||
+                event.metaKey
+            ) {
+
+                if (
+                    event.key === "+" ||
+                    event.key === "-" ||
+                    event.key === "=" ||
+                    event.key === "0"
+                ) {
+
+                    event.preventDefault();
+                }
+            }
+        }
+    );
+
+
+    /*
+        ------------------------------------------------------------
+        STARTUP
+        ------------------------------------------------------------
+    */
+
+    loadWorlds();
+
+    setupSearchPlaceholder(
+        searchBox
+    );
+
+    setupSearchPlaceholder(
+        worldSearchBox
+    );
+
+    renderWorlds();
+
+    updateDayDisplay();
+
+    loadChecklist(true);
+
+
+    /*
+        Keep checklist.json updated while the page is open.
+        The incremental renderer preserves which sections are open.
+    */
+
+    setInterval(
+        () => {
+            loadChecklist(false);
+        },
+        CHECKLIST_POLL_INTERVAL
     );
 
 </script>
