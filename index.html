@@ -5,7 +5,22 @@
 
     <meta
         name="viewport"
-        content="width=device-width, initial-scale=1.0"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"
+    >
+
+    <meta
+        name="apple-mobile-web-app-capable"
+        content="yes"
+    >
+
+    <meta
+        name="apple-mobile-web-app-status-bar-style"
+        content="black-translucent"
+    >
+
+    <meta
+        name="theme-color"
+        content="#090b10"
     >
 
     <title>Versions</title>
@@ -13,60 +28,262 @@
     <style>
         * {
             box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
         }
 
-        html,
+        html {
+            margin: 0;
+            padding: 0;
+            background: #090b10;
+
+            touch-action: manipulation;
+        }
+
         body {
             margin: 0;
-            min-height: 100%;
-            font-family: Arial, sans-serif;
-            background: #090b10;
+            min-height: 100vh;
+
+            background:
+                radial-gradient(
+                    circle at top,
+                    #151a2b 0,
+                    #090b10 45%
+                );
+
             color: #ffffff;
+
+            font-family:
+                -apple-system,
+                BlinkMacSystemFont,
+                "Segoe UI",
+                Roboto,
+                Helvetica,
+                Arial,
+                sans-serif;
+
+            -webkit-text-size-adjust: 100%;
+            overscroll-behavior-x: none;
         }
 
-        body {
-            display: flex;
-            justify-content: center;
-            padding: 40px 20px;
+        a,
+        button,
+        input {
+            touch-action: manipulation;
+        }
+
+        .page {
+            width: 100%;
+            min-height: 100vh;
+
+            padding:
+                64px 20px
+                calc(64px + env(safe-area-inset-bottom));
         }
 
         .container {
             width: 100%;
-            max-width: 700px;
+            max-width: 900px;
+
+            margin: 0 auto;
+        }
+
+        .header {
+            margin-bottom: 32px;
+        }
+
+        .eyebrow {
+            margin-bottom: 10px;
+
+            color: #818cf8;
+
+            font-size: 13px;
+            font-weight: 700;
+
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
         }
 
         h1 {
-            margin: 0 0 10px;
-            font-size: 36px;
+            margin: 0;
+
+            font-size: clamp(32px, 7vw, 48px);
+            line-height: 1.05;
+
+            letter-spacing: -0.04em;
         }
 
         .description {
-            margin: 0 0 30px;
+            max-width: 600px;
+
+            margin:
+                14px 0 0;
+
             color: #9da4b3;
+
+            font-size: 16px;
+            line-height: 1.6;
         }
 
         .latest {
-            display: block;
-            padding: 18px 20px;
-            margin-bottom: 30px;
+            display: flex;
 
-            background: #4f46e5;
-            color: white;
+            align-items: center;
+            justify-content: space-between;
+
+            gap: 20px;
+
+            width: 100%;
+
+            padding: 22px 24px;
+
+            margin-bottom: 24px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #4f46e5,
+                    #4338ca
+                );
+
+            border:
+                1px solid
+                rgba(255, 255, 255, 0.12);
+
+            border-radius: 16px;
+
+            color: #ffffff;
 
             text-decoration: none;
-            text-align: center;
 
-            border-radius: 12px;
+            box-shadow:
+                0 12px 35px
+                rgba(79, 70, 229, 0.2);
 
-            font-size: 18px;
-            font-weight: bold;
-
-            transition: 0.2s;
+            transition:
+                transform 0.2s ease,
+                box-shadow 0.2s ease;
         }
 
         .latest:hover {
-            background: #6366f1;
             transform: translateY(-2px);
+
+            box-shadow:
+                0 16px 40px
+                rgba(79, 70, 229, 0.3);
+        }
+
+        .latest:active {
+            transform: scale(0.99);
+        }
+
+        .latest-label {
+            display: block;
+
+            margin-bottom: 5px;
+
+            color:
+                rgba(255, 255, 255, 0.7);
+
+            font-size: 12px;
+            font-weight: 700;
+
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+
+        .latest-version {
+            display: block;
+
+            font-size: 22px;
+            font-weight: 700;
+        }
+
+        .latest-arrow {
+            flex-shrink: 0;
+
+            font-size: 25px;
+        }
+
+        .toolbar {
+            display: flex;
+
+            align-items: center;
+
+            gap: 12px;
+
+            margin-bottom: 18px;
+        }
+
+        .search {
+            position: relative;
+
+            flex: 1;
+        }
+
+        .search-icon {
+            position: absolute;
+
+            top: 50%;
+            left: 16px;
+
+            width: 18px;
+            height: 18px;
+
+            transform:
+                translateY(-50%);
+
+            color: #747d8f;
+
+            pointer-events: none;
+        }
+
+        .search input {
+            width: 100%;
+
+            min-height: 52px;
+
+            padding:
+                0 18px
+                0 46px;
+
+            background: #11151d;
+
+            border:
+                1px solid
+                #252c39;
+
+            border-radius: 12px;
+
+            outline: none;
+
+            color: #ffffff;
+
+            font-family: inherit;
+            font-size: 16px;
+
+            transition:
+                border-color 0.2s ease,
+                box-shadow 0.2s ease;
+        }
+
+        .search input::placeholder {
+            color: #687181;
+        }
+
+        .search input:focus {
+            border-color: #6366f1;
+
+            box-shadow:
+                0 0 0 3px
+                rgba(99, 102, 241, 0.12);
+        }
+
+        .count {
+            flex-shrink: 0;
+
+            color: #747d8f;
+
+            font-size: 14px;
         }
 
         .versions {
@@ -75,116 +292,317 @@
             grid-template-columns:
                 repeat(
                     auto-fill,
-                    minmax(140px, 1fr)
+                    minmax(190px, 1fr)
                 );
 
-            gap: 12px;
+            gap: 14px;
         }
 
         .version {
-            display: block;
+            display: flex;
 
-            padding: 16px;
+            flex-direction: column;
 
-            background: #11151d;
-            border: 1px solid #202633;
+            min-height: 112px;
 
-            color: white;
+            padding: 20px;
+
+            background:
+                rgba(17, 21, 29, 0.92);
+
+            border:
+                1px solid
+                #202633;
+
+            border-radius: 14px;
+
+            color: #ffffff;
+
             text-decoration: none;
 
-            border-radius: 10px;
-
-            text-align: center;
-
-            transition: 0.2s;
+            transition:
+                transform 0.2s ease,
+                border-color 0.2s ease,
+                background 0.2s ease;
         }
 
         .version:hover {
-            background: #181e29;
-            border-color: #4f46e5;
             transform: translateY(-2px);
+
+            background: #151a23;
+
+            border-color: #4f46e5;
+        }
+
+        .version:active {
+            transform: scale(0.99);
         }
 
         .version-number {
-            font-size: 18px;
-            font-weight: bold;
+            font-size: 20px;
+            font-weight: 700;
         }
 
         .version-path {
-            margin-top: 5px;
+            margin-top: 7px;
 
-            color: #8b93a3;
+            color: #737d8f;
 
             font-size: 13px;
+        }
+
+        .empty {
+            display: none;
+
+            padding: 40px 20px;
+
+            border:
+                1px dashed
+                #2a3140;
+
+            border-radius: 14px;
+
+            color: #7f8898;
+
+            text-align: center;
+        }
+
+        .empty-title {
+            margin-bottom: 6px;
+
+            color: #c5cad3;
+
+            font-size: 17px;
+            font-weight: 600;
+        }
+
+        .empty-description {
+            font-size: 14px;
+        }
+
+        @media (max-width: 600px) {
+            .page {
+                padding-top: 40px;
+            }
+
+            .latest {
+                padding: 19px 20px;
+            }
+
+            .toolbar {
+                align-items: stretch;
+
+                flex-direction: column;
+            }
+
+            .count {
+                padding-left: 2px;
+            }
+
+            .versions {
+                grid-template-columns:
+                    repeat(
+                        2,
+                        minmax(0, 1fr)
+                    );
+            }
+        }
+
+        @media (max-width: 380px) {
+            .versions {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
 
 <body>
 
-    <main class="container">
+    <main class="page">
 
-        <h1>Versions</h1>
+        <div class="container">
 
-        <p class="description">
-            Choose the version you want to use.
-        </p>
+            <header class="header">
 
-        <a
-            id="latest"
-            class="latest"
-        ></a>
+                <div class="eyebrow">
+                    Version Directory
+                </div>
 
-        <div
-            id="versions"
-            class="versions"
-        ></div>
+                <h1>
+                    Versions
+                </h1>
+
+                <p class="description">
+                    Browse and access every available
+                    version.
+                </p>
+
+            </header>
+
+
+            <a
+                id="latest"
+                class="latest"
+            >
+
+                <span>
+                    <span class="latest-label">
+                        Latest Version
+                    </span>
+
+                    <span
+                        id="latestVersion"
+                        class="latest-version"
+                    ></span>
+                </span>
+
+                <span
+                    class="latest-arrow"
+                    aria-hidden="true"
+                >
+                    →
+                </span>
+
+            </a>
+
+
+            <div class="toolbar">
+
+                <div class="search">
+
+                    <svg
+                        class="search-icon"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        aria-hidden="true"
+                    >
+                        <circle
+                            cx="11"
+                            cy="11"
+                            r="7"
+                        ></circle>
+
+                        <path
+                            d="m20 20-4-4"
+                        ></path>
+                    </svg>
+
+                    <input
+                        id="search"
+                        type="search"
+                        placeholder="Search versions..."
+                        autocomplete="off"
+                        autocorrect="off"
+                        autocapitalize="off"
+                        spellcheck="false"
+                        enterkeyhint="search"
+                    >
+
+                </div>
+
+                <div
+                    id="count"
+                    class="count"
+                ></div>
+
+            </div>
+
+
+            <section
+                id="versions"
+                class="versions"
+                aria-label="Available versions"
+            ></section>
+
+
+            <div
+                id="empty"
+                class="empty"
+            >
+
+                <div class="empty-title">
+                    No versions found
+                </div>
+
+                <div class="empty-description">
+                    Try searching for another version.
+                </div>
+
+            </div>
+
+        </div>
 
     </main>
 
+
     <script>
         /*
-            Change ONLY this number
+            Change ONLY this number.
         */
 
         const versionCount = 2;
 
 
         /*
-            Latest version
+            Latest version automatically
+            uses the highest version number.
         */
 
         const latestVersion =
             versionCount;
 
 
-        /*
-            Latest button
-        */
-
         const latest =
             document.getElementById(
                 "latest"
             );
 
-        latest.href =
-            "/v" +
-            latestVersion;
-
-        latest.textContent =
-            "Latest Version — v" +
-            latestVersion;
-
-
-        /*
-            Version links
-        */
+        const latestVersionText =
+            document.getElementById(
+                "latestVersion"
+            );
 
         const versions =
             document.getElementById(
                 "versions"
             );
 
+        const search =
+            document.getElementById(
+                "search"
+            );
+
+        const count =
+            document.getElementById(
+                "count"
+            );
+
+        const empty =
+            document.getElementById(
+                "empty"
+            );
+
+
+        /*
+            Set latest version.
+        */
+
+        latest.href =
+            "./v" +
+            latestVersion;
+
+        latestVersionText.textContent =
+            "v" +
+            latestVersion;
+
+
+        /*
+            Create all versions.
+        */
 
         for (
             let version = 1;
@@ -201,8 +619,11 @@
                 "version";
 
             link.href =
-                "/v" +
+                "./v" +
                 version;
+
+            link.dataset.version =
+                String(version);
 
 
             const number =
@@ -227,7 +648,7 @@
                 "version-path";
 
             path.textContent =
-                "/v" +
+                "./v" +
                 version;
 
 
@@ -243,6 +664,90 @@
                 link
             );
         }
+
+
+        /*
+            Search versions.
+        */
+
+        function filterVersions() {
+
+            const query =
+                search.value
+                    .trim()
+                    .toLowerCase()
+                    .replace(
+                        /^version\s*/,
+                        ""
+                    )
+                    .replace(
+                        /^v/,
+                        ""
+                    );
+
+
+            const versionLinks =
+                versions.querySelectorAll(
+                    ".version"
+                );
+
+
+            let visibleCount = 0;
+
+
+            versionLinks.forEach(
+                function (link) {
+
+                    const version =
+                        link.dataset.version;
+
+
+                    const matches =
+                        query === "" ||
+                        version.includes(
+                            query
+                        );
+
+
+                    link.style.display =
+                        matches
+                            ? ""
+                            : "none";
+
+
+                    if (matches) {
+                        visibleCount++;
+                    }
+
+                }
+            );
+
+
+            count.textContent =
+                visibleCount +
+                " of " +
+                versionCount +
+                " versions";
+
+
+            empty.style.display =
+                visibleCount === 0
+                    ? "block"
+                    : "none";
+        }
+
+
+        search.addEventListener(
+            "input",
+            filterVersions
+        );
+
+
+        /*
+            Initial count.
+        */
+
+        filterVersions();
     </script>
 
 </body>
